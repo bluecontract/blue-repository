@@ -42,7 +42,7 @@ jobs:
             # Skip if not in types directory
             if [[ ! "$FILE" =~ ^types/ ]]; then
               continue
-            }
+            fi
             
             # Extract the contract and version path
             if [[ "$FILE" =~ ^types/([^/]+)/([^/]+) ]]; then
