@@ -27,27 +27,52 @@ jobs:
           # Function to check if path is a new directory
           is_new_directory() {
             local path=$1
-            if ! git ls-tree $BASE_COMMIT "$path" > /dev/null 2>&1; then
+            if ! git rev-parse "$BASE_COMMIT":"$path" > /dev/null 2>&1; then
               return 0  # True, it's a new directory
             fi
             return 1  # False, directory already exists
           }
           
-          # Process each changed file
+          # Keep track of validated new version directories
+          declare -A NEW_VERSIONS
+          
+          # First pass: identify new version directories
           echo "$CHANGED_FILES" | while read -r line; do
-            # Split the line into status and file path
             STATUS=$(echo "$line" | cut -f1)
             FILE=$(echo "$line" | cut -f2)
             
-            # Skip if not in types directory
             if [[ ! "$FILE" =~ ^types/ ]]; then
               continue
             fi
             
-            # Extract the contract and version path
             if [[ "$FILE" =~ ^types/([^/]+)/([^/]+) ]]; then
               CONTRACT_PATH="types/${BASH_REMATCH[1]}"
               VERSION_PATH="types/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+              
+              # If this is a new version directory, mark it as valid
+              if is_new_directory "$VERSION_PATH"; then
+                NEW_VERSIONS["$VERSION_PATH"]=1
+              fi
+            fi
+          done
+          
+          # Second pass: validate changes
+          echo "$CHANGED_FILES" | while read -r line; do
+            STATUS=$(echo "$line" | cut -f1)
+            FILE=$(echo "$line" | cut -f2)
+            
+            if [[ ! "$FILE" =~ ^types/ ]]; then
+              continue
+            fi
+            
+            if [[ "$FILE" =~ ^types/([^/]+)/([^/]+) ]]; then
+              CONTRACT_PATH="types/${BASH_REMATCH[1]}"
+              VERSION_PATH="types/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+              
+              # Skip validation for files in new version directories
+              if [[ ${NEW_VERSIONS["$VERSION_PATH"]} == 1 ]]; then
+                continue
+              fi
               
               # If modifying existing version directory
               if ! is_new_directory "$VERSION_PATH"; then
