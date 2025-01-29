@@ -4,4 +4,4 @@ request:
 response:
   description: Result
 status:
-  description: Task status
+  description: Task Status
