@@ -1,0 +1,8 @@
+name: Restaurant
+author: Blue, Inc.
+extends: Blue Contracts
+dependencies:
+  - Italy Food
+blueIds:
+  - Am4dn8AVXpRL8tPZeqVa9vbRE7Pr4bCRb9ciabS4KZk5
+  - 5kBhHAXaGRZ4as5Ak8z8m6YJMSQZffhXMY4XTDBiPsu7
