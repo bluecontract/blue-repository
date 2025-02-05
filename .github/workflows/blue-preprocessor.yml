@@ -1,0 +1,41 @@
+name: Blue Preprocessor Workflow
+
+# Manual trigger with branch input
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run workflow on'
+        required: true
+        type: string
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the specified branch
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      
+      # Set up Java environment
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # or another distribution like 'adopt'
+          java-version: '11' # adjust version as needed
+      
+      # Run the preprocessor
+      - name: Run Blue Preprocessor
+        run: |
+          java -jar ./.github/scripts/blue-preprocessor.jar ./blue-repository ./blue-preprocessed
+      
+      # Upload the preprocessed files as an artifact
+      - name: Upload preprocessed files
+        uses: actions/upload-artifact@v3
+        with:
+          name: blue-preprocessed-files
+          path: ./blue-preprocessed
+          retention-days: 5 # optional: specify how long to keep the artifact
