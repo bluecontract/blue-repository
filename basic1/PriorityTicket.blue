@@ -1,5 +1,5 @@
 name: Priority Ticket
-priority:
-  type: Integer
 error:
   type: Fatal Error Event
+priority:
+  type: Integer
