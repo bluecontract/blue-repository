@@ -1,7 +1,7 @@
 name: Ticket
 a:
   type: Integer
-b:
+c:
   type: Integer
 error:
   type: Fatal Error Event
