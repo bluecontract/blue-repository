@@ -48,7 +48,7 @@ jobs:
             # Skip .github folder and root files
             if [[ "$FILE" =~ ^\.github/ ]] || [[ ! "$FILE" =~ "/" ]]; then
               continue
-            }
+            fi  # Fixed the closing brace here
             
             # Get the root folder of the changed file
             ROOT_FOLDER=$(echo "$FILE" | cut -d'/' -f1)
