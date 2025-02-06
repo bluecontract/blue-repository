@@ -45,7 +45,7 @@ jobs:
           java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
       
       - name: Upload preprocessed files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: blue-preprocessed-files
           path: ./blue-preprocessed
