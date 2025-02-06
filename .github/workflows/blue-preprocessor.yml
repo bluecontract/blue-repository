@@ -1,27 +1,57 @@
 name: Blue Preprocessor Workflow
 
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to run workflow on'
-        required: true
-        type: string
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   Preprocess:
+    # Only run if the PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout LFS objects
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0  # Full history needed to check changes
           lfs: true
-          fetch-depth: 0
 
       - name: Fetch LFS files
         run: git lfs fetch --all && git lfs checkout
+
+      - name: Get changed package folders
+        run: |
+          # Get the base and head commits of the PR
+          BASE_SHA=${{ github.event.pull_request.base.sha }}
+          HEAD_SHA=${{ github.event.pull_request.head.sha }}
+          
+          # Get list of changed files
+          CHANGED_FILES=$(git diff --name-only $BASE_SHA $HEAD_SHA)
+          
+          # Extract unique root folders, excluding .github and files in root
+          echo "$CHANGED_FILES" | while read -r FILE; do
+            if [[ "$FILE" =~ ^\.github/ ]] || [[ ! "$FILE" =~ "/" ]]; then
+              continue
+            fi
+            
+            # Get the root folder
+            ROOT_FOLDER=$(echo "$FILE" | cut -d'/' -f1)
+            echo "$ROOT_FOLDER"
+          done | sort -u > changed_packages.txt
+          
+          # Print the results
+          echo "Changed package folders:"
+          cat changed_packages.txt
+          
+          # Set output for next steps
+          if [ -s changed_packages.txt ]; then
+            echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
+          else
+            echo "CHANGES_DETECTED=false" >> $GITHUB_ENV
+          fi
 
       # Updated to Java 17
       - name: Set up Java
@@ -36,6 +66,11 @@ jobs:
       - name: Run Blue Preprocessor
         run: |
           java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
+    
+      - name: Copy changed_packages.txt to artifacts
+        if: env.CHANGES_DETECTED == 'true'
+        run: |
+          cp changed_packages.txt ./blue-preprocessed/
       
       - name: Upload preprocessed files
         uses: actions/upload-artifact@v4
