@@ -13,29 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # First, checkout LFS files
       - name: Checkout LFS objects
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
           lfs: true
-          fetch-depth: 0  # Fetch all history
+          fetch-depth: 0
 
-      # Explicitly pull LFS files
       - name: Fetch LFS files
         run: git lfs fetch --all && git lfs checkout
 
-      # Verify the JAR file exists and check its size
-      - name: Verify JAR file
-        run: |
-          ls -l .github/scripts/blue-preprocessor.jar
-          file .github/scripts/blue-preprocessor.jar
-
+      # Updated to Java 17
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'  # Changed from 11 to 17
       
       - name: Set execute permissions for JAR
         run: chmod +x .github/scripts/blue-preprocessor.jar
