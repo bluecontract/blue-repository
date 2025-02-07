@@ -1,0 +1,97 @@
+name: Blue Preprocessor Manual Workflow
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  Preprocess:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout LFS objects
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: Fetch LFS files
+        run: git lfs fetch --all && git lfs checkout
+
+      # Updated to Java 17
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Set execute permissions for JAR
+        run: chmod +x .github/scripts/blue-preprocessor.jar
+      
+      - name: Run Blue Preprocessor
+        run: |
+          java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
+      
+      - name: Upload preprocessed files
+        uses: actions/upload-artifact@v4
+        with:
+          name: blue-preprocessed
+          path: ./blue-preprocessed
+          retention-days: 5
+  
+  UploadPackages:
+    needs: Preprocess
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-west-1
+
+      - name: Download preprocessed files
+        uses: actions/download-artifact@v4
+        with:
+          name: blue-preprocessed
+          path: ./blue-preprocessed
+
+      - name: Install yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/download/v4.40.5/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Process and upload files
+        run: |
+          # Read blue IDs into associative array
+          declare -A BLUE_IDS
+          while IFS=": " read -r package id; do
+            BLUE_IDS["$package"]="$id"
+          done < <(yq eval-all '.[] | to_entries | .[] | .key + ": " + .value' ./blue-preprocessed/blue-ids.yaml)
+
+          # Process each package from blue-ids.yaml
+          for package in "${!BLUE_IDS[@]}"; do
+            echo "Processing package: $package"
+            
+            # Get blueId for the package
+            blueId="${BLUE_IDS[$package]}"
+            
+            # Check if package directory exists
+            if [ ! -d "./blue-preprocessed/$package" ]; then
+              echo "Warning: Directory not found for package $package"
+              continue
+            }
+
+            # Process all yaml and blue files in the package directory
+            for file in ./blue-preprocessed/"$package"/*.[yb][al][mu][el]*; do
+              [ -f "$file" ] || continue
+              
+              filename=$(basename "$file")
+              filename_without_ext="${filename%.*}"
+              
+              # Convert YAML to JSON
+              json_content=$(yq eval -o=json "$file")
+              
+              # Upload to S3
+              echo "$json_content" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
+              
+              echo "Uploaded $filename to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
+            done
+          done
