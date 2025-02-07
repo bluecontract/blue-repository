@@ -42,10 +42,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: eu-west-1
+          audience: sts.amazonaws.com
+          role-session-name: GitHubActionsSession
 
       - name: Download preprocessed files
         uses: actions/download-artifact@v4
