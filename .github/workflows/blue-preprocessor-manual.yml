@@ -73,8 +73,8 @@ jobs:
             declare -A BLUE_IDS
             while IFS=": " read -r package id; do
                 BLUE_IDS["$package"]="$id"
-            done < <(yq '.[] | to_entries[] | .key + ": " + .value' ./blue-preprocessed/blue-ids.yaml)
-
+            done < <(yq 'to_entries | .[] | .key + ": " + .value' ./blue-preprocessed/blue-ids.yaml)
+  
             # Process each package from blue-ids.yaml
             for package in "${!BLUE_IDS[@]}"; do
                 echo "Processing package: $package"
@@ -84,23 +84,23 @@ jobs:
                 
                 # Check if package directory exists
                 if [ ! -d "./blue-preprocessed/$package" ]; then
-                echo "Warning: Directory not found for package $package"
-                continue
-                fi  # Changed } to fi for if statement
-
+                    echo "Warning: Directory not found for package $package"
+                    continue
+                fi
+  
                 # Process all yaml and blue files in the package directory
                 for file in ./blue-preprocessed/"$package"/*.[yb][al][mu][el]*; do
-                [ -f "$file" ] || continue
-                
-                filename=$(basename "$file")
-                filename_without_ext="${filename%.*}"
-                
-                # Convert YAML to JSON
-                json_content=$(yq eval '.' -o=json "$file")
-                
-                # Upload to S3
-                echo "$json_content" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
-                
-                echo "Uploaded $filename to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
+                    [ -f "$file" ] || continue
+                    
+                    filename=$(basename "$file")
+                    filename_without_ext="${filename%.*}"
+                    
+                    # Convert YAML to JSON
+                    json_content=$(yq -o=json '.' "$file")
+                    
+                    # Upload to S3
+                    echo "$json_content" | aws s3 cp - "s3://blue-repository-modest-eu-west-1/packages/$package/$blueId/${filename_without_ext}.json"
+                    
+                    echo "Uploaded $filename to s3://blue-repository-modest-eu-west-1/packages/$package/$blueId/${filename_without_ext}.json"
                 done
             done
