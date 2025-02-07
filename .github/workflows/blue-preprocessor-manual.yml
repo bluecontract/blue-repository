@@ -3,6 +3,10 @@ name: Blue Preprocessor Manual Workflow
 on:
   workflow_dispatch:  # Allows manual triggering
 
+permissions:
+  id-token: write   # This is required for OIDC
+  contents: read    # This is required for checkout
+
 jobs:
   Preprocess:
     runs-on: ubuntu-latest
@@ -40,6 +44,9 @@ jobs:
   UploadPackages:
     needs: Preprocess
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
