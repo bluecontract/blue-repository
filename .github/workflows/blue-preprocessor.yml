@@ -11,12 +11,12 @@ jobs:
     # Only run if the PR was merged (not just closed)
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout LFS objects
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Full history needed to check changes
+          fetch-depth: 0 # Full history needed to check changes
           lfs: true
 
       - name: Fetch LFS files
@@ -27,10 +27,10 @@ jobs:
           # Get the base and head commits of the PR
           BASE_SHA=${{ github.event.pull_request.base.sha }}
           HEAD_SHA=${{ github.event.pull_request.head.sha }}
-          
+
           # Get list of changed files
           CHANGED_FILES=$(git diff --name-only $BASE_SHA $HEAD_SHA)
-          
+
           # Extract unique root folders, excluding .github and files in root
           echo "$CHANGED_FILES" | while read -r FILE; do
             if [[ "$FILE" =~ ^\.github/ ]] || [[ ! "$FILE" =~ "/" ]]; then
@@ -41,11 +41,11 @@ jobs:
             ROOT_FOLDER=$(echo "$FILE" | cut -d'/' -f1)
             echo "$ROOT_FOLDER"
           done | sort -u > changed_packages.txt
-          
+
           # Print the results
           echo "Changed package folders:"
           cat changed_packages.txt
-          
+
           # Set output for next steps
           if [ -s changed_packages.txt ]; then
             echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
@@ -57,28 +57,28 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'  # Changed from 11 to 17
-      
+          distribution: "temurin"
+          java-version: "17" # Changed from 11 to 17
+
       - name: Set execute permissions for JAR
         run: chmod +x .github/scripts/blue-preprocessor.jar
-      
+
       - name: Run Blue Preprocessor
         run: |
           java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
-    
+
       - name: Copy changed_packages.txt to artifacts
         if: env.CHANGES_DETECTED == 'true'
         run: |
           cp changed_packages.txt ./blue-preprocessed/
-      
+
       - name: Upload preprocessed files
         uses: actions/upload-artifact@v4
         with:
           name: blue-preprocessed
           path: ./blue-preprocessed
           retention-days: 5
-  
+
   UploadPackages:
     needs: Preprocess
     runs-on: ubuntu-latest
@@ -88,61 +88,62 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: eu-west-1
-          - name: Download preprocessed files
-          uses: actions/download-artifact@v4
-          with:
-            name: blue-preprocessed
-            path: ./blue-preprocessed
-  
-        - name: Install yq
-          run: |
-            wget https://github.com/mikefarah/yq/releases/download/v4.40.5/yq_linux_amd64 -O /usr/local/bin/yq
-            chmod +x /usr/local/bin/yq
-  
-        - name: Process and upload files
-          run: |
-            # Read the changed packages
-            if [ ! -f "./blue-preprocessed/changed_packages.txt" ]; then
-              echo "No changed packages file found"
-              exit 0
+
+      - name: Download preprocessed files
+        uses: actions/download-artifact@v4
+        with:
+          name: blue-preprocessed
+          path: ./blue-preprocessed
+
+      - name: Install yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/download/v4.40.5/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Process and upload files
+        run: |
+          # Read the changed packages
+          if [ ! -f "./blue-preprocessed/changed_packages.txt" ]; then
+            echo "No changed packages file found"
+            exit 0
+          fi
+
+          # Read blue IDs into associative array
+          declare -A BLUE_IDS
+          while IFS=": " read -r package id; do
+            BLUE_IDS["$package"]="$id"
+          done < <(yq eval-all '.[] | to_entries | .[] | .key + ": " + .value' ./blue-preprocessed/blue-ids.yaml)
+
+          # Process each changed package
+          while IFS= read -r package; do
+            # Skip empty lines
+            [ -z "$package" ] && continue
+            
+            echo "Processing package: $package"
+            
+            # Get blueId for the package
+            blueId="${BLUE_IDS[$package]}"
+            if [ -z "$blueId" ]; then
+              echo "Warning: No blueId found for package $package"
+              continue
             fi
-  
-            # Read blue IDs into associative array
-            declare -A BLUE_IDS
-            while IFS=": " read -r package id; do
-              BLUE_IDS["$package"]="$id"
-            done < <(yq eval-all '.[] | to_entries | .[] | .key + ": " + .value' ./blue-preprocessed/blue-ids.yaml)
-  
-            # Process each changed package
-            while IFS= read -r package; do
-              # Skip empty lines
-              [ -z "$package" ] && continue
+
+            # Process all yaml and blue files in the package directory
+            for file in ./blue-preprocessed/"$package"/*.[yb][al][mu][el]*; do
+              [ -f "$file" ] || continue
               
-              echo "Processing package: $package"
+              filename=$(basename "$file")
+              filename_without_ext="${filename%.*}"
               
-              # Get blueId for the package
-              blueId="${BLUE_IDS[$package]}"
-              if [ -z "$blueId" ]; then
-                echo "Warning: No blueId found for package $package"
-                continue
-              fi
-  
-              # Process all yaml and blue files in the package directory
-              for file in ./blue-preprocessed/"$package"/*.[yb][al][mu][el]*; do
-                [ -f "$file" ] || continue
-                
-                filename=$(basename "$file")
-                filename_without_ext="${filename%.*}"
-                
-                # Convert YAML to JSON
-                json_content=$(yq eval -o=json "$file")
-                
-                # Upload to S3
-                echo "$json_content" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
-                
-                echo "Uploaded $filename to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
-              done
-            done < "./blue-preprocessed/changed_packages.txt"
+              # Convert YAML to JSON
+              json_content=$(yq eval -o=json "$file")
+              
+              # Upload to S3
+              echo "$json_content" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
+              
+              echo "Uploaded $filename to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
+            done
+          done < "./blue-preprocessed/changed_packages.txt"
 
   TriggerSDKs:
     needs: Preprocess
