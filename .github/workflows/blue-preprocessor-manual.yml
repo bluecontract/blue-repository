@@ -22,7 +22,7 @@ jobs:
       
       - name: Download blue-preprocessor.jar
         run: |
-          aws s3 cp "s3://${{ vars.S3_BUCKET_NAME }}/scripts/blue-preprocessor.jar" ./.github/scripts
+          aws s3 cp "s3://${{ vars.S3_BUCKET_NAME }}/scripts/blue-preprocessor.jar" ./.github/scripts/blue-preprocessor.jar
 
       # Updated to Java 17
       - name: Set up Java
