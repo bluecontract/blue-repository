@@ -13,14 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout LFS objects
-        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          fetch-depth: 0 # Full history needed to check changes
-          lfs: true
-
-      - name: Fetch LFS files
-        run: git lfs fetch --all && git lfs checkout
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-west-1
+          audience: sts.amazonaws.com
+          role-session-name: GitHubActionsSession
 
       - name: Get changed package folders
         run: |
@@ -52,6 +51,10 @@ jobs:
           else
             echo "CHANGES_DETECTED=false" >> $GITHUB_ENV
           fi
+
+      - name: Download blue-preprocessor.jar
+        run: |
+          aws s3 cp "s3://$S3_BUCKET_NAME/scripts/blue-preprocessor.jar" ./.github/scripts
 
       # Updated to Java 17
       - name: Set up Java

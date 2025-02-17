@@ -12,13 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout LFS objects
-        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          lfs: true
-
-      - name: Fetch LFS files
-        run: git lfs fetch --all && git lfs checkout
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-west-1
+          audience: sts.amazonaws.com
+          role-session-name: GitHubActionsSession
+      
+      - name: Download blue-preprocessor.jar
+        run: |
+          aws s3 cp "s3://$S3_BUCKET_NAME/scripts/blue-preprocessor.jar" ./.github/scripts
 
       # Updated to Java 17
       - name: Set up Java
@@ -26,10 +30,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      
-      - name: Set execute permissions for JAR
-        run: chmod +x .github/scripts/blue-preprocessor.jar
-      
+
       - name: Run Blue Preprocessor
         run: |
           java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
@@ -99,8 +100,8 @@ jobs:
                     json_content=$(yq -o=json '.' "$file")
                     
                     # Upload to S3
-                    echo "$json_content" | aws s3 cp - "s3://blue-repository-modest-eu-west-1/packages/$package/$blueId/${filename_without_ext}.json"
+                    echo "$json_content" | aws s3 cp - "s3://$S3_BUCKET_NAME/packages/$package/$blueId/${filename_without_ext}.json"
                     
-                    echo "Uploaded $filename to s3://blue-repository-modest-eu-west-1/packages/$package/$blueId/${filename_without_ext}.json"
+                    echo "Uploaded $filename to s3://$S3_BUCKET_NAME/packages/$package/$blueId/${filename_without_ext}.json"
                 done
             done
