@@ -31,6 +31,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Set execute permissions for JAR
+        run: chmod +x .github/scripts/blue-preprocessor.jar
+
       - name: Run Blue Preprocessor
         run: |
           java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
