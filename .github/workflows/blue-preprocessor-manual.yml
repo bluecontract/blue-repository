@@ -46,7 +46,25 @@ jobs:
         with:
           name: blue-preprocessed
           path: ./blue-preprocessed
-          retention-days: 5
+          retention-days: 10
+
+      - name: Create blue-repository artifact
+        run: |
+          # Create a temporary directory for the repository content
+          mkdir -p ./blue-repository
+          # Copy all folders except .github and blue-repository
+          for d in */; do
+            if [ "$d" != ".github/" ] && [ "$d" != "blue-repository/" ] && [ "$d" != "blue-preprocessed/" ]; then
+              cp -r "$d" ./blue-repository/
+            fi
+          done
+  
+      - name: Upload blue-repository
+        uses: actions/upload-artifact@v4
+        with:
+          name: blue-repository
+          path: ./blue-repository
+          retention-days: 10
   
   UploadPackages:
     needs: Preprocess
