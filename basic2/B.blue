@@ -1,3 +1,5 @@
 name: Ticket B
 b:
   type: Integer
+c:
+  type: Integer
