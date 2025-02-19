@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write   # This is required for OIDC
+  contents: read    # This is required for checkout
+
 jobs:
   Preprocess:
     # Only run if the PR was merged (not just closed)
