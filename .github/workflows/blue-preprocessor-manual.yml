@@ -112,6 +112,39 @@ jobs:
                     echo "Warning: Directory not found for package $package"
                     continue
                 fi
+                
+                # Get current timestamp
+                timestamp=$(date +%s)
+                
+                # Get extends value if _extends.txt exists
+                extends=""
+                if [ -f "./$package/_extends.txt" ]; then
+                    extends=$(cat "./$package/_extends.txt")
+                fi
+                
+                # Get types from blue-ids.yaml in package directory
+                types=()
+                if [ -f "./blue-preprocessed/$package/blue-ids.yaml" ]; then
+                    while IFS=": " read -r type_name _; do
+                        types+=("$type_name")
+                    done < <(yq 'to_entries | .[] | .key + ": " + .value' "./blue-preprocessed/$package/blue-ids.yaml")
+                fi
+                
+                # Create metadata JSON
+                metadata_json=$(cat <<EOF
+{
+    "name": "$package",
+    "extends": "$extends",
+    "created": "$timestamp",
+    "blueId": "$blueId",
+    "types": $(printf '%s\n' "${types[@]}" | jq -R . | jq -s .)
+}
+EOF
+)
+
+                # Upload metadata to S3
+                echo "$metadata_json" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
+                echo "Uploaded metadata.json to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
   
                 # Process all yaml and blue files in the package directory
                 for file in ./blue-preprocessed/"$package"/*.[yb][al][mu][el]*; do
