@@ -1,0 +1,7 @@
+name: Ticket2
+a:
+  type: Integer
+b:
+  type: Integer
+error:
+  type: Fatal Error Event
