@@ -131,17 +131,15 @@ jobs:
                 fi
                 
                 # Create metadata JSON
-                metadata_json=$(cat <<EOF
-{
-    "name": "$package",
-    "extends": "$extends",
-    "created": "$timestamp",
-    "blueId": "$blueId",
-    "types": $(printf '%s\n' "${types[@]}" | jq -R . | jq -s .)
-}
-EOF
-)
-
+                types_json=$(printf '%s\n' "${types[@]}" | jq -R . | jq -s .)
+                metadata_json=$(jq -n \
+                    --arg name "$package" \
+                    --arg extends "$extends" \
+                    --arg created "$timestamp" \
+                    --arg blueId "$blueId" \
+                    --argjson types "$types_json" \
+                    '{name: $name, extends: $extends, created: $created, blueId: $blueId, types: $types}')
+                
                 # Upload metadata to S3
                 echo "$metadata_json" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
                 echo "Uploaded metadata.json to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
