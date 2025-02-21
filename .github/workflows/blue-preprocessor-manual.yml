@@ -125,8 +125,10 @@ jobs:
                 # Get types from blue-ids.yaml in package directory
                 types=()
                 if [ -f "./blue-preprocessed/$package/blue-ids.yaml" ]; then
-                    while IFS=": " read -r type_name _; do
-                        types+=("$type_name")
+                    while IFS=': ' read -r name _; do
+                        # Remove any leading/trailing whitespace
+                        name=$(echo "$name" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+                        types+=("$name")
                     done < <(yq 'to_entries | .[] | .key + ": " + .value' "./blue-preprocessed/$package/blue-ids.yaml")
                 fi
                 
