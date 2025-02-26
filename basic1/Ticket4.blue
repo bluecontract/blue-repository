@@ -1,0 +1,11 @@
+name: Ticket3
+a:
+  type: Integer
+b:
+  type: Integer
+c:
+  type: Integer
+d:
+  type: Integer
+error:
+  type: Fatal Error Event
