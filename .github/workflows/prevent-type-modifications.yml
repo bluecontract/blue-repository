@@ -48,10 +48,17 @@ jobs:
             # Skip .github folder and root files
             if [[ "$FILE" =~ ^\.github/ ]] || [[ ! "$FILE" =~ "/" ]]; then
               continue
-            fi  # Fixed the closing brace here
+            fi
             
             # Get the root folder of the changed file
             ROOT_FOLDER=$(echo "$FILE" | cut -d'/' -f1)
+            
+            # Check if root folder name follows naming convention
+            if ! [[ "$ROOT_FOLDER" =~ ^[A-Z][A-Za-z0-9.]*$ ]]; then
+              echo "❌ Error: Invalid root folder name: $ROOT_FOLDER"
+              echo "Root folder names must start with uppercase letter and contain only alphanumeric characters and dots."
+              exit 1
+            fi
             
             # If the root folder exists in base commit
             if path_exists "$ROOT_FOLDER"; then
