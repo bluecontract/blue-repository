@@ -111,7 +111,6 @@ jobs:
                 blueId="${BLUE_IDS[$package]}"
 
                 # Check if metadata.json already exists in S3
-                aws s3 ls "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
                 if aws s3 ls "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json" >/dev/null 2>&1; then
                     echo "Skipping package $package - metadata.json already exists in S3"
                     continue
