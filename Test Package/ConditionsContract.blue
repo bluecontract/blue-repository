@@ -1,0 +1,4 @@
+name: Conditions Contract
+type: Contract
+properties:
+  condition: false
