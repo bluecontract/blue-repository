@@ -1,0 +1,4 @@
+name: Trigger Event
+description: A sequential workflow step that can trigger an event.
+event:
+  description: Event data
