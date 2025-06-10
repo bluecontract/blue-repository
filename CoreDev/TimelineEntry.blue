@@ -1,5 +1,6 @@
 name: Timeline Entry
 timeline:
+  type: Timeline
   description: Timeline this entry belongs to
 timelinePrev:
   description: Previous entry
