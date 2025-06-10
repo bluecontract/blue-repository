@@ -1,0 +1,7 @@
+name: MyOS Agent Channel
+description: MyOS-specific agent channel extending Channel with agent and event fields
+agent:
+  type: MyOS Agent
+  description: Optional MyOS agent associated with this channel
+event:
+  description: Optional event node reference
