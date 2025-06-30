@@ -1,0 +1,6 @@
+name: State Change
+type: Sequential Workflow Step
+description: A workflow step that displays information to the user when the document state changes during workflow processing.
+message:
+  type: Text
+  description: The message to be displayed to the user when this state change occurs during workflow execution.
