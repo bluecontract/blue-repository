@@ -1,0 +1,7 @@
+name: Sequential Workflow
+description: A sequential workflow is a workflow that executes its steps in a linear, sequential manner.
+steps:
+  type: List
+  itemType: Sequential Workflow Step
+channel:
+  type: Text
