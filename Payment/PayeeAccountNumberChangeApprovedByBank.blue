@@ -1,0 +1,4 @@
+name: Payee Account Number Change Approved by Bank
+description: Bank confirms payee account is valid
+payeeAccountNumber:
+  type: Text

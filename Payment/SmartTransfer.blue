@@ -1,0 +1,98 @@
+name: Smart Transfer
+description: Bank transfer with multi-stage approval workflow
+payerAccountNumber:
+  type: Text
+  description: Source account for the transfer
+payeeAccountNumber:
+  type: Text
+  description: Destination account for the transfer
+transferValue:
+  type: Money
+  description: Amount to be transferred
+captured:
+  type: Boolean
+  description: Whether transfer has been executed
+cancelled:
+  type: Boolean
+  description: Whether transfer has been cancelled
+contracts:
+  bankChannel:
+    type: Timeline Channel
+
+  specifyPayeeAccountNumber:
+    type: Operation
+    channel: bankChannel
+    request:
+      description: Account number where funds should be sent
+      type: Text
+  specifyPayeeAccountNumberImpl:
+    type: Sequential Workflow Operation
+    operation: specifyPayeeAccountNumber
+    steps:
+      - type: Update Document
+        changeset:
+          - op: replace
+            path: /payeeAccountNumber
+            val: ${event.value}
+      - type: Trigger Event
+        event:
+          type: Payee Account Number Change Approved by Bank
+          payeeAccountNumber: ${event.value}
+
+  authorizeTransfer:
+    type: Operation
+    channel: bankChannel
+    request:
+      description: Amount to authorize for transfer
+      type: Money
+  authorizeTransferImpl:
+    type: Sequential Workflow Operation
+    operation: authorizeTransfer
+    steps:
+      - type: Update Document
+        changeset:
+          - op: replace
+            path: /transferValue
+            val: ${event.value}
+      - type: Trigger Event
+        event:
+          type: Transfer Authorization Approved by Bank
+          transferValue: ${event.value}
+
+  captureTransfer:
+    type: Operation
+    channel: bankChannel
+    request:
+      description: Execute the authorized transfer
+      type: Money
+  captureTransferImpl:
+    type: Sequential Workflow Operation
+    operation: captureTransfer
+    steps:
+      - type: Update Document
+        changeset:
+          - op: replace
+            path: /captured
+            val: true
+      - type: Trigger Event
+        event:
+          type: Transfer Capture Approved by Bank
+
+  cancelTransfer:
+    type: Operation
+    channel: bankChannel
+    request:
+      description: Cancel the pending transfer
+      type: Money
+  cancelTransferImpl:
+    type: Sequential Workflow Operation
+    operation: cancelTransfer
+    steps:
+      - type: Update Document
+        changeset:
+          - op: replace
+            path: /cancelled
+            val: true
+      - type: Trigger Event
+        event:
+          type: Transfer Cancellation Approved by Bank
