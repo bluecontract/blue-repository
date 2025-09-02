@@ -1,0 +1,35 @@
+name: Document Session Bootstrap
+description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
+status:
+  type: Text
+  description: Current status (ResolvingParticipants, Completed, Failed)
+document:
+  description: Target Blue document to be bootstrapped
+channelBindings:
+  type: Dictionary
+  keyType: Text
+  valueType: MyOS Timeline Channel
+  description: Maps channel names to participant identifiers
+initialMessages:
+  description: Messages sent to participants when inviting them to the bootstrapped document
+  defaultMessage:
+    type: Text
+    description: Default invitation message sent to all participants
+  perChannel:
+    type: Dictionary
+    keyType: Text
+    valueType: Text
+    description: Per-channel custom invitation messages
+capabilities:
+  type: Dictionary
+  keyType: Text
+  valueType: Boolean
+  description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+contracts:
+  description: Operational contracts for the bootstrap session participants
+  initiatorChannel:
+    type: MyOS Timeline Channel
+    description: Timeline channel for the user who initiated the bootstrap process
+  myOsAdminChannel:
+    type: MyOS Timeline Channel
+    description: Timeline channel for MyOS Admin to orchestrate the bootstrap process and emit progress events
