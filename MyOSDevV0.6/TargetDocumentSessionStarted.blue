@@ -1,0 +1,3 @@
+name: Target Document Session Started
+document:
+  description: The final, canonicalized document state with all timelineIds filled in.
