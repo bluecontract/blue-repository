@@ -1,0 +1,5 @@
+name: Participant Activated
+channelName:
+  type: Text
+participant:
+  type: Participant
