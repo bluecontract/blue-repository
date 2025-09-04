@@ -1,0 +1,5 @@
+name: MyOS Agent
+description: MyOS-specific agent with optional agent identifier
+agentId:
+  type: Text
+  description: Optional agent identifier
