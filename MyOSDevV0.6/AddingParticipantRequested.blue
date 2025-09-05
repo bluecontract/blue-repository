@@ -1,0 +1,9 @@
+name: Adding Participant Requested
+channelName:
+  description: The abstract channel name for the new participant.
+  type: Text
+participantBinding:
+  description: How to identify the new user.
+  email:
+    type: Text
+

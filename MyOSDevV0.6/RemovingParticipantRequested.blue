@@ -1,0 +1,4 @@
+name: Removing Participant Requested
+channelName:
+  description: The abstract channel name of the participant to be removed.
+  type: Text

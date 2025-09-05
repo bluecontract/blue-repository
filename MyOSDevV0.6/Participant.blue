@@ -1,0 +1,10 @@
+name: Participant
+accountId:
+  type: Text
+email:
+  type: Text
+timelineId:
+  type: Text
+status:
+  type: Text
+  description:  Can be "Active" or "Inactive"
