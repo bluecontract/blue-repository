@@ -1,0 +1,9 @@
+name: Single Document Permission Revoking in Progress
+type: Event
+description: MyOS Admin is retracting rights granted by this PGD.
+targetSessionId:
+  type: Text
+permissions:
+  type: Single Document Permission Set
+note:
+  type: Text

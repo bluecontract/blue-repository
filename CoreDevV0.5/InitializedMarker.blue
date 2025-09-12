@@ -1,0 +1,3 @@
+name: Initialized Marker
+description: A marker that indicates that the document has been initialized.
+type: Marker

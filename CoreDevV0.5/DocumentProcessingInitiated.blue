@@ -1,0 +1,3 @@
+name: Document Processing Initiated
+type: Lifecycle Event
+description: An event that marks the beginning of document processing.

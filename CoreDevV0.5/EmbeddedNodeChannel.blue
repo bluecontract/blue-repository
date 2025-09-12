@@ -1,0 +1,4 @@
+name: Embedded Node Channel
+type: Channel
+path:
+  type: Text

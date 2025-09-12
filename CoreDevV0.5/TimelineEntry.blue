@@ -1,0 +1,14 @@
+name: Timeline Entry
+timeline:
+  type: Timeline
+  description: Timeline this entry belongs to
+timelinePrev:
+  description: Previous entry
+thread:
+  description: Optional thread
+threadPrev:
+  description: Previous entry in the thread
+message:
+  description: Message
+signature:
+  type: Text

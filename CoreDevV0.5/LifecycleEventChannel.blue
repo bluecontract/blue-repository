@@ -1,0 +1,4 @@
+name: Lifecycle Event Channel
+type: Channel
+event:
+  description: The event that occurred.

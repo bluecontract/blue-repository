@@ -1,0 +1,5 @@
+name: JavaScript Code
+type: Sequential Workflow Step
+description: A workflow step that executes a JavaScript code.
+code:
+  type: Text
