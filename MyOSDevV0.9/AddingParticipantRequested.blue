@@ -6,4 +6,5 @@ participantBinding:
   description: How to identify the new user.
   email:
     type: Text
-
+  accountId:
+    type: Text
