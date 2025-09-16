@@ -1,0 +1,9 @@
+name: MyOS Timeline Channel
+type: Timeline Channel
+description: MyOS-specific Timeline Channel
+accountId:
+  type: Text
+  description: Account identifier for the MyOS timeline
+email:
+  type: Text
+  description: Email address associated with the MyOS timeline
