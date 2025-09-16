@@ -22,6 +22,25 @@ capabilities:
   keyType: Text
   valueType: Boolean
   description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+
+bootstrapStatus:
+  type: Document Status
+  description: Overall bootstrap process status
+
+bootstrapError:
+  type: Text
+  description: Error message explaining bootstrap failure
+
+initiatorSessionId:
+  type: Text
+  description: Session ID created for the bootstrap initiator (caller)
+
+participantsState:
+  type: Dictionary
+  description: Maps channel names to participant activation tracking
+  keyType: Text
+  valueType: Participant Activation State
+
 contracts:
   description: Operational contracts for the bootstrap session participants
   myOsAdminChannel:
@@ -43,3 +62,105 @@ contracts:
         type: JavaScript Code
         code: |
           return { events: event.message.request };
+
+  # Workflow to handle Participant Resolved events
+  handleParticipantResolved:
+    type: Sequential Workflow
+    channel: myOsAdminChannel
+    event:
+      type: Participant Resolved
+    steps:
+      - name: Prepare Participant State
+        type: JavaScript Code
+        code: |
+          const participantState = {
+            accountStatus: event.participant?.status?.accountStatus, // "Active" | "Inactive"
+            errorMessage: ''
+          };
+
+          const currentStatus = document('/bootstrapStatus');
+          const shouldUpdateStatus = currentStatus.mode === 'pending';
+
+          return {
+            participantState,
+            channelName: event.channelName,
+            events: shouldUpdateStatus ? [
+              {
+                type: "Status Change",
+                status: "Status In Progress"
+              }
+            ] : []
+          };
+
+      - name: Update Participants State
+        type: Update Document
+        changeset:
+          - op: replace
+            path: /participantsState/${steps.0.channelName}
+            val: "${steps.0.participantState}"
+
+
+  # Workflow to handle Target Document Session Started (initiator session created)
+  handleTargetDocumentSessionStarted:
+    type: Sequential Workflow
+    channel: myOsAdminChannel
+    event:
+      type: Target Document Session Started
+    steps:
+      - name: Update Initiator Session
+        type: Update Document
+        changeset:
+          - op: replace
+            path: /initiatorSessionId
+            val: "${event.initiatorSessionId}"
+
+      - name: Emit Completion Event
+        type: JavaScript Code
+        code: |
+          return {
+            events: [
+              {
+                type: "Status Change",
+                status: "Status Completed"
+              }
+            ]
+          };
+
+  # Workflow to handle Bootstrap Failed events
+  handleBootstrapFailed:
+    type: Sequential Workflow
+    channel: myOsAdminChannel
+    event:
+      type: Bootstrap Failed
+    steps:
+      - name: Update Error Message
+        type: Update Document
+        changeset:
+          - op: replace
+            path: /bootstrapError
+            val: "${event.reason}"
+
+      - name: Emit Failure Event
+        type: JavaScript Code
+        code: |
+          return {
+            events: [
+              {
+                type: "Status Change",
+                status: { "type": "Status Failed" }
+              }
+            ]
+          };
+
+  # Central status change workflow
+  handleStatusChange:
+    type: Sequential Workflow
+    event:
+      type: Status Change
+    steps:
+      - name: Update Bootstrap Status
+        type: Update Document
+        changeset:
+          - op: replace
+            path: /bootstrapStatus
+            val: "${event.status}"
