@@ -1,0 +1,14 @@
+name: Document Anchors
+description: Dictionary of named incoming connection points (anchors) that other documents can link to. Each anchor declares a semantic purpose and may optionally provide a template recommendation for linking documents.
+type: Dictionary
+keyType: Text
+valueType:
+  name:
+    type: Text
+    description: Human-readable name of the anchor. Links to anchor refer by dictionary key, not by this name.
+  description:
+    type: Text
+    description: Explains the intent/purpose of incoming links to this anchor.
+  template:
+    description: Optional Blue document template recommendation for linking documents. Used by MyOS UI for validation and filtering; not protocol-enforced.
+
