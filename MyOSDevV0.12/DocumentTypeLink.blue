@@ -2,7 +2,4 @@ name: Document Type Link
 type: Link
 description: Link targeting any document of a specific Blue type. Enables dynamic discovery where the platform resolves to a concrete instance at runtime.
 documentType:
-  description: The Blue type being targeted by this link.
-  blueId:
-    type: Text
-    description: BlueId of the target document type definition.
+  description: Type being targeted by this link.
