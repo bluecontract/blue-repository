@@ -1,0 +1,10 @@
+name: Participant
+accountId:
+  type: Text
+email:
+  type: Text
+timelineId:
+  type: Text
+status:
+  type: Participant Activation State
+  description: Participant activation status

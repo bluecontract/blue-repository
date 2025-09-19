@@ -1,0 +1,9 @@
+name: Document Status
+description: The base type for all document status indicators.
+mode:
+  type: Text
+  description: |
+    Defines the high-level phase of the document's lifecycle. Must be one of:
+      pending: The document is waiting for a pre-condition before its core logic begins.
+      active: The document is in its main operational phase, actively processing events.
+      terminated: The document has reached a final, conclusive state.
