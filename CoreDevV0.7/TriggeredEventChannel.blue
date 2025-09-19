@@ -1,0 +1,6 @@
+name: Triggered Event Channel
+type: Channel
+description: |
+  A channel for document‑internal custom events produced during processing.
+  It is intended for locally generated events within the document, not for
+  external timeline entries.
