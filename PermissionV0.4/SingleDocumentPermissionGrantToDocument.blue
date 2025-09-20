@@ -82,12 +82,9 @@ contracts:
             issues.push("permissions block is missing");
           } else {
             if (perms.read !== true) issues.push("permissions.read must be true for SDPG");
-            const hasSingle = Object.prototype.hasOwnProperty.call(perms, 'singleOps');
-            const isList = Array.isArray(perms?.singleOps);
+            const hasSingle = Array.isArray(perms?.singleOps) && perms.singleOps.length > 0;
             if (hasSingle) {
-              if (!isList || perms.singleOps.length === 0) {
-                issues.push("permissions.singleOps must be a non-empty list when provided");
-              } else if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
+              if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
                 issues.push("permissions.singleOps must contain only non-empty strings");
               }
             }
