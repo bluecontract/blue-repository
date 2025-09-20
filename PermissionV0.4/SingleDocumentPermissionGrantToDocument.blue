@@ -69,7 +69,7 @@ contracts:
           if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
 
           // Required: bound granter identity
-          const granterId = document('/granterChannel/accountId');
+          const granterId = document('/contracts/granterChannel/accountId');
           if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
 
           // Required: grantee document id
