@@ -9,9 +9,6 @@ contracts:
     type: Operation
     description: The standard, required operation for MyOS Admin to deliver events.
     channel: myOsAdminChannel
-    request:
-      type: List
-      itemType: Event
 
   myOsAdminUpdateImpl:
     type: Sequential Workflow Operation
