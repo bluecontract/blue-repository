@@ -1,0 +1,25 @@
+name: Document Session Bootstrap
+type: MyOS Admin Base
+description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
+document:
+  description: Target Blue document to be bootstrapped
+channelBindings:
+  type: Dictionary
+  keyType: Text
+  valueType: Channel
+  description: Maps channel names to participant identifiers
+initialMessages:
+  description: Messages sent to participants when inviting them to the bootstrapped document
+  defaultMessage:
+    type: Text
+    description: Default invitation message sent to all participants
+  perChannel:
+    type: Dictionary
+    keyType: Text
+    valueType: Text
+    description: Per-channel custom invitation messages
+capabilities:
+  type: Dictionary
+  keyType: Text
+  valueType: Boolean
+  description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
