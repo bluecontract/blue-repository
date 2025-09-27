@@ -1,0 +1,11 @@
+name: Inform User To Install MyOS Package
+description: Notifies the user that a MyOS Package is ready to install.
+title:
+  type: Text
+  description: Short, user-facing headline (e.g., "Install Agent Package")
+message:
+  type: Text
+  description: Context for the user (e.g., who suggested it, what it does)
+package:
+  type: MyOS Package
+  description: The complete package to be bootstrapped
