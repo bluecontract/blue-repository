@@ -6,3 +6,6 @@ timeline:
 timestamp:
   type: Integer
   description: Timestamp of the MyOS timeline entry
+actor:
+  type: Actor
+  description: The value is either a Principal Actor or an Agent Actor document.
