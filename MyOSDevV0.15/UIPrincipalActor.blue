@@ -1,0 +1,6 @@
+name: UI Principal Actor
+type: Principal Actor
+description: A specialization for a Principal Actor acting through the MyOS User Interface.
+uiSessionNonce:
+  type: Text
+  description: Opaque, non-resolvable per-login nonce for owner-side grouping.

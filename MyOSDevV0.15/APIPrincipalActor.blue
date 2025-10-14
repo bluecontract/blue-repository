@@ -1,0 +1,6 @@
+name: API Principal Actor
+type: Principal Actor
+description: A specialization for a Principal Actor acting programmatically via an API key.
+apiKeyId:
+  type: Text
+  description: Identifier of the API key used (dereferenceable only by the owner).
