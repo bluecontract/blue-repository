@@ -1,0 +1,30 @@
+name: Chat GPT Connector Agent
+type: Agent
+description: Lets the owner prompt installation of a provided MyOS Package.
+
+contracts:
+  ownerChannel:
+    type: MyOS Timeline Channel
+
+  startWorker:
+    type: Operation
+    channel: ownerChannel
+    description: Prompt the user to install a provided MyOS Package
+    request:
+      package:
+        type: MyOS Package
+        description: MyOS Package
+
+  startWorkerImpl:
+    type: Sequential Workflow Operation
+    operation: startWorker
+    steps:
+      - name: Emit Install Prompt
+        type: Trigger Event
+        event:
+          type: Inform User To Install MyOS Package
+          title: ChatGPT is requesting permission to launch a new agent
+          message: A package has been prepared for you. Review and install.
+          package:
+            type: MyOS Package
+            value: ${event.message.request.package}
