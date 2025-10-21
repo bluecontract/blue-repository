@@ -1,0 +1,14 @@
+name: Channel Event Checkpoint
+type: Marker
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Stores last-seen events per external channel at this scope to enable
+  idempotent processing and ordering. Updates are Direct Writes (no Document Update).
+lastEvents:
+  description: |
+    Map of channelKey (the contracts key of an external channel in this scope)
+    to the entire last event node seen for that channel. Values are unconstrained
+    (any Blue node) to allow channel-specific shapes.
+  type: Dictionary
+  keyType: Text
+  # valueType intentionally omitted → any Blue node

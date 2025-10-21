@@ -1,0 +1,7 @@
+name: Channel
+type: Contract
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Abstract base for event entry points within a scope. Channels decide whether
+  an incoming event matches at this scope. External channels may also use the
+  scope's checkpoint to gate duplicates/stale events.

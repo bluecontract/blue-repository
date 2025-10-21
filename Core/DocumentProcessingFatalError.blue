@@ -1,0 +1,14 @@
+name: Document Processing Fatal Error
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Appended to the root run result (outbox only; never routed via channels)
+  when any scope terminates fatally. Conveys where and why the fatal occurred.
+domain:
+  type: Text
+  description: Absolute scope pointer where the fatal occurred (e.g., "/a/b").
+code:
+  type: Text
+  description: RuntimeFatal
+reason:
+  type: Text
+  description: Optional explanation.
