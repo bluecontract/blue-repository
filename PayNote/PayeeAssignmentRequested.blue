@@ -1,0 +1,5 @@
+name: Payee Assignment Requested
+type: Request
+description: The Payer requests to assign or change the Payee.
+payeeEmail:
+  type: Text

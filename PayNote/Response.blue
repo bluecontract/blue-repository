@@ -1,0 +1,3 @@
+name: Response
+type: Event
+description: Lifecycle events emitted by the Guarantor to confirm the outcome of PayNote operations.
