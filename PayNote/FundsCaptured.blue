@@ -1,5 +1,5 @@
 name: Funds Captured
-type: Response
+type: PayNote Response
 description: The Guarantor confirms that funds have been successfully transferred to the Payee.
 amountCaptured:
   type: Integer

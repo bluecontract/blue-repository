@@ -1,5 +1,5 @@
 name: Reservation Release Requested
-type: Request
+type: PayNote Request
 description: A participant requests the Guarantor to release previously held funds.
 amount:
   type: Integer

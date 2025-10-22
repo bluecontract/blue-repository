@@ -1,5 +1,5 @@
 name: PayNote Cancellation Requested
-type: Request
+type: PayNote Request
 description: |
   The Payer requests to cancel PayNote that is Approved but not yet
   Reserved or Captured.
