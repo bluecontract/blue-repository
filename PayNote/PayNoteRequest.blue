@@ -1,3 +1,0 @@
-name: PayNote Request
-type: Event
-description: Participant-initiated events asking the Guarantor to perform PayNote operations.

@@ -1,5 +1,5 @@
 name: Settlement Amount Specified
-type: PayNote Response
+type: Response
 description: The Guarantor confirms the final settlement amount, which may differ from the initial total.
 finalAmount:
   type: Integer

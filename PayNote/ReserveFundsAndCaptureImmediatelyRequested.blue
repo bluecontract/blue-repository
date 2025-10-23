@@ -1,5 +1,5 @@
 name: Reserve Funds and Capture Immediately Requested
-type: PayNote Request
+type: Request
 description: Equivalent of Reserve Funds Requested + Capture Funds Requested
 amount:
   type: Integer

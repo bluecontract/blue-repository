@@ -1,5 +1,5 @@
 name: Reservation Released
-type: PayNote Response
+type: Response
 description: The Guarantor confirms that previously reserved funds have been released.
 amountReleased:
   type: Integer

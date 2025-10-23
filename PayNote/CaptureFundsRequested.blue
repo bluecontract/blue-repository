@@ -1,5 +1,5 @@
 name: Capture Funds Requested
-type: PayNote Request
+type: Request
 description: A participant (usually the Payee) requests the final transfer of funds.
 amount:
   type: Integer

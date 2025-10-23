@@ -1,5 +1,5 @@
 name: Capture Declined
-type: PayNote Response
+type: Response
 description: The Guarantor declined the capture request before attempting the transfer.
 reason:
   type: Text
