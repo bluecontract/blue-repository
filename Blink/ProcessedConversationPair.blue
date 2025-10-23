@@ -1,5 +1,0 @@
-name: Processed Conversation Pair
-userMessage:
-  type: User Message
-assistantMessage:
-  type: Conversation Entry
