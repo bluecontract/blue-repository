@@ -1,5 +1,0 @@
-name: Ticket
-a:
-  type: Integer
-error:
-  type: Fatal Error Event

@@ -1,6 +1,0 @@
-name: ABCDE
-description: xyz
-x:
-  type: Contract
-y:
-  type: Ticket
