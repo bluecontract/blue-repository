@@ -1,0 +1,14 @@
+name: Processing Terminated Marker
+type: Marker
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Final state for a scope (either graceful or fatal). Once present, the scope
+  becomes permanently inactive both for the remainder of the current run and in
+  subsequent runs until explicitly replaced by a parent. Written as a Direct
+  Write (no Document Update) when termination occurs.
+cause:
+  type: Text
+  description: One of fatal, graceful.
+reason:
+  type: Text
+  description: Optional human-readable explanation.

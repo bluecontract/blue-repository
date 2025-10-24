@@ -1,0 +1,10 @@
+name: Contract
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Base for all contracts (channels, handlers, markers). Contracts live under a
+  scope's contracts map (keyed by Text). At runtime, contract processors execute
+  deterministically and only through explicit operations; there are no implicit
+  side effects.
+order:
+  type: Integer
+  description: Deterministic sort key within a scope; missing ≡ 0.
