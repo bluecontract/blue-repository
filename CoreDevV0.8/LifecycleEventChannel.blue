@@ -1,0 +1,7 @@
+name: Lifecycle Event Channel
+type: Channel
+description: |
+  A channel for lifecycle events in the document (e.g., processing initiation).
+  You can optionally provide an event pattern to filter which lifecycle events are handled.
+event:
+  type: Lifecycle Event
