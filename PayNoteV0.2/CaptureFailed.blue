@@ -1,5 +1,0 @@
-name: Capture Failed
-type: Response
-description: The Guarantor attempted the transfer, but it failed for a technical reason.
-reason:
-  type: Text

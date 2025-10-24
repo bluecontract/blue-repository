@@ -1,7 +1,0 @@
-name: Document Update Channel
-type: Channel
-description: |
-  A channel for document update events. Use this channel to react to changes
-  in the document state, optionally constrained by a target path.
-path:
-  type: Text

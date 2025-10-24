@@ -1,7 +1,7 @@
 name: MyOS Timeline Channel
 type: Timeline Channel
 description: MyOS-specific Timeline Channel
-account:
+accountId:
   type: Text
   description: Account identifier for the MyOS timeline
 email:

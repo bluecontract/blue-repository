@@ -1,3 +1,0 @@
-name: Lifecycle Event
-type: Event
-description: A type of event that signals a significant change in a document's lifecycle.

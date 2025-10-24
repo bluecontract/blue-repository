@@ -33,11 +33,12 @@ contracts:
         changeset:
           - op: replace
             path: /payeeAccountNumber
-            val: ${event.value}
-      - type: Trigger Event
-        event:
-          type: Payee Account Number Change Approved by Bank
-          payeeAccountNumber: ${event.value}
+            val: ${event.message.request}
+      - type: JavaScript Code
+        code: |
+          const payeeAccountNumber = event.message.request;
+          const type = "Payee Account Number Change Approved by Bank";
+          return { "events": [{ "type": type, "payeeAccountNumber": payeeAccountNumber }] };
 
   authorizeTransfer:
     type: Operation
@@ -53,11 +54,12 @@ contracts:
         changeset:
           - op: replace
             path: /transferValue
-            val: ${event.value}
-      - type: Trigger Event
-        event:
-          type: Transfer Authorization Approved by Bank
-          transferValue: ${event.value}
+            val: ${event.message.request}
+      - type: JavaScript Code
+        code: |
+          const transferValue = event.message.request;
+          const type = "Transfer Authorization Approved by Bank";
+          return { "events": [{ "type": type, "transferValue": transferValue }] };
 
   captureTransfer:
     type: Operation

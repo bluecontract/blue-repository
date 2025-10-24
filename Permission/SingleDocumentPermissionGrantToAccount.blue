@@ -34,13 +34,13 @@ contracts:
   revoke:
     type: Operation
     description: Granter or grantee indicates the grant should be revoked (MyOS Admin will handle)
+    channel: granterChannel
     request:
       type: Text
       description: Optional human-readable reason
 
   revokeImplGranter:
     type: Sequential Workflow Operation
-    channel: granterChannel
     operation: revoke
     steps:
       - name: EmitRevokeRequested
@@ -55,23 +55,24 @@ contracts:
             ]
           };
 
-  revokeImplGrantee:
-    type: Sequential Workflow Operation
-    description: Emit a revoke request event
-    channel: granteeChannel
-    operation: revoke
-    steps:
-      - name: EmitRevokeRequested
-        type: JavaScript Code
-        code: |
-          return {
-            events: [
-              {
-                type: "Single Document Permission Revoke Requested",
-                reason: event.message.request
-              }
-            ]
-          };
+  # Currently each operation can only have one implementation
+  # revokeImplGrantee:
+  #   type: Sequential Workflow Operation
+  #   description: Emit a revoke request event
+  #   channel: granteeChannel
+  #   operation: revoke
+  #   steps:
+  #     - name: EmitRevokeRequested
+  #       type: JavaScript Code
+  #       code: |
+  #         return {
+  #           events: [
+  #             {
+  #               type: "Single Document Permission Revoke Requested",
+  #               reason: event.message.request
+  #             }
+  #           ]
+  #         };
 
   # --- Initial validation on first tick ---
   validateOnInit:
@@ -88,9 +89,9 @@ contracts:
           if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
 
           // Required: bound identities
-          const granterId = document('/granterChannel/accountId');
+          const granterId = document('/contracts/granterChannel/accountId');
           if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
-          const granteeId = document('/granteeChannel/accountId');
+          const granteeId = document('/contracts/granteeChannel/accountId');
           if (typeof granteeId !== 'string' || granteeId.length === 0) issues.push("granteeChannel must be bound to an accountId");
 
           // Permissions
@@ -99,12 +100,9 @@ contracts:
             issues.push("permissions block is missing");
           } else {
             if (perms.read !== true) issues.push("permissions.read must be true for SDPG");
-            const hasSingle = Object.prototype.hasOwnProperty.call(perms, 'singleOps');
-            const isList = Array.isArray(perms?.singleOps);
+            const hasSingle = Array.isArray(perms?.singleOps) && perms.singleOps.length > 0;
             if (hasSingle) {
-              if (!isList || perms.singleOps.length === 0) {
-                issues.push("permissions.singleOps must be a non-empty list when provided");
-              } else if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
+              if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
                 issues.push("permissions.singleOps must contain only non-empty strings");
               }
             }

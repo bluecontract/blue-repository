@@ -1,4 +1,0 @@
-name: Transfer Authorization Approved by Bank
-description: Bank confirms funds are available and reserved
-transferValue:
-  type: Money

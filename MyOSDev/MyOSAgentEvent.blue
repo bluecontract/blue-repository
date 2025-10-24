@@ -4,10 +4,10 @@ agentId:
   type: Text
   description: Optional agent identifier
 id:
-  type: Number
+  type: Text
   description: Optional event ID
 timestamp:
-  type: Number
+  type: Integer
   description: Optional timestamp for the event
 event:
   description: Optional event node reference
