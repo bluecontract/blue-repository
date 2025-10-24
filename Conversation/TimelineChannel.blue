@@ -1,0 +1,4 @@
+name: Timeline Channel
+type: Channel
+timelineId:
+  type: Text
