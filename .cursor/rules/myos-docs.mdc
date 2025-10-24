@@ -1,0 +1,6 @@
+---
+description: MyOS Documentation
+alwaysApply: true
+---
+
+- Load all files from ../../../docs/ to understand the context of the project, especially what is Blue language and MyOS.

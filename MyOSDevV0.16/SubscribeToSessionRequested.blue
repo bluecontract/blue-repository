@@ -1,0 +1,10 @@
+name: Subscribe to Session Requested
+type: Event
+description: Document asks MyOS Admin to mediate a subscription to a target session it can READ.
+targetSessionId:
+  type: Text
+  description: Session to subscribe to.
+events:
+  type: List
+  itemType: Text
+  description: Optional allow-list of emitted event types to forward.
