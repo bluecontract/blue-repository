@@ -1,0 +1,46 @@
+name: PayNote
+description: A verifiable instrument for managing a commitment of value between a Payer, Payee, and Guarantor.
+
+status:
+  description: The current state of the PayNote (e.g., Pending, Approved, Reserved, Captured, Released, Rejected).
+  type: Text
+  value: Pending
+
+currency:
+  description: The ISO 4217 currency code for the transaction.
+  type: Text
+
+amount:
+  description: The amounts associated with this PayNote.
+  total:
+    description: The maximum total value of this PayNote.
+    type: Integer # Stored in minor units (e.g., cents)
+  reserved:
+    description: The amount currently reserved by the Guarantor.
+    type: Integer
+    value: 0
+  captured:
+    description: The amount that has been successfully captured.
+    type: Integer
+    value: 0
+
+payNoteInitialStateDescription:
+  summary:
+    type: Text
+    description: |
+      General information about the PayNote. It should capture the most important
+      information, most critical or non-standard elements should be covered here.
+      Markdown format suggested.
+  details:
+    type: Text
+    description: |
+      Complete text description of the PayNote, with everything significant explained.
+      Markdown format suggested.
+
+contracts:
+  payerChannel:
+    type: MyOS Timeline Channel
+  payeeChannel:
+    type: MyOS Timeline Channel
+  guarantorChannel:
+    type: MyOS Timeline Channel
