@@ -39,8 +39,8 @@ payNoteInitialStateDescription:
 
 contracts:
   payerChannel:
-    type: MyOS Timeline Channel
+    type: Timeline Channel
   payeeChannel:
-    type: MyOS Timeline Channel
+    type: Timeline Channel
   guarantorChannel:
-    type: MyOS Timeline Channel
+    type: Timeline Channel
