@@ -1,5 +1,0 @@
-name: State Change
-description: Displays information to the user when the document state changes during processing.
-message:
-  type: Text
-  description: The message to be displayed to the user when this state change occurs during workflow execution.

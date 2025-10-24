@@ -1,4 +1,0 @@
-name: Process Embedded
-paths:
-  type: List
-  itemType: Text

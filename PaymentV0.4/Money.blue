@@ -1,8 +1,0 @@
-name: Money
-description: Monetary amount with currency specification
-amount:
-  type: Integer
-  description: ISO 4217 integer value compliant with minor units
-currency:
-  type: Text
-  description: ISO 4217 compliant alphabetic code

@@ -1,5 +1,0 @@
-name: Timeline
-description: Represents a sequence of authenticated, hash-chained events.
-timelineId:
-  type: Text
-  description: Unique identifier for the timeline

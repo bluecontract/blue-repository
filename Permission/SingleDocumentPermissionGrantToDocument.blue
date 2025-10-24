@@ -18,6 +18,10 @@ permissions:
   type: Single Document Permission Set
   description: Rights to grant on the target session (READ required; allOps and singleOps are mutually exclusive; singleOps is optional but must be non-empty if provided).
 
+skipValidation:
+  type: Boolean
+  description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant)
+
 # ---------- Contracts (participants, operations, workflows) ----------
 contracts:
   # Participants (channels)
@@ -33,13 +37,13 @@ contracts:
   revoke:
     type: Operation
     description: Granter requests revocation (handled by MyOS Admin)
+    channel: granterChannel
     request:
       type: Text
       description: Optional human-readable reason
 
   revokeImplGranter:
     type: Sequential Workflow Operation
-    channel: granterChannel
     operation: revoke
     steps:
       - name: EmitRevokeRequested
@@ -62,6 +66,9 @@ contracts:
       - name: ValidateBasicShape
         type: JavaScript Code
         code: |
+          const skipValidation = document('/skipValidation');
+          if (skipValidation === true) return { events: [] };
+
           const issues = [];
 
           // Required: target session
@@ -69,7 +76,7 @@ contracts:
           if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
 
           // Required: bound granter identity
-          const granterId = document('/granterChannel/accountId');
+          const granterId = document('/contracts/granterChannel/accountId');
           if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
 
           // Required: grantee document id
@@ -82,12 +89,9 @@ contracts:
             issues.push("permissions block is missing");
           } else {
             if (perms.read !== true) issues.push("permissions.read must be true for SDPG");
-            const hasSingle = Object.prototype.hasOwnProperty.call(perms, 'singleOps');
-            const isList = Array.isArray(perms?.singleOps);
+            const hasSingle = Array.isArray(perms?.singleOps) && perms.singleOps.length > 0;
             if (hasSingle) {
-              if (!isList || perms.singleOps.length === 0) {
-                issues.push("permissions.singleOps must be a non-empty list when provided");
-              } else if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
+              if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
                 issues.push("permissions.singleOps must contain only non-empty strings");
               }
             }

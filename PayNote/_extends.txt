@@ -1,1 +1,1 @@
-CoreDevV0.7
+CoreDev

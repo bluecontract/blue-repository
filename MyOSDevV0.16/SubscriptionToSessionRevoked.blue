@@ -1,9 +1,0 @@
-name: Subscription to Session Revoked
-type: Event
-description: Indicates MyOS Admin stopped forwarding updates for the subscription.
-targetSessionId:
-  type: Text
-  description: Session that is no longer being forwarded.
-reason:
-  type: Text
-  description: Optional explanation for the revocation.

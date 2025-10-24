@@ -1,6 +1,0 @@
-name: Status Failed
-type: Document Status
-mode: terminated
-description: |
-  A final state indicating that the document encountered an unrecoverable
-  error and could not complete its process.

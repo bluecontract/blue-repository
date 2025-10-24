@@ -1,5 +1,0 @@
-name: Composite Timeline Channel
-type: Channel
-channels:
-  type: List
-  itemType: Text

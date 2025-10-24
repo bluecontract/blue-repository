@@ -1,5 +1,0 @@
-name: Trigger Event
-type: Sequential Workflow Step
-description: A sequential workflow step that can trigger an event.
-event:
-  description: Event data

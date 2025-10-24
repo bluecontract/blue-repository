@@ -1,4 +1,0 @@
-name: Transfer Authorization Requested
-description: Document requests bank to authorize amount
-transferValue:
-  type: Money

@@ -1,13 +1,15 @@
 name: Timeline Entry
+description: Represents a single entry in a timeline.
 timeline:
+  type: Timeline
   description: Timeline this entry belongs to
-timelinePrev:
+prevEntry:
   description: Previous entry
-thread:
-  description: Optional thread
-threadPrev:
-  description: Previous entry in the thread
 message:
   description: Message
-signature:
-  type: Text
+timestamp:
+  type: Integer
+  description: Timestamp of the timeline entry
+actor:
+  type: Actor
+  description: Who created this entry

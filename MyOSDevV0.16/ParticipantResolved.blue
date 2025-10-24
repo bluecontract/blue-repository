@@ -1,5 +1,0 @@
-name: Participant Resolved
-channelName:
-  type: Text
-participant:
-  type: Participant
