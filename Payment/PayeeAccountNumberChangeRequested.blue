@@ -1,4 +1,0 @@
-name: Payee Account Number Change Requested
-description: Document requests bank to verify payee account
-payeeAccountNumber:
-  type: Text
