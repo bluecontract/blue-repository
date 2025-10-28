@@ -1,7 +1,14 @@
 name: Operation
-description: Named, structured interfaces that documents expose to the outside world. They define specific actions that can be performed on a document, complete with formal request definitions.
+type: Contract
+description: >
+  Conversation contract a document exposes. Defines the action’s request schema
+  and the channel over which callers invoke it.
 request:
-  description: Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked.
+  description: >
+    The request schema for this operation (any Blue node). Invocation payloads
+    MUST conform to this shape.
 channel:
   type: Text
-  description: Specifies the channel through which Operation Request events are sent to invoke this operation on the document.
+  description: >
+    Contracts-map key of the Channel in this scope on which Operation Request
+    events are sent to invoke this operation.

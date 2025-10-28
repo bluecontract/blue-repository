@@ -1,12 +1,17 @@
 name: Sequential Workflow
-description: A sequential workflow that executes its steps in a linear order.
+type: Handler
+description: |
+  Conversation handler.
+  Executes a list of workflow steps in order when matching events arrive on the
+  bound channel. As a Handler, it may emit events and request document patches.
 steps:
   type: List
   itemType: Sequential Workflow Step
+  description: Ordered list of steps to execute (positional semantics).
 channel:
   type: Text
-  description: |
-    Name of the channel this workflow listens to.
+  description: Contracts-map key of the channel this handler binds to (same scope).
 event:
-  description: |
-    Optional event-type criteria to filter incoming events from the channel.
+  description: >
+    Optional matcher payload used by the handler’s processor to further restrict
+    which incoming events from `channel` are handled.

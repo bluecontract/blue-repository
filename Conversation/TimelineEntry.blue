@@ -1,15 +1,19 @@
 name: Timeline Entry
-description: Represents a single entry in a timeline.
+description: >
+  Conversation package type.
+  Single entry in a Timeline. Entries are hash-linked via `prevEntry`, forming
+  a tamper-evident chain. The `message` payload is unconstrained to allow
+  different entry kinds (chat, notices, etc.).
 timeline:
   type: Timeline
-  description: Timeline this entry belongs to
+  description: The timeline this entry belongs to.
 prevEntry:
-  description: Previous entry
+  description: The previous entry in the timeline; omitted for the first entry.
 message:
-  description: Message
+  description: Entry payload (any Blue node), e.g., Chat Message or Status Change.
 timestamp:
   type: Integer
-  description: Timestamp of the timeline entry
+  description: Timestamp when the entry was created.
 actor:
   type: Actor
-  description: Who created this entry
+  description: Actor attribution for the creator of this entry.

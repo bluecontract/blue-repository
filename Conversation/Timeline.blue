@@ -1,5 +1,8 @@
 name: Timeline
-description: Represents a sequence of authenticated, hash-chained events.
+description: >
+  Conversation package type.
+  Tamper-evident sequence of entries (hash-linked chain) for a conversation.
+  Each new entry references the preceding entry by identifier to preserve order.
 timelineId:
   type: Text
-  description: Unique identifier for the timeline
+  description: Stable identifier of this timeline (application-defined).

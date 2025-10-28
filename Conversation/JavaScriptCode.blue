@@ -1,5 +1,8 @@
 name: JavaScript Code
 type: Sequential Workflow Step
-description: A workflow step that executes a JavaScript code.
+description: >
+  Conversation workflow step that executes provided JavaScript source as part of
+  a sequential workflow.
 code:
   type: Text
+  description: JavaScript source to execute for this step.
