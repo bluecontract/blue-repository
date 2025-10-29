@@ -8,10 +8,3 @@ steps:
   type: List
   itemType: Sequential Workflow Step
   description: Ordered list of steps to execute (positional semantics).
-channel:
-  type: Text
-  description: Contracts-map key of the channel this handler binds to (same scope).
-event:
-  description: >
-    Optional matcher payload used by the handler’s processor to further restrict
-    which incoming events from `channel` are handled.
