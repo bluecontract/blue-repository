@@ -1,5 +1,5 @@
 name: Operation
-type: Contract
+type: Marker
 description: >
   Conversation contract a document exposes. Defines the action’s request schema
   and the channel over which callers invoke it.
