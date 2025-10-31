@@ -1,0 +1,13 @@
+name: Response
+type: Event
+description: >
+  The base type for any event that is a direct response to a prior Request event.
+inResponseTo:
+  type:
+    name: Correlation
+    description: A structured reference linking this response back to the original action and trigger.
+    requestId:
+      type: Text
+      description: The 'requestId' from the specific Request event this is a response to.
+    incomingEvent:
+      description: An event which initiated the entire workflow. Normally just blueId of it.

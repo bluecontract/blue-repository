@@ -1,0 +1,6 @@
+name: Trigger Event
+type: Sequential Workflow Step
+description: >
+  Conversation workflow step that enqueues an event as part of the workflow.
+event:
+  description: The event payload to enqueue (any Blue node).

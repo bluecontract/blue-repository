@@ -1,0 +1,6 @@
+name: Update Document
+type: Sequential Workflow Step
+description: Updates the document with the changeset.
+changeset:
+  type: List
+  itemType: Json Patch Entry

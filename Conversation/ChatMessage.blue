@@ -1,0 +1,8 @@
+name: Chat Message
+type: Event
+description: >
+  Conversation event representing a single chat message exchanged between
+  participants.
+message:
+  type: Text
+  description: The textual content of the chat message.

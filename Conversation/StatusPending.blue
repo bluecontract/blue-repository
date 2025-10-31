@@ -1,0 +1,6 @@
+name: Status Pending
+type: Document Status
+mode: pending
+description: |
+  A generic initial state. The document is waiting for an initial action
+  or condition to be met before it becomes active.
