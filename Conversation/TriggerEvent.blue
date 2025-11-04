@@ -2,5 +2,17 @@ name: Trigger Event
 type: Sequential Workflow Step
 description: >
   Conversation workflow step that enqueues an event as part of the workflow.
+
+  - Gas accounting (when & what is charged):
+      - Base step charge (once per run of this step): 30.
+      - Expression/template resolution under "/event" (if present):
+          - For each standalone expression ${…}: 5 + ceil(bytes(expr)/100).
+          - For each template string containing one or more ${…} placeholders:
+            3 × placeholderCount + ceil(bytes(template)/100).
+          - Any document(<pointer>) used inside expressions/templates charges
+            per call: 8 + depth(pointer) + ceil(snapshotBytes/100).
+      - Event emission (enqueue): 20 + ceil(eventBytes/100) for the final event
+        payload after expression resolution.
+
 event:
   description: The event payload to enqueue (any Blue node).

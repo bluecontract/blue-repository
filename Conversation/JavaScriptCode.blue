@@ -3,6 +3,19 @@ type: Sequential Workflow Step
 description: >
   Conversation workflow step that executes provided JavaScript source as part of
   a sequential workflow.
+
+  - Gas accounting (when & what is charged):
+      - Base step charge (once per run of this step): 100 + ceil(bytes(code)/100)
+        where bytes(code) is the UTF-8 length of the JavaScript source.
+      - Document snapshot reads (via document(<pointer>) inside the code):
+        8 + depth(pointer) + ceil(snapshotBytes/100) per call, where:
+          - depth("/") = 0, depth("/a/b") = 2 (number of path segments),
+          - snapshotBytes is the canonical JSON size of the retrieved snapshot.
+      - Event emissions (if the returned result contains events: [...]):
+        20 + ceil(eventBytes/100) per emitted event, where eventBytes is the
+        canonical JSON size of that event. (Delivery/handling of those events may incur
+        additional charges elsewhere, outside this step.)
+
 code:
   type: Text
   description: JavaScript source to execute for this step.
