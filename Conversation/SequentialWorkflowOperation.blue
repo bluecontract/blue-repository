@@ -1,0 +1,11 @@
+name: Sequential Workflow Operation
+type: Sequential Workflow
+description: >
+  Conversation handler pattern for implementing an Operation as a sequential
+  workflow. Binds to the operation’s invocation channel and runs the configured
+  steps when the operation is called.
+operation:
+  type: Text
+  description: >
+    The name of the Operation this handler implements. Must reference an
+    Operation defined in the same scope.

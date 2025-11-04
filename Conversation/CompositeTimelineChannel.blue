@@ -1,0 +1,13 @@
+name: Composite Timeline Channel
+type: Channel
+description: |
+  Conversation package type.
+  Channel that matches if an incoming event would match **any** of the named
+  child channels in this scope (union). Useful to observe multiple timeline
+  inputs through a single handler binding.
+channels:
+  type: List
+  itemType: Text
+  description: >
+    List of contracts-map keys (Text) of channels in the same scope
+    to compose (union). Each entry must name an existing Channel contract.
