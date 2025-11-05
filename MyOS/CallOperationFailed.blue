@@ -1,0 +1,12 @@
+name: Call Operation Failed
+type: Event
+description: MyOS Admin could not invoke the requested operation.
+targetSessionId:
+  type: Text
+  description: Target document session that was attempted.
+operation:
+  type: Text
+  description: Operation name that was attempted.
+reason:
+  type: Text
+  description: Failure reason code (permission_denied, execution_error, invalid_request, target_not_found).
