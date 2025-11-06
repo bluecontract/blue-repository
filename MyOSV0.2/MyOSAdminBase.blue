@@ -1,0 +1,25 @@
+name: MyOS Admin Base
+description: Document base for MyOS Admin participant
+contracts:
+  myOsAdminChannel:
+    type: MyOS Timeline Channel
+    description: MyOS Admin (accountId=0) — posts operational progress/decisions via myOsAdminUpdate
+
+  myOsAdminUpdate:
+    type: Operation
+    description: The standard, required operation for MyOS Admin to deliver events.
+    channel: myOsAdminChannel
+    # TODO: Uncomment when we will support List type
+    # request:
+    #   type: List
+    #   itemType: Event
+
+  myOsAdminUpdateImpl:
+    type: Sequential Workflow Operation
+    description: Implementation that re-emits the provided events
+    operation: myOsAdminUpdate
+    steps:
+      - name: EmitAdminEvents
+        type: JavaScript Code
+        code: |
+          return { events: event.request };
