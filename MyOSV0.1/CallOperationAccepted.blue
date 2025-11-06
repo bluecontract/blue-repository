@@ -1,0 +1,9 @@
+name: Call Operation Accepted
+type: Event
+description: MyOS Admin accepted the call and submitted the operation request.
+targetSessionId:
+  type: Text
+  description: Target document session that received the request.
+operation:
+  type: Text
+  description: Operation name that was invoked.

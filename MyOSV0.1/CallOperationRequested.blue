@@ -1,0 +1,14 @@
+name: Call Operation Requested
+type: Event
+description: Document asks MyOS Admin to invoke an operation on a target session.
+onBehalfOf:
+  type: Text
+  description: Channel whose binding provides the requester account.
+targetSessionId:
+  type: Text
+  description: Target document session to invoke.
+operation:
+  type: Text
+  description: Operation name to invoke.
+request:
+  description: Payload forwarded to the target operation.
