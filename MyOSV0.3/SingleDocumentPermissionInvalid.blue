@@ -1,0 +1,6 @@
+name: Single Document Permission Invalid
+type: Event
+description: Emitted on initialise when local shape checks fail.
+issues:
+  type: List
+  itemType: Text

@@ -1,0 +1,3 @@
+name: Worker Agency Permission Revoked
+type: Event
+description: Rights granted by this WAG have been retracted.
