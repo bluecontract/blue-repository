@@ -1,5 +1,5 @@
 name: Call Operation Accepted
-type: Event
+type: Response
 description: MyOS Admin accepted the call and submitted the operation request.
 targetSessionId:
   type: Text
