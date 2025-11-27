@@ -1,0 +1,12 @@
+name: Handler
+type: Contract
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Abstract base for logic bound to exactly one channel (same scope). At runtime,
+  a handler may: (1) apply patches (list of Json Patch Entry), (2) emit events,
+  (3) consume gas via consumeGas(units: Integer), and (4) terminate.
+channel:
+  type: Text
+  description: The contracts-map key of the channel this handler binds to (same scope).
+event:
+  description: Optional matcher payload used by the handler's processor to further restrict events.

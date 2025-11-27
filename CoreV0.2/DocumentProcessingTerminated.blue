@@ -1,0 +1,11 @@
+name: Document Processing Terminated
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Published at the terminating scope when processing ends, either gracefully
+  or fatally. Bridgeable to the parent via Embedded Node Channel if configured.
+cause:
+  type: Text
+  description: One of fatal, graceful.
+reason:
+  type: Text
+  description: Optional explanation.

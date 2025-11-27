@@ -1,0 +1,5 @@
+name: Reserve Funds Requested
+type: Request
+description: A participant requests the Guarantor to reserve (hold) a specific amount.
+amount:
+  type: Integer
