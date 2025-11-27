@@ -1,0 +1,5 @@
+name: Linked Documents Permission Set
+type: Dictionary
+description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+keyType: Text
+valueType: Single Document Permission Set

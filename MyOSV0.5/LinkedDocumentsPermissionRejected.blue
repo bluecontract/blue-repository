@@ -1,0 +1,9 @@
+name: Linked Documents Permission Rejected
+type: Event
+description: Grant could not be applied.
+targetSessionId:
+  type: Text
+links:
+  type: Linked Documents Permission Set
+reason:
+  type: Text

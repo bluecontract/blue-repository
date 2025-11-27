@@ -1,0 +1,3 @@
+name: Worker Agency Permission Validated
+type: Event
+description: Emitted on initialise when local shape checks pass.

@@ -1,0 +1,5 @@
+name: Linked Documents Permission Revoke Requested
+type: Event
+description: Emitted by revoke operation
+reason:
+  type: Text
