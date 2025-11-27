@@ -15,6 +15,18 @@ description: >
         20 + ceil(eventBytes/100) per emitted event, where eventBytes is the
         canonical JSON size of that event. (Delivery/handling of those events may incur
         additional charges elsewhere, outside this step.)
+  - JavaScript bindings available to the code:
+      - `event`: triggering event rendered via the `'simple'` JSON strategy (plain
+        values/arrays, no metadata).
+      - `eventCanonical`: triggering event rendered via the `'official'` strategy.
+      - `document(pointer?)`: document snapshot (absolute path or scope-relative) rendered
+        with the `'simple'` strategy; defaults to `/` when omitted.
+      - `document.canonical(pointer?)`: snapshot rendered using the `'official'`
+        strategy for canonical metadata.
+      - `steps`: results of previously executed steps.
+      - `canon.unwrap(canonical, deep=true)`: converts canonical JSON back to plain values.
+      - `canon.at(canonical, pointer)`: JSON Pointer navigation helper for canonical
+        JSON objects.
 
 code:
   type: Text
