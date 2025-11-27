@@ -1,0 +1,114 @@
+name: Linked Documents Permission Grant To Document
+type: MyOS Admin Base
+
+# ----------------- Document fields -----------------
+
+targetSessionId:
+  type: Text
+  description: Base document session id whose anchors define the scope of this grant.
+
+granteeDocumentId:
+  type: Text
+  description: Required original document id (blueId) that will act as the 'document' principal.
+
+granterDocumentSessionId:
+  type: Text
+  description: |
+    Optional. If set, MyOS should evaluate authority as this document session
+    (principalType='document', granteeId=documentId of this session),
+    instead of the granter accountId.
+
+links:
+  type: Linked Documents Permission Set
+  description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+
+skipValidation:
+  type: Boolean
+  description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant)
+
+# ----------------- Contracts -----------------
+
+contracts:
+  # Participants (channels)
+  granterChannel:
+    type: MyOS Timeline Channel
+    description: Granter/owner’s timeline (actor allowed to request revoke)
+
+  initLifecycleChannel:
+    type: Lifecycle Event Channel
+    event:
+      type: Document Processing Initiated
+
+  revoke:
+    type: Operation
+    description: Granter indicates the grant should be revoked (MyOS Admin will handle)
+    channel: granterChannel
+    request:
+      type: Text
+      description: Optional human-readable reason
+
+  revokeImplGranter:
+    type: Sequential Workflow Operation
+    operation: revoke
+    steps:
+      - name: EmitRevokeRequested
+        type: JavaScript Code
+        code: |
+          return {
+            events: [
+              {
+                type: "Linked Documents Permission Revoke Requested",
+                reason: event.message.request
+              }
+            ]
+          };
+
+  # --- Initial validation on first tick ---
+  validateOnInit:
+    type: Sequential Workflow
+    channel: initLifecycleChannel
+    steps:
+      - name: ValidateBasicShape
+        type: JavaScript Code
+        code: |
+          const skipValidation = document('/skipValidation');
+          if (skipValidation === true) return { events: [] };
+
+          const issues = [];
+
+          // Required: target session
+          const target = document('/targetSessionId');
+          if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
+
+          // Required: bound granter identity
+          const granterId = document('/contracts/granterChannel/accountId');
+          if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
+
+          // Required: grantee document id
+          const gdoc = document('/granteeDocumentId');
+          if (typeof gdoc !== 'string' || gdoc.trim().length === 0) issues.push("granteeDocumentId must be a non-empty string");
+
+          // Required: links
+          const links = document('/links');
+          if (!links || typeof links !== 'object') issues.push("links is missing or invalid");
+
+          const anchors = Object.keys(links).filter(key => !['description', 'type', 'keyType', 'valueType'].includes(key));
+          if (anchors.length === 0) {
+            issues.push("links must have at least one anchor entry");
+          }
+          for (const anchor of anchors) {
+            const perms = links[anchor];
+            if (!perms || perms.read !== true) {
+              issues.push(`links['${anchor}'].read must be true`);
+            }
+            const hasSingle = Array.isArray(perms.singleOps) && perms.singleOps.length > 0;
+            if (hasSingle && perms.singleOps.some(x => typeof x !== "string" || x.trim().length === 0)) {
+              issues.push(`links['${anchor}'].singleOps must contain only non-empty strings`);
+            }
+            if (perms.allOps === true && hasSingle) {
+              issues.push(`links['${anchor}'].allOps=true and singleOps are mutually exclusive`);
+            }
+          }
+
+          if (issues.length > 0) return { events: [ { type: "Linked Documents Permission Invalid", issues } ] };
+          return { events: [ { type: "Linked Documents Permission Validated" } ] };

@@ -1,0 +1,129 @@
+name: Linked Documents Permission Grant To Account
+type: MyOS Admin Base
+
+# ----------------- Document fields -----------------
+
+targetSessionId:
+  type: Text
+  description: Base document session id whose anchors define the scope of this grant.
+
+granterDocumentSessionId:
+  type: Text
+  description: |
+    Optional. If set, MyOS should evaluate authority as this document session
+    (principalType='document', granteeId=documentId of this session),
+    instead of the granter accountId.
+
+links:
+  type: Linked Documents Permission Set
+  description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+
+# Grantee is the account that owns the Grantee channel for this document.
+# (Same pattern as Single Document Permission Grant To Account.)
+
+# ----------------- Contracts -----------------
+
+contracts:
+  # Participants (channels)
+  granterChannel:
+    type: MyOS Timeline Channel
+    description: Granter/owner’s timeline (actor allowed to request revoke)
+
+  granteeChannel:
+    type: MyOS Timeline Channel
+    description: Grantee’s timeline (recipient of the rights)
+
+  initLifecycleChannel:
+    type: Lifecycle Event Channel
+    event:
+      type: Document Processing Initiated
+
+  revoke:
+    type: Operation
+    description: Granter or grantee indicates the grant should be revoked (MyOS Admin will handle)
+    channel: granterChannel
+    request:
+      type: Text
+      description: Optional human-readable reason
+
+  revokeImplGranter:
+    type: Sequential Workflow Operation
+    operation: revoke
+    steps:
+      - name: EmitRevokeRequested
+        type: JavaScript Code
+        code: |
+          return {
+            events: [
+              {
+                type: "Linked Documents Permission Revoke Requested",
+                reason: event.message.request
+              }
+            ]
+          };
+
+# Currently each operation can only have one implementation
+# revokeImplGrantee:
+#   type: Sequential Workflow Operation
+#   description: Emit a revoke request event
+#   channel: granteeChannel
+#   operation: revoke
+#   steps:
+#     - name: EmitRevokeRequested
+#       type: JavaScript Code
+#       code: |
+#         return {
+#           events: [
+#             {
+#               type: "Linked Documents Permission Revoke Requested",
+#               reason: event.message.request
+#             }
+#           ]
+#         };
+
+
+  # --- Initial validation on first tick ---
+  # TODO: How to iterate over the document Dictionary (links) without using Object.keys?
+  validateOnInit:
+    type: Sequential Workflow
+    channel: initLifecycleChannel
+    steps:
+      - name: ValidateBasicShape
+        type: JavaScript Code
+        code: |
+          const issues = [];
+
+          // Required: target session
+          const target = document('/targetSessionId');
+          if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
+
+          // Required: bound identities
+          const granterId = document('/contracts/granterChannel/accountId');
+          if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
+          const granteeId = document('/contracts/granteeChannel/accountId');
+          if (typeof granteeId !== 'string' || granteeId.length === 0) issues.push("granteeChannel must be bound to an accountId");
+
+          // Required: links
+          const links = document('/links');
+          if (!links || typeof links !== 'object') issues.push("links is missing or invalid");
+
+          const anchors = Object.keys(links).filter(key => !['description', 'type', 'keyType', 'valueType'].includes(key));
+          if (anchors.length === 0) {
+            issues.push("links must have at least one anchor entry");
+          }
+          for (const anchor of anchors) {
+            const perms = links[anchor];
+            if (!perms || perms.read !== true) {
+              issues.push(`links['${anchor}'].read must be true`);
+            }
+            const hasSingle = Array.isArray(perms.singleOps) && perms.singleOps.length > 0;
+            if (hasSingle && perms.singleOps.some(x => typeof x !== "string" || x.trim().length === 0)) {
+              issues.push(`links['${anchor}'].singleOps must contain only non-empty strings`);
+            }
+            if (perms.allOps === true && hasSingle) {
+              issues.push(`links['${anchor}'].allOps=true and singleOps are mutually exclusive`);
+            }
+          }
+
+          if (issues.length > 0) return { events: [ { type: "Linked Documents Permission Invalid", issues } ] };
+          return { events: [ { type: "Linked Documents Permission Validated" } ] };

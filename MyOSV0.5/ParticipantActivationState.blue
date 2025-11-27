@@ -1,0 +1,8 @@
+name: Participant Activation State
+description: Tracks participant account status and activation
+accountStatus:
+  type: Text
+  description: Participant's MyOS account status from bootstrap events (Active | Inactive | Failed)
+errorMessage:
+  type: Text
+  description: Error message if participant activation failed

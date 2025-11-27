@@ -1,0 +1,9 @@
+name: Linked Documents Permission Revoking in Progress
+type: Event
+description: MyOS Admin has started revoking this LDPG.
+targetSessionId:
+  type: Text
+links:
+  type: Linked Documents Permission Set
+note:
+  type: Text

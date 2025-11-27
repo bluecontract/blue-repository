@@ -1,0 +1,7 @@
+name: Linked Documents Permission Revoked
+type: Event
+description: All rights from this LDPG have been revoked.
+targetSessionId:
+  type: Text
+links:
+  type: Linked Documents Permission Set
