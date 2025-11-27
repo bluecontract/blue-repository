@@ -1,0 +1,5 @@
+name: Reservation Release Declined
+type: Response
+description: The Guarantor failed to release the reserved funds.
+reason:
+  type: Text

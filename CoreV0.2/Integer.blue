@@ -1,0 +1,31 @@
+name: Integer
+description: >
+  Primitive numeric scalar for mathematical integers (ℤ).
+
+  - Domain & arithmetic:
+      detail: >
+        Represents …, -2, -1, 0, 1, 2, … with arbitrary precision. There is no
+        fixed bit width and no overflow. Arithmetic is exact; operations may
+        fail only due to resource exhaustion.
+
+  - Authoring & wrappers:
+      detail: >
+        Scalar sugar (x: 1) and wrapped form (x: { value: 1 }) are equivalent
+        for authoring; canonical hashing uses the wrapped form (§8.2.2). The
+        type does NOT declare `value` because that wrapper belongs to instances;
+        declaring it on the type would fix a payload on the type object (§2.1, §4.1).
+
+  - Canonical textual form:
+      detail: >
+        Optional leading "-" for negatives, followed by one or more decimal
+        digits; no leading zeros except the single digit "0".
+
+  - Schema & combination:
+      detail: >
+        §5.4 numeric constraints apply: minimum, maximum, exclusiveMinimum,
+        exclusiveMaximum, multipleOf (> 0). If multiple `multipleOf` appear in a
+        type chain, combine via least common multiple (LCM) as specified.
+
+  - Equality & enums:
+      detail: >
+        Equality (incl. `enum`) compares the parsed scalar value in canonical JSON terms.

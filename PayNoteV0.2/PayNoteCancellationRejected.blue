@@ -1,0 +1,5 @@
+name: PayNote Cancellation Rejected
+type: Response
+description: The Guarantor denies PayNote cancellation requested by Payer.
+reason:
+  type: Text

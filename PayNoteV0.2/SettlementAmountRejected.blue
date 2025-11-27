@@ -1,0 +1,5 @@
+name: Settlement Amount Rejected
+type: Response
+description: The Guarantor rejects the proposed settlement amount.
+reason:
+  type: Text

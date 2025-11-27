@@ -1,0 +1,5 @@
+name: Child PayNote Issued
+type: Response
+description: The Guarantor confirms that a new Child PayNote has been issued against this parent.
+childPayNote:
+  description: Content of the issued PayNote

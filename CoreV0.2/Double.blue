@@ -1,0 +1,32 @@
+name: Double
+description: >
+  Primitive numeric scalar for floating-point real numbers.
+
+  - Semantics:
+      detail: >
+        Computation aligns with IEEE 754 binary64 (“double precision”).
+        JSON permits only finite numbers; NaN and ±Infinity are invalid Blue nodes.
+
+  - Authoring & wrappers:
+      detail: >
+        Scalar sugar (x: 1.25) and wrapped form (x: { value: 1.25 }) are
+        equivalent for authoring; canonical hashing uses the wrapped form
+        (§8.2.2). The type does NOT declare `value` (instance wrapper); putting
+        it on the type would fix an instance payload (§2.1, §4.1).
+
+  - Canonical textual form:
+      detail: >
+        RFC 8785 canonical-JSON number: base-10 notation, no leading zeros, no
+        leading "+", optional exponent with lower-case "e", and no unnecessary
+        trailing zeros or decimal point.
+
+  - Precision & comparison:
+      detail: >
+        Processors should be aware of binary64 rounding when performing numeric
+        operations. Schema comparisons use the numeric value (per §5.4). Equality
+        and `enum` compare by canonical JSON value semantics, not by byte shape.
+
+  - Schema:
+      detail: >
+        §5.4 numeric constraints apply: minimum, maximum, exclusiveMinimum,
+        exclusiveMaximum, multipleOf (> 0).

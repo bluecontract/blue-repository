@@ -1,0 +1,6 @@
+name: Triggered Event Channel
+type: Channel
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Delivers events previously enqueued by handlers into the scope's FIFO.
+  One drain per scope at the end of scope processing; never drains during cascades.

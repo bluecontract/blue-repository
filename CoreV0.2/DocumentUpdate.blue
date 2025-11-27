@@ -1,0 +1,16 @@
+name: Document Update
+description: |
+  Core type of Blue Language v1.0 (see https://language.blue).
+  Emitted once per participating scope for each successful patch
+  (bottom-up delivery). 'op' uses lower-case enum; 'path' is scope-relative
+  for the receiving scope. 'before' and 'after' are snapshots (immutable views).
+op:
+  type: Text
+  description: One of add, replace, remove.
+path:
+  type: Text
+  description: Scope-relative pointer. "/" when the receiving scope's root was affected.
+before:
+  description: Snapshot before the patch at this path (may be null).
+after:
+  description: Snapshot after the patch at this path (may be null).
