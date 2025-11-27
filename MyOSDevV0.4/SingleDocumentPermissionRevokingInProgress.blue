@@ -5,5 +5,5 @@ targetSessionId:
   type: Text
 permissions:
   type: Single Document Permission Set
-note:
+reason:
   type: Text

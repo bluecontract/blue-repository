@@ -5,3 +5,5 @@ targetSessionId:
   type: Text
 links:
   type: Linked Documents Permission Set
+reason:
+  type: Text

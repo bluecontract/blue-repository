@@ -6,5 +6,3 @@ granteeDocumentId:
 allowedWorkerAgencyPermissions:
   type: List
   itemType: Worker Agency Permission
-note:
-  type: Text
