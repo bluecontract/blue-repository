@@ -20,7 +20,7 @@ permissions:
 
 skipValidation:
   type: Boolean
-  description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant)
+  description: If true, the local validation workflow is skipped (no `Single Document Permission Validated` event). MyOS Admin is expected to construct/apply this grant in response to a `Single Document Permission Grant Requested` event.
 
 # ---------- Contracts (participants, operations, workflows) ----------
 contracts:
