@@ -1,0 +1,7 @@
+name: Worker Session Starting
+type: Response
+description: Worker session is starting.
+granteeDocumentId:
+  type: Text
+targetDocumentType:
+  type: Text
