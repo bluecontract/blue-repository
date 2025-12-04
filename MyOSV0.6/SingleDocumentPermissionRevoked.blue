@@ -1,0 +1,3 @@
+name: Single Document Permission Revoked
+type: Response
+description: Rights granted by this PGD have been retracted.

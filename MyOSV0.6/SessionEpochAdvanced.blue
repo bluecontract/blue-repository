@@ -1,0 +1,14 @@
+name: Session Epoch Advanced
+description: Snapshot captured from a target session epoch emission.
+type: Event
+sessionId:
+  type: Text
+  description: Session whose state advanced.
+timestamp:
+  type: Text
+  description: ISO 8601 timestamp for the emission.
+epoch:
+  type: Integer
+  description: Epoch number.
+document:
+  description: Document state after the emission.

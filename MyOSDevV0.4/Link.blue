@@ -1,0 +1,5 @@
+name: Link
+description: Abstract base class for all link types.
+anchor:
+  type: Text
+  description: Target anchor key on the destination document.

@@ -1,0 +1,7 @@
+name: Target Document Session Started
+document:
+  description: The final, canonicalized document state with all timelineIds filled in.
+initiatorSessionIds:
+  type: List
+  itemType: Text
+  description: Session IDs created for the bootstrap initiator (caller)
