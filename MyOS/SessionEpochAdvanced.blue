@@ -1,13 +1,14 @@
 name: Session Epoch Advanced
-type: Event
-description: Snapshot and correlated events captured from a target session emission.
-update:
-  description: Latest state snapshot packaged with the emission batch.
-  targetSessionId:
-    type: Text
-    description: Session whose state advanced.
-  timestamp:
-    type: Text
-    description: ISO 8601 timestamp for the emission.
-  document:
-    description: Document state after the emission.
+description: Snapshot captured from a target session epoch emission.
+type: Conversation/Event
+sessionId:
+  type: Text
+  description: Session whose state advanced.
+timestamp:
+  type: Text
+  description: ISO 8601 timestamp for the emission.
+epoch:
+  type: Integer
+  description: Epoch number.
+document:
+  description: Document state after the emission.

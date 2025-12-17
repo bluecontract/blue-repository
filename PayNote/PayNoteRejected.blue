@@ -1,5 +1,5 @@
 name: PayNote Rejected
-type: Response
+type: Conversation/Response
 description: The Guarantor denies the creation of the PayNote.
 reason:
   type: Text

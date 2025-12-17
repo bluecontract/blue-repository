@@ -1,5 +1,5 @@
 name: Payee Assignment Requested
-type: Request
+type: Conversation/Request
 description: The Payer requests to assign or change the Payee.
 payeeEmail:
   type: Text

@@ -1,5 +1,0 @@
-name: Document Anchors
-description: Dictionary of named incoming connection points (anchors) that other documents can link to. Links to an anchor are by its dictionary key.
-type: Dictionary
-keyType: Text
-valueType: Document Anchor

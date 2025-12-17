@@ -1,8 +1,0 @@
-name: MyOS Document Session Reference
-description: A reference to a specific, live document processing session on the MyOS platform.
-documentId:
-  type: Text
-  description: The initial blueId of the logical document.
-sessionId:
-  type: Text
-  description: The id of a specific, live processing session.

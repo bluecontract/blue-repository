@@ -1,9 +1,0 @@
-name: Single Document Permission Rejected
-type: Event
-description: Grant could not be applied.
-targetSessionId:
-  type: Text
-permissions:
-  type: Single Document Permission Set
-reason:
-  type: Text

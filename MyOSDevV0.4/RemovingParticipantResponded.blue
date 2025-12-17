@@ -1,6 +1,0 @@
-name: Removing Participant Responded
-type: Response
-request:
-  type: Removing Participant Requested
-status:
-  type: Text

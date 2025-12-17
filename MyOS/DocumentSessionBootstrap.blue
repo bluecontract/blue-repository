@@ -1,12 +1,12 @@
 name: Document Session Bootstrap
-type: MyOS Admin Base
+type: MyOS/MyOS Admin Base
 description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
 document:
   description: Target Blue document to be bootstrapped
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Channel
+  valueType: Core/Channel
   description: Maps channel names to participant identifiers
 initialMessages:
   description: Messages sent to participants when inviting them to the bootstrapped document
@@ -24,7 +24,7 @@ capabilities:
   valueType: Boolean
   description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
 bootstrapStatus:
-  type: Document Status
+  type: Conversation/Document Status
   description: Overall bootstrap process status
 bootstrapError:
   type: Text
@@ -37,37 +37,37 @@ participantsState:
   type: Dictionary
   description: Maps channel names to participant activation tracking
   keyType: Text
-  valueType: Participant Activation State
+  valueType: MyOS/Participant Activation State
 
 contracts:
   triggeredEventsChannel:
-    type: Triggered Event Channel
+    type: Core/Triggered Event Channel
 
   lifecycle:
-    type: Lifecycle Event Channel
+    type: Core/Lifecycle Event Channel
     event:
-      type: Document Processing Initiated
+      type: Core/Document Processing Initiated
 
   initHandler:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: lifecycle
     steps:
       - name: Initialize Bootstrap Status
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /bootstrapStatus
             val:
-              type: Status In Progress
+              type: Conversation/Status In Progress
 
   handleParticipantResolved:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Participant Resolved
+      type: MyOS/Participant Resolved
     steps:
       - name: Prepare Participant State
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const participantState = {
             accountStatus: event.participant?.status?.accountStatus || 'Unknown', // "Active" | "Inactive"
@@ -80,56 +80,56 @@ contracts:
           };
 
       - name: Update Participants State
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /participantsState/${steps['Prepare Participant State'].channelName}
             val: "${steps['Prepare Participant State'].participantState}"
 
   handleTargetDocumentSessionStarted:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Target Document Session Started
+      type: MyOS/Target Document Session Started
     steps:
       - name: Update Initiator Session
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /initiatorSessionIds
             val: "${event.initiatorSessionIds}"
 
       - name: Emit Completion Event
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           return { events: [ { type: 'Status Change', status: { type: 'Status Completed' } } ] };
 
   handleBootstrapFailed:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Bootstrap Failed
+      type: MyOS/Bootstrap Failed
     steps:
       - name: Update Error Message
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /bootstrapError
             val: "${event.reason}"
 
       - name: Emit Failure Event
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           return { events: [ { type: 'Status Change', status: { type: 'Status Failed' } } ] };
 
   handleStatusChange:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Status Change
+      type: Conversation/Status Change
     steps:
       - name: Update Bootstrap Status
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /bootstrapStatus

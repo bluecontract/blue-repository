@@ -1,0 +1,7 @@
+name: Call Operation Responded
+type: Conversation/Response
+description: MyOS Admin forwards operation Response events to the requesting session
+events:
+  type: List
+  itemType: Conversation/Response
+  description: Operation Response events

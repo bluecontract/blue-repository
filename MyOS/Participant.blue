@@ -6,5 +6,5 @@ email:
 timelineId:
   type: Text
 status:
-  type: Participant Activation State
+  type: MyOS/Participant Activation State
   description: Participant activation status

@@ -1,3 +1,0 @@
-name: PayNote Cancelled
-type: Response
-description: The Guarantor confirms PayNote cancellation requested by Payer.

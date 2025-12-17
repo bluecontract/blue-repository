@@ -1,5 +1,5 @@
 name: MyOS Package
-type: Agent
+type: MyOS/Agent
 description: >
   A distributable blueprint for a new Agent session, which can include
   pre-configured automations that start on installation.
@@ -11,7 +11,7 @@ agentStoreDescription:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Channel
+  valueType: Core/Channel
   description: Maps channel names to participant identifiers
 installerChannel:
   type: Text
@@ -32,5 +32,5 @@ capabilities:
   valueType: Boolean
   description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
 automationTemplate:
-  type: Anchor Automation Template
+  type: MyOS/Anchor Automation Template
   description: Optional automation template to start post-creation

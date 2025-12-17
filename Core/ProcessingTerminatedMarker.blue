@@ -1,5 +1,5 @@
 name: Processing Terminated Marker
-type: Marker
+type: Core/Marker
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Final state for a scope (either graceful or fatal). Once present, the scope

@@ -1,5 +1,5 @@
 name: Status Completed
-type: Document Status
+type: Conversation/Document Status
 mode: terminated
 description: |
   A successful final state. The document has achieved its goal and its

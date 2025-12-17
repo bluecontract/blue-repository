@@ -1,5 +1,5 @@
 name: Call Operation Failed
-type: Event
+type: Conversation/Response
 description: MyOS Admin could not invoke the requested operation.
 targetSessionId:
   type: Text

@@ -1,5 +1,5 @@
 name: Capture Declined
-type: Response
+type: Conversation/Response
 description: The Guarantor declined the capture request before attempting the transfer.
 reason:
   type: Text

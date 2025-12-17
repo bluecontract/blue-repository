@@ -1,5 +1,5 @@
 name: Worker Agency Permission Invalid
-type: Event
+type: Conversation/Response
 description: Emitted on initialise when local shape checks fail.
 issues:
   type: List

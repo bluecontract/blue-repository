@@ -1,5 +1,5 @@
 name: Start Worker Session Requested
-type: Event # TODO: Change to Request, same with Single Document Permission Grant Requested
+type: Conversation/Request
 description: Parent worker requests from MyOS Admin to start a new child session. Parent worker requires to have Worker Agency Permission Grant.
 onBehalfOf: # account (channe name) on whose behalf the document is being created
   type: Text
@@ -10,7 +10,7 @@ document:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Channel
+  valueType: Core/Channel
   description: Maps channel names to participant identifiers
 initialMessages:
   description: Messages sent to participants when inviting them to the bootstrapped document
@@ -28,4 +28,3 @@ capabilities:
   keyType: Text
   valueType: Boolean
   description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
-

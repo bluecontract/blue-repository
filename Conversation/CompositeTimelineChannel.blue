@@ -1,5 +1,5 @@
 name: Composite Timeline Channel
-type: Channel
+type: Core/Channel
 description: |
   Conversation package type.
   Channel that matches if an incoming event would match **any** of the named

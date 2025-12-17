@@ -1,11 +1,11 @@
 name: Single Document Permission Grant Responded
-type: Event
+type: Conversation/Response
 description: Whatever granter confirmed or rejected the request.
 status:
   type: Text # confirmed or rejected
 targetSessionId:
   type: Text
 permissions:
-  type: Single Document Permission Set
+  type: MyOS/Single Document Permission Set
 reason:
   type: Text

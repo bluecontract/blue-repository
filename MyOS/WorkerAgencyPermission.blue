@@ -2,5 +2,5 @@ name: Worker Agency Permission
 workerType:
   description: The document type the worker is allowed to create.
 permissions:
-  type: Single Document Permission Set
+  type: MyOS/Single Document Permission Set
   description: The permissions granted to the worker for documents of the given type.

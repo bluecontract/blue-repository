@@ -1,5 +1,5 @@
 name: Funds Reserved
-type: Response
+type: Conversation/Response
 description: The Guarantor confirms that funds have been successfully reserved (held).
 amountReserved:
   type: Integer

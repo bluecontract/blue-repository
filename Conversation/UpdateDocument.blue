@@ -1,5 +1,5 @@
 name: Update Document
-type: Sequential Workflow Step
+type: Conversation/Sequential Workflow Step
 description: >
   Updates the document with the provided changeset.
 
@@ -23,4 +23,4 @@ description: >
 
 changeset:
   type: List
-  itemType: Json Patch Entry
+  itemType: Core/Json Patch Entry

@@ -1,6 +1,0 @@
-name: MyOS Session Link
-type: Link
-description: Link targeting a specific document session by its sessionId. Use when referencing a live session rather than a logical document.
-sessionId:
-  type: Text
-  description: Identifier of the document session being targeted.

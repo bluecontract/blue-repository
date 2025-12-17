@@ -1,6 +1,0 @@
-name: Document Link
-type: Link
-description: Link targeting a specific Blue document by its stable documentId (initial blueId before any processing). Used to point to a logical document regardless of session.
-documentId:
-  type: Text
-  description: Stable document identifier (original BlueId) of the target document.

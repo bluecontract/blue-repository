@@ -1,6 +1,0 @@
-name: Status Completed
-type: Document Status
-mode: terminated
-description: |
-  A successful final state. The document has achieved its goal and its
-  process has finished as expected.

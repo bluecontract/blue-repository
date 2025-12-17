@@ -1,5 +1,6 @@
 name: Removing Participant Responded
+type: Conversation/Response
 request:
-  type: Removing Participant Requested
+  type: MyOS/Removing Participant Requested
 status:
   type: Text

@@ -1,10 +1,10 @@
 name: Sequential Workflow
-type: Handler
+type: Core/Handler
 description: |
   Conversation handler.
   Executes a list of workflow steps in order when matching events arrive on the
   bound channel. As a Handler, it may emit events and request document patches.
 steps:
   type: List
-  itemType: Sequential Workflow Step
+  itemType: Conversation/Sequential Workflow Step
   description: Ordered list of steps to execute (positional semantics).

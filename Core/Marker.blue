@@ -1,5 +1,5 @@
 name: Marker
-type: Contract
+type: Core/Contract
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Abstract base for informational/policy contracts. Markers do not run logic;

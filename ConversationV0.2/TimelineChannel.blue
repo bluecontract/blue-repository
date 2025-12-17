@@ -1,8 +1,0 @@
-name: Timeline Channel
-type: Channel
-description: |
-  Conversation channel.
-  Delivers events that belong to a specific Timeline
-timelineId:
-  type: Text
-  description: The `timelineId` whose entries this channel delivers.

@@ -1,5 +1,5 @@
 name: Channel Event Checkpoint
-type: Marker
+type: Core/Marker
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Stores last-seen events per external channel at this scope to enable

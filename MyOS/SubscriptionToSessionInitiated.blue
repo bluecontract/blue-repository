@@ -1,6 +1,9 @@
 name: Subscription to Session Initiated
-type: Event
+type: Conversation/Response
 description: Confirms that MyOS Admin accepted the subscription request and will start forwarding updates.
+subscriptionId:
+  type: Text
+  description: The subscription id that was initiated.
 targetSessionId:
   type: Text
   description: Session being observed.

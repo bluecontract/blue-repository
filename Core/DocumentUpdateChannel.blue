@@ -1,5 +1,5 @@
 name: Document Update Channel
-type: Channel
+type: Core/Channel
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Fires on successful patches with immediate bottom-up cascade (origin → ancestors → root).

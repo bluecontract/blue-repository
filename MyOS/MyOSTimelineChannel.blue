@@ -1,5 +1,5 @@
 name: MyOS Timeline Channel
-type: Timeline Channel
+type: Conversation/Timeline Channel
 description: MyOS-specific Timeline Channel
 accountId:
   type: Text

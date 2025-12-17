@@ -7,5 +7,5 @@ message:
   type: Text
   description: Context for the user (e.g., who suggested it, what it does)
 package:
-  type: MyOS Package
+  type: MyOS/MyOS Package
   description: The complete package to be bootstrapped

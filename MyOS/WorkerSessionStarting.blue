@@ -1,5 +1,5 @@
 name: Worker Session Starting
-type: Event
+type: Conversation/Response
 description: Worker session is starting.
 granteeDocumentId:
   type: Text

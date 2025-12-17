@@ -1,6 +1,9 @@
 name: Subscription to Session Revoked
-type: Event
+type: Conversation/Response
 description: Indicates MyOS Admin stopped forwarding updates for the subscription.
+subscriptionId:
+  type: Text
+  description: The subscription id that was revoked.
 targetSessionId:
   type: Text
   description: Session that is no longer being forwarded.

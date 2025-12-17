@@ -1,5 +1,5 @@
 name: Process Embedded
-type: Marker
+type: Core/Marker
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Declares embedded child scopes beneath the current scope. The processor reads

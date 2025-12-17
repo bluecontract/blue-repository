@@ -1,4 +1,5 @@
 name: Adding Participant Requested
+type: Conversation/Request
 channelName:
   description: The abstract channel name for the new participant.
   type: Text

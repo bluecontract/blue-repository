@@ -1,32 +1,32 @@
 name: Worker Agency Permission Grant
-type: MyOS Admin Base
+type: MyOS/MyOS Admin Base
 granteeDocumentId: # parent worker document id
   type: Text
 allowedWorkerAgencyPermissions:
   type: List
-  itemType: Worker Agency Permission
+  itemType: MyOS/Worker Agency Permission
 contracts:
   # Participants (channels)
   granterChannel:
-    type: MyOS Timeline Channel
+    type: MyOS/MyOS Timeline Channel
     description: Granter/owner’s timeline (actor allowed to request revoke)
   initLifecycleChannel:
-    type: Lifecycle Event Channel
+    type: Core/Lifecycle Event Channel
     event:
-      type: Document Processing Initiated
+      type: Core/Document Processing Initiated
   revoke:
-    type: Operation
+    type: Conversation/Operation
     description: Granter requests revocation (handled by MyOS Admin)
     channel: granterChannel
     request:
       type: Text
       description: Optional human-readable reason
   revokeImplGranter:
-    type: Sequential Workflow Operation
+    type: Conversation/Sequential Workflow Operation
     operation: revoke
     steps:
       - name: EmitRevokeRequested
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           return {
             events: [
@@ -38,11 +38,11 @@ contracts:
           };
   # --- Initial validation on first tick ---
   validateOnInit:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: initLifecycleChannel
     steps:
       - name: ValidateBasicShape # TODO: review the implementation
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const issues = [];
 
