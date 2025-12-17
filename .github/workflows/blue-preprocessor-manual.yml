@@ -1,9 +1,6 @@
 name: Repository Generator (manual)
 
 on:
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       mode:
