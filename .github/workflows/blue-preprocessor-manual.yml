@@ -1,171 +1,133 @@
-name: Blue Preprocessor Manual Workflow
+name: Repository Generator (manual)
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Generator mode (check or write)'
+        required: true
+        type: choice
+        options:
+          - check
+          - write
+        default: write
+      allow_diff:
+        description: 'In check mode, allow BlueRepository.blue to differ (exit 0)'
+        required: true
+        type: boolean
+        default: true
+
+concurrency:
+  group: repository-generator-manual
+  cancel-in-progress: false
 
 permissions:
-  id-token: write   # This is required for OIDC
-  contents: read    # This is required for checkout
+  contents: write
+
+env:
+  REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
+  REPOSITORY_GENERATOR_VERSION: '2.0.0-rc.9'
+  BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
+  ARTIFACT_NAME: 'blue-repository-definition'
+  ARTIFACT_RETENTION_DAYS: '10'
+  DOWNSTREAM_REPO: 'bluecontract/blue-repository-js'
+  DOWNSTREAM_EVENT_TYPE: 'blue-preprocessor-completed'
+  SOURCE_WORKFLOW_FILE: 'blue-preprocessor-manual.yml'
 
 jobs:
-  Preprocess:
+  Generate:
+    name: Generate BlueRepository.blue
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: actions/checkout@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: eu-west-1
-          audience: sts.amazonaws.com
-          role-session-name: GitHubActionsSession
-      
-      - name: Download blue-preprocessor.jar
-        run: |
-          aws s3 cp "s3://${{ vars.S3_BUCKET_NAME }}/scripts/blue-preprocessor.jar" ./.github/scripts/blue-preprocessor.jar
+          fetch-depth: 0
+          ref: main
+          token: ${{ secrets.WORKFLOW_PAT || github.token }}
 
-      # Updated to Java 17
-      - name: Set up Java
-        uses: actions/setup-java@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          node-version: 20
 
-      - name: Set execute permissions for JAR
-        run: chmod +x .github/scripts/blue-preprocessor.jar
-
-      - name: Run Blue Preprocessor
+      - name: Configure Git
+        shell: bash
         run: |
-          java -jar ./.github/scripts/blue-preprocessor.jar ./ ./blue-preprocessed
-      
-      - name: Upload preprocessed files
-        uses: actions/upload-artifact@v4
-        with:
-          name: blue-preprocessed
-          path: ./blue-preprocessed
-          retention-days: 10
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
-      - name: Create blue-repository artifact
+      - name: Run repository-generator
+        id: generate
+        shell: bash
         run: |
-          # Create a temporary directory for the repository content
-          mkdir -p ./blue-repository
-          # Copy all folders except .github and blue-repository
-          for d in */; do
-            if [ "$d" != ".github/" ] && [ "$d" != "blue-repository/" ] && [ "$d" != "blue-preprocessed/" ]; then
-              cp -r "$d" ./blue-repository/
+          set -euo pipefail
+
+          git fetch origin main
+          git checkout -B main origin/main
+
+          MODE='${{ inputs.mode }}'
+          ALLOW_DIFF='${{ inputs.allow_diff }}'
+
+          EXTRA_ARGS=()
+          if [ "${MODE}" = 'check' ] && [ "${ALLOW_DIFF}" = 'true' ]; then
+            EXTRA_ARGS+=(--allow-diff)
+          fi
+
+          npm_config_loglevel=error \
+            npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
+            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode "${MODE}" "${EXTRA_ARGS[@]}" \
+            | tee /tmp/repository-generator-output.txt
+
+          if [ "${MODE}" = 'write' ]; then
+            repoBlueId="$(tail -n 1 /tmp/repository-generator-output.txt | tr -d '\r')"
+            if [ -z "${repoBlueId}" ]; then
+              echo "Failed to read RepoBlueId from generator output."
+              exit 1
             fi
-          done
-  
-      - name: Upload blue-repository
+
+            echo "repo_blue_id=${repoBlueId}" >> "${GITHUB_OUTPUT}"
+
+            if [ -n "$(git status --porcelain -- "${BLUE_REPOSITORY_PATH}")" ]; then
+              echo "changed=true" >> "${GITHUB_OUTPUT}"
+            else
+              echo "changed=false" >> "${GITHUB_OUTPUT}"
+            fi
+          fi
+
+      - name: Commit + tag release
+        if: inputs.mode == 'write' && steps.generate.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${{ steps.generate.outputs.repo_blue_id }}" ]; then
+            echo "Missing RepoBlueId output; refusing to create a release tag."
+            exit 1
+          fi
+
+          git add "${BLUE_REPOSITORY_PATH}"
+          git commit -m "release: ${{ steps.generate.outputs.repo_blue_id }}"
+
+          git tag -a "${{ steps.generate.outputs.repo_blue_id }}" -m "Repository release ${{ steps.generate.outputs.repo_blue_id }}"
+          git push origin HEAD:main --follow-tags
+
+      - name: Upload BlueRepository.blue
+        if: inputs.mode == 'write' && steps.generate.outputs.changed == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: blue-repository
-          path: ./blue-repository
-          retention-days: 10
-  
-  UploadPackages:
-    needs: Preprocess
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.BLUE_REPOSITORY_PATH }}
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: eu-west-1
-          audience: sts.amazonaws.com
-          role-session-name: GitHubActionsSession
-
-      - name: Download preprocessed files
-        uses: actions/download-artifact@v4
-        with:
-          name: blue-preprocessed
-          path: ./blue-preprocessed
-
-      - name: Install yq
+      - name: Trigger blue-repository-js
+        if: inputs.mode == 'write' && steps.generate.outputs.changed == 'true'
+        shell: bash
         run: |
-          wget https://github.com/mikefarah/yq/releases/download/v4.40.5/yq_linux_amd64 -O /usr/local/bin/yq
-          chmod +x /usr/local/bin/yq
-
-      - name: Process and upload files
-        run: |
-            # Read blue IDs into associative array
-            declare -A BLUE_IDS
-            while IFS=": " read -r package id; do
-                BLUE_IDS["$package"]="$id"
-            done < <(yq 'to_entries | .[] | .key + ": " + .value' ./blue-preprocessed/blue-ids.yaml)
-  
-            # Process each package from blue-ids.yaml
-            for package in "${!BLUE_IDS[@]}"; do
-                echo "Processing package: $package"
-                
-                # Get blueId for the package
-                blueId="${BLUE_IDS[$package]}"
-
-                # Check if metadata.json already exists in S3
-                if aws s3 ls "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json" >/dev/null 2>&1; then
-                    echo "Skipping package $package - metadata.json already exists in S3"
-                    continue
-                fi
-                
-                # Check if package directory exists
-                if [ ! -d "./blue-preprocessed/$package" ]; then
-                    echo "Warning: Directory not found for package $package"
-                    continue
-                fi
-                
-                # Get current timestamp
-                timestamp=$(date +%s)
-                
-                # Get extends value if _extends.txt exists
-                extends=""
-                if [ -f "./$package/_extends.txt" ]; then
-                    extends=$(cat "./$package/_extends.txt")
-                fi
-                
-                # Get types from blue-ids.yaml in package directory
-                types=()
-                if [ -f "./blue-preprocessed/$package/blue-ids.yaml" ]; then
-                    while IFS=$'\n' read -r name; do
-                        types+=("$name")
-                    done < <(yq 'keys | .[]' "./blue-preprocessed/$package/blue-ids.yaml")
-                fi
-                
-                # Create metadata JSON
-                types_json=$(printf '%s\n' "${types[@]}" | jq -R . | jq -s .)
-                metadata_json=$(jq -n \
-                    --arg name "$package" \
-                    --arg extends "$extends" \
-                    --arg created "$timestamp" \
-                    --arg blueId "$blueId" \
-                    --argjson types "$types_json" \
-                    '{name: $name, extends: $extends, created: $created, blueId: $blueId, types: $types}')
-                
-                # Upload metadata to S3
-                echo "$metadata_json" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
-                echo "Uploaded metadata.json to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/metadata.json"
-  
-                # Process all yaml and blue files in the package directory
-                for file in ./blue-preprocessed/"$package"/*.[yb][al][mu][el]*; do
-                    [ -f "$file" ] || continue
-                    
-                    filename=$(basename "$file")
-                    filename_without_ext="${filename%.*}"
-                    
-                    # Convert YAML to JSON
-                    json_content=$(yq -o=json '.' "$file")
-                    
-                    # Upload to S3
-                    echo "$json_content" | aws s3 cp - "s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
-                    
-                    echo "Uploaded $filename to s3://${{ vars.S3_BUCKET_NAME }}/packages/$package/$blueId/${filename_without_ext}.json"
-                done
-            done
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.WORKFLOW_PAT }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/${{ env.DOWNSTREAM_REPO }}/dispatches \
+            -d '{"event_type":"${{ env.DOWNSTREAM_EVENT_TYPE }}","client_payload":{"run_id":"${{ github.run_id }}","workflow":"${{ env.SOURCE_WORKFLOW_FILE }}","repo_blue_id":"${{ steps.generate.outputs.repo_blue_id }}"}}'
