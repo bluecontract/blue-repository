@@ -1,0 +1,9 @@
+name: Single Document Permission Grant Requested
+type: Request
+description: Ask MyOS Admin to grant permisison to document (event emitter) for a concrete target session.
+onBehalfOf:
+  type: Text # granter (channel)
+targetSessionId:
+  type: Text
+permissions:
+  type: Single Document Permission Set

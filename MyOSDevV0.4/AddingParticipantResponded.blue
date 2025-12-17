@@ -1,0 +1,6 @@
+name: Adding Participant Responded
+type: Response
+request:
+  type: Adding Participant Requested
+status:
+  type: Text

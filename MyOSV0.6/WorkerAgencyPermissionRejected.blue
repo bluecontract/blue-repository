@@ -1,0 +1,10 @@
+name: Worker Agency Permission Rejected
+type: Response
+description: Grant could not be applied.
+granteeDocumentId:
+  type: Text
+allowedWorkerAgencyPermissions:
+  type: List
+  itemType: Worker Agency Permission
+reason:
+  type: Text

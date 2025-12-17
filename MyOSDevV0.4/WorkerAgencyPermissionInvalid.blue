@@ -1,0 +1,6 @@
+name: Worker Agency Permission Invalid
+type: Response
+description: Emitted on initialise when local shape checks fail.
+issues:
+  type: List
+  itemType: Text
