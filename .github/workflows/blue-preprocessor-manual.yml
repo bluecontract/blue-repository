@@ -3,6 +3,11 @@ name: Repository Generator (manual)
 on:
   workflow_dispatch:
     inputs:
+      branch:
+        description: 'Branch to run against'
+        required: true
+        type: string
+        default: main
       mode:
         description: 'Generator mode (check or write)'
         required: true
@@ -18,11 +23,11 @@ on:
         default: true
 
 concurrency:
-  group: repository-generator-manual
+  group: repository-generator-manual-${{ inputs.branch }}
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
 
 env:
   REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
@@ -43,7 +48,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: main
+          ref: ${{ inputs.branch }}
           token: ${{ secrets.WORKFLOW_PAT || github.token }}
 
       - name: Setup Node.js
@@ -51,20 +56,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Configure Git
-        shell: bash
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
       - name: Run repository-generator
         id: generate
         shell: bash
         run: |
           set -euo pipefail
-
-          git fetch origin main
-          git checkout -B main origin/main
 
           MODE='${{ inputs.mode }}'
           ALLOW_DIFF='${{ inputs.allow_diff }}'
@@ -95,25 +91,8 @@ jobs:
             fi
           fi
 
-      - name: Commit + tag release
-        if: inputs.mode == 'write' && steps.generate.outputs.changed == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if [ -z "${{ steps.generate.outputs.repo_blue_id }}" ]; then
-            echo "Missing RepoBlueId output; refusing to create a release tag."
-            exit 1
-          fi
-
-          git add "${BLUE_REPOSITORY_PATH}"
-          git commit -m "release: ${{ steps.generate.outputs.repo_blue_id }}"
-
-          git tag -a "${{ steps.generate.outputs.repo_blue_id }}" -m "Repository release ${{ steps.generate.outputs.repo_blue_id }}"
-          git push origin HEAD:main --follow-tags
-
       - name: Upload BlueRepository.blue
-        if: inputs.mode == 'write' && steps.generate.outputs.changed == 'true'
+        if: inputs.mode == 'write'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
