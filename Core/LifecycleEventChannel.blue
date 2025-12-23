@@ -1,5 +1,5 @@
 name: Lifecycle Event Channel
-type: Channel
+type: Core/Channel
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Delivers processor lifecycle notifications at this scope, e.g.,

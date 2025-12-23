@@ -1,0 +1,74 @@
+name: Validate Folders
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_modifications:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for invalid modifications
+        run: |
+          # Get the base branch commit
+          BASE_COMMIT=${{ github.event.pull_request.base.sha }}
+          
+          # Get list of changed files
+          CHANGED_FILES=$(git diff --name-status $BASE_COMMIT HEAD)
+          
+          # Function to check if path exists in base commit
+          path_exists() {
+            local path=$1
+            if git rev-parse "$BASE_COMMIT":"$path" > /dev/null 2>&1; then
+              return 0  # True, path exists
+            fi
+            return 1  # False, path doesn't exist
+          }
+          
+          # Function to check if path is a directory
+          is_directory() {
+            local path=$1
+            if [[ -d "$path" ]]; then
+              return 0  # True, it's a directory
+            fi
+            return 1  # False, it's not a directory
+          }
+          
+          # Process each changed file
+          echo "$CHANGED_FILES" | while read -r line; do
+            STATUS=$(echo "$line" | cut -f1)
+            FILE=$(echo "$line" | cut -f2)
+            
+            # Skip .github folder and root files
+            if [[ "$FILE" =~ ^\.github/ ]] || [[ ! "$FILE" =~ "/" ]]; then
+              continue
+            fi
+            
+            # Get the root folder of the changed file
+            ROOT_FOLDER=$(echo "$FILE" | cut -d'/' -f1)
+            
+            # Check if root folder name follows naming convention
+            if ! [[ "$ROOT_FOLDER" =~ ^[A-Z][A-Za-z0-9.]*$ ]]; then
+              echo "❌ Error: Invalid root folder name: $ROOT_FOLDER"
+              echo "Root folder names must start with uppercase letter and contain only alphanumeric characters and dots."
+              exit 1
+            fi
+            
+            # If the root folder exists in base commit
+            if path_exists "$ROOT_FOLDER"; then
+              # Check if trying to create subfolder
+              if [[ "$FILE" =~ / ]] && [[ $(echo "$FILE" | tr -cd '/' | wc -c) -gt 1 ]]; then
+                echo "❌ Error: Creation of subfolder detected: $FILE"
+                echo "Creating subfolders in type folders is not allowed."
+                exit 1
+              fi
+            fi
+          done
+          
+          echo "✅ All directories are valid."

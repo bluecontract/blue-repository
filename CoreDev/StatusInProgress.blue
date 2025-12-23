@@ -1,6 +1,0 @@
-name: Status In Progress
-type: Document Status
-mode: active
-description: |
-  Represents active processing of the document, often used for processes that involve
-  multiple steps over time.

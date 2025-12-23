@@ -1,6 +1,6 @@
 name: Status Change
-type: Event
+type: Conversation/Event
 description: An event indicating that the document's status has transitioned.
 status:
-  type: Document Status
+  type: Conversation/Document Status
   description: The new status node.

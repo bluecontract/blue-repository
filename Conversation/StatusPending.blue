@@ -1,5 +1,5 @@
 name: Status Pending
-type: Document Status
+type: Conversation/Document Status
 mode: pending
 description: |
   A generic initial state. The document is waiting for an initial action

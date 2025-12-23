@@ -1,9 +1,9 @@
 name: Single Document Permission Rejected
-type: Event
+type: Conversation/Response
 description: Grant could not be applied.
 targetSessionId:
   type: Text
 permissions:
-  type: Single Document Permission Set
+  type: MyOS/Single Document Permission Set
 reason:
   type: Text

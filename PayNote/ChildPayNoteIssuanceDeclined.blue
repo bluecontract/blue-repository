@@ -1,5 +1,5 @@
 name: Child PayNote Issuance Declined
-type: Response
+type: Conversation/Response
 description: The Guarantor declined the request to issue a Child PayNote.
 reason:
   type: Text

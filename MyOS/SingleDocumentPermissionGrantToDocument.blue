@@ -1,5 +1,5 @@
 name: Single Document Permission Grant To Document
-type: MyOS Admin Base
+type: MyOS/MyOS Admin Base
 
 # ----------------- Document fields -----------------
 targetSessionId:
@@ -15,7 +15,7 @@ granterDocumentSessionId:
   description: Optional. If set, MyOS should evaluate authority using this document session as the principal (instead of granter accountId).
 
 permissions:
-  type: Single Document Permission Set
+  type: MyOS/Single Document Permission Set
   description: Rights to grant on the target session (READ required; allOps and singleOps are mutually exclusive; singleOps is optional but must be non-empty if provided).
 
 skipValidation:
@@ -26,16 +26,16 @@ skipValidation:
 contracts:
   # Participants (channels)
   granterChannel:
-    type: MyOS Timeline Channel
+    type: MyOS/MyOS Timeline Channel
     description: Granter/owner’s timeline (actor allowed to request revoke)
 
   initLifecycleChannel:
-    type: Lifecycle Event Channel
+    type: Core/Lifecycle Event Channel
     event:
-      type: Document Processing Initiated
+      type: Core/Document Processing Initiated
 
   revoke:
-    type: Operation
+    type: Conversation/Operation
     description: Granter requests revocation (handled by MyOS Admin)
     channel: granterChannel
     request:
@@ -43,16 +43,16 @@ contracts:
       description: Optional human-readable reason
 
   revokeImplGranter:
-    type: Sequential Workflow Operation
+    type: Conversation/Sequential Workflow Operation
     operation: revoke
     steps:
       - name: EmitRevokeRequested
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           return {
             events: [
               {
-                type: "Single Document Permission Revoke Requested",
+                type: "MyOS/Single Document Permission Revoke Requested",
                 reason: event.message.request
               }
             ]
@@ -60,11 +60,11 @@ contracts:
 
   # --- Initial validation on first tick ---
   validateOnInit:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: initLifecycleChannel
     steps:
       - name: ValidateBasicShape
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const skipValidation = document('/skipValidation');
           if (skipValidation === true) return { events: [] };
@@ -100,5 +100,5 @@ contracts:
             }
           }
 
-          if (issues.length > 0) return { events: [ { type: "Single Document Permission Invalid", issues } ] };
-          return { events: [ { type: "Single Document Permission Validated" } ] };
+          if (issues.length > 0) return { events: [ { type: "MyOS/Single Document Permission Invalid", issues } ] };
+          return { events: [ { type: "MyOS/Single Document Permission Validated" } ] };

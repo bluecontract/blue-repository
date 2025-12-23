@@ -1,11 +1,11 @@
 name: Agent Actor
-type: Actor
+type: Conversation/Actor
 onBehalfOf:
   type: Text
   description: The principal's accountId
 agentRef:
-  type: MyOS Document Session Reference
+  type: MyOS/MyOS Document Session Reference
   description: Which Worker acted
 delegation:
-  type: MyOS Document Session Reference
+  type: MyOS/MyOS Document Session Reference
   description: The grant document/session used

@@ -1,9 +1,0 @@
-name: Single Document Permission Granted
-type: Event
-description: DB rows written; rights are effective.
-targetSessionId:
-  type: Text
-permissions:
-  type: Single Document Permission Set
-
-

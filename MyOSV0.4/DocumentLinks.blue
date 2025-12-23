@@ -1,5 +1,0 @@
-name: Document Links
-description: Dictionary of named outgoing connections from this document to anchors on other documents or sessions. MyOS indexes supported link variants to power discovery.
-type: Dictionary
-keyType: Text
-valueType: Link

@@ -1,5 +1,5 @@
 name: Response
-type: Event
+type: Conversation/Event
 description: >
   The base type for any event that is a direct response to a prior Request event.
 inResponseTo:

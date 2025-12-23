@@ -1,7 +1,0 @@
-name: Worker Session Starting
-type: Event
-description: Worker session is starting.
-granteeDocumentId:
-  type: Text
-targetDocumentType:
-  type: Text

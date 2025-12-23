@@ -1,5 +1,5 @@
 name: Timeline Channel
-type: Channel
+type: Core/Channel
 description: |
   Conversation channel.
   Delivers events that belong to a specific Timeline

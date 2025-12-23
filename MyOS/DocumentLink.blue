@@ -1,5 +1,5 @@
 name: Document Link
-type: Link
+type: MyOS/Link
 description: Link targeting a specific Blue document by its stable documentId (initial blueId before any processing). Used to point to a logical document regardless of session.
 documentId:
   type: Text

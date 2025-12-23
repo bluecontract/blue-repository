@@ -1,8 +1,8 @@
 name: Worker Agency Permission Granted
-type: Event
+type: Conversation/Response
 description: DB rows written; rights are effective.
 granteeDocumentId:
   type: Text
 allowedWorkerAgencyPermissions:
   type: List
-  itemType: Worker Agency Permission
+  itemType: MyOS/Worker Agency Permission

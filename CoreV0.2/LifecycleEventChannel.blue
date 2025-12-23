@@ -1,6 +1,0 @@
-name: Lifecycle Event Channel
-type: Channel
-description: |
-  Core type of Blue Language v1.0 (see https://language.blue).
-  Delivers processor lifecycle notifications at this scope, e.g.,
-  Document Processing Initiated and Document Processing Terminated.

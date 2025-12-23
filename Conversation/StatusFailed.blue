@@ -1,5 +1,5 @@
 name: Status Failed
-type: Document Status
+type: Conversation/Document Status
 mode: terminated
 description: |
   A final state indicating that the document encountered an unrecoverable

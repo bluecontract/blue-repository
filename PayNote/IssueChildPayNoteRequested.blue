@@ -1,5 +1,5 @@
 name: Issue Child PayNote Requested
-type: Request
+type: Conversation/Request
 description: |
   The Payer requests to issue a new PayNote.
   The requested PayNote must have amount/total specified and in the same currency as this PayNote.

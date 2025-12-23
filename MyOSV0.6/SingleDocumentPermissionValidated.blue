@@ -1,3 +1,0 @@
-name: Single Document Permission Validated
-type: Response
-description: Emitted on initialise when local shape checks pass.

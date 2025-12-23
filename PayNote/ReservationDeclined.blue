@@ -1,5 +1,5 @@
 name: Reservation Declined
-type: Response
+type: Conversation/Response
 description: The Guarantor could not reserve the requested funds.
 reason:
   type: Text

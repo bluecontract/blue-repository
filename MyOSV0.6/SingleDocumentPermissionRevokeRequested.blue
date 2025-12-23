@@ -1,5 +1,0 @@
-name: Single Document Permission Revoke Requested
-type: Request
-description: Emitted by revoke operation
-reason:
-  type: Text

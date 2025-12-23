@@ -1,5 +1,5 @@
 name: Worker Agency Permission Revoke Requested
-type: Event
+type: Conversation/Request
 description: Emitted by revoke operation
 reason:
   type: Text

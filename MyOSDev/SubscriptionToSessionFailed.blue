@@ -1,9 +1,0 @@
-name: Subscription to Session Failed
-type: Event
-description: Indicates MyOS Admin rejected the subscription request before activation.
-targetSessionId:
-  type: Text
-  description: Session that was requested, if known.
-reason:
-  type: Text
-  description: Explanation why the subscription could not be established.

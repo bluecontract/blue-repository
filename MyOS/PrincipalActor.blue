@@ -1,5 +1,5 @@
 name: Principal Actor
-type: Actor
+type: Conversation/Actor
 description: The base type for a direct action by the account owner.
 accountId:
   type: Text

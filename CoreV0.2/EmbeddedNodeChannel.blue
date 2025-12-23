@@ -1,9 +1,0 @@
-name: Embedded Node Channel
-type: Channel
-description: |
-  Core type of Blue Language v1.0 (see https://language.blue).
-  Bridges a child scope's emissions (including lifecycle nodes) into the parent
-  after the child finishes.
-childPath:
-  type: Text
-  description: Scope-relative absolute pointer to the child root to bridge.

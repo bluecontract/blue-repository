@@ -1,5 +1,5 @@
 name: Processing Initialized Marker
-type: Marker
+type: Core/Marker
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Recorded exactly once at a scope on first processing; stores the pre-init

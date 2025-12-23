@@ -1,5 +1,5 @@
 name: Request
-type: Event
+type: Conversation/Event
 description: >
   The base type for any event that represents a specific, trackable request to
   another participant or service. It mandates the inclusion of a unique identifier.

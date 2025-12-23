@@ -1,10 +1,10 @@
 name: Worker Agency Permission Revoking in Progress
-type: Event
+type: Conversation/Response
 description: MyOS Admin is retracting rights granted by this WAG.
 granteeDocumentId:
   type: Text
 allowedWorkerAgencyPermissions:
   type: List
-  itemType: Worker Agency Permission
+  itemType: MyOS/Worker Agency Permission
 note:
   type: Text

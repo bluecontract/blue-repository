@@ -5,7 +5,7 @@ description: >
   a tamper-evident chain. The `message` payload is unconstrained to allow
   different entry kinds (chat, notices, etc.).
 timeline:
-  type: Timeline
+  type: Conversation/Timeline
   description: The timeline this entry belongs to.
 prevEntry:
   description: The previous entry in the timeline; omitted for the first entry.
@@ -15,5 +15,5 @@ timestamp:
   type: Integer
   description: Timestamp when the entry was created.
 actor:
-  type: Actor
+  type: Conversation/Actor
   description: Actor attribution for the creator of this entry.

@@ -1,5 +1,0 @@
-name: MyOS Timeline Entry
-type: Timeline Entry
-description: MyOS-specific timeline entry with account and email information
-timeline:
-  type: MyOS Timeline

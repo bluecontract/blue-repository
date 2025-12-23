@@ -1,0 +1,40 @@
+name: Repository Generator (check)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: repository-generator-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
+  REPOSITORY_GENERATOR_VERSION: '2.0.0-rc.20'
+  BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
+
+jobs:
+  Check:
+    name: Validate repository changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run repository-generator (check)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          npm_config_loglevel=error \
+            npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
+            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode check --allow-diff

@@ -1,10 +1,10 @@
 name: Worker Agency Permission Granting in Progress
-type: Event
+type: Conversation/Response
 description: Admin has started applying the grant for this WAG.
 granteeDocumentId:
   type: Text
 allowedWorkerAgencyPermissions:
   type: List
-  itemType: Worker Agency Permission
+  itemType: MyOS/Worker Agency Permission
 note:
   type: Text

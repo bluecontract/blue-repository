@@ -1,5 +1,5 @@
 name: Sequential Workflow Operation
-type: Sequential Workflow
+type: Conversation/Sequential Workflow
 description: >
   Conversation handler pattern for implementing an Operation as a sequential
   workflow. Binds to the operation’s invocation channel and runs the configured

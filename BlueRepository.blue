@@ -1,0 +1,3061 @@
+name: Blue Repository
+packages:
+  - name: Conversation
+    types:
+      - status: stable
+        content:
+          name: Actor
+          description: |
+            Conversation type for attributing timeline entries to a person, service, or system. Intended solely for display/attribution; carries no runtime behavior.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Chat Message
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: |
+            Conversation event representing a single chat message exchanged between participants.
+          message:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The textual content of the chat message.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AkUKoKY1hHY1CytCrAXDPKCd4md1QGmn1WNcQtWBsyAD
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Composite Timeline Channel
+          type:
+            blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+          description: |
+            Conversation package type.
+            Channel that matches if an incoming event would match **any** of the named
+            child channels in this scope (union). Useful to observe multiple timeline
+            inputs through a single handler binding.
+          channels:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              List of contracts-map keys (Text) of channels in the same scope to compose (union). Each entry must name an existing Channel contract.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HsNatiPt2YvmkWQoqtfrFCbdp75ZUBLBUkWeq84WTfnr
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Status
+          description: The base type for all document status indicators.
+          mode:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Defines the high-level phase of the document's lifecycle. Must be one of:
+                pending: The document is waiting for a pre-condition before its core logic begins.
+                active: The document is in its main operational phase, actively processing events.
+                terminated: The document has reached a final, conclusive state.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Event
+          description: |
+            Conversation package type. Abstract base for domain events (payload nodes delivered via channels). Not a contract; carries no runtime behavior by itself.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Inform User About Pending Action
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: |
+            Conversation event notifying that a required user action must be performed by running a specific operation defined in the document. Provides the operation name, user-facing text, the channel to watch, and the expected request shape.
+          operation:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The name of the operation defined in the document that the user is required to run to fulfill the pending action.
+          title:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: A short, user-facing title describing the required action (e.g., "Payment Setup Required", "Agreement Required").
+          message:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Human-readable explanation of what is needed and relevant context.
+          channel:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Contracts-map key of the channel in this scope expected to receive the follow-up that triggers the required operation.
+          expectedRequest:
+            description: The expected request payload structure for the operation’s request.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8Akr9sdTkxBqMYWSGh8gHgoXQQeYEPfhV4s8fXeKTd9W
+            attributesAdded: []
+      - status: stable
+        content:
+          name: JavaScript Code
+          type:
+            blueId: HYsLiqsqk7t98d5fK6YxKEQGeqBaHNVjM4rRNdxK4yUW
+          description: |
+            Conversation workflow step that executes provided JavaScript source as part of a sequential workflow.
+            - Gas accounting (when & what is charged):
+                - Base step charge (once per run of this step): 100 + ceil(bytes(code)/100)
+                  where bytes(code) is the UTF-8 length of the JavaScript source.
+                - Document snapshot reads (via document(<pointer>) inside the code):
+                  8 + depth(pointer) + ceil(snapshotBytes/100) per call, where:
+                    - depth("/") = 0, depth("/a/b") = 2 (number of path segments),
+                    - snapshotBytes is the canonical JSON size of the retrieved snapshot.
+                - Event emissions (if the returned result contains events: [...]):
+                  20 + ceil(eventBytes/100) per emitted event, where eventBytes is the
+                  canonical JSON size of that event. (Delivery/handling of those events may incur
+                  additional charges elsewhere, outside this step.)
+            - JavaScript bindings available to the code:
+                - `event`: triggering event rendered via the `'simple'` JSON strategy (plain
+                  values/arrays, no metadata).
+                - `eventCanonical`: triggering event rendered via the `'official'` strategy.
+                - `document(pointer?)`: document snapshot (absolute path or scope-relative) rendered
+                  with the `'simple'` strategy; defaults to `/` when omitted.
+                - `document.canonical(pointer?)`: snapshot rendered using the `'official'`
+                  strategy for canonical metadata.
+                - `steps`: results of previously executed steps.
+                - `canon.unwrap(canonical, deep=true)`: converts canonical JSON back to plain values.
+                - `canon.at(canonical, pointer)`: JSON Pointer navigation helper for canonical
+                  JSON objects.
+          code:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: JavaScript source to execute for this step.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Lifecycle Event
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: A type of event that signals a significant change in a document's lifecycle.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5YZEAtUaHhNfnVnwtSsyBnBakpcSwdL75UcgtrtnqeYn
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Operation
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Conversation contract a document exposes. Defines the action’s request schema and the channel over which callers invoke it.
+          request:
+            description: |
+              The request schema for this operation (any Blue node). Invocation payloads MUST conform to this shape.
+          channel:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Contracts-map key of the Channel in this scope on which Operation Request events are sent to invoke this operation.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Operation Request
+          description: |
+            Conversation package event. Sent to a document’s operation channel to invoke a specific operation on a specific document instance, carrying request data and concurrency preference.
+          operation:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The name of the operation to invoke (must exist on the target).
+          request:
+            description: |
+              Payload for the operation. Shape MUST match the target Operation’s `request` contract (scalars or structured nodes).
+          document:
+            description: Specifies the target document for the operation, typically containing the blueId of the document to operate on.
+          allowNewerVersion:
+            description: Controls concurrent modification handling. When true, processes the operation on the latest document version even if it changed. When false, only processes if the document still has the same blueId as specified.
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HM4Ku4LFcjC5MxnhPMRwQ8w3BbHmJKKZfHTTzsd4jbJq
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Request
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: |
+            The base type for any event that represents a specific, trackable request to another participant or service. It mandates the inclusion of a unique identifier.
+          requestId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              A caller-generated ID for this specific request. This ID is used by the recipient to correlate their response.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Response
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: |
+            The base type for any event that is a direct response to a prior Request event.
+          inResponseTo:
+            type:
+              name: Correlation
+              description: A structured reference linking this response back to the original action and trigger.
+              requestId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: The 'requestId' from the specific Request event this is a response to.
+              incomingEvent:
+                description: An event which initiated the entire workflow. Normally just blueId of it.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Sequential Workflow
+          type:
+            blueId: 9ZE5pGjtSGJgWJG7iAVz4iPEz5CatceX3yb3qp5MpAKJ
+          description: |
+            Conversation handler.
+            Executes a list of workflow steps in order when matching events arrive on the
+            bound channel. As a Handler, it may emit events and request document patches.
+          steps:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: HYsLiqsqk7t98d5fK6YxKEQGeqBaHNVjM4rRNdxK4yUW
+            description: Ordered list of steps to execute (positional semantics).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Sequential Workflow Operation
+          type:
+            blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+          description: |
+            Conversation handler pattern for implementing an Operation as a sequential workflow. Binds to the operation’s invocation channel and runs the configured steps when the operation is called.
+          operation:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              The name of the Operation this handler implements. Must reference an Operation defined in the same scope.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Sequential Workflow Step
+          description: |
+            Conversation package type. Abstract base for a single step in a Sequential Workflow. Concrete step types (e.g., JavaScript Code, Trigger Event, Update Document) refine behavior.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HYsLiqsqk7t98d5fK6YxKEQGeqBaHNVjM4rRNdxK4yUW
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Status Change
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: An event indicating that the document's status has transitioned.
+          status:
+            type:
+              blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+            description: The new status node.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: C48nKSkbxraMSv4gCiGYVHKFjmtK12k63Yasn95zknWE
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Status Completed
+          type:
+            blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+          mode:
+            value: terminated
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          description: |
+            A successful final state. The document has achieved its goal and its
+            process has finished as expected.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EhPFqrRCreg7StsZEcW8fRQ1FQVdqYSsMSis2CHHJZ1G
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Status Failed
+          type:
+            blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+          mode:
+            value: terminated
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          description: |
+            A final state indicating that the document encountered an unrecoverable
+            error and could not complete its process.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Guus3kHbivXvy5G93yhiKs3Pc8sxCc4XVvSo7CqLsQEc
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Status In Progress
+          type:
+            blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+          mode:
+            value: active
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          description: |
+            Represents active processing of the document, often used for processes that involve
+            multiple steps over time.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 56Lhu3Z2oF3kuYG41eZAK8TvgVtRNevkbRi4D31kKWZm
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Status Pending
+          type:
+            blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+          mode:
+            value: pending
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          description: |
+            A generic initial state. The document is waiting for an initial action
+            or condition to be met before it becomes active.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: ETAPjwZVyYEfPUWvXkCWAuybBhYUayg4hKC2V7mLXmsv
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Timeline
+          description: |
+            Conversation package type. Tamper-evident sequence of entries (hash-linked chain) for a conversation. Each new entry references the preceding entry by identifier to preserve order.
+          timelineId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Stable identifier of this timeline (application-defined).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3Ge54FsGJaaeZmm8nTKJdS6HVdYhiR3g18fDwg3Ev1Sa
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Timeline Channel
+          type:
+            blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+          description: |
+            Conversation channel.
+            Delivers events that belong to a specific Timeline
+          timelineId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The `timelineId` whose entries this channel delivers.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EvuCWsG1E6WJQg8QXmk6rwMANYTZjoLWVZ1vYQWUwdTH
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Timeline Entry
+          description: |
+            Conversation package type. Single entry in a Timeline. Entries are hash-linked via `prevEntry`, forming a tamper-evident chain. The `message` payload is unconstrained to allow different entry kinds (chat, notices, etc.).
+          timeline:
+            type:
+              blueId: 3Ge54FsGJaaeZmm8nTKJdS6HVdYhiR3g18fDwg3Ev1Sa
+            description: The timeline this entry belongs to.
+          prevEntry:
+            description: The previous entry in the timeline; omitted for the first entry.
+          message:
+            description: Entry payload (any Blue node), e.g., Chat Message or Status Change.
+          timestamp:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp when the entry was created.
+          actor:
+            type:
+              blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+            description: Actor attribution for the creator of this entry.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EzDiC9Frs8V5yQBMtDYh1DobVnWtWpFemXDX5fGUULBn
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Trigger Event
+          type:
+            blueId: HYsLiqsqk7t98d5fK6YxKEQGeqBaHNVjM4rRNdxK4yUW
+          description: |
+            Conversation workflow step that enqueues an event as part of the workflow.
+            - Gas accounting (when & what is charged):
+                - Base step charge (once per run of this step): 30.
+                - Expression/template resolution under "/event" (if present):
+                    - For each standalone expression ${…}: 5 + ceil(bytes(expr)/100).
+                    - For each template string containing one or more ${…} placeholders:
+                      3 × placeholderCount + ceil(bytes(template)/100).
+                    - Any document(<pointer>) used inside expressions/templates charges
+                      per call: 8 + depth(pointer) + ceil(snapshotBytes/100).
+                - Event emission (enqueue): 20 + ceil(eventBytes/100) for the final event
+                  payload after expression resolution.
+          event:
+            description: The event payload to enqueue (any Blue node).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GxUtWr3eH9a6YQeioQkujEnsPjD5s9RU8ZhEfmsV1vuU
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Update Document
+          type:
+            blueId: HYsLiqsqk7t98d5fK6YxKEQGeqBaHNVjM4rRNdxK4yUW
+          description: |
+            Updates the document with the provided changeset.
+            - Gas accounting (when & what is charged):
+                - Base step charge (once per run of this step): 40 + 5 × changesetLength.
+                - Expression/template resolution under "/changeset/**" (if present):
+                    - For each standalone expression ${…}: 5 + ceil(bytes(expr)/100).
+                    - For each template string containing one or more ${…} placeholders:
+                      3 × placeholderCount + ceil(bytes(template)/100).
+                    - Any document(<pointer>) used inside expressions/templates charges
+                      per call: 8 + depth(pointer) + ceil(snapshotBytes/100).
+                - Per change (applied in order after boundary validation):
+                    - Boundary check: 2.
+                    - Operation charge:
+                        - add or replace: 20 + ceil(valueBytes/100) (valueBytes is the
+                          canonical JSON size of val).
+                        - remove: 10.
+                    - Cascade routing (Document Update delivery):
+                      10 × N, where N is the number of scopes that receive the resulting
+                      Document Update (origin scope and each participating ancestor up to root).
+          changeset:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: Bz49DbfqKC1yJeCfv5RYPZUKTfb7rtZnmreCaz4RsXn5
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+            attributesAdded: []
+  - name: Core
+    types:
+      - status: stable
+        content:
+          name: Channel
+          type:
+            blueId: AERp8BWnuUsjoPciAeNXuUWS9fmqPNMdWbxmKn3tcitx
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Abstract base for event entry points within a scope. Channels decide whether
+            an incoming event matches at this scope. External channels may also use the
+            scope's checkpoint to gate duplicates/stale events.
+          event:
+            description: Optional matcher payload used by the channel's processor to further restrict which incoming events it accepts at this scope.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Channel Event Checkpoint
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Stores last-seen events per external channel at this scope to enable
+            idempotent processing and ordering. Updates are Direct Writes (no Document Update).
+          lastEvents:
+            description: |
+              Map of channelKey (the contracts key of an external channel in this scope)
+              to the entire last event node seen for that channel. Values are unconstrained
+              (any Blue node) to allow channel-specific shapes.
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: B7YQeYdQzUNuzaDQ4tNTd2iJqgd4YnVQkgz4QgymDWWU
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Contract
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Base for all contracts (channels, handlers, markers). Contracts live under a
+            scope's contracts map (keyed by Text). At runtime, contract processors execute
+            deterministically and only through explicit operations; there are no implicit
+            side effects.
+          order:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Deterministic sort key within a scope; missing ≡ 0.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AERp8BWnuUsjoPciAeNXuUWS9fmqPNMdWbxmKn3tcitx
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Processing Initiated
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Published once at a scope on first processing (before writing the
+            Processing Initialized Marker). At root, it is also included in the run's
+            triggered_events outbox.
+          documentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Stable document identifier (original BlueId).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Processing Terminated
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Published at the terminating scope when processing ends, either gracefully
+            or fatally. Bridgeable to the parent via Embedded Node Channel if configured.
+          cause:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: One of fatal, graceful.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional explanation.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5AJiAUgiSDwfCzv9rCYKNaAJu1hm8BXFu7eLNAEHNACr
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Update
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Emitted once per participating scope for each successful patch
+            (bottom-up delivery). 'op' uses lower-case enum; 'path' is scope-relative
+            for the receiving scope. 'before' and 'after' are snapshots (immutable views).
+          op:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: One of add, replace, remove.
+          path:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Scope-relative pointer. "/" when the receiving scope's root was affected.
+          before:
+            description: Snapshot before the patch at this path (may be null).
+          after:
+            description: Snapshot after the patch at this path (may be null).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 7htwgHAXA9FjUGRytXFfwYMUZz4R3BDMfmeHeGvpscLP
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Update Channel
+          type:
+            blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Fires on successful patches with immediate bottom-up cascade (origin → ancestors → root).
+            Matching uses subtree semantics against ABS(scope, path). Payload is the processor-emitted
+            Document Update event with scope-relative path.
+          path:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Scope-relative absolute pointer (begins with "/") defining the watched subtree.
+              Match iff the absolute changed path equals or is a descendant of ABS(scope, path).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 6H1iGrDAcqtFE1qv3iyMTj79jCZsMUMxsNUzqYSJNbyR
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Embedded Node Channel
+          type:
+            blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Bridges a child scope's emissions (including lifecycle nodes) into the parent
+            after the child finishes.
+          childPath:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Scope-relative absolute pointer to the child root to bridge.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Fjbu3QpnUaTruDTcTidETCX2N5STyv7KYxT42PCzGHxm
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Handler
+          type:
+            blueId: AERp8BWnuUsjoPciAeNXuUWS9fmqPNMdWbxmKn3tcitx
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Abstract base for logic bound to exactly one channel (same scope). At runtime,
+            a handler may: (1) apply patches (list of Json Patch Entry), (2) emit events,
+            (3) consume gas via consumeGas(units: Integer), and (4) terminate.
+          channel:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The contracts-map key of the channel this handler binds to (same scope).
+          event:
+            description: Optional matcher payload used by the handler's processor to further restrict events.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 9ZE5pGjtSGJgWJG7iAVz4iPEz5CatceX3yb3qp5MpAKJ
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Json Patch Entry
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Deterministic subset of RFC 6902 used by handlers to request document changes.
+          op:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: One of add, replace, remove.
+          path:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Absolute JSON Pointer within the document (must begin with "/").
+          val:
+            description: Payload for add and replace (any Blue node). Omitted for remove.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Bz49DbfqKC1yJeCfv5RYPZUKTfb7rtZnmreCaz4RsXn5
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Lifecycle Event Channel
+          type:
+            blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Delivers processor lifecycle notifications at this scope, e.g.,
+            Document Processing Initiated and Document Processing Terminated.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Marker
+          type:
+            blueId: AERp8BWnuUsjoPciAeNXuUWS9fmqPNMdWbxmKn3tcitx
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Abstract base for informational/policy contracts. Markers do not run logic;
+            they carry state/policy enforced by the processor.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Process Embedded
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Declares embedded child scopes beneath the current scope. The processor reads
+            this list dynamically and re-reads after each child finishes.
+          paths:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Scope-relative absolute pointers to child roots (strings beginning with "/",
+              resolved against the current scope).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Hu4XkfvyXLSdfFNUwuXebEu3oJeWcMyhBTcRV9AQyKPC
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Processing Initialized Marker
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Recorded exactly once at a scope on first processing; stores the pre-init
+            identifier of the scope's subtree. Writing this marker is a patch that
+            triggers a Document Update cascade.
+          documentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Stable document identifier (original BlueId) of this scope.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EVguxFmq5iFtMZaBQgHfjWDojaoesQ1vEXCQFZ59yL28
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Processing Terminated Marker
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Final state for a scope (either graceful or fatal). Once present, the scope
+            becomes permanently inactive both for the remainder of the current run and in
+            subsequent runs until explicitly replaced by a parent. Written as a Direct
+            Write (no Document Update) when termination occurs.
+          cause:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: One of fatal, graceful.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional human-readable explanation.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5NiEhupJ6uF54Q3vs4GwQX4UX4ExtwHpKRVvjKEHtvjR
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Triggered Event Channel
+          type:
+            blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+          description: |
+            Core type of Blue Language v1.0 (see https://language.blue).
+            Delivers events previously enqueued by handlers into the scope's FIFO.
+            One drain per scope at the end of scope processing; never drains during cascades.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: C77W4kVGcxL7Mkx9WL9QESPEFFL2GzWAe647s1Efprt
+            attributesAdded: []
+  - name: MyOS
+    types:
+      - status: stable
+        content:
+          name: Adding Participant Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          channelName:
+            description: The abstract channel name for the new participant.
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          participantBinding:
+            description: How to identify the new user.
+            email:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            accountId:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 98JmkF189jZpQRyzaiQxLbc2rRUqnRy2o6bH2qCRaBg3
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Adding Participant Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          request:
+            type:
+              blueId: 98JmkF189jZpQRyzaiQxLbc2rRUqnRy2o6bH2qCRaBg3
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BQMtWzcdbYUdaJQADyy6bkscxQGfhQHT4BgFhXQAgKfz
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Agent
+          description: Marker type for a specialized Blue document that MyOS treats as an Agent, enabling richer UI and behaviors while remaining a standard Blue document.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8s2rAFDtiB6sCwqeURkT4Lq7fcc2FXBkmX9B9p7R4Boc
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Agent Actor
+          type:
+            blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The principal's accountId
+          agentRef:
+            type:
+              blueId: 8jCUCDoX7LUd5UaktCD7i4xxEheCWFQDkTbbNTEdYVZ9
+            description: Which Worker acted
+          delegation:
+            type:
+              blueId: 8jCUCDoX7LUd5UaktCD7i4xxEheCWFQDkTbbNTEdYVZ9
+            description: The grant document/session used
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3SJK2XGFHJgqXyCK4sjZ6tmAk3VjyuX6imGBJmV2LgQZ
+            attributesAdded: []
+      - status: stable
+        content:
+          name: All Participants Ready
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Ff61TKzxLStjvfMksRNUBif2PRJGJM6XvmTqSf3M76wC
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Anchor Automation Template
+          description: |
+            Template payload that can be included in a MyOS package to optionally start an automation after the Agent session is created.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8eyv5ogjHbTqUeaJKWHMenLs3MaCnpGSQkbPrCqvk2Ga
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Bootstrap Failed
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 9iEADVdqxqgacF3GAZVMFZu4m5ywuNpsGzButLUNkPWo
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Call Operation Accepted
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin accepted the call and submitted the operation request.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Target document session that received the request.
+          operation:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Operation name that was invoked.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Dd53JjiBGUnASZXjhiHBqCSnruN2XmLtcW2vNQB7Sm34
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Call Operation Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin could not invoke the requested operation.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Target document session that was attempted.
+          operation:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Operation name that was attempted.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Failure reason code (permission_denied, execution_error, invalid_request, target_not_found).
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BaNmvStTGdsBsSHiHbqdhrrC7vfwiQdDK6NYiyRbJowx
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Call Operation Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Document asks MyOS Admin to invoke an operation on a target session.
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Channel whose binding provides the requester account.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Target document session to invoke.
+          operation:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Operation name to invoke.
+          request:
+            description: Payload forwarded to the target operation.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EVX6nBdHdVEBH9Gbthpd2eqpxaxS4bb9wM55QNdZmcBy
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Call Operation Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin forwards operation Response events to the requesting session
+          events:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+            description: Operation Response events
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3P4vsTx8Ky2pucXxKgkn8MouveP2DBRjkwZckCG5b9Lb
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Chat GPT Connector Agent
+          type:
+            blueId: 8s2rAFDtiB6sCwqeURkT4Lq7fcc2FXBkmX9B9p7R4Boc
+          description: Lets the owner prompt installation of a provided MyOS Package.
+          contracts:
+            ownerChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+            startWorker:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              channel:
+                value: ownerChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Prompt the user to install a provided MyOS Package
+              request:
+                package:
+                  type:
+                    blueId: 5cg55kgH8ckRVji4oWSBBxthJQFYmB5Lb1Pea7achyNr
+                  description: MyOS Package
+            startWorkerImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: startWorker
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Install Prompt
+                    type:
+                      blueId: GxUtWr3eH9a6YQeioQkujEnsPjD5s9RU8ZhEfmsV1vuU
+                    event:
+                      type:
+                        blueId: CrGV4ZYjvPvMqrgNQAfgZCUnFjFW6HDjYNdon2chLKU3
+                      title:
+                        value: ChatGPT is requesting permission to launch a new agent
+                        type:
+                          blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                      message:
+                        value: A package has been prepared for you. Review and install.
+                        type:
+                          blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                      package:
+                        type:
+                          blueId: 5cg55kgH8ckRVji4oWSBBxthJQFYmB5Lb1Pea7achyNr
+                        value: ${event.message.request.package}
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GH3Lqn1Vd4G36VjXu2j81SGfNqRUn82tkKiSSguhRp8J
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Anchor
+          description: Each anchor declares a semantic purpose and may optionally provide a template recommendation for linking documents.
+          template:
+            description: Optional Blue document template recommendation for linking documents. Used by MyOS UI for validation and filtering; not protocol-enforced.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HS9yo34TGEAM2LGcNbLh7XPN4goPRhqdGZQkiyh473Wb
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Anchors
+          description: Dictionary of named incoming connection points (anchors) that other documents can link to. Links to an anchor are by its dictionary key.
+          type:
+            blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+          keyType:
+            blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          valueType:
+            blueId: HS9yo34TGEAM2LGcNbLh7XPN4goPRhqdGZQkiyh473Wb
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 7Usvk6dZMVqas3yqs23ZEXn1zu1YDPjgYiZFNYaw3puH
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Link
+          type:
+            blueId: D2ERUvbpn6R6PR7hjFsGofwQsu9bkRfc6wbSYHcfJtMD
+          description: Link targeting a specific Blue document by its stable documentId (initial blueId before any processing). Used to point to a logical document regardless of session.
+          documentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Stable document identifier (original BlueId) of the target document.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BFxgEnovNHQ693YR2YvALi4FP8vjcwSQiX63LiLwjUhk
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Links
+          description: Dictionary of named outgoing connections from this document to anchors on other documents or sessions. MyOS indexes supported link variants to power discovery.
+          type:
+            blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+          keyType:
+            blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          valueType:
+            blueId: D2ERUvbpn6R6PR7hjFsGofwQsu9bkRfc6wbSYHcfJtMD
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 4cmrbevB6K23ZenjqwmNxpnaw6RF4VB3wkP7XB59V7W5
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Session Bootstrap
+          type:
+            blueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+          description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
+          document:
+            description: Target Blue document to be bootstrapped
+          channelBindings:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+            description: Maps channel names to participant identifiers
+          initialMessages:
+            description: Messages sent to participants when inviting them to the bootstrapped document
+            defaultMessage:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Default invitation message sent to all participants
+            perChannel:
+              type:
+                blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+              keyType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              valueType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Per-channel custom invitation messages
+          capabilities:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+          bootstrapStatus:
+            type:
+              blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+            description: Overall bootstrap process status
+          bootstrapError:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Error message explaining bootstrap failure
+          initiatorSessionIds:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session IDs created for the bootstrap initiator (caller)
+          participantsState:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            description: Maps channel names to participant activation tracking
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: CocmZUt2K7LuGukwuPSAFC7EFo5HZonozAm4tUsSmuFB
+          contracts:
+            triggeredEventsChannel:
+              type:
+                blueId: C77W4kVGcxL7Mkx9WL9QESPEFFL2GzWAe647s1Efprt
+            lifecycle:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            initHandler:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: lifecycle
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Initialize Bootstrap Status
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /bootstrapStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            type:
+                              blueId: 56Lhu3Z2oF3kuYG41eZAK8TvgVtRNevkbRi4D31kKWZm
+            handleParticipantResolved:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: triggeredEventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: EQVu8aZyp5ivTyKpSm8ueVsDLgprfcrHzr5QWdH1p6Cz
+              steps:
+                items:
+                  - name: Prepare Participant State
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const participantState = {
+                          accountStatus: event.participant?.status?.accountStatus || 'Unknown', // "Active" | "Inactive"
+                          errorMessage: ''
+                        };
+
+                        return {
+                          participantState,
+                          channelName: event.channelName
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Update Participants State
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /participantsState/${steps['Prepare Participant State'].channelName}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Prepare Participant State'].participantState}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleTargetDocumentSessionStarted:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: triggeredEventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: FoHDf4WzS4idtPc8rWwVFFvALQ27WzMHxPdXovy7DH4p
+              steps:
+                items:
+                  - name: Update Initiator Session
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /initiatorSessionIds
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${event.initiatorSessionIds}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Emit Completion Event
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return { events: [ { type: 'Conversation/Status Change', status: { type: 'Conversation/Status Completed' } } ] };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleBootstrapFailed:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: triggeredEventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: 9iEADVdqxqgacF3GAZVMFZu4m5ywuNpsGzButLUNkPWo
+              steps:
+                items:
+                  - name: Update Error Message
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /bootstrapError
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${event.reason}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Emit Failure Event
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return { events: [ { type: 'Conversation/Status Change', status: { type: 'Conversation/Status Failed' } } ] };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleStatusChange:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: triggeredEventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: C48nKSkbxraMSv4gCiGYVHKFjmtK12k63Yasn95zknWE
+              steps:
+                items:
+                  - name: Update Bootstrap Status
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /bootstrapStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${event.status}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 84xMEnEYr3DPBuYZL3JtcsZBBTtRH9fEEJiPnk7ASj1o
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Type Link
+          type:
+            blueId: D2ERUvbpn6R6PR7hjFsGofwQsu9bkRfc6wbSYHcfJtMD
+          description: Link targeting any document of a specific Blue type. Enables dynamic discovery where the platform resolves to a concrete instance at runtime.
+          documentType:
+            description: Type being targeted by this link.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: D9Ret9Hmz5TWxzuJEeauWEuZVPkPL7hcHYsSNY1cZ5zX
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Inform User To Install MyOS Package
+          description: Notifies the user that a MyOS Package is ready to install.
+          title:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Short, user-facing headline (e.g., "Install Agent Package")
+          message:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Context for the user (e.g., who suggested it, what it does)
+          package:
+            type:
+              blueId: 5cg55kgH8ckRVji4oWSBBxthJQFYmB5Lb1Pea7achyNr
+            description: The complete package to be bootstrapped
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CrGV4ZYjvPvMqrgNQAfgZCUnFjFW6HDjYNdon2chLKU3
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Link
+          description: Abstract base class for all link types.
+          anchor:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Target anchor key on the destination document.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: D2ERUvbpn6R6PR7hjFsGofwQsu9bkRfc6wbSYHcfJtMD
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Admin Base
+          description: Document base for MyOS Admin participant
+          contracts:
+            myOsAdminChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: MyOS Admin (accountId=0) — posts operational progress/decisions via myOsAdminUpdate
+            myOsAdminUpdate:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: The standard, required operation for MyOS Admin to deliver events.
+              channel:
+                value: myOsAdminChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            myOsAdminUpdateImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              description: Implementation that re-emits the provided events
+              operation:
+                value: myOsAdminUpdate
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: EmitAdminEvents
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return { events: event.message.request };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Agent
+          description: MyOS-specific agent with optional agent identifier
+          agentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional agent identifier
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8DQrCT6Mf9wHQyRc4NdYhjFW4FbKi83no2QPe54UhdQ5
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Agent Channel
+          description: MyOS-specific agent channel extending Channel with agent and event fields
+          agent:
+            type:
+              blueId: 8DQrCT6Mf9wHQyRc4NdYhjFW4FbKi83no2QPe54UhdQ5
+            description: Optional MyOS agent associated with this channel
+          event:
+            description: Optional event node reference
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 4fYuD2ZdTQpm5T6Xtibge9SKkNA8RrvDVmKmArrToQQW
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Agent Event
+          description: MyOS-specific agent event with agent ID, timestamp, and event data
+          agentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional agent identifier
+          id:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional event ID
+          timestamp:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Optional timestamp for the event
+          event:
+            description: Optional event node reference
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GiYocGMGQcneiMPm4NH9MxVj7Fr4jwg2BUAMzwZcWRNR
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Document Session Reference
+          description: A reference to a specific, live document processing session on the MyOS platform.
+          documentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The initial blueId of the logical document.
+          sessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The id of a specific, live processing session.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8jCUCDoX7LUd5UaktCD7i4xxEheCWFQDkTbbNTEdYVZ9
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Package
+          type:
+            blueId: 8s2rAFDtiB6sCwqeURkT4Lq7fcc2FXBkmX9B9p7R4Boc
+          description: |
+            A distributable blueprint for a new Agent session, which can include pre-configured automations that start on installation.
+          document:
+            description: The full initial state of the Agent to be created. Root type MUST specialize 'Agent'.
+          agentStoreDescription:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Human-readable description for stores/directories
+          channelBindings:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+            description: Maps channel names to participant identifiers
+          installerChannel:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Channel name in 'document' to bind to the installing user/account
+          initialMessages:
+            description: Optional per-participant invitation messages (installer's message is public)
+            defaultMessage:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Default invitation message sent to all participants
+            perChannel:
+              type:
+                blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+              keyType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              valueType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Per-channel custom invitation messages
+          capabilities:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+          automationTemplate:
+            type:
+              blueId: 8eyv5ogjHbTqUeaJKWHMenLs3MaCnpGSQkbPrCqvk2Ga
+            description: Optional automation template to start post-creation
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5cg55kgH8ckRVji4oWSBBxthJQFYmB5Lb1Pea7achyNr
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Participants Orchestration
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 6tzp2YX1rei3aAXg22SqYbeiiteGthj1LesTNCWm7wbU
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Session Interaction
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CeWyRmXAMZqvWBvby2KbRUZWcS7Pdxs42vnMXgn9gg6H
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Session Link
+          type:
+            blueId: D2ERUvbpn6R6PR7hjFsGofwQsu9bkRfc6wbSYHcfJtMD
+          description: Link targeting a specific document session by its sessionId. Use when referencing a live session rather than a logical document.
+          sessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Identifier of the document session being targeted.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: d1vQ8ZTPcQc5KeuU6tzWaVukWRVtKjQL4hbvbpC22rB
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Timeline
+          type:
+            blueId: 3Ge54FsGJaaeZmm8nTKJdS6HVdYhiR3g18fDwg3Ev1Sa
+          description: A managed timeline implementation providing convenient email-based authentication and extensive features. MyOS timelines are straightforward to set up and use, offering a balance of convenience and security through hash-chained, authenticated event sequences.
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Identifier for the MyOS account associated with this timeline
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 2gyToM86KgFJpB8inz8TBVEMZk8UVGYdRozF4mfvxtuk
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Timeline Channel
+          type:
+            blueId: EvuCWsG1E6WJQg8QXmk6rwMANYTZjoLWVZ1vYQWUwdTH
+          description: MyOS-specific Timeline Channel
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Account identifier for the MyOS timeline
+          email:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Email address associated with the MyOS timeline
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Timeline Entry
+          type:
+            blueId: EzDiC9Frs8V5yQBMtDYh1DobVnWtWpFemXDX5fGUULBn
+          description: MyOS-specific timeline entry with account and email information
+          timeline:
+            type:
+              blueId: 2gyToM86KgFJpB8inz8TBVEMZk8UVGYdRozF4mfvxtuk
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Furgmg5xcJVMDmaQXZRfZ1XehSf7PWctrioo8etRYJHQ
+            attributesAdded: []
+      - status: stable
+        content:
+          name: MyOS Worker Agency
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 4Lix4AKXvBDvrwxw2htSdYFKxL4wugEQzqoSEYet5Dh1
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Participant
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          email:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          timelineId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          status:
+            type:
+              blueId: CocmZUt2K7LuGukwuPSAFC7EFo5HZonozAm4tUsSmuFB
+            description: Participant activation status
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: phD9k4YTUgGjWeLPKqXNNn6S1PmqSeBJfVscAnUwFhQ
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Participant Activated
+          channelName:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          participant:
+            type:
+              blueId: phD9k4YTUgGjWeLPKqXNNn6S1PmqSeBJfVscAnUwFhQ
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EQhLKv5EAcFriegGYEP7ykwbjeyzFoaTxeizzuTd8VDq
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Participant Activation State
+          description: Tracks participant account status and activation
+          accountStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Participant's MyOS account status from bootstrap events (Active | Inactive | Failed)
+          errorMessage:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Error message if participant activation failed
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CocmZUt2K7LuGukwuPSAFC7EFo5HZonozAm4tUsSmuFB
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Participant Resolved
+          channelName:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          participant:
+            type:
+              blueId: phD9k4YTUgGjWeLPKqXNNn6S1PmqSeBJfVscAnUwFhQ
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EQVu8aZyp5ivTyKpSm8ueVsDLgprfcrHzr5QWdH1p6Cz
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Principal Actor
+          type:
+            blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+          description: The base type for a direct action by the account owner.
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: MyOS account ID of the principal.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5GB8C22LsZGR3kkEmP5j5Zye7SR173ojzzUK99tUcoP
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Removing Participant Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          channelName:
+            description: The abstract channel name of the participant to be removed.
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8PrHr6fcJ1xMyNFptEy2sksyYYuZ48Ypkcnjv4V2WcoD
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Removing Participant Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          request:
+            type:
+              blueId: 8PrHr6fcJ1xMyNFptEy2sksyYYuZ48Ypkcnjv4V2WcoD
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 6efzqM67y1po3YWbsbYSkKW8L41Tx8THeMv1q1TksAmr
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Session Epoch Advanced
+          description: Snapshot captured from a target session epoch emission.
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          sessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session whose state advanced.
+          timestamp:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: ISO 8601 timestamp for the emission.
+          epoch:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Epoch number.
+          document:
+            description: Document state after the emission.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 9CvxqAMJhqcFoLr5nXSEdWDZUMD383xhJtyFwXsCqD9E
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Grant Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Ask MyOS Admin to grant permisison to document (event emitter) for a concrete target session.
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Ef7EvcR5He11JtgBFtswYTHEfUKnTHmFysMTo3ZsoQby
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Grant Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Whatever granter confirmed or rejected the request.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5jtNV7xpaim18pUQp4uvron8uHfTjPSi6kUZQdCMGsKa
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Grant To Account
+          type:
+            blueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Target document session id to grant access to
+          granterDocumentSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional. If set, MyOS should evaluate authority using this document session as the principal (instead of granter accountId).
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+            description: Rights to grant on the target session (READ required; allOps and singleOps are mutually exclusive; singleOps is optional but must be non-empty if provided).
+          contracts:
+            granterChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Granter/owner’s timeline (actor allowed to request revoke)
+            granteeChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Grantee’s timeline (recipient of the rights)
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            revoke:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Granter or grantee indicates the grant should be revoked (MyOS Admin will handle)
+              channel:
+                value: granterChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional human-readable reason
+            revokeImplGranter:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: revoke
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: EmitRevokeRequested
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return {
+                          events: [
+                            {
+                              type: "MyOS/Single Document Permission Revoke Requested",
+                              reason: event.message.request
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            validateOnInit:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: ValidateBasicShape
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const issues = [];
+
+                        // Required: target session
+                        const target = document('/targetSessionId');
+                        if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
+
+                        // Required: bound identities
+                        const granterId = document('/contracts/granterChannel/accountId');
+                        if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
+                        const granteeId = document('/contracts/granteeChannel/accountId');
+                        if (typeof granteeId !== 'string' || granteeId.length === 0) issues.push("granteeChannel must be bound to an accountId");
+
+                        // Permissions
+                        const perms = document('/permissions');
+                        if (!perms || typeof perms !== 'object') {
+                          issues.push("permissions block is missing");
+                        } else {
+                          if (perms.read !== true) issues.push("permissions.read must be true for SDPG");
+                          const hasSingle = Array.isArray(perms?.singleOps) && perms.singleOps.length > 0;
+                          if (hasSingle) {
+                            if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
+                              issues.push("permissions.singleOps must contain only non-empty strings");
+                            }
+                          }
+                          if (perms.allOps === true && hasSingle) {
+                            issues.push("permissions.allOps=true and permissions.singleOps are mutually exclusive");
+                          }
+                        }
+
+                        if (issues.length > 0) return { events: [ { type: "MyOS/Single Document Permission Invalid", issues } ] };
+                        return { events: [ { type: "MyOS/Single Document Permission Validated" } ] };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: EVkAZAwJkgjQfTkA3RXpdEX2VgYJtMREmkQEFrojAQ1j
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Grant To Document
+          type:
+            blueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Target document session id to grant access to
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Required original document id (blueId) that will act as the grantee principal ('document')
+          granterDocumentSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional. If set, MyOS should evaluate authority using this document session as the principal (instead of granter accountId).
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+            description: Rights to grant on the target session (READ required; allOps and singleOps are mutually exclusive; singleOps is optional but must be non-empty if provided).
+          skipValidation:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant)
+          contracts:
+            granterChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Granter/owner’s timeline (actor allowed to request revoke)
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            revoke:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Granter requests revocation (handled by MyOS Admin)
+              channel:
+                value: granterChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional human-readable reason
+            revokeImplGranter:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: revoke
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: EmitRevokeRequested
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return {
+                          events: [
+                            {
+                              type: "MyOS/Single Document Permission Revoke Requested",
+                              reason: event.message.request
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            validateOnInit:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: ValidateBasicShape
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const skipValidation = document('/skipValidation');
+                        if (skipValidation === true) return { events: [] };
+
+                        const issues = [];
+
+                        // Required: target session
+                        const target = document('/targetSessionId');
+                        if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
+
+                        // Required: bound granter identity
+                        const granterId = document('/contracts/granterChannel/accountId');
+                        if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
+
+                        // Required: grantee document id
+                        const gdoc = document('/granteeDocumentId');
+                        if (typeof gdoc !== 'string' || gdoc.trim().length === 0) issues.push("granteeDocumentId must be a non-empty string (originalBlueId)");
+
+                        // Permissions
+                        const perms = document('/permissions');
+                        if (!perms || typeof perms !== 'object') {
+                          issues.push("permissions block is missing");
+                        } else {
+                          if (perms.read !== true) issues.push("permissions.read must be true for SDPG");
+                          const hasSingle = Array.isArray(perms?.singleOps) && perms.singleOps.length > 0;
+                          if (hasSingle) {
+                            if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
+                              issues.push("permissions.singleOps must contain only non-empty strings");
+                            }
+                          }
+                          if (perms.allOps === true && hasSingle) {
+                            issues.push("permissions.allOps=true and permissions.singleOps are mutually exclusive");
+                          }
+                        }
+
+                        if (issues.length > 0) return { events: [ { type: "MyOS/Single Document Permission Invalid", issues } ] };
+                        return { events: [ { type: "MyOS/Single Document Permission Validated" } ] };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AQyDRNKEkDan8VGNcvBdJCz95HKcwcAurhccHnCgV1j9
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Granted
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: DB rows written; rights are effective.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8XYzJ3BrgB5uoAWU5HvZ7Gej9RXNG5r52ccneLZxMAQd
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Granting in Progress
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Admin has started applying the grant for this PGD.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+          note:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5dYUepkS2uQHtzhVYoHEtR4x8vaMRtNuHyiqqTvRrKGY
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Invalid
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Emitted on initialise when local shape checks fail.
+          issues:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 567voUMtKJQoqru6ZVPYb4EGwdeV99rUSAqsnod7gqfd
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Grant could not be applied.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: kHtVfa88aG4NMwCcBgJH9mq7EBqLQUrJVEr92porG5j
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Revoke Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Emitted by revoke operation
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: E4R5PmrxAtCHsQtUKtwxMjXgE5qNJWuuziArDMATudfb
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Revoked
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Rights granted by this PGD have been retracted.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 29JSV8DwY6x3zfvAqiM7xNc96i46sKcunFYgfywBkF2f
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Revoking in Progress
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin is retracting rights granted by this PGD.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+          note:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Cyr8aNNYedFse1EZ74dy9uXJ59gLH5LhTRyVeLiSMkg8
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Set
+          description: Permissions that become effective for a single target session.
+          read:
+            value: true
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+          allOps:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+          share:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+          singleOps:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Single Document Permission Validated
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Emitted on initialise when local shape checks pass.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AG6fiGy88gX5eKoUcHS2BV17EfMssiYZj99kx9RcpKEX
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Start Worker Session Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Parent worker requests from MyOS Admin to start a new child session. Parent worker requires to have Worker Agency Permission Grant.
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          document:
+            description: Target Blue document to be bootstrapped
+          channelBindings:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+            description: Maps channel names to participant identifiers
+          initialMessages:
+            description: Messages sent to participants when inviting them to the bootstrapped document
+            defaultMessage:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Default invitation message sent to all participants
+            perChannel:
+              type:
+                blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+              keyType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              valueType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Per-channel custom invitation messages
+          capabilities:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3f9PA4RUDBxs6DsqGEYjna2RNf8XhCDHjQGDjLyNZyRh
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Subscribe to Session Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Document asks MyOS Admin to mediate a subscription to a target session it can READ.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session to subscribe to.
+          subscription:
+            id:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Optional client correlation id.
+            events:
+              type:
+                blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+              description: Optional allow-list of emitted event patterns to forward.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BnrAcFrEHzoARE2yqKmRv7jrPWCbJsVBqSoXwWCaTtrk
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Subscription to Session Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Indicates MyOS Admin rejected the subscription request before activation.
+          subscriptionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The subscription id that failed.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session that was requested, if known.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Explanation why the subscription could not be established.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: S1gzGs6z9uy5inkcJu5wr6i5ESKDmZy9XhgLHMZKrdV
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Subscription to Session Initiated
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Confirms that MyOS Admin accepted the subscription request and will start forwarding updates.
+          subscriptionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The subscription id that was initiated.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session being observed.
+          at:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: ISO 8601 timestamp when the subscription became active.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GZPDibWTKDudqwPufgmNo7AHMLwY5FGeeHFx3EkegzLj
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Subscription to Session Revoked
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Indicates MyOS Admin stopped forwarding updates for the subscription.
+          subscriptionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The subscription id that was revoked.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session that is no longer being forwarded.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional explanation for the revocation.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GcotFgiqo3GMHp4xKrArDJi7AqciJGgYKvHodoAJwcWp
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Subscription Update
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Update to a subscription.
+          subscriptionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The ID of the subscription.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: The ID of the target session.
+          update:
+            description: The update (subscription event) from the target session.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 2gc8djtKGGRPjGfMQzvJZMviaXm4ytM1nA4DVbfyjkrW
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Target Document Session Started
+          document:
+            description: The final, canonicalized document state with all timelineIds filled in.
+          initiatorSessionIds:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session IDs created for the bootstrap initiator (caller)
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: FoHDf4WzS4idtPc8rWwVFFvALQ27WzMHxPdXovy7DH4p
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission
+          workerType:
+            description: The document type the worker is allowed to create.
+          permissions:
+            type:
+              blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+            description: The permissions granted to the worker for documents of the given type.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Grant
+          type:
+            blueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          allowedWorkerAgencyPermissions:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+          contracts:
+            granterChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Granter/owner’s timeline (actor allowed to request revoke)
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            revoke:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Granter requests revocation (handled by MyOS Admin)
+              channel:
+                value: granterChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional human-readable reason
+            revokeImplGranter:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: revoke
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: EmitRevokeRequested
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return {
+                          events: [
+                            {
+                              type: "MyOS/Worker Agency Permission Revoke Requested",
+                              reason: event.message.request
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            validateOnInit:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: ValidateBasicShape
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const issues = [];
+
+                        const unwrapText = value => {
+                          if (typeof value === 'string') {
+                            const trimmed = value.trim();
+                            return trimmed.length > 0 ? trimmed : undefined;
+                          }
+                          if (value && typeof value === 'object') {
+                            if (typeof value.value === 'string') {
+                              const trimmed = value.value.trim();
+                              return trimmed.length > 0 ? trimmed : undefined;
+                            }
+                            if (typeof value.workerType === 'string') {
+                              const trimmed = value.workerType.trim();
+                              return trimmed.length > 0 ? trimmed : undefined;
+                            }
+                            if (typeof value.name === 'string') {
+                              const trimmed = value.name.trim();
+                              return trimmed.length > 0 ? trimmed : undefined;
+                            }
+                          }
+                          return undefined;
+                        };
+
+                        const unwrapBoolean = value => {
+                          if (typeof value === 'boolean') {
+                            return value;
+                          }
+                          if (value && typeof value === 'object') {
+                            if (typeof value.value === 'boolean') {
+                              return value.value;
+                            }
+                            if (
+                              value.value &&
+                              typeof value.value === 'object' &&
+                              typeof value.value.value === 'boolean'
+                            ) {
+                              return value.value.value;
+                            }
+                          }
+                          return undefined;
+                        };
+
+                        const hasBooleanValue = value => {
+                          if (typeof value === 'boolean') {
+                            return true;
+                          }
+                          if (value && typeof value === 'object') {
+                            if (typeof value.value === 'boolean') {
+                              return true;
+                            }
+                            if (
+                              value.value &&
+                              typeof value.value === 'object' &&
+                              typeof value.value.value === 'boolean'
+                            ) {
+                              return true;
+                            }
+                          }
+                          return false;
+                        };
+
+                        const unwrapArray = value => {
+                          if (Array.isArray(value)) {
+                            return value;
+                          }
+                          if (value && typeof value === 'object' && Array.isArray(value.items)) {
+                            return value.items;
+                          }
+                          return [];
+                        };
+
+                        const unwrapRecord = value => {
+                          if (value && typeof value === 'object' && !Array.isArray(value)) {
+                            if (value.value && typeof value.value === 'object') {
+                              return value.value;
+                            }
+                            return value;
+                          }
+                          return {};
+                        };
+
+                        // --- granter binding (owner account) ---
+                        const granterId = document('/contracts/granterChannel/accountId');
+                        if (typeof granterId !== 'string' || granterId.length === 0) {
+                          issues.push("granterChannel must be bound to an accountId");
+                        }
+                        // --- grantee (parent worker) session id ---
+                        const granteeDocumentId = document('/granteeDocumentId');
+                        if (
+                          typeof granteeDocumentId !== 'string' ||
+                          granteeDocumentId.trim().length === 0
+                        ) {
+                          issues.push("granteeDocumentId must be a non-empty string");
+                        }
+                        // --- allowedWorkerAgencyPermissions : list of { workerType, permissions } ---
+                        const list = document('/allowedWorkerAgencyPermissions');
+                        if (!Array.isArray(list) || list.length === 0) {
+                          issues.push("allowedWorkerAgencyPermissions must be a non-empty array");
+                        } else {
+                          // helper: validate Single Document Permission Set
+                          const validateSDPS = (p, path) => {
+                            const record = unwrapRecord(p);
+                            if (Object.keys(record).length === 0) {
+                              issues.push(`${path} must be an object`);
+                              return;
+                            }
+                            // read must be true to allow any access at all
+                            const read = unwrapBoolean(record.read);
+                            if (read !== true) {
+                              issues.push(`${path}.read must be true`);
+                            }
+                            const share = record.share;
+                            const shareValue = unwrapBoolean(share);
+                            if (hasBooleanValue(share) && typeof shareValue !== 'boolean') {
+                              issues.push(`${path}.share must be boolean if provided`);
+                            }
+                            const allOps = record.allOps;
+                            const allOpsValue = unwrapBoolean(allOps);
+                            if (hasBooleanValue(allOps) && typeof allOpsValue !== 'boolean') {
+                              issues.push(`${path}.allOps must be boolean if provided`);
+                            }
+                            const singleOpsRaw = unwrapArray(record.singleOps)
+                              .map(entry => unwrapText(entry))
+                              .filter(Boolean);
+                            const hasSingle = singleOpsRaw.length > 0;
+                            if (hasSingle) {
+                              const bad = singleOpsRaw.length !== unwrapArray(record.singleOps).length;
+                              if (bad) issues.push(`${path}.singleOps must contain only non-empty strings`);
+                            }
+                            if (allOpsValue === true && hasSingle) {
+                              issues.push(`${path}.allOps=true and ${path}.singleOps are mutually exclusive`);
+                            }
+                            // Note: it is valid to have read=true with neither allOps nor singleOps (read-only template)
+                          };
+                          const seenTypes = new Set();
+                          list.forEach((item, idx) => {
+                            const itemPath = `/allowedWorkerAgencyPermissions[${idx}]`;
+                            // shape
+                            if (typeof item !== 'object' || item === null) {
+                              issues.push(`${itemPath} must be an object`);
+                              return;
+                            }
+                            // workerType
+                            const workerType = unwrapText(item.workerType);
+                            if (!workerType) {
+                              issues.push(`${itemPath}.workerType must be a non-empty string`);
+                            } else {
+                              if (seenTypes.has(workerType)) {
+                                issues.push(`duplicate workerType '${workerType}' in allowedWorkerAgencyPermissions`);
+                              } else {
+                                seenTypes.add(workerType);
+                              }
+                            }
+                            // permissions (Single Document Permission Set)
+                            const perms = item.permissions;
+                            if (typeof perms === 'undefined') {
+                              issues.push(`${itemPath}.permissions is required`);
+                            } else {
+                              validateSDPS(perms, `${itemPath}.permissions`);
+                            }
+                          });
+                        }
+                        if (issues.length > 0) {
+                          return { events: [ { type: "MyOS/Worker Agency Permission Invalid", issues } ] };
+                        } else {
+                          return { events: [ { type: "MyOS/Worker Agency Permission Validated" } ] };
+                        }
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 2NN4VerhNHSyBcyoJpgtcuURkss2QRMmGkocQobJ8JYP
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Grant Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Parent worker requests authority to start specific sub-worker types and receive per-instance SDPGs.
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          allowedWorkerAgencyPermissions:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HF5aRJZqvHn7sDFbwfDGQjkWmTSW9Lee7c9dUBtcdNtK
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Granted
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: DB rows written; rights are effective.
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          allowedWorkerAgencyPermissions:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8GNc7HmPKXmURG12ZBY8iXYEP7CTfBLsfXvpLcQ6EMwS
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Granting in Progress
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Admin has started applying the grant for this WAG.
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          allowedWorkerAgencyPermissions:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+          note:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HzQyVKvSQ2cienAkjW5R8HgTcStPe13p8eoB4vXr7dAc
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Invalid
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Emitted on initialise when local shape checks fail.
+          issues:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 29zvV2MA4XAwLoGoNLLhLMa61mEgGceFnDvMznfQauYY
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Grant could not be applied.
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          allowedWorkerAgencyPermissions:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: G1cW5kjZdJrmCwfrwiHXQcJfYfFAY5jEFZNA7u7pFdtY
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Revoke Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Emitted by revoke operation
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: ABJ7njZbfTXNP173SCoMytQtVfMXCEwPdFhSJ7F3Vbx9
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Revoked
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Rights granted by this WAG have been retracted.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AMNPp7uGYBgygbnmMS649m6Gf5bNULaEK8aSQ3b4xdrf
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Revoking in Progress
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin is retracting rights granted by this WAG.
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          allowedWorkerAgencyPermissions:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 5J3RXNnALK1ZYAQBrjGwCQ4WpL3YUGHvz9WcGos6mMSp
+          note:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 5zNb9H63xeG2RjZ1gzJwyGxvTVzWdyNBb2Te6g8UXd72
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Agency Permission Validated
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Emitted on initialise when local shape checks pass.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GMDw72G9CRTJU12Rce9BDWGw8f715RJrWvPL78RYDWH4
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Worker Session Starting
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Worker session is starting.
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          targetDocumentType:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3B7ErHwZ9NHiW4e6msFDt57U8sTvFXZQBEwHzcdNCjmf
+            attributesAdded: []
+  - name: PayNote
+    types:
+      - status: stable
+        content:
+          name: Capture Declined
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor declined the capture request before attempting the transfer.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: FzJqLm7Ek58LsVstJV2c37JfiMhRiWtjZNsiMz2ZfCYG
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Capture Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor attempted the transfer, but it failed for a technical reason.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: FUh3TARSh4TjnWKAkM5ydjFWLWEmrFByKMBQzcgQfqRW
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Capture Funds Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: A participant (usually the Payee) requests the final transfer of funds.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: DvxKVEFsDmgA1hcBDfh7t42NgTRLaxXjCrB48DufP3i3
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Child PayNote Issuance Declined
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor declined the request to issue a Child PayNote.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: DFKVw43E36kimqj64FyiiVxE9yNuB22SETFx5M4WAi9m
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Child PayNote Issued
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms that a new Child PayNote has been issued against this parent.
+          childPayNote:
+            description: Content of the issued PayNote
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: FAZCx2s5eq9zPV64LdHNFYbjjxD3ci1ZqyTcQk5WhXAs
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Funds Captured
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms that funds have been successfully transferred to the Payee.
+          amountCaptured:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BJvjorbC5ed5KTV7SxoV3CvrJXjrFPcFxY9QT4jHBbXi
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Funds Reserved
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms that funds have been successfully reserved (held).
+          amountReserved:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AopfdGqnwcxsw4mJzXbmjDMnASRtkce9BZB1n6QSRNXX
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Issue Child PayNote Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: |
+            The Payer requests to issue a new PayNote.
+            The requested PayNote must have amount/total specified and in the same currency as this PayNote.
+            If approved by Guarator, amount/total of this PayNote will be deducted by this value.
+            If child PayNote is later cancelled, or captured value is smaller than the total, the funds will be added back to amount/total.
+          childPayNote:
+            description: Complete PayNote
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 53Dir2sGy1NHuCQXF6suGoDMxYacNhbcy23AKD89SghD
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Payee Assignment Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: The Payer requests to assign or change the Payee.
+          payeeEmail:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: BVLMcTzag3D2rvg8LoKQ3Htgoqsh77EAoiTLTxH5aVBE
+            attributesAdded: []
+      - status: stable
+        content:
+          name: PayNote
+          description: A verifiable instrument for managing a commitment of value between a Payer, Payee, and Guarantor.
+          status:
+            description: The current state of the PayNote (e.g., Pending, Approved, Reserved, Captured, Released, Rejected).
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            value: Pending
+          currency:
+            description: The ISO 4217 currency code for the transaction.
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          amount:
+            description: The amounts associated with this PayNote.
+            total:
+              description: The maximum total value of this PayNote.
+              type:
+                blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            reserved:
+              description: The amount currently reserved by the Guarantor.
+              type:
+                blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+              value: 0
+            captured:
+              description: The amount that has been successfully captured.
+              type:
+                blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+              value: 0
+          payNoteInitialStateDescription:
+            summary:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: |
+                General information about the PayNote. It should capture the most important
+                information, most critical or non-standard elements should be covered here.
+                Markdown format suggested.
+            details:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: |
+                Complete text description of the PayNote, with everything significant explained.
+                Markdown format suggested.
+          contracts:
+            payerChannel:
+              type:
+                blueId: EvuCWsG1E6WJQg8QXmk6rwMANYTZjoLWVZ1vYQWUwdTH
+            payeeChannel:
+              type:
+                blueId: EvuCWsG1E6WJQg8QXmk6rwMANYTZjoLWVZ1vYQWUwdTH
+            guarantorChannel:
+              type:
+                blueId: EvuCWsG1E6WJQg8QXmk6rwMANYTZjoLWVZ1vYQWUwdTH
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CDMVLRyodD2WhScu2PPRgGquEArMNGXxvZCYiJXg2YjT
+            attributesAdded: []
+      - status: stable
+        content:
+          name: PayNote Approved
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms the PayNote is valid and ready for further action.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HQTUxErobqhSuhWo9DAC1WwaG9oYdjfmdKprGtV4TeEK
+            attributesAdded: []
+      - status: stable
+        content:
+          name: PayNote Cancellation Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor denies PayNote cancellation requested by Payer.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GaYDPA7TTqWuoxioCYFPeyqomjH4g3YDtFxHv9yLRQ8A
+            attributesAdded: []
+      - status: stable
+        content:
+          name: PayNote Cancellation Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: |
+            The Payer requests to cancel PayNote that is Approved but not yet
+            Reserved or Captured.
+          childPayNote:
+            description: Complete PayNote
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: DqiwzsNLbHCh6PaDF6wy6ZqBSF5JV5nAQSKFKTPRTbGB
+            attributesAdded: []
+      - status: stable
+        content:
+          name: PayNote Cancelled
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms PayNote cancellation requested by Payer.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 96buyUXwhkak8xKoCR5nAW9tMuwzkevJFdELVvwKxR6Y
+            attributesAdded: []
+      - status: stable
+        content:
+          name: PayNote Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor denies the creation of the PayNote.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: AdKfkwRfzRUxUKSzhRfYANsaUBNnz4u6JFWR66qhzyZe
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Reservation Declined
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor could not reserve the requested funds.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 4xS8bmZQBGPENmaPfsrtYguYfq4hTtaZAXrefdyFNkKq
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Reservation Release Declined
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor failed to release the reserved funds.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 653sCbbRH3RiKhGjmVxh6wFVs4rn54wJRKDXRMKBZtjA
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Reservation Release Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: A participant requests the Guarantor to release previously held funds.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: GU8nkSnUuMs6632rHQyBndRtjDcMB9ZSbgwkGYcfGt97
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Reservation Released
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms that previously reserved funds have been released.
+          amountReleased:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CFqiZigjKE5JatANkaAkWw2NbgvEmb2BVEVPf3ckUrWg
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Reserve Funds and Capture Immediately Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Equivalent of Reserve Funds Requested + Capture Funds Requested
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3XstDYFkqsUP5PdM6Z6mwspPzgdQMFtUpNyMsKPK2o6N
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Reserve Funds Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: A participant requests the Guarantor to reserve (hold) a specific amount.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3Y3TYmSfZMmPYKmF5i3eR8YcVPNP5Sic2bZN8xRnvMWm
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Settlement Amount Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor rejects the proposed settlement amount.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 3b3ePGPg5GzS6KYfqoDfgjWbjccXVnGzytbpFS53x4HM
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Settlement Amount Specified
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The Guarantor confirms the final settlement amount, which may differ from the initial total.
+          finalAmount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 4pVAdZo93FHRRkAkshqCZW4pUvvV1ccczJZ2Lu4jkD1D
+            attributesAdded: []
+repositoryVersions:
+  - 7Mh4CgtBu1xUyk64hVrF5HPbD9K8DvhGCecD2q74dMsi

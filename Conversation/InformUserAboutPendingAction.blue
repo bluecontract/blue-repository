@@ -1,5 +1,5 @@
 name: Inform User About Pending Action
-type: Event
+type: Conversation/Event
 description: >
   Conversation event notifying that a required user action must be performed by
   running a specific operation defined in the document. Provides the operation

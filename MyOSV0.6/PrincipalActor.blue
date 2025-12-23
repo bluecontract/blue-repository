@@ -1,6 +1,0 @@
-name: Principal Actor
-type: Actor
-description: The base type for a direct action by the account owner.
-accountId:
-  type: Text
-  description: MyOS account ID of the principal.

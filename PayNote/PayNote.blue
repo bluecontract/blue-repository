@@ -39,8 +39,8 @@ payNoteInitialStateDescription:
 
 contracts:
   payerChannel:
-    type: Timeline Channel
+    type: Conversation/Timeline Channel
   payeeChannel:
-    type: Timeline Channel
+    type: Conversation/Timeline Channel
   guarantorChannel:
-    type: Timeline Channel
+    type: Conversation/Timeline Channel

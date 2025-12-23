@@ -1,5 +1,5 @@
 name: Worker Agency Permission Grant Requested
-type: Event # TODO: Change to Request, same with Single Document Permission Grant Requested
+type: Conversation/Request
 description: Parent worker requests authority to start specific sub-worker types and receive per-instance SDPGs.
 # Principals
 onBehalfOf: # account (channe name) owning the worker / granter
@@ -7,4 +7,4 @@ onBehalfOf: # account (channe name) owning the worker / granter
 # grantee is always document id of event emitter
 allowedWorkerAgencyPermissions: # Worker Agency Permissions
   type: List
-  itemType: Worker Agency Permission
+  itemType: MyOS/Worker Agency Permission

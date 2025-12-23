@@ -1,5 +1,5 @@
 name: MyOS Session Link
-type: Link
+type: MyOS/Link
 description: Link targeting a specific document session by its sessionId. Use when referencing a live session rather than a logical document.
 sessionId:
   type: Text

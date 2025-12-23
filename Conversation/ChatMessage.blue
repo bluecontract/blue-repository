@@ -1,5 +1,5 @@
 name: Chat Message
-type: Event
+type: Conversation/Event
 description: >
   Conversation event representing a single chat message exchanged between
   participants.

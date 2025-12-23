@@ -1,5 +1,5 @@
 name: Triggered Event Channel
-type: Channel
+type: Core/Channel
 description: |
   Core type of Blue Language v1.0 (see https://language.blue).
   Delivers events previously enqueued by handlers into the scope's FIFO.
