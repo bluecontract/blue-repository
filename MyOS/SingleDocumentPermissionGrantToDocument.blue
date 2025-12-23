@@ -52,7 +52,7 @@ contracts:
           return {
             events: [
               {
-                type: "Single Document Permission Revoke Requested",
+                type: "MyOS/Single Document Permission Revoke Requested",
                 reason: event.message.request
               }
             ]
@@ -100,5 +100,5 @@ contracts:
             }
           }
 
-          if (issues.length > 0) return { events: [ { type: "Single Document Permission Invalid", issues } ] };
-          return { events: [ { type: "Single Document Permission Validated" } ] };
+          if (issues.length > 0) return { events: [ { type: "MyOS/Single Document Permission Invalid", issues } ] };
+          return { events: [ { type: "MyOS/Single Document Permission Validated" } ] };

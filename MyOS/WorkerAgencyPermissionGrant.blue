@@ -31,7 +31,7 @@ contracts:
           return {
             events: [
               {
-                type: "Worker Agency Permission Revoke Requested",
+                type: "MyOS/Worker Agency Permission Revoke Requested",
                 reason: event.message.request
               }
             ]
@@ -208,7 +208,7 @@ contracts:
             });
           }
           if (issues.length > 0) {
-            return { events: [ { type: "Worker Agency Permission Invalid", issues } ] };
+            return { events: [ { type: "MyOS/Worker Agency Permission Invalid", issues } ] };
           } else {
-            return { events: [ { type: "Worker Agency Permission Validated" } ] };
+            return { events: [ { type: "MyOS/Worker Agency Permission Validated" } ] };
           }

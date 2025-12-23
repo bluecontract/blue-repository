@@ -102,7 +102,7 @@ contracts:
       - name: Emit Completion Event
         type: Conversation/JavaScript Code
         code: |
-          return { events: [ { type: 'Status Change', status: { type: 'Status Completed' } } ] };
+          return { events: [ { type: 'Conversation/Status Change', status: { type: 'Conversation/Status Completed' } } ] };
 
   handleBootstrapFailed:
     type: Conversation/Sequential Workflow
@@ -120,7 +120,7 @@ contracts:
       - name: Emit Failure Event
         type: Conversation/JavaScript Code
         code: |
-          return { events: [ { type: 'Status Change', status: { type: 'Status Failed' } } ] };
+          return { events: [ { type: 'Conversation/Status Change', status: { type: 'Conversation/Status Failed' } } ] };
 
   handleStatusChange:
     type: Conversation/Sequential Workflow
