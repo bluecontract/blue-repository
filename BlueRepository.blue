@@ -1324,6 +1324,16 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: D2ERUvbpn6R6PR7hjFsGofwQsu9bkRfc6wbSYHcfJtMD
             attributesAdded: []
+      - status: dev
+        content:
+          name: LLM Agent
+          type:
+            blueId: 8s2rAFDtiB6sCwqeURkT4Lq7fcc2FXBkmX9B9p7R4Boc
+          description: Marker type for a specialized Blue document that MyOS treats as an Agent, enabling richer UI and behaviors while remaining a standard Blue document.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: DL73vQGQGdEFA53shnv58CkVJVVs5P5Hygc5qNghY5Zf
+            attributesAdded: []
       - status: stable
         content:
           name: MyOS Admin Base
@@ -3059,3 +3069,4 @@ packages:
             attributesAdded: []
 repositoryVersions:
   - 7Mh4CgtBu1xUyk64hVrF5HPbD9K8DvhGCecD2q74dMsi
+  - AGDPTwMdekjTE775U5Dc4WTjZPN46D14ohKsb6hUZkVp
