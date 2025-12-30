@@ -1,0 +1,7 @@
+name: Linked Documents Permission Granted
+type: Conversation/Response
+description: All initial rights from this LDPG have been persisted.
+targetSessionId:
+  type: Text
+links:
+  type: MyOS/Linked Documents Permission Set

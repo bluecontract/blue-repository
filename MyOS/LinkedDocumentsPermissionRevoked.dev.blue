@@ -1,0 +1,9 @@
+name: Linked Documents Permission Revoked
+type: Conversation/Response
+description: All rights from this LDPG have been revoked.
+targetSessionId:
+  type: Text
+links:
+  type: MyOS/Linked Documents Permission Set
+reason:
+  type: Text

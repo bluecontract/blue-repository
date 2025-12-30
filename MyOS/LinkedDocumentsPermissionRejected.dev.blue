@@ -1,0 +1,9 @@
+name: Linked Documents Permission Rejected
+type: Conversation/Response
+description: Grant could not be applied.
+targetSessionId:
+  type: Text
+links:
+  type: MyOS/Linked Documents Permission Set
+reason:
+  type: Text

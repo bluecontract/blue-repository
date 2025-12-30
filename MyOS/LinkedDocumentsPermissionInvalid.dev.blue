@@ -1,0 +1,6 @@
+name: Linked Documents Permission Invalid
+type: Conversation/Event
+description: Emitted when LDPG fails local validation.
+issues:
+  type: List
+  itemType: Text

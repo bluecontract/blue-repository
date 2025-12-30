@@ -1,0 +1,3 @@
+name: Linked Documents Permission Validated
+type: Conversation/Response
+description: Emitted when the LDPG passes local validation.
