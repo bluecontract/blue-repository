@@ -1326,6 +1326,429 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Linked Documents Permission Grant Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Ask MyOS Admin to grant permisison to document (event emitter) for a concrete target session.
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: DBv2TLwytwBgvrSVeauLjTZYycf8hiXgdadoyRVDfjhS
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Grant To Account
+          type:
+            blueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Base document session id whose anchors define the scope of this grant.
+          granterDocumentSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Optional. If set, MyOS should evaluate authority as this document session
+              (principalType='document', granteeId=documentId of this session),
+              instead of the granter accountId.
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+            description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+          contracts:
+            granterChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Granter/owner’s timeline (actor allowed to request revoke)
+            granteeChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Grantee’s timeline (recipient of the rights)
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            revoke:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Granter or grantee indicates the grant should be revoked (MyOS Admin will handle)
+              channel:
+                value: granterChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional human-readable reason
+            revokeImplGranter:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: revoke
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: EmitRevokeRequested
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return {
+                          events: [
+                            {
+                              type: "MyOS/Linked Documents Permission Revoke Requested",
+                              reason: event.message.request
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            validateOnInit:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: ValidateBasicShape
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const issues = [];
+
+                        // Required: target session
+                        const target = document('/targetSessionId');
+                        if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
+
+                        // Required: bound identities
+                        const granterId = document('/contracts/granterChannel/accountId');
+                        if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
+                        const granteeId = document('/contracts/granteeChannel/accountId');
+                        if (typeof granteeId !== 'string' || granteeId.length === 0) issues.push("granteeChannel must be bound to an accountId");
+
+                        // Required: links
+                        const links = document('/links');
+                        if (!links || typeof links !== 'object') issues.push("links is missing or invalid");
+
+                        const anchors = Object.keys(links).filter(key => !['description', 'type', 'keyType', 'valueType'].includes(key));
+                        if (anchors.length === 0) {
+                          issues.push("links must have at least one anchor entry");
+                        }
+                        for (const anchor of anchors) {
+                          const perms = links[anchor];
+                          if (!perms || perms.read !== true) {
+                            issues.push(`links['${anchor}'].read must be true`);
+                          }
+                          const hasSingle = Array.isArray(perms.singleOps) && perms.singleOps.length > 0;
+                          if (hasSingle && perms.singleOps.some(x => typeof x !== "string" || x.trim().length === 0)) {
+                            issues.push(`links['${anchor}'].singleOps must contain only non-empty strings`);
+                          }
+                          if (perms.allOps === true && hasSingle) {
+                            issues.push(`links['${anchor}'].allOps=true and singleOps are mutually exclusive`);
+                          }
+                        }
+
+                        if (issues.length > 0) return { events: [ { type: "MyOS/Linked Documents Permission Invalid", issues } ] };
+                        return { events: [ { type: "MyOS/Linked Documents Permission Validated" } ] };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 3nHZjceYBWLD6nWXo354UhdU5vZWy26rUTL8aRj3xEmd
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Grant To Document
+          type:
+            blueId: FHzfgUb3eTqBkgDi1n5QNw5PC1QYGycEVs1c3YSrZ53o
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Base document session id whose anchors define the scope of this grant.
+          granteeDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Required original document id (blueId) that will act as the 'document' principal.
+          granterDocumentSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Optional. If set, MyOS should evaluate authority as this document session
+              (principalType='document', granteeId=documentId of this session),
+              instead of the granter accountId.
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+            description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+          skipValidation:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant)
+          contracts:
+            granterChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Granter/owner’s timeline (actor allowed to request revoke)
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            revoke:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Granter indicates the grant should be revoked (MyOS Admin will handle)
+              channel:
+                value: granterChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional human-readable reason
+            revokeImplGranter:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: revoke
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: EmitRevokeRequested
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        return {
+                          events: [
+                            {
+                              type: "MyOS/Linked Documents Permission Revoke Requested",
+                              reason: event.message.request
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            validateOnInit:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: ValidateBasicShape
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const skipValidation = document('/skipValidation');
+                        if (skipValidation === true) return { events: [] };
+
+                        const issues = [];
+
+                        // Required: target session
+                        const target = document('/targetSessionId');
+                        if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
+
+                        // Required: bound granter identity
+                        const granterId = document('/contracts/granterChannel/accountId');
+                        if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
+
+                        // Required: grantee document id
+                        const gdoc = document('/granteeDocumentId');
+                        if (typeof gdoc !== 'string' || gdoc.trim().length === 0) issues.push("granteeDocumentId must be a non-empty string");
+
+                        // Required: links
+                        const links = document('/links');
+                        if (!links || typeof links !== 'object') issues.push("links is missing or invalid");
+
+                        const anchors = Object.keys(links).filter(key => !['description', 'type', 'keyType', 'valueType'].includes(key));
+                        if (anchors.length === 0) {
+                          issues.push("links must have at least one anchor entry");
+                        }
+                        for (const anchor of anchors) {
+                          const perms = links[anchor];
+                          if (!perms || perms.read !== true) {
+                            issues.push(`links['${anchor}'].read must be true`);
+                          }
+                          const hasSingle = Array.isArray(perms.singleOps) && perms.singleOps.length > 0;
+                          if (hasSingle && perms.singleOps.some(x => typeof x !== "string" || x.trim().length === 0)) {
+                            issues.push(`links['${anchor}'].singleOps must contain only non-empty strings`);
+                          }
+                          if (perms.allOps === true && hasSingle) {
+                            issues.push(`links['${anchor}'].allOps=true and singleOps are mutually exclusive`);
+                          }
+                        }
+
+                        if (issues.length > 0) return { events: [ { type: "MyOS/Linked Documents Permission Invalid", issues } ] };
+                        return { events: [ { type: "MyOS/Linked Documents Permission Validated" } ] };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 488CnQXrxMyNAgCVgL85SyHxUK5rZzWzd81eo4JkVHRD
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Granted
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: All initial rights from this LDPG have been persisted.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: BM9qSFkhY9CV4BwHFP6DrrB9VbFZhTfwxCeS8Kh96o5N
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Granting in Progress
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin has started applying the Linked Documents Permission Grant.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 8rdTEmuSkwgzj47Uc4tLdSk1wSd8NG5Q6vTFZt8hXbHK
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Invalid
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Emitted when LDPG fails local validation.
+          issues:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: ENswN7PB5Ty8mfy1AdFsu2QR9jMjCsm5AGGJgkYSTrWU
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Grant could not be applied.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: Cg3FfBGZZSfviaJg4Jsf7Cbg4jLRPYDcrbT65YD4vjxi
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Revoke Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Emitted by revoke operation
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 6fTSbBwfj3zkin6EjGevF16QzokKa1xNXrDjdQwbDir7
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Revoked
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: All rights from this LDPG have been revoked.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 9J18sDqoJX8KKutFwuzxeSdXiGuRbJB2yCfADGSKax6h
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Revoking in Progress
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: MyOS Admin has started revoking this LDPG.
+          targetSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          links:
+            type:
+              blueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: HTvyBGjSkM4gmJxhwznVMM1aU7UUaKCcWQY9qgU6JfvH
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Set
+          type:
+            blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+          description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+          keyType:
+            blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          valueType:
+            blueId: DRDQcve5AjwBK9z6Njfa4MNERko7Uf4ucvARFdC6sL54
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 75TXyy5E7vbexVAUZcjZ2vdQaG7fJJbAHAgrh8sMtTp5
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Documents Permission Validated
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Emitted when the LDPG passes local validation.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: DFMcBSRfNqK6NqdNLCF8b88soezajjq4gyBS8QRzSBhe
+            attributesAdded: []
+      - status: dev
+        content:
           name: LLM Agent
           type:
             blueId: 8s2rAFDtiB6sCwqeURkT4Lq7fcc2FXBkmX9B9p7R4Boc
@@ -3070,3 +3493,4 @@ packages:
 repositoryVersions:
   - 7Mh4CgtBu1xUyk64hVrF5HPbD9K8DvhGCecD2q74dMsi
   - AGDPTwMdekjTE775U5Dc4WTjZPN46D14ohKsb6hUZkVp
+  - GenpwaWZPgCUuDBd8DDAa5Kes2ojV1oP4eVt6ayBKy6e
