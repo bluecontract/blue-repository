@@ -57,13 +57,13 @@ contracts:
 
   # Currently each operation can only have one implementation
   # revokeImplGrantee:
-  #   type: Sequential Workflow Operation
+  #   type: Conversation/Sequential Workflow Operation
   #   description: Emit a revoke request event
   #   channel: granteeChannel
   #   operation: revoke
   #   steps:
   #     - name: EmitRevokeRequested
-  #       type: JavaScript Code
+  #       type: Conversation/JavaScript Code
   #       code: |
   #         return {
   #           events: [

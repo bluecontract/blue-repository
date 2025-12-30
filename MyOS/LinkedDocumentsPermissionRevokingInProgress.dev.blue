@@ -1,0 +1,9 @@
+name: Linked Documents Permission Revoking in Progress
+type: Conversation/Response
+description: MyOS Admin has started revoking this LDPG.
+targetSessionId:
+  type: Text
+links:
+  type: MyOS/Linked Documents Permission Set
+reason:
+  type: Text

@@ -1,0 +1,7 @@
+name: Linked Documents Permission Granting in Progress
+type: Conversation/Response
+description: MyOS Admin has started applying the Linked Documents Permission Grant.
+targetSessionId:
+  type: Text
+links:
+  type: MyOS/Linked Documents Permission Set

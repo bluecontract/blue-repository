@@ -1,0 +1,5 @@
+name: Linked Documents Permission Revoke Requested
+type: Conversation/Request
+description: Emitted by revoke operation
+reason:
+  type: Text
