@@ -1,0 +1,12 @@
+name: PayNote Client Decision Discarded
+type: Conversation/Event
+description: The client's decision was discarded because it could not be applied in the current delivery state.
+decision:
+  type: Text
+  description: Attempted decision (accepted or rejected).
+reason:
+  type: Text
+  description: Validation reason for discarding the decision.
+decisionAt:
+  type: Text
+  description: ISO 8601 timestamp provided with the decision, if any.

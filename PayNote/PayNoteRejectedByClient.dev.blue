@@ -1,0 +1,9 @@
+name: PayNote Rejected By Client
+type: Conversation/Event
+description: The client rejected the PayNote.
+reason:
+  type: Text
+  description: Optional rejection reason.
+rejectedAt:
+  type: Text
+  description: ISO 8601 timestamp when the client rejected.
