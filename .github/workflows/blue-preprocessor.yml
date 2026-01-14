@@ -14,6 +14,7 @@ concurrency:
 
 permissions:
   contents: write
+  id-token: write
 
 env:
   REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
@@ -86,6 +87,23 @@ jobs:
 
           git tag -a "${{ steps.generate.outputs.repo_blue_id }}" -m "Repository release ${{ steps.generate.outputs.repo_blue_id }}"
           git push origin main --follow-tags
+
+      - name: Configure AWS Credentials
+        if: steps.generate.outputs.changed == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-west-1
+          audience: sts.amazonaws.com
+          role-session-name: GitHubActionsSession
+
+      - name: Upload BlueRepository.blue to S3
+        if: steps.generate.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws s3 cp "${BLUE_REPOSITORY_PATH}" \
+            "s3://${{ vars.S3_BUCKET_NAME }}/repository/${{ steps.generate.outputs.repo_blue_id }}/BlueRepository.blue"
 
       - name: Upload BlueRepository.blue
         if: steps.generate.outputs.changed == 'true'
