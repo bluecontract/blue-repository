@@ -1,0 +1,9 @@
+name: Propose Change Request
+description: Request payload for proposing a document changeset.
+changesetDescription:
+  type: Text
+  description: Human-readable summary of the proposed change.
+changeset:
+  type: List
+  itemType: Core/Json Patch Entry
+  description: RFC 6902-compatible patch entries to apply if accepted.

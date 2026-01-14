@@ -1,0 +1,3 @@
+name: Reject Change Operation
+type: Conversation/Operation
+description: Operation to reject a previously proposed change.

@@ -1,0 +1,6 @@
+name: Proposed Change Invalid
+type: Conversation/Event
+description: Emitted when a proposed change operation cannot be applied.
+reason:
+  type: Text
+  description: Human-readable reason for the failure.

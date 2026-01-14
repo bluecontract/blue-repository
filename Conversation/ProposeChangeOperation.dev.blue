@@ -1,0 +1,5 @@
+name: Propose Change Operation
+type: Conversation/Operation
+description: Operation to propose a document change for later acceptance or rejection.
+request:
+  type: Conversation/Propose Change Request

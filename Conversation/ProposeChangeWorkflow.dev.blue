@@ -1,0 +1,88 @@
+name: Propose Change Workflow
+type: Conversation/Sequential Workflow Operation
+postfix:
+  type: Text
+  description: Optional postfix used while building proposed change state key.
+steps:
+  - name: Prepare
+    type: Conversation/JavaScript Code
+    code: |
+      const issues = [];
+
+      const request = event.message.request || {};
+
+      const proposedChangesetDescription =
+        request && typeof request.changesetDescription === 'string'
+          ? request.changesetDescription
+          : null;
+      if (proposedChangesetDescription === null) {
+        issues.push('changesetDescription is missing or invalid');
+      }
+
+      const proposedChangeset =
+        request && Array.isArray(request.changeset)
+          ? request.changeset
+          : null;
+      if (!proposedChangeset) {
+        issues.push('changeset must be a list');
+      }
+
+      if (Array.isArray(proposedChangeset)) {
+        for (let i = 0; i < proposedChangeset.length; i += 1) {
+          const entry = proposedChangeset[i];
+          if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+            issues.push(`changeset[${i}] must be an object`);
+            continue;
+          }
+          if (typeof entry.op !== 'string' || entry.op.length === 0) {
+            issues.push(`changeset[${i}].op must be a string`);
+          } else if (!['add', 'replace', 'remove'].includes(entry.op)) {
+            issues.push(`changeset[${i}].op must be add, replace, or remove`);
+          }
+          if (typeof entry.path !== 'string' || entry.path.length === 0) {
+            issues.push(`changeset[${i}].path must be a string`);
+          }
+        }
+      }
+
+      if (issues.length > 0) {
+        return {
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Proposed Change Invalid",
+              reason: issues.join('; ')
+            }
+          ]
+        }
+      }
+
+      const postfix = currentContract.postfix ?? ''
+      const path = '/proposedChange' + postfix
+
+      const existing = document(path)
+      if (existing) {
+        return {
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Proposed Change Invalid",
+              reason: "Can not propose change when it already exists at " + path
+            }
+          ]
+        }
+      }
+
+      return {
+        changeset: [{
+          op: 'add',
+          path,
+          val: {
+            changesetDescription: proposedChangesetDescription,
+            changeset: proposedChangeset
+          }
+        }]
+      };
+  - name: Apply
+    type: Conversation/Update Document
+    changeset: '${steps.Prepare.changeset}'

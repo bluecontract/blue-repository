@@ -1,0 +1,13 @@
+name: Document Section
+type: Core/Marker
+description: >
+  Declarative marker used to document a logical section of a document and
+  link it to relevant fields and contracts. No runtime behavior.
+relatedFields:
+  type: List
+  itemType: Text
+  description: Absolute JSON Pointer paths of fields that belong to this section.
+relatedContracts:
+  type: List
+  itemType: Text
+  description: Contract keys in the same scope that implement/affect the section.

@@ -1,0 +1,3 @@
+name: Accept Change Operation
+type: Conversation/Operation
+description: Operation to accept a previously proposed change.
