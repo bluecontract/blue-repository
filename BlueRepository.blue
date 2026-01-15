@@ -14,6 +14,66 @@ packages:
             attributesAdded: []
   - name: Conversation
     types:
+      - status: dev
+        content:
+          name: Accept Change Operation
+          type:
+            blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+          description: Operation to accept a previously proposed change.
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: APk3siB8g9pvWLG3qyqtGjRNNGB7RDpFWQtG4epj5Avv
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Accept Change Workflow
+          type:
+            blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+          description: Applies a previously proposed change and removes its proposal state.
+          postfix:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional postfix used while building proposed change state key.
+          steps:
+            items:
+              - name: Prepare
+                type:
+                  blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                code:
+                  value: |
+                    const postfix = currentContract.postfix ?? ''
+                    const path = '/proposedChange' + postfix
+
+                    const proposedChange = document(path)
+                    if (proposedChange) {
+                      const changeset = [...proposedChange.changeset, { op: 'remove', path }]
+                      return {
+                        changeset
+                      }
+                    }
+
+                    return {
+                      changeset: [],
+                      events: [
+                        {
+                          type: "Conversation/Proposed Change Invalid",
+                          reason: "Proposed change does not exist at " + path
+                        }
+                      ]
+                    };
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              - name: Apply
+                type:
+                  blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                changeset:
+                  value: ${steps.Prepare.changeset}
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: 4ydM8ihVRAgqRqx61PueAuegj1FDvGuf5FoqRugZk9dR
+            attributesAdded: []
       - status: stable
         content:
           name: Actor
@@ -22,6 +82,91 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Change Operation
+          type:
+            blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+          description: Operation that applies a changeset immediately without proposal/accept.
+          request:
+            type:
+              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: 3UQcFf9FhSYZPGtbxWTg2ifNAVKzbzb61aTMVUFaTCnD
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Change Request
+          description: Request payload for proposing or applying a document changeset.
+          changesetDescription:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional human-readable summary of the change.
+          changeset:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: Bz49DbfqKC1yJeCfv5RYPZUKTfb7rtZnmreCaz4RsXn5
+            description: RFC 6902-compatible patch entries to apply.
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Change Workflow
+          type:
+            blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+          description: Applies a requested changeset immediately to the document.
+          request:
+            type:
+              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+            description: Expected request payload for this workflow.
+          steps:
+            items:
+              - name: Prepare
+                type:
+                  blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                code:
+                  value: |
+                    const issues = [];
+
+                    const request = event.message.request || {};
+
+                    const changeset = request.changeset;
+                    if (!changeset) {
+                      issues.push('changeset is missing');
+                    }
+
+                    if (issues.length > 0) {
+                      return {
+                        changeset: [],
+                        events: [
+                          {
+                            type: "Conversation/Event",
+                            reason: issues.join('; ')
+                          }
+                        ]
+                      }
+                    }
+
+                    return {
+                      changeset
+                    };
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              - name: Apply
+                type:
+                  blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                changeset:
+                  value: ${steps.Prepare.changeset}
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: 66hMJa3AbzQaYMh3xHPD2SZZGgMeVhb5ZcLrkSEyMTPW
             attributesAdded: []
       - status: stable
         content:
@@ -58,6 +203,29 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: HsNatiPt2YvmkWQoqtfrFCbdp75ZUBLBUkWeq84WTfnr
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Section
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Declarative marker used to document a logical section of a document and link it to relevant fields and contracts. No runtime behavior.
+          relatedFields:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Absolute JSON Pointer paths of fields that belong to this section.
+          relatedContracts:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Contract keys in the same scope that implement/affect the section.
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: jvUyZxPToTrcvJHLaYcmvKXrVJfbL1xvcaeK9ekKkJp
             attributesAdded: []
       - status: stable
         content:
@@ -202,6 +370,179 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: HM4Ku4LFcjC5MxnhPMRwQ8w3BbHmJKKZfHTTzsd4jbJq
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Propose Change Operation
+          type:
+            blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+          description: Operation to propose a document change for later acceptance or rejection.
+          request:
+            type:
+              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: D96pLVtZPE4Q6MgF31NDyUTQKazaTqJnA6koSW8SaS2g
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Propose Change Workflow
+          type:
+            blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+          description: Stores a proposed change under /proposedChange{postfix}.
+          request:
+            type:
+              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+            description: Expected request payload for this workflow.
+          postfix:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional postfix used while building proposed change state key.
+          steps:
+            items:
+              - name: Prepare
+                type:
+                  blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                code:
+                  value: |
+                    const issues = [];
+
+                    const request = event.message.request || {};
+
+                    const proposedChangesetDescription = request.changesetDescription;
+                    const proposedChangeset = request.changeset;
+
+                    if (!proposedChangesetDescription) {
+                      issues.push('changesetDescription is missing');
+                    }
+
+                    if (!proposedChangeset) {
+                      issues.push('changeset is missing');
+                    }
+
+                    if (issues.length > 0) {
+                      return {
+                        changeset: [],
+                        events: [
+                          {
+                            type: "Conversation/Proposed Change Invalid",
+                            reason: issues.join('; ')
+                          }
+                        ]
+                      }
+                    }
+
+                    const postfix = currentContract.postfix ?? ''
+                    const path = '/proposedChange' + postfix
+
+                    const existing = document(path)
+                    if (existing) {
+                      return {
+                        changeset: [],
+                        events: [
+                          {
+                            type: "Conversation/Proposed Change Invalid",
+                            reason: "Can not propose change when it already exists at " + path
+                          }
+                        ]
+                      }
+                    }
+
+                    return {
+                      changeset: [{
+                        op: 'add',
+                        path,
+                        val: {
+                          changesetDescription: proposedChangesetDescription,
+                          changeset: proposedChangeset
+                        }
+                      }]
+                    };
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              - name: Apply
+                type:
+                  blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                changeset:
+                  value: ${steps.Prepare.changeset}
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: 2JsX64BknTYKNW6vhCxiZKXVX1WGxQAHWrkVNNnhof4v
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Proposed Change Invalid
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Emitted when a proposed change operation cannot be applied.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Human-readable reason for the failure.
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: EbGQYtYR9UNAxcn7auCCujXmnz6DWxMpqVcgYSsKE85M
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Reject Change Operation
+          type:
+            blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+          description: Operation to reject a previously proposed change.
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: 4T5AmhKAXSJAAHDEjtVJ2FQgCyz2qyd9qG5uoh627Ux6
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Reject Change Workflow
+          type:
+            blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+          description: Discards a previously proposed change by removing its proposal state.
+          postfix:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional postfix used while building proposed change state key.
+          steps:
+            items:
+              - name: Prepare
+                type:
+                  blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                code:
+                  value: |
+                    const postfix = currentContract.postfix ?? ''
+                    const path = '/proposedChange' + postfix
+
+                    const proposedChange = document(path)
+                    if (proposedChange) {
+                      return {
+                        changeset: [{ op: 'remove', path }]
+                      }
+                    }
+
+                    return {
+                      changeset: [],
+                      events: [
+                        {
+                          type: "Conversation/Proposed Change Invalid",
+                          reason: "Proposed change does not exist at " + path
+                        }
+                      ]
+                    };
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              - name: Apply
+                type:
+                  blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                changeset:
+                  value: ${steps.Prepare.changeset}
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 4
+            typeBlueId: DPZyXiaegtbPsrL8dB415DxHRqFHML35uyqr2MX9XJYc
             attributesAdded: []
       - status: stable
         content:
@@ -4244,3 +4585,4 @@ repositoryVersions:
   - AGDPTwMdekjTE775U5Dc4WTjZPN46D14ohKsb6hUZkVp
   - GenpwaWZPgCUuDBd8DDAa5Kes2ojV1oP4eVt6ayBKy6e
   - EbEJF1ttddLLVTPtGjxo8TnjxdZsQvtfmanjgUheQuvp
+  - 4vpHZQ2NpENzjNmaR9TDBrezwZ392BJH9t31bZBaeRRr
