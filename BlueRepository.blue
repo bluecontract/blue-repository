@@ -1,5 +1,17 @@
 name: Blue Repository
 packages:
+  - name: Common
+    types:
+      - status: dev
+        content:
+          name: Timestamp
+          type:
+            blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          description: ISO 8601 timestamp with timezone offset (for example, 2025-01-10T09:30:00Z, 2025-01-10T10:30:00+01:00, or 2025-01-10T09:30:00.123456Z).
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            attributesAdded: []
   - name: Conversation
     types:
       - status: stable
@@ -3189,6 +3201,30 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: DvxKVEFsDmgA1hcBDfh7t42NgTRLaxXjCrB48DufP3i3
             attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Details
+          description: Card network identifiers used by processor and issuer to match the same transaction (ISO 8583).
+          retrievalReferenceNumber:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: ISO 8583 DE37 Retrieval Reference Number (RRN) for cross-network traceability.
+          systemTraceAuditNumber:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: ISO 8583 DE11 System Trace Audit Number (STAN).
+          transmissionDateTime:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: ISO 8583 DE7 Transmission Date and Time (MMDDhhmmss).
+          authorizationCode:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: ISO 8583 DE38 Authorization Identification Response (authorization code).
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
+            attributesAdded: []
       - status: stable
         content:
           name: Child PayNote Issuance Declined
@@ -3326,6 +3362,20 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: CDMVLRyodD2WhScu2PPRgGquEArMNGXxvZCYiJXg2YjT
             attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Accepted By Client
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: The client accepted the PayNote.
+          acceptedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the client accepted.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 6VQC585V4SdpyA5hCeQQGM178bbeW3D2WcKt8ZCWK9s3
+            attributesAdded: []
       - status: stable
         content:
           name: PayNote Approved
@@ -3373,6 +3423,663 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 96buyUXwhkak8xKoCR5nAW9tMuwzkevJFdELVvwKxR6Y
             attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Client Decision Discarded
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: The client's decision was discarded because it could not be applied in the current delivery state.
+          decision:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Attempted decision (accepted or rejected).
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Validation reason for discarding the decision.
+          decisionAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp provided with the decision, if any.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: Da7ZSyWgvMyTfwDVhAgCkGf3H8dwHhouHsHgNzg3DZ2j
+            attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Delivery
+          description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer).
+          payNote:
+            type:
+              blueId: CDMVLRyodD2WhScu2PPRgGquEArMNGXxvZCYiJXg2YjT
+            description: PayNote being delivered.
+          cardTransactionDetails:
+            type:
+              blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
+            description: Card network identifiers used to match processor and issuer records.
+          deliveryStatus:
+            type:
+              blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+            description: High-level delivery status.
+          transactionIdentificationStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Identification state (pending, identified, failed).
+          clientDecisionStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Client decision (pending, accepted, rejected).
+          clientAcceptedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the client accepted.
+          clientRejectedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the client rejected.
+          deliveryError:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Error message when delivery fails.
+          contracts:
+            payNoteSender:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Participant submitting the PayNote delivery (merchant or processor).
+            payNoteReceiver:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Participant receiving the PayNote delivery (payer).
+            payNoteDeliverer:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Participant delivering and reporting status (e.g., bank).
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            initialize:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Initialize Delivery State
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            type:
+                              blueId: ETAPjwZVyYEfPUWvXkCWAuybBhYUayg4hKC2V7mLXmsv
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /transactionIdentificationStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: pending
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /clientDecisionStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: pending
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryError
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ''
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            updateTransactionIdentificationStatus:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              channel:
+                value: payNoteDeliverer
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+                description: True when the transaction is identified.
+            updateTransactionIdentificationStatusImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: updateTransactionIdentificationStatus
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Classify Identification Result
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const request =
+                          event && event.message ? event.message.request : null;
+                        const identified = request === true;
+                        const currentStatus = document('/transactionIdentificationStatus');
+                        const canUpdate =
+                          currentStatus !== "identified" && currentStatus !== "failed";
+                        const identificationStatus = canUpdate
+                          ? identified
+                            ? "identified"
+                            : "failed"
+                          : currentStatus;
+                        const currentDeliveryStatus =
+                          document.canonical('/deliveryStatus') || {
+                            type: "Conversation/Status Pending"
+                          };
+                        const deliveryStatus = canUpdate
+                          ? identified
+                            ? { type: "Conversation/Status In Progress" }
+                            : { type: "Conversation/Status Failed" }
+                          : currentDeliveryStatus;
+                        const currentDeliveryError = document('/deliveryError');
+                        const deliveryError = canUpdate
+                          ? identified
+                            ? ""
+                            : "Transaction identification failed"
+                          : typeof currentDeliveryError === "string"
+                            ? currentDeliveryError
+                            : "";
+                        const eventType = identified
+                          ? "PayNote/Transaction Identified"
+                          : "PayNote/Transaction Identification Failed";
+
+                        return {
+                          identificationStatus,
+                          deliveryStatus,
+                          deliveryError,
+                          events: canUpdate ? [{ type: eventType }] : []
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Identification Update
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /transactionIdentificationStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Classify Identification Result'].identificationStatus}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Classify Identification Result'].deliveryStatus}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryError
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Classify Identification Result'].deliveryError}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            markPayNoteAcceptedByClient:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              channel:
+                value: payNoteDeliverer
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                acceptedAt:
+                  type:
+                    blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+                  description: Timestamp when the client accepted.
+            markPayNoteAcceptedByClientImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: markPayNoteAcceptedByClient
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Capture Acceptance Timestamp
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const request =
+                          event && event.message ? event.message.request : null;
+                        const acceptedAt =
+                          request && typeof request.acceptedAt === "string"
+                            ? request.acceptedAt
+                            : "";
+                        const currentDecisionStatus = document('/clientDecisionStatus');
+                        const alreadyAccepted = currentDecisionStatus === "accepted";
+                        const alreadyRejected = currentDecisionStatus === "rejected";
+                        const alreadyDecided = alreadyAccepted || alreadyRejected;
+                        const transactionStatus = document('/transactionIdentificationStatus');
+                        const canAccept =
+                          transactionStatus === "identified" &&
+                          currentDecisionStatus === "pending";
+                        const discardReason = canAccept
+                          ? ""
+                          : alreadyDecided
+                            ? `PayNote already ${currentDecisionStatus}`
+                            : transactionStatus === "failed"
+                              ? "Transaction identification failed"
+                              : "Transaction not identified";
+                        const currentAcceptedAt = document('/clientAcceptedAt');
+                        const currentDeliveryStatus =
+                          document.canonical('/deliveryStatus') || {
+                            type: "Conversation/Status Pending"
+                          };
+                        const currentDeliveryError = document('/deliveryError');
+
+                        const nextDecisionStatus = canAccept
+                          ? "accepted"
+                          : typeof currentDecisionStatus === "string"
+                            ? currentDecisionStatus
+                            : "pending";
+                        const nextAcceptedAt = canAccept
+                          ? acceptedAt
+                          : typeof currentAcceptedAt === "string"
+                            ? currentAcceptedAt
+                            : "";
+                        const nextDeliveryStatus = canAccept
+                          ? { type: "Conversation/Status Completed" }
+                          : currentDeliveryStatus;
+                        const nextDeliveryError = canAccept
+                          ? ""
+                          : typeof currentDeliveryError === "string"
+                            ? currentDeliveryError
+                            : "";
+
+                        return {
+                          acceptedAt,
+                          nextDecisionStatus,
+                          nextAcceptedAt,
+                          nextDeliveryStatus,
+                          nextDeliveryError,
+                          events: canAccept
+                            ? [
+                                {
+                                  type: "PayNote/PayNote Accepted By Client",
+                                  acceptedAt
+                                }
+                              ]
+                            : [
+                                {
+                                  type: "PayNote/PayNote Client Decision Discarded",
+                                  decision: "accepted",
+                                  reason: discardReason,
+                                  decisionAt: acceptedAt
+                                }
+                              ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Acceptance Update
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /clientDecisionStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Acceptance Timestamp'].nextDecisionStatus}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /clientAcceptedAt
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Acceptance Timestamp'].nextAcceptedAt}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Acceptance Timestamp'].nextDeliveryStatus}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryError
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Acceptance Timestamp'].nextDeliveryError}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            markPayNoteRejectedByClient:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              channel:
+                value: payNoteDeliverer
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Optional rejection reason.
+                rejectedAt:
+                  type:
+                    blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+                  description: Timestamp when the client rejected.
+            markPayNoteRejectedByClientImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: markPayNoteRejectedByClient
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Capture Rejection Reason
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const request =
+                          event && event.message ? event.message.request : null;
+                        const safeReason =
+                          typeof request === "string"
+                            ? request
+                            : request && typeof request.reason === "string"
+                              ? request.reason
+                              : "";
+                        const rejectedAt =
+                          request && typeof request.rejectedAt === "string"
+                            ? request.rejectedAt
+                            : "";
+                        const currentDecisionStatus = document('/clientDecisionStatus');
+                        const alreadyAccepted = currentDecisionStatus === "accepted";
+                        const alreadyRejected = currentDecisionStatus === "rejected";
+                        const alreadyDecided = alreadyAccepted || alreadyRejected;
+                        const transactionStatus = document('/transactionIdentificationStatus');
+                        const canReject =
+                          transactionStatus === "identified" &&
+                          currentDecisionStatus === "pending";
+                        const discardReason = canReject
+                          ? ""
+                          : alreadyDecided
+                            ? `PayNote already ${currentDecisionStatus}`
+                            : transactionStatus === "failed"
+                              ? "Transaction identification failed"
+                              : "Transaction not identified";
+
+                        const currentRejectedAt = document('/clientRejectedAt');
+                        const currentDeliveryStatus =
+                          document.canonical('/deliveryStatus') || {
+                            type: "Conversation/Status Pending"
+                          };
+                        const currentDeliveryError = document('/deliveryError');
+
+                        const nextDecisionStatus = canReject
+                          ? "rejected"
+                          : typeof currentDecisionStatus === "string"
+                            ? currentDecisionStatus
+                            : "pending";
+                        const nextRejectedAt = canReject
+                          ? rejectedAt
+                          : typeof currentRejectedAt === "string"
+                            ? currentRejectedAt
+                            : "";
+                        const nextDeliveryStatus = canReject
+                          ? { type: "Conversation/Status Failed" }
+                          : currentDeliveryStatus;
+                        const nextDeliveryError = canReject
+                          ? safeReason
+                          : typeof currentDeliveryError === "string"
+                            ? currentDeliveryError
+                            : "";
+
+                        return {
+                          reason: safeReason,
+                          rejectedAt,
+                          nextDecisionStatus,
+                          nextRejectedAt,
+                          nextDeliveryStatus,
+                          nextDeliveryError,
+                          events: canReject
+                            ? [
+                                {
+                                  type: "PayNote/PayNote Rejected By Client",
+                                  reason: safeReason,
+                                  rejectedAt
+                                }
+                              ]
+                            : [
+                                {
+                                  type: "PayNote/PayNote Client Decision Discarded",
+                                  decision: "rejected",
+                                  reason: discardReason,
+                                  decisionAt: rejectedAt
+                                }
+                              ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Rejection Update
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /clientDecisionStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Rejection Reason'].nextDecisionStatus}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /clientRejectedAt
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Rejection Reason'].nextRejectedAt}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Rejection Reason'].nextDeliveryStatus}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryError
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Rejection Reason'].nextDeliveryError}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            reportDeliveryError:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              channel:
+                value: payNoteDeliverer
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Delivery error reason.
+            reportDeliveryErrorImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: reportDeliveryError
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Capture Delivery Failure Reason
+                    type:
+                      blueId: 3hYcmWMtMUPAzXBLFLb7BpuG9537tuTJPCr7pxWXvTZK
+                    code:
+                      value: |
+                        const reason =
+                          event && event.message ? event.message.request : "";
+                        const safeReason = typeof reason === "string" ? reason : "";
+
+                        return {
+                          reason: safeReason,
+                          events: [
+                            {
+                              type: "PayNote/PayNote Delivery Failed",
+                              reason: safeReason
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Delivery Failure
+                    type:
+                      blueId: BnnNLCnKF49TUJ1bRfZ5rSMaFw8SVfUNfnE4kJFG7HtM
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryStatus
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            type:
+                              blueId: Guus3kHbivXvy5G93yhiKs3Pc8sxCc4XVvSo7CqLsQEc
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /deliveryError
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Capture Delivery Failure Reason'].reason}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: F55Gk1KTHsAfWVjfP4LH7bB558tJ5DL6FUu4as3g5mY1
+            attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Delivery Bootstrap Requested
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Request to bootstrap a PayNote Delivery session.
+          delivery:
+            type:
+              blueId: F55Gk1KTHsAfWVjfP4LH7bB558tJ5DL6FUu4as3g5mY1
+            description: Delivery payload to bootstrap.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 5dMaJQ2nrVQLFB6VT3RGRHJC1nKxzj89cji86TJo7YMr
+            attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Delivery Failed
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Delivery failed for a non-identification reason.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Failure reason.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: GtFG4Nt2fAamUZi9fSZNotab3BEUuv236LuPAcErVj5y
+            attributesAdded: []
       - status: stable
         content:
           name: PayNote Rejected
@@ -3385,6 +4092,24 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: AdKfkwRfzRUxUKSzhRfYANsaUBNnz4u6JFWR66qhzyZe
+            attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Rejected By Client
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: The client rejected the PayNote.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional rejection reason.
+          rejectedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the client rejected.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: EGRRGwNnReqfQQhKnML28DWz9MvvC3B5JgbBrCUxrZ3G
             attributesAdded: []
       - status: stable
         content:
@@ -3490,7 +4215,32 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 4pVAdZo93FHRRkAkshqCZW4pUvvV1ccczJZ2Lu4jkD1D
             attributesAdded: []
+      - status: dev
+        content:
+          name: Transaction Identification Failed
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: The deliverer could not identify the card transaction.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional failure reason.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: GvFQ71MZS1CrHvSopnTkSz8DBX2is4meMR5tpF5WmwCC
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Transaction Identified
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: The deliverer identified the card transaction.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 6gQWKeJHZEbBo13Vvyf2nsdg7TA9kLSYdzMaJgySPG7V
+            attributesAdded: []
 repositoryVersions:
   - 7Mh4CgtBu1xUyk64hVrF5HPbD9K8DvhGCecD2q74dMsi
   - AGDPTwMdekjTE775U5Dc4WTjZPN46D14ohKsb6hUZkVp
   - GenpwaWZPgCUuDBd8DDAa5Kes2ojV1oP4eVt6ayBKy6e
+  - EbEJF1ttddLLVTPtGjxo8TnjxdZsQvtfmanjgUheQuvp
