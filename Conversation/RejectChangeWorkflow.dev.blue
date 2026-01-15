@@ -1,5 +1,6 @@
 name: Reject Change Workflow
 type: Conversation/Sequential Workflow Operation
+description: Discards a previously proposed change by removing its proposal state.
 postfix:
   type: Text
   description: Optional postfix used while building proposed change state key.

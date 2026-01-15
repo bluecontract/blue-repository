@@ -1,5 +1,6 @@
 name: Accept Change Workflow
 type: Conversation/Sequential Workflow Operation
+description: Applies a previously proposed change and removes its proposal state.
 postfix:
   type: Text
   description: Optional postfix used while building proposed change state key.
