@@ -1,0 +1,69 @@
+name: Propose Change Workflow
+type: Conversation/Sequential Workflow Operation
+description: Stores a proposed change under /proposedChange{postfix}.
+request:
+  type: Conversation/Change Request
+  description: Expected request payload for this workflow.
+postfix:
+  type: Text
+  description: Optional postfix used while building proposed change state key.
+steps:
+  - name: Prepare
+    type: Conversation/JavaScript Code
+    code: |
+      const issues = [];
+
+      const request = event.message.request || {};
+
+      const proposedChangesetDescription = request.changesetDescription;
+      const proposedChangeset = request.changeset;
+
+      if (!proposedChangesetDescription) {
+        issues.push('changesetDescription is missing');
+      }
+
+      if (!proposedChangeset) {
+        issues.push('changeset is missing');
+      }
+
+      if (issues.length > 0) {
+        return {
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Proposed Change Invalid",
+              reason: issues.join('; ')
+            }
+          ]
+        }
+      }
+
+      const postfix = currentContract.postfix ?? ''
+      const path = '/proposedChange' + postfix
+
+      const existing = document(path)
+      if (existing) {
+        return {
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Proposed Change Invalid",
+              reason: "Can not propose change when it already exists at " + path
+            }
+          ]
+        }
+      }
+
+      return {
+        changeset: [{
+          op: 'add',
+          path,
+          val: {
+            changesetDescription: proposedChangesetDescription,
+            changeset: proposedChangeset
+          }
+        }]
+      };
+  - name: Apply
+    type: Conversation/Update Document
+    changeset: '${steps.Prepare.changeset}'

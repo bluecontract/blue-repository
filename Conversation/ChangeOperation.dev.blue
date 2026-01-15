@@ -1,0 +1,5 @@
+name: Change Operation
+type: Conversation/Operation
+description: Operation that applies a changeset immediately without proposal/accept.
+request:
+  type: Conversation/Change Request

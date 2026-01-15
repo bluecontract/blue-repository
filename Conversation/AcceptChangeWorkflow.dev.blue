@@ -1,0 +1,33 @@
+name: Accept Change Workflow
+type: Conversation/Sequential Workflow Operation
+description: Applies a previously proposed change and removes its proposal state.
+postfix:
+  type: Text
+  description: Optional postfix used while building proposed change state key.
+steps:
+  - name: Prepare
+    type: Conversation/JavaScript Code
+    code: |
+      const postfix = currentContract.postfix ?? ''
+      const path = '/proposedChange' + postfix
+
+      const proposedChange = document(path)
+      if (proposedChange) {
+        const changeset = [...proposedChange.changeset, { op: 'remove', path }]
+        return {
+          changeset
+        }
+      }
+
+      return {
+        changeset: [],
+        events: [
+          {
+            type: "Conversation/Proposed Change Invalid",
+            reason: "Proposed change does not exist at " + path
+          }
+        ]
+      };
+  - name: Apply
+    type: Conversation/Update Document
+    changeset: '${steps.Prepare.changeset}'

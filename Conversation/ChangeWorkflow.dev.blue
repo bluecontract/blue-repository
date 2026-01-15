@@ -1,0 +1,37 @@
+name: Change Workflow
+type: Conversation/Sequential Workflow Operation
+description: Applies a requested changeset immediately to the document.
+request:
+  type: Conversation/Change Request
+  description: Expected request payload for this workflow.
+steps:
+  - name: Prepare
+    type: Conversation/JavaScript Code
+    code: |
+      const issues = [];
+
+      const request = event.message.request || {};
+
+      const changeset = request.changeset;
+      if (!changeset) {
+        issues.push('changeset is missing');
+      }
+
+      if (issues.length > 0) {
+        return {
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Event",
+              reason: issues.join('; ')
+            }
+          ]
+        }
+      }
+
+      return {
+        changeset
+      };
+  - name: Apply
+    type: Conversation/Update Document
+    changeset: '${steps.Prepare.changeset}'
