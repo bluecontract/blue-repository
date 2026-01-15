@@ -1,0 +1,6 @@
+name: Transaction Identification Failed
+type: Conversation/Event
+description: The deliverer could not identify the card transaction.
+reason:
+  type: Text
+  description: Optional failure reason.

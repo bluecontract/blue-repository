@@ -1,0 +1,392 @@
+name: PayNote Delivery
+description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer).
+
+payNote:
+  type: PayNote/PayNote
+  description: PayNote being delivered.
+
+cardTransactionDetails:
+  type: PayNote/Card Transaction Details
+  description: Card network identifiers used to match processor and issuer records.
+
+deliveryStatus:
+  type: Conversation/Document Status
+  description: High-level delivery status.
+
+transactionIdentificationStatus:
+  type: Text
+  description: Identification state (pending, identified, failed).
+
+clientDecisionStatus:
+  type: Text
+  description: Client decision (pending, accepted, rejected).
+
+clientAcceptedAt:
+  type: Common/Timestamp
+  description: Timestamp when the client accepted.
+
+clientRejectedAt:
+  type: Common/Timestamp
+  description: Timestamp when the client rejected.
+
+deliveryError:
+  type: Text
+  description: Error message when delivery fails.
+
+contracts:
+  payNoteSender:
+    type: MyOS/MyOS Timeline Channel
+    description: Participant submitting the PayNote delivery (merchant or processor).
+
+  payNoteReceiver:
+    type: MyOS/MyOS Timeline Channel
+    description: Participant receiving the PayNote delivery (payer).
+
+  payNoteDeliverer:
+    type: MyOS/MyOS Timeline Channel
+    description: Participant delivering and reporting status (e.g., bank).
+
+  initLifecycleChannel:
+    type: Core/Lifecycle Event Channel
+    event:
+      type: Core/Document Processing Initiated
+
+  initialize:
+    type: Conversation/Sequential Workflow
+    channel: initLifecycleChannel
+    steps:
+      - name: Initialize Delivery State
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /deliveryStatus
+            val:
+              type: Conversation/Status Pending
+          - op: replace
+            path: /transactionIdentificationStatus
+            val: pending
+          - op: replace
+            path: /clientDecisionStatus
+            val: pending
+          - op: replace
+            path: /deliveryError
+            val: ""
+
+  updateTransactionIdentificationStatus:
+    type: Conversation/Operation
+    channel: payNoteDeliverer
+    request:
+      type: Boolean
+      description: True when the transaction is identified.
+
+  updateTransactionIdentificationStatusImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: updateTransactionIdentificationStatus
+    steps:
+      - name: Classify Identification Result
+        type: Conversation/JavaScript Code
+        code: |
+          const request =
+            event && event.message ? event.message.request : null;
+          const identified = request === true;
+          const currentStatus = document('/transactionIdentificationStatus');
+          const canUpdate =
+            currentStatus !== "identified" && currentStatus !== "failed";
+          const identificationStatus = canUpdate
+            ? identified
+              ? "identified"
+              : "failed"
+            : currentStatus;
+          const currentDeliveryStatus =
+            document.canonical('/deliveryStatus') || {
+              type: "Conversation/Status Pending"
+            };
+          const deliveryStatus = canUpdate
+            ? identified
+              ? { type: "Conversation/Status In Progress" }
+              : { type: "Conversation/Status Failed" }
+            : currentDeliveryStatus;
+          const currentDeliveryError = document('/deliveryError');
+          const deliveryError = canUpdate
+            ? identified
+              ? ""
+              : "Transaction identification failed"
+            : typeof currentDeliveryError === "string"
+              ? currentDeliveryError
+              : "";
+          const eventType = identified
+            ? "PayNote/Transaction Identified"
+            : "PayNote/Transaction Identification Failed";
+
+          return {
+            identificationStatus,
+            deliveryStatus,
+            deliveryError,
+            events: canUpdate ? [{ type: eventType }] : []
+          };
+
+      - name: Apply Identification Update
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /transactionIdentificationStatus
+            val: "${steps['Classify Identification Result'].identificationStatus}"
+          - op: replace
+            path: /deliveryStatus
+            val: "${steps['Classify Identification Result'].deliveryStatus}"
+          - op: replace
+            path: /deliveryError
+            val: "${steps['Classify Identification Result'].deliveryError}"
+
+  markPayNoteAcceptedByClient:
+    type: Conversation/Operation
+    channel: payNoteDeliverer
+    request:
+      acceptedAt:
+        type: Common/Timestamp
+        description: Timestamp when the client accepted.
+
+  markPayNoteAcceptedByClientImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: markPayNoteAcceptedByClient
+    steps:
+      - name: Capture Acceptance Timestamp
+        type: Conversation/JavaScript Code
+        code: |
+          const request =
+            event && event.message ? event.message.request : null;
+          const acceptedAt =
+            request && typeof request.acceptedAt === "string"
+              ? request.acceptedAt
+              : "";
+          const currentDecisionStatus = document('/clientDecisionStatus');
+          const alreadyAccepted = currentDecisionStatus === "accepted";
+          const alreadyRejected = currentDecisionStatus === "rejected";
+          const alreadyDecided = alreadyAccepted || alreadyRejected;
+          const transactionStatus = document('/transactionIdentificationStatus');
+          const canAccept =
+            transactionStatus === "identified" &&
+            currentDecisionStatus === "pending";
+          const discardReason = canAccept
+            ? ""
+            : alreadyDecided
+              ? `PayNote already ${currentDecisionStatus}`
+              : transactionStatus === "failed"
+                ? "Transaction identification failed"
+                : "Transaction not identified";
+          const currentAcceptedAt = document('/clientAcceptedAt');
+          const currentDeliveryStatus =
+            document.canonical('/deliveryStatus') || {
+              type: "Conversation/Status Pending"
+            };
+          const currentDeliveryError = document('/deliveryError');
+
+          const nextDecisionStatus = canAccept
+            ? "accepted"
+            : typeof currentDecisionStatus === "string"
+              ? currentDecisionStatus
+              : "pending";
+          const nextAcceptedAt = canAccept
+            ? acceptedAt
+            : typeof currentAcceptedAt === "string"
+              ? currentAcceptedAt
+              : "";
+          const nextDeliveryStatus = canAccept
+            ? { type: "Conversation/Status Completed" }
+            : currentDeliveryStatus;
+          const nextDeliveryError = canAccept
+            ? ""
+            : typeof currentDeliveryError === "string"
+              ? currentDeliveryError
+              : "";
+
+          return {
+            acceptedAt,
+            nextDecisionStatus,
+            nextAcceptedAt,
+            nextDeliveryStatus,
+            nextDeliveryError,
+            events: canAccept
+              ? [
+                  {
+                    type: "PayNote/PayNote Accepted By Client",
+                    acceptedAt
+                  }
+                ]
+              : [
+                  {
+                    type: "PayNote/PayNote Client Decision Discarded",
+                    decision: "accepted",
+                    reason: discardReason,
+                    decisionAt: acceptedAt
+                  }
+                ]
+          };
+
+      - name: Apply Acceptance Update
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /clientDecisionStatus
+            val: "${steps['Capture Acceptance Timestamp'].nextDecisionStatus}"
+          - op: replace
+            path: /clientAcceptedAt
+            val: "${steps['Capture Acceptance Timestamp'].nextAcceptedAt}"
+          - op: replace
+            path: /deliveryStatus
+            val: "${steps['Capture Acceptance Timestamp'].nextDeliveryStatus}"
+          - op: replace
+            path: /deliveryError
+            val: "${steps['Capture Acceptance Timestamp'].nextDeliveryError}"
+
+  markPayNoteRejectedByClient:
+    type: Conversation/Operation
+    channel: payNoteDeliverer
+    request:
+      reason:
+        type: Text
+        description: Optional rejection reason.
+      rejectedAt:
+        type: Common/Timestamp
+        description: Timestamp when the client rejected.
+
+  markPayNoteRejectedByClientImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: markPayNoteRejectedByClient
+    steps:
+      - name: Capture Rejection Reason
+        type: Conversation/JavaScript Code
+        code: |
+          const request =
+            event && event.message ? event.message.request : null;
+          const safeReason =
+            typeof request === "string"
+              ? request
+              : request && typeof request.reason === "string"
+                ? request.reason
+                : "";
+          const rejectedAt =
+            request && typeof request.rejectedAt === "string"
+              ? request.rejectedAt
+              : "";
+          const currentDecisionStatus = document('/clientDecisionStatus');
+          const alreadyAccepted = currentDecisionStatus === "accepted";
+          const alreadyRejected = currentDecisionStatus === "rejected";
+          const alreadyDecided = alreadyAccepted || alreadyRejected;
+          const transactionStatus = document('/transactionIdentificationStatus');
+          const canReject =
+            transactionStatus === "identified" &&
+            currentDecisionStatus === "pending";
+          const discardReason = canReject
+            ? ""
+            : alreadyDecided
+              ? `PayNote already ${currentDecisionStatus}`
+              : transactionStatus === "failed"
+                ? "Transaction identification failed"
+                : "Transaction not identified";
+
+          const currentRejectedAt = document('/clientRejectedAt');
+          const currentDeliveryStatus =
+            document.canonical('/deliveryStatus') || {
+              type: "Conversation/Status Pending"
+            };
+          const currentDeliveryError = document('/deliveryError');
+
+          const nextDecisionStatus = canReject
+            ? "rejected"
+            : typeof currentDecisionStatus === "string"
+              ? currentDecisionStatus
+              : "pending";
+          const nextRejectedAt = canReject
+            ? rejectedAt
+            : typeof currentRejectedAt === "string"
+              ? currentRejectedAt
+              : "";
+          const nextDeliveryStatus = canReject
+            ? { type: "Conversation/Status Failed" }
+            : currentDeliveryStatus;
+          const nextDeliveryError = canReject
+            ? safeReason
+            : typeof currentDeliveryError === "string"
+              ? currentDeliveryError
+              : "";
+
+          return {
+            reason: safeReason,
+            rejectedAt,
+            nextDecisionStatus,
+            nextRejectedAt,
+            nextDeliveryStatus,
+            nextDeliveryError,
+            events: canReject
+              ? [
+                  {
+                    type: "PayNote/PayNote Rejected By Client",
+                    reason: safeReason,
+                    rejectedAt
+                  }
+                ]
+              : [
+                  {
+                    type: "PayNote/PayNote Client Decision Discarded",
+                    decision: "rejected",
+                    reason: discardReason,
+                    decisionAt: rejectedAt
+                  }
+                ]
+          };
+
+      - name: Apply Rejection Update
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /clientDecisionStatus
+            val: "${steps['Capture Rejection Reason'].nextDecisionStatus}"
+          - op: replace
+            path: /clientRejectedAt
+            val: "${steps['Capture Rejection Reason'].nextRejectedAt}"
+          - op: replace
+            path: /deliveryStatus
+            val: "${steps['Capture Rejection Reason'].nextDeliveryStatus}"
+          - op: replace
+            path: /deliveryError
+            val: "${steps['Capture Rejection Reason'].nextDeliveryError}"
+
+  reportDeliveryError:
+    type: Conversation/Operation
+    channel: payNoteDeliverer
+    request:
+      type: Text
+      description: Delivery error reason.
+
+  reportDeliveryErrorImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: reportDeliveryError
+    steps:
+      - name: Capture Delivery Failure Reason
+        type: Conversation/JavaScript Code
+        code: |
+          const reason =
+            event && event.message ? event.message.request : "";
+          const safeReason = typeof reason === "string" ? reason : "";
+
+          return {
+            reason: safeReason,
+            events: [
+              {
+                type: "PayNote/PayNote Delivery Failed",
+                reason: safeReason
+              }
+            ]
+          };
+
+      - name: Apply Delivery Failure
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /deliveryStatus
+            val:
+              type: Conversation/Status Failed
+          - op: replace
+            path: /deliveryError
+            val: "${steps['Capture Delivery Failure Reason'].reason}"

@@ -1,0 +1,14 @@
+name: Card Transaction Details
+description: Card network identifiers used by processor and issuer to match the same transaction (ISO 8583).
+retrievalReferenceNumber:
+  type: Text
+  description: ISO 8583 DE37 Retrieval Reference Number (RRN) for cross-network traceability.
+systemTraceAuditNumber:
+  type: Text
+  description: ISO 8583 DE11 System Trace Audit Number (STAN).
+transmissionDateTime:
+  type: Text
+  description: ISO 8583 DE7 Transmission Date and Time (MMDDhhmmss).
+authorizationCode:
+  type: Text
+  description: ISO 8583 DE38 Authorization Identification Response (authorization code).
