@@ -8,5 +8,5 @@ reason:
   type: Text
   description: Validation reason for discarding the decision.
 decisionAt:
-  type: Text
-  description: ISO 8601 timestamp provided with the decision, if any.
+  type: Common/Timestamp
+  description: Timestamp provided with the decision, if any.

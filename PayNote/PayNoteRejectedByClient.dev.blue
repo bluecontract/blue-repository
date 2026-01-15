@@ -5,5 +5,5 @@ reason:
   type: Text
   description: Optional rejection reason.
 rejectedAt:
-  type: Text
-  description: ISO 8601 timestamp when the client rejected.
+  type: Common/Timestamp
+  description: Timestamp when the client rejected.

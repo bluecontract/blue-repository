@@ -2,5 +2,5 @@ name: PayNote Accepted By Client
 type: Conversation/Event
 description: The client accepted the PayNote.
 acceptedAt:
-  type: Text
-  description: ISO 8601 timestamp when the client accepted.
+  type: Common/Timestamp
+  description: Timestamp when the client accepted.

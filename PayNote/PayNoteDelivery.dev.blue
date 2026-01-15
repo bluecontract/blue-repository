@@ -22,12 +22,12 @@ clientDecisionStatus:
   description: Client decision (pending, accepted, rejected).
 
 clientAcceptedAt:
-  type: Text
-  description: ISO 8601 timestamp when the client accepted.
+  type: Common/Timestamp
+  description: Timestamp when the client accepted.
 
 clientRejectedAt:
-  type: Text
-  description: ISO 8601 timestamp when the client rejected.
+  type: Common/Timestamp
+  description: Timestamp when the client rejected.
 
 deliveryError:
   type: Text
@@ -143,8 +143,8 @@ contracts:
     channel: payNoteDeliverer
     request:
       acceptedAt:
-        type: Text
-        description: ISO 8601 timestamp when the client accepted.
+        type: Common/Timestamp
+        description: Timestamp when the client accepted.
 
   markPayNoteAcceptedByClientImpl:
     type: Conversation/Sequential Workflow Operation
@@ -247,8 +247,8 @@ contracts:
         type: Text
         description: Optional rejection reason.
       rejectedAt:
-        type: Text
-        description: ISO 8601 timestamp when the client rejected.
+        type: Common/Timestamp
+        description: Timestamp when the client rejected.
 
   markPayNoteRejectedByClientImpl:
     type: Conversation/Sequential Workflow Operation
