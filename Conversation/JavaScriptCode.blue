@@ -19,6 +19,10 @@ description: >
       - `event`: triggering event rendered via the `'simple'` JSON strategy (plain
         values/arrays, no metadata).
       - `eventCanonical`: triggering event rendered via the `'official'` strategy.
+      - `currentContract`: the current handler contract rendered via the `'simple'`
+        JSON strategy.
+      - `currentContractCanonical`: current handler contract rendered via the
+        `'official'` strategy.
       - `document(pointer?)`: document snapshot (absolute path or scope-relative) rendered
         with the `'simple'` strategy; defaults to `/` when omitted.
       - `document.canonical(pointer?)`: snapshot rendered using the `'official'`
