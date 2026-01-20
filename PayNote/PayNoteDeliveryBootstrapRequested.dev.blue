@@ -1,6 +1,0 @@
-name: PayNote Delivery Bootstrap Requested
-type: Conversation/Event
-description: Request to bootstrap a PayNote Delivery session.
-delivery:
-  type: PayNote/PayNote Delivery
-  description: Delivery payload to bootstrap.

@@ -1,0 +1,6 @@
+name: Document Bootstrap Failed
+type: Conversation/Response
+description: Failure response event sent when document bootstrap failed.
+reason:
+  type: Text
+  description: Failure reason.

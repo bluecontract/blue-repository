@@ -1,9 +1,11 @@
 name: PayNote Delivery
 description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer).
 
-payNote:
-  type: PayNote/PayNote
-  description: PayNote being delivered.
+payNoteBootstrapRequest:
+  type: Conversation/Document Bootstrap Requested
+  document:
+    type: PayNote/PayNote
+  description: PayNote bootstrap request details.
 
 cardTransactionDetails:
   type: PayNote/Card Transaction Details
@@ -138,17 +140,17 @@ contracts:
             path: /deliveryError
             val: "${steps['Classify Identification Result'].deliveryError}"
 
-  markPayNoteAcceptedByClient:
+  acceptPayNote:
     type: Conversation/Operation
-    channel: payNoteDeliverer
+    channel: payNoteReceiver
     request:
       acceptedAt:
         type: Common/Timestamp
         description: Timestamp when the client accepted.
 
-  markPayNoteAcceptedByClientImpl:
+  acceptPayNoteImpl:
     type: Conversation/Sequential Workflow Operation
-    operation: markPayNoteAcceptedByClient
+    operation: acceptPayNote
     steps:
       - name: Capture Acceptance Timestamp
         type: Conversation/JavaScript Code
@@ -180,6 +182,7 @@ contracts:
               type: "Conversation/Status Pending"
             };
           const currentDeliveryError = document('/deliveryError');
+          const payNoteBootstrapRequest = document('/payNoteBootstrapRequest');
 
           const nextDecisionStatus = canAccept
             ? "accepted"
@@ -211,7 +214,8 @@ contracts:
                   {
                     type: "PayNote/PayNote Accepted By Client",
                     acceptedAt
-                  }
+                  },
+                  payNoteBootstrapRequest
                 ]
               : [
                   {
@@ -239,9 +243,9 @@ contracts:
             path: /deliveryError
             val: "${steps['Capture Acceptance Timestamp'].nextDeliveryError}"
 
-  markPayNoteRejectedByClient:
+  rejectPayNote:
     type: Conversation/Operation
-    channel: payNoteDeliverer
+    channel: payNoteReceiver
     request:
       reason:
         type: Text
@@ -250,9 +254,9 @@ contracts:
         type: Common/Timestamp
         description: Timestamp when the client rejected.
 
-  markPayNoteRejectedByClientImpl:
+  rejectPayNoteImpl:
     type: Conversation/Sequential Workflow Operation
-    operation: markPayNoteRejectedByClient
+    operation: rejectPayNote
     steps:
       - name: Capture Rejection Reason
         type: Conversation/JavaScript Code

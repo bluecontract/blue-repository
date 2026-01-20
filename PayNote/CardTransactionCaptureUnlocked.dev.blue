@@ -1,0 +1,6 @@
+name: Card Transaction Capture Unlocked
+type: Conversation/Response
+description: Card transaction capture was unlocked. Any following card transaction capture requests will be processed.
+unlockedAt:
+  type: Common/Timestamp
+  description: Timestamp of when the card transaction capture was unlocked.

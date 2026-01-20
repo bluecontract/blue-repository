@@ -1,0 +1,5 @@
+name: Card Transaction Capture Lock Requested
+type: Conversation/Request
+description: Request to the card issuer to deny any following card transaction capture requests.
+cardTransactionDetails:
+  type: PayNote/Card Transaction Details
