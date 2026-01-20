@@ -3,12 +3,14 @@ type: Conversation/Sequential Workflow Step
 description: >
   Conversation workflow step that enqueues an event as part of the workflow.
 
-  - Gas accounting (when & what is charged):
+  - Gas accounting (when and what is charged):
       - Base step charge (once per run of this step): 30.
       - Expression/template resolution under "/event" (if present):
-          - For each standalone expression ${…}: 5 + ceil(bytes(expr)/100).
-          - For each template string containing one or more ${…} placeholders:
-            3 × placeholderCount + ceil(bytes(template)/100).
+          - Expressions run in the deterministic QuickJS VM (same sandbox and
+            bindings as the JavaScript Code step).
+          - VM gas is converted to host gas as:
+            hostGas = ceil(wasmFuel / 1700)
+            (calibration factor currently 1700 fuel per host gas unit).
           - Any document(<pointer>) used inside expressions/templates charges
             per call: 8 + depth(pointer) + ceil(snapshotBytes/100).
       - Event emission (enqueue): 20 + ceil(eventBytes/100) for the final event

@@ -4,9 +4,17 @@ description: >
   Conversation workflow step that executes provided JavaScript source as part of
   a sequential workflow.
 
-  - Gas accounting (when & what is charged):
-      - Base step charge (once per run of this step): 100 + ceil(bytes(code)/100)
-        where bytes(code) is the UTF-8 length of the JavaScript source.
+  - Deterministic JavaScript runtime (QuickJS in Wasm):
+      - Only deterministic APIs are available. Date, Math.random, eval/Function,
+        Promise/async, RegExp, Proxy, ArrayBuffer/typed arrays, WebAssembly,
+        console, JSON.parse/stringify, and Array.prototype.sort are disabled.
+      - Values passed into and returned from the VM must be DV-compatible
+        (null, boolean, number, string, array, object with string keys).
+  - Gas accounting (when and what is charged):
+      - JavaScript execution is metered by the QuickJS VM. The VM reports wasm
+        fuel used; the processor converts it to host gas with:
+          hostGas = ceil(wasmFuel / 1700)
+        (calibration factor currently 1700 fuel per host gas unit).
       - Document snapshot reads (via document(<pointer>) inside the code):
         8 + depth(pointer) + ceil(snapshotBytes/100) per call, where:
           - depth("/") = 0, depth("/a/b") = 2 (number of path segments),
