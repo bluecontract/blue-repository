@@ -1,0 +1,8 @@
+name: Contracts Change Policy
+type: Core/Marker
+description: >
+  Policy marker that restricts /contracts mutations to explicit sectionChanges
+  and rejects JSON Patch entries targeting /contracts.
+requireSectionChanges:
+  type: Boolean
+  description: Policy flag; when present and not false, /contracts changes must use sectionChanges. Set false to allow direct changeset edits.

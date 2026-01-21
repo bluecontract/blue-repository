@@ -1,0 +1,14 @@
+name: Document Section Changes
+description: Structured /contracts changes grouped by logical sections, used by change workflows.
+add:
+  type: List
+  itemType: Conversation/Document Section Change Entry
+  description: New sections to create with their Document Section and contracts.
+modify:
+  type: List
+  itemType: Conversation/Document Section Change Entry
+  description: Existing sections to update with a full contracts map.
+remove:
+  type: List
+  itemType: Text
+  description: Section keys to remove (also removes the section's related contracts).

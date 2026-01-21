@@ -1,0 +1,15 @@
+name: Document Section Change Entry
+description: >
+  Single section change entry used by sectionChanges.add/modify. The section's
+  relatedContracts should align with the keys provided in contracts.
+sectionKey:
+  type: Text
+  description: Contracts key under /contracts for the Document Section marker.
+section:
+  type: Conversation/Document Section
+  description: Document Section contract node; must include type Conversation/Document Section and relatedContracts should list keys in contracts.
+contracts:
+  type: Dictionary
+  keyType: Text
+  valueType: Core/Contract
+  description: Map of contractKey -> contract node to add or replace for this section.
