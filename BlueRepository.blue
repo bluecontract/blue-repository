@@ -206,6 +206,90 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Document Bootstrap Completed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Response event confirming completion of the document bootstrap.
+          documentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Document ID of the bootstrapped document.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: HH5u8PwvdXrARNkT4oyWR4QjgkwhKfPWGnNtEwfUBiUg
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Bootstrap Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Failure response event sent when document bootstrap failed.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Failure reason.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: B8b1ayXMrAYbwkqaJfAS6Aspp2kZyJda8ay9QeFkZ9MH
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Bootstrap Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to bootstrap the provided document.
+          document:
+            description: Target Blue document to bootstrap.
+          channelBindings:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+            description: Maps channel names to participant identifiers.
+          initialMessages:
+            description: Messages sent to participants when inviting them to the bootstrapped document.
+            defaultMessage:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Default invitation message sent to all participants.
+            perChannel:
+              type:
+                blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+              keyType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              valueType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Per-channel custom invitation messages.
+          bootstrapAssignee:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Channel name of a participant in the requesting document which is asked to bootstrap the requested document
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Bootstrap Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Decision response event for a document bootstrap request.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Decision for the bootstrap request ("accepted" | "rejected").
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Details when rejected or additional context.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 1Ucfmhtb9xjvyLxLKSVkqXZjVVuAdXyzdjb11QG11Uv
+            attributesAdded: []
+      - status: dev
+        content:
           name: Document Section
           type:
             blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
@@ -3544,6 +3628,74 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Card Transaction Capture Lock Change Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Card transaction capture lock change failed.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Failure reason.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 2LFkmyxDFSdNqM8mr6Md3LF54V15fFGL1s5fTnUfCpUH
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Capture Lock Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to the card issuer to deny any following card transaction capture requests.
+          cardTransactionDetails:
+            type:
+              blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: DhxGBjA6Gow9E6ZKZ49SdziihHZ4PeXxFNatSqmesKZu
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Capture Locked
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Card transaction capture was locked. Any following card transaction capture requests will be rejected.
+          lockedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp of when the card transaction capture was locked.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: EXoQHkYEDQdhGd3AeXBryzxmCTXsvTjXTfZmjwuqqbHt
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Capture Unlock Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to the card issuer to process any following card transaction capture requests.
+          cardTransactionDetails:
+            type:
+              blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 531sxtH5rD9ter3EzwBTcn9GMdA7RAYFwmSQRzxCru8z
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Capture Unlocked
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Card transaction capture was unlocked. Any following card transaction capture requests will be processed.
+          unlockedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp of when the card transaction capture was unlocked.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: DiowRXdCBw83YCn5Pwcg2YABaVQZ1p4Wk1L9DJfajqp5
+            attributesAdded: []
+      - status: dev
+        content:
           name: Card Transaction Details
           description: Card network identifiers used by processor and issuer to match the same transaction (ISO 8583).
           retrievalReferenceNumber:
@@ -3790,10 +3942,13 @@ packages:
         content:
           name: PayNote Delivery
           description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer).
-          payNote:
+          payNoteBootstrapRequest:
             type:
-              blueId: CDMVLRyodD2WhScu2PPRgGquEArMNGXxvZCYiJXg2YjT
-            description: PayNote being delivered.
+              blueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
+            document:
+              type:
+                blueId: CDMVLRyodD2WhScu2PPRgGquEArMNGXxvZCYiJXg2YjT
+            description: PayNote bootstrap request details.
           cardTransactionDetails:
             type:
               blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
@@ -4008,11 +4163,11 @@ packages:
                             value: ${steps['Classify Identification Result'].deliveryError}
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            markPayNoteAcceptedByClient:
+            acceptPayNote:
               type:
                 blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
               channel:
-                value: payNoteDeliverer
+                value: payNoteReceiver
                 type:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               request:
@@ -4020,11 +4175,11 @@ packages:
                   type:
                     blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
                   description: Timestamp when the client accepted.
-            markPayNoteAcceptedByClientImpl:
+            acceptPayNoteImpl:
               type:
                 blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
               operation:
-                value: markPayNoteAcceptedByClient
+                value: acceptPayNote
                 type:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               steps:
@@ -4061,6 +4216,7 @@ packages:
                             type: "Conversation/Status Pending"
                           };
                         const currentDeliveryError = document('/deliveryError');
+                        const payNoteBootstrapRequest = document('/payNoteBootstrapRequest');
 
                         const nextDecisionStatus = canAccept
                           ? "accepted"
@@ -4092,7 +4248,8 @@ packages:
                                 {
                                   type: "PayNote/PayNote Accepted By Client",
                                   acceptedAt
-                                }
+                                },
+                                payNoteBootstrapRequest
                               ]
                             : [
                                 {
@@ -4158,11 +4315,11 @@ packages:
                             value: ${steps['Capture Acceptance Timestamp'].nextDeliveryError}
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            markPayNoteRejectedByClient:
+            rejectPayNote:
               type:
                 blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
               channel:
-                value: payNoteDeliverer
+                value: payNoteReceiver
                 type:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               request:
@@ -4174,11 +4331,11 @@ packages:
                   type:
                     blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
                   description: Timestamp when the client rejected.
-            markPayNoteRejectedByClientImpl:
+            rejectPayNoteImpl:
               type:
                 blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
               operation:
-                value: markPayNoteRejectedByClient
+                value: rejectPayNote
                 type:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               steps:
@@ -4390,22 +4547,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 3
-            typeBlueId: F55Gk1KTHsAfWVjfP4LH7bB558tJ5DL6FUu4as3g5mY1
-            attributesAdded: []
-      - status: dev
-        content:
-          name: PayNote Delivery Bootstrap Requested
-          type:
-            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
-          description: Request to bootstrap a PayNote Delivery session.
-          delivery:
-            type:
-              blueId: F55Gk1KTHsAfWVjfP4LH7bB558tJ5DL6FUu4as3g5mY1
-            description: Delivery payload to bootstrap.
-        versions:
-          - repositoryVersionIndex: 3
-            typeBlueId: 5dMaJQ2nrVQLFB6VT3RGRHJC1nKxzj89cji86TJo7YMr
+          - repositoryVersionIndex: 5
+            typeBlueId: HLbADMUuL3giyZNqfrSVRC2uifTyRUJQPQkS2vDBCgdS
             attributesAdded: []
       - status: dev
         content:
@@ -4586,3 +4729,4 @@ repositoryVersions:
   - GenpwaWZPgCUuDBd8DDAa5Kes2ojV1oP4eVt6ayBKy6e
   - EbEJF1ttddLLVTPtGjxo8TnjxdZsQvtfmanjgUheQuvp
   - 4vpHZQ2NpENzjNmaR9TDBrezwZ392BJH9t31bZBaeRRr
+  - J41s13bymFExtPh8YmYrRdQECGKomDfB8djpj8uUNkHy
