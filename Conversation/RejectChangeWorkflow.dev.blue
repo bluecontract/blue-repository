@@ -8,7 +8,7 @@ steps:
   - name: Prepare
     type: Conversation/JavaScript Code
     code: |
-      const postfix = currentContract.postfix ?? ''
+      const postfix = currentContract.postfix || ''
       const path = '/proposedChange' + postfix
 
       const proposedChange = document(path)

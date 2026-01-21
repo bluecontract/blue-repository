@@ -15,15 +15,350 @@ steps:
 
       const request = event.message.request || {};
 
-      const proposedChangesetDescription = request.changesetDescription;
-      const proposedChangeset = request.changeset;
+      const changeDescription = request.changeDescription;
+      const rawChangeset = request.changeset;
+      const rawSectionChanges = request.sectionChanges;
+      const requestSectionChanges = rawSectionChanges || {};
 
-      if (!proposedChangesetDescription) {
-        issues.push('changesetDescription is missing');
+      const toText = (value) => {
+        const raw = value && value.value ? value.value : value;
+        return raw && raw.trim ? raw.trim() : '';
+      };
+      const asList = (value) => Array.isArray(value) ? value : [];
+      const hasType = (value) => value && value.type;
+      const escapePointer = (value) => {
+        const text = toText(value);
+        return text.split('~').join('~0').split('/').join('~1');
+      };
+      const requestChangeset = asList(rawChangeset);
+
+      const uniqueKeys = (values, label) => {
+        const seen = new Set();
+        const output = [];
+        for (const value of values) {
+          const key = toText(value);
+          if (!key) {
+            issues.push(label + ' contains invalid key');
+            continue;
+          }
+          if (seen.has(key)) {
+            issues.push(label + ' contains duplicate key: ' + key);
+            continue;
+          }
+          seen.add(key);
+          output.push(key);
+        }
+        return output;
+      };
+
+      const sameStringSet = (left, right) => {
+        if (left.length !== right.length) return false;
+        const set = new Set(left);
+        if (set.size !== right.length) return false;
+        for (const value of right) {
+          if (!set.has(value)) return false;
+        }
+        return true;
+      };
+
+      const contracts = Object(document('/contracts') || {});
+
+      const isDocumentSection = (contract) =>
+        !!contract && Array.isArray(contract.relatedContracts);
+
+      const isContractsChangePolicy = (contract) => {
+        if (!contract) return false;
+        return 'requireSectionChanges' in contract;
+      };
+
+      const findPolicy = () => {
+        for (const key of Object.keys(contracts)) {
+          const contract = contracts[key];
+          if (isContractsChangePolicy(contract)) {
+            return contract;
+          }
+        }
+        return null;
+      };
+
+      const policy = findPolicy();
+      const policyEnabled = !!policy && policy.requireSectionChanges !== false;
+
+      if (!toText(changeDescription)) {
+        issues.push('changeDescription is missing');
       }
 
-      if (!proposedChangeset) {
-        issues.push('changeset is missing');
+      const hasChangeset = !!rawChangeset;
+      const hasSectionChanges = !!rawSectionChanges;
+
+      if (!hasChangeset && !hasSectionChanges) {
+        issues.push('changeset or sectionChanges is required');
+      }
+
+      const isContractsPath = (path) => {
+        const value = toText(path);
+        return value === '/contracts' || value.startsWith('/contracts/');
+      };
+      if (policyEnabled && hasChangeset) {
+        for (const entry of requestChangeset) {
+          if (entry && isContractsPath(entry.path)) {
+            issues.push('changeset cannot modify /contracts when Contracts Change Policy is enabled');
+            break;
+          }
+        }
+      }
+      const isProposedChangePath = (path) =>
+        toText(path).startsWith('/proposedChange');
+      if (hasChangeset) {
+        for (const entry of requestChangeset) {
+          if (entry && isProposedChangePath(entry.path)) {
+            issues.push('changeset cannot modify /proposedChange');
+            break;
+          }
+        }
+      }
+
+      const existingSections = {};
+      for (const key of Object.keys(contracts)) {
+        const contract = contracts[key];
+        if (isDocumentSection(contract)) {
+          existingSections[key] = contract;
+        }
+      }
+
+      const contractIndex = {};
+      for (const sectionKey of Object.keys(existingSections)) {
+        const section = existingSections[sectionKey];
+        const related = asList(section.relatedContracts);
+        for (const relatedKey of related) {
+          const contractKey = toText(relatedKey);
+          if (!contractKey) continue;
+          if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+            contractIndex[contractKey] = null;
+          } else if (!contractIndex[contractKey]) {
+            contractIndex[contractKey] = sectionKey;
+          }
+        }
+      }
+
+      const normalizeSectionDefinition = (sectionDef, label) => {
+        if (!sectionDef) {
+          issues.push(label + ' entry must be an object');
+          return null;
+        }
+        const sectionKey = toText(sectionDef.sectionKey);
+        if (!sectionKey) {
+          issues.push(label + ' sectionKey is missing');
+          return null;
+        }
+        const section = sectionDef.section;
+        if (!section) {
+          issues.push(label + ' section is missing');
+          return null;
+        }
+
+        const contractsMap = sectionDef.contracts || {};
+        const contractDefs = [];
+        const contractKeys = [];
+        for (const [rawKey, contract] of Object.entries(contractsMap)) {
+          const key = toText(rawKey);
+          if (!key) {
+            issues.push(label + ' contract key is missing');
+            continue;
+          }
+          if (!contract) {
+            issues.push(label + ' contract ' + key + ' is missing or invalid');
+            continue;
+          }
+          if (!hasType(contract)) {
+            issues.push(label + ' contract ' + key + ' is missing type');
+          }
+          contractDefs.push({ key, contract });
+          contractKeys.push(key);
+        }
+
+        if (!hasType(section)) {
+          issues.push(label + ' section ' + sectionKey + ' is missing type');
+        }
+
+        const related = section.relatedContracts
+          ? uniqueKeys(asList(section.relatedContracts), label + ' section ' + sectionKey + ' relatedContracts')
+          : null;
+        if (related && !sameStringSet(related, contractKeys)) {
+          issues.push(label + ' section ' + sectionKey + ' relatedContracts must match contracts');
+        }
+
+        const normalizedRelated = related || contractKeys;
+        const normalizedSection = Object.assign({}, section, {
+          type: 'Conversation/Document Section',
+          relatedContracts: normalizedRelated
+        });
+
+        return {
+          sectionKey,
+          section: normalizedSection,
+          contractDefs,
+          contractKeys
+        };
+      };
+
+      const sectionChangeset = [];
+      const seenSectionKeys = new Set();
+      const seenContractKeys = new Set();
+
+      const addList = asList(requestSectionChanges.add);
+      const modifyList = asList(requestSectionChanges.modify);
+      const removeList = asList(requestSectionChanges.remove);
+
+      for (const entry of addList) {
+        const normalized = normalizeSectionDefinition(entry, 'sectionChanges.add');
+        if (!normalized) continue;
+        const sectionKey = normalized.sectionKey;
+        if (seenSectionKeys.has(sectionKey)) {
+          issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+          continue;
+        }
+        seenSectionKeys.add(sectionKey);
+
+        if (contracts[sectionKey]) {
+          issues.push('section key already exists at /contracts/' + sectionKey);
+        }
+
+        for (const contractKey of normalized.contractKeys) {
+          if (seenContractKeys.has(contractKey)) {
+            issues.push('contract key used by multiple sections in request: ' + contractKey);
+            continue;
+          }
+          seenContractKeys.add(contractKey);
+          if (contracts[contractKey]) {
+            issues.push('contract key already exists at /contracts/' + contractKey);
+          }
+        }
+
+        for (const contractDef of normalized.contractDefs) {
+          sectionChangeset.push({
+            op: 'add',
+            path: '/contracts/' + escapePointer(contractDef.key),
+            val: contractDef.contract
+          });
+        }
+        sectionChangeset.push({
+          op: 'add',
+          path: '/contracts/' + escapePointer(sectionKey),
+          val: normalized.section
+        });
+      }
+
+      for (const entry of modifyList) {
+        const normalized = normalizeSectionDefinition(entry, 'sectionChanges.modify');
+        if (!normalized) continue;
+        const sectionKey = normalized.sectionKey;
+        if (seenSectionKeys.has(sectionKey)) {
+          issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+          continue;
+        }
+        seenSectionKeys.add(sectionKey);
+
+        const existingSection = contracts[sectionKey];
+        if (!existingSection) {
+          issues.push('section key does not exist at /contracts/' + sectionKey);
+        } else if (!isDocumentSection(existingSection)) {
+          issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
+        }
+
+        const existingRelated =
+          existingSection && existingSection.relatedContracts
+            ? asList(existingSection.relatedContracts)
+            : [];
+        if (existingSection && !existingSection.relatedContracts) {
+          issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+        }
+
+        for (const contractKey of normalized.contractKeys) {
+          if (seenContractKeys.has(contractKey)) {
+            issues.push('contract key used by multiple sections in request: ' + contractKey);
+            continue;
+          }
+          seenContractKeys.add(contractKey);
+          if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+            issues.push('contract key ' + contractKey + ' is linked to another section');
+          }
+        }
+
+        for (const contractDef of normalized.contractDefs) {
+          const op = contracts[contractDef.key] ? 'replace' : 'add';
+          sectionChangeset.push({
+            op,
+            path: '/contracts/' + escapePointer(contractDef.key),
+            val: contractDef.contract
+          });
+        }
+
+        const toRemove = uniqueKeys(existingRelated, 'sectionChanges.modify remove list').filter(
+          (key) => !normalized.contractKeys.includes(key)
+        );
+        for (const contractKey of toRemove) {
+          if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+            issues.push('contract key ' + contractKey + ' is linked to another section');
+            continue;
+          }
+          sectionChangeset.push({
+            op: 'remove',
+            path: '/contracts/' + escapePointer(contractKey)
+          });
+        }
+
+        sectionChangeset.push({
+          op: 'replace',
+          path: '/contracts/' + escapePointer(sectionKey),
+          val: normalized.section
+        });
+      }
+
+      const removeKeys = uniqueKeys(removeList, 'sectionChanges.remove');
+      for (const sectionKey of removeKeys) {
+        if (seenSectionKeys.has(sectionKey)) {
+          issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+          continue;
+        }
+        seenSectionKeys.add(sectionKey);
+
+        const existingSection = contracts[sectionKey];
+        if (!existingSection) {
+          issues.push('section key does not exist at /contracts/' + sectionKey);
+          continue;
+        }
+        if (!isDocumentSection(existingSection)) {
+          issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
+          continue;
+        }
+
+        const related = existingSection.relatedContracts
+          ? uniqueKeys(asList(existingSection.relatedContracts), 'sectionChanges.remove relatedContracts')
+          : [];
+        if (!existingSection.relatedContracts) {
+          issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+        }
+
+        for (const contractKey of related) {
+          if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+            issues.push('contract key ' + contractKey + ' is linked to another section');
+            continue;
+          }
+          sectionChangeset.push({
+            op: 'remove',
+            path: '/contracts/' + escapePointer(contractKey)
+          });
+        }
+        sectionChangeset.push({
+          op: 'remove',
+          path: '/contracts/' + escapePointer(sectionKey)
+        });
+      }
+      const combinedChangeset = sectionChangeset.concat(hasChangeset ? requestChangeset : []);
+
+      if (combinedChangeset.length === 0) {
+        issues.push('no changes provided');
       }
 
       if (issues.length > 0) {
@@ -38,11 +373,10 @@ steps:
         }
       }
 
-      const postfix = currentContract.postfix ?? ''
-      const path = '/proposedChange' + postfix
+      const postfixValue = currentContract.postfix || '';
+      const path = '/proposedChange' + postfixValue;
 
-      const existing = document(path)
-      if (existing) {
+      if (document(path)) {
         return {
           changeset: [],
           events: [
@@ -54,14 +388,26 @@ steps:
         }
       }
 
+      const proposedPayload = {
+        changeDescription
+      };
+
+      proposedPayload.preparedChangeset = combinedChangeset;
+
+      if (hasChangeset) {
+        proposedPayload.changeset = requestChangeset;
+      }
+
+      const hasSectionChangesData = addList.length || modifyList.length || removeList.length;
+      if (hasSectionChangesData) {
+        proposedPayload.sectionChanges = rawSectionChanges;
+      }
+
       return {
         changeset: [{
           op: 'add',
           path,
-          val: {
-            changesetDescription: proposedChangesetDescription,
-            changeset: proposedChangeset
-          }
+          val: proposedPayload
         }]
       };
   - name: Apply

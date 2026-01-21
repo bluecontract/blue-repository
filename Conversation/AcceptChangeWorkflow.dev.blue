@@ -8,25 +8,37 @@ steps:
   - name: Prepare
     type: Conversation/JavaScript Code
     code: |
-      const postfix = currentContract.postfix ?? ''
-      const path = '/proposedChange' + postfix
+      const postfix = currentContract.postfix || '';
+      const path = '/proposedChange' + postfix;
 
-      const proposedChange = document(path)
-      if (proposedChange) {
-        const changeset = [...proposedChange.changeset, { op: 'remove', path }]
+      const proposedChange = document(path);
+      if (!proposedChange) {
         return {
-          changeset
-        }
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Proposed Change Invalid",
+              reason: "Proposed change does not exist at " + path
+            }
+          ]
+        };
+      }
+
+      const preparedChangeset = proposedChange.preparedChangeset;
+      if (!preparedChangeset || preparedChangeset.length === 0) {
+        return {
+          changeset: [],
+          events: [
+            {
+              type: "Conversation/Proposed Change Invalid",
+              reason: "Proposed change is missing prepared changeset at " + path
+            }
+          ]
+        };
       }
 
       return {
-        changeset: [],
-        events: [
-          {
-            type: "Conversation/Proposed Change Invalid",
-            reason: "Proposed change does not exist at " + path
-          }
-        ]
+        changeset: preparedChangeset.concat({ op: 'remove', path })
       };
   - name: Apply
     type: Conversation/Update Document
