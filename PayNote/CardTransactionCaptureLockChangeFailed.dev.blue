@@ -1,0 +1,6 @@
+name: Card Transaction Capture Lock Change Failed
+type: Conversation/Response
+description: Card transaction capture lock change failed.
+reason:
+  type: Text
+  description: Failure reason.

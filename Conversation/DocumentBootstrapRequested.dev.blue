@@ -1,0 +1,23 @@
+name: Document Bootstrap Requested
+type: Conversation/Request
+description: Request to bootstrap the provided document.
+document:
+  description: Target Blue document to bootstrap.
+channelBindings:
+  type: Dictionary
+  keyType: Text
+  valueType: Core/Channel
+  description: Maps channel names to participant identifiers.
+initialMessages:
+  description: Messages sent to participants when inviting them to the bootstrapped document.
+  defaultMessage:
+    type: Text
+    description: Default invitation message sent to all participants.
+  perChannel:
+    type: Dictionary
+    keyType: Text
+    valueType: Text
+    description: Per-channel custom invitation messages.
+bootstrapAssignee:
+  type: Text
+  description: Channel name of a participant in the requesting document which is asked to bootstrap the requested document

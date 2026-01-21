@@ -1,0 +1,6 @@
+name: Document Bootstrap Completed
+type: Conversation/Response
+description: Response event confirming completion of the document bootstrap.
+documentId:
+  type: Text
+  description: Document ID of the bootstrapped document.
