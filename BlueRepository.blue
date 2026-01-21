@@ -41,25 +41,37 @@ packages:
                   blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                 code:
                   value: |
-                    const postfix = currentContract.postfix ?? ''
-                    const path = '/proposedChange' + postfix
+                    const postfix = currentContract.postfix || '';
+                    const path = '/proposedChange' + postfix;
 
-                    const proposedChange = document(path)
-                    if (proposedChange) {
-                      const changeset = [...proposedChange.changeset, { op: 'remove', path }]
+                    const proposedChange = document(path);
+                    if (!proposedChange) {
                       return {
-                        changeset
-                      }
+                        changeset: [],
+                        events: [
+                          {
+                            type: "Conversation/Proposed Change Invalid",
+                            reason: "Proposed change does not exist at " + path
+                          }
+                        ]
+                      };
+                    }
+
+                    const preparedChangeset = proposedChange.preparedChangeset;
+                    if (!preparedChangeset || preparedChangeset.length === 0) {
+                      return {
+                        changeset: [],
+                        events: [
+                          {
+                            type: "Conversation/Proposed Change Invalid",
+                            reason: "Proposed change is missing prepared changeset at " + path
+                          }
+                        ]
+                      };
                     }
 
                     return {
-                      changeset: [],
-                      events: [
-                        {
-                          type: "Conversation/Proposed Change Invalid",
-                          reason: "Proposed change does not exist at " + path
-                        }
-                      ]
+                      changeset: preparedChangeset.concat({ op: 'remove', path })
                     };
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -71,8 +83,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: AwN4iZfsqtGnU1b4dKTFkZipLTKhT4Fu815sEDR1Uw2V
+          - repositoryVersionIndex: 1
+            typeBlueId: G6GMCB3AQvH2xR12RiDvaCiEbCjgz4uhjKssDMRXbCTG
             attributesAdded: []
       - status: stable
         content:
@@ -91,28 +103,32 @@ packages:
           description: Operation that applies a changeset immediately without proposal/accept.
           request:
             type:
-              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 3UQcFf9FhSYZPGtbxWTg2ifNAVKzbzb61aTMVUFaTCnD
+          - repositoryVersionIndex: 1
+            typeBlueId: BoyJNkH7CAzjuuzbZFpxB7HguZVtLCxpBLnuYY5k1eqB
             attributesAdded: []
       - status: dev
         content:
           name: Change Request
-          description: Request payload for proposing or applying a document changeset.
-          changesetDescription:
+          description: Payload for propose/make change operations (changeset + sectionChanges).
+          changeDescription:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional human-readable summary of the change.
+            description: Required human-readable summary used for review and audit.
           changeset:
             type:
               blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
             itemType:
               blueId: Bz49DbfqKC1yJeCfv5RYPZUKTfb7rtZnmreCaz4RsXn5
-            description: RFC 6902-compatible patch entries to apply.
+            description: RFC 6902 patch entries outside /contracts (blocked by policy when touching /contracts).
+          sectionChanges:
+            type:
+              blueId: DEmFwGa1sWm2BKhrN98LREKiB8j8B8kFAo7KBkkaojnN
+            description: Section-based /contracts mutations (required when Contracts Change Policy is enabled).
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+          - repositoryVersionIndex: 1
+            typeBlueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
             attributesAdded: []
       - status: dev
         content:
@@ -122,7 +138,7 @@ packages:
           description: Applies a requested changeset immediately to the document.
           request:
             type:
-              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
             description: Expected request payload for this workflow.
           steps:
             items:
@@ -135,9 +151,350 @@ packages:
 
                     const request = event.message.request || {};
 
-                    const changeset = request.changeset;
-                    if (!changeset) {
-                      issues.push('changeset is missing');
+                    const changeDescription = request.changeDescription;
+                    const rawChangeset = request.changeset;
+                    const rawSectionChanges = request.sectionChanges;
+                    const requestSectionChanges = rawSectionChanges || {};
+
+                    const toText = (value) => {
+                      const raw = value && value.value ? value.value : value;
+                      return raw && raw.trim ? raw.trim() : '';
+                    };
+                    const asList = (value) => Array.isArray(value) ? value : [];
+                    const hasType = (value) => value && value.type;
+                    const escapePointer = (value) => {
+                      const text = toText(value);
+                      return text.split('~').join('~0').split('/').join('~1');
+                    };
+                    const requestChangeset = asList(rawChangeset);
+
+                    const uniqueKeys = (values, label) => {
+                      const seen = new Set();
+                      const output = [];
+                      for (const value of values) {
+                        const key = toText(value);
+                        if (!key) {
+                          issues.push(label + ' contains invalid key');
+                          continue;
+                        }
+                        if (seen.has(key)) {
+                          issues.push(label + ' contains duplicate key: ' + key);
+                          continue;
+                        }
+                        seen.add(key);
+                        output.push(key);
+                      }
+                      return output;
+                    };
+
+                    const sameStringSet = (left, right) => {
+                      if (left.length !== right.length) return false;
+                      const set = new Set(left);
+                      if (set.size !== right.length) return false;
+                      for (const value of right) {
+                        if (!set.has(value)) return false;
+                      }
+                      return true;
+                    };
+
+                    const contracts = Object(document('/contracts') || {});
+
+                    const isDocumentSection = (contract) =>
+                      !!contract && Array.isArray(contract.relatedContracts);
+
+                    const isContractsChangePolicy = (contract) => {
+                      if (!contract) return false;
+                      return 'requireSectionChanges' in contract;
+                    };
+
+                    const findPolicy = () => {
+                      for (const key of Object.keys(contracts)) {
+                        const contract = contracts[key];
+                        if (isContractsChangePolicy(contract)) {
+                          return contract;
+                        }
+                      }
+                      return null;
+                    };
+
+                    const policy = findPolicy();
+                    const policyEnabled = !!policy && policy.requireSectionChanges !== false;
+
+                    if (!toText(changeDescription)) {
+                      issues.push('changeDescription is missing');
+                    }
+
+                    const hasChangeset = !!rawChangeset;
+                    const hasSectionChanges = !!rawSectionChanges;
+
+                    if (!hasChangeset && !hasSectionChanges) {
+                      issues.push('changeset or sectionChanges is required');
+                    }
+
+                    const isContractsPath = (path) => {
+                      const value = toText(path);
+                      return value === '/contracts' || value.startsWith('/contracts/');
+                    };
+                    if (policyEnabled && hasChangeset) {
+                      for (const entry of requestChangeset) {
+                        if (entry && isContractsPath(entry.path)) {
+                          issues.push('changeset cannot modify /contracts when Contracts Change Policy is enabled');
+                          break;
+                        }
+                      }
+                    }
+                    const isProposedChangePath = (path) =>
+                      toText(path).startsWith('/proposedChange');
+                    if (hasChangeset) {
+                      for (const entry of requestChangeset) {
+                        if (entry && isProposedChangePath(entry.path)) {
+                          issues.push('changeset cannot modify /proposedChange');
+                          break;
+                        }
+                      }
+                    }
+
+                    const existingSections = {};
+                    for (const key of Object.keys(contracts)) {
+                      const contract = contracts[key];
+                      if (isDocumentSection(contract)) {
+                        existingSections[key] = contract;
+                      }
+                    }
+
+                    const contractIndex = {};
+                    for (const sectionKey of Object.keys(existingSections)) {
+                      const section = existingSections[sectionKey];
+                      const related = asList(section.relatedContracts);
+                      for (const relatedKey of related) {
+                        const contractKey = toText(relatedKey);
+                        if (!contractKey) continue;
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          contractIndex[contractKey] = null;
+                        } else if (!contractIndex[contractKey]) {
+                          contractIndex[contractKey] = sectionKey;
+                        }
+                      }
+                    }
+
+                    const normalizeSectionDefinition = (sectionDef, label) => {
+                      if (!sectionDef) {
+                        issues.push(label + ' entry must be an object');
+                        return null;
+                      }
+                      const sectionKey = toText(sectionDef.sectionKey);
+                      if (!sectionKey) {
+                        issues.push(label + ' sectionKey is missing');
+                        return null;
+                      }
+                      const section = sectionDef.section;
+                      if (!section) {
+                        issues.push(label + ' section is missing');
+                        return null;
+                      }
+
+                      const contractsMap = sectionDef.contracts || {};
+                      const contractDefs = [];
+                      const contractKeys = [];
+                      for (const [rawKey, contract] of Object.entries(contractsMap)) {
+                        const key = toText(rawKey);
+                        if (!key) {
+                          issues.push(label + ' contract key is missing');
+                          continue;
+                        }
+                        if (!contract) {
+                          issues.push(label + ' contract ' + key + ' is missing or invalid');
+                          continue;
+                        }
+                        if (!hasType(contract)) {
+                          issues.push(label + ' contract ' + key + ' is missing type');
+                        }
+                        contractDefs.push({ key, contract });
+                        contractKeys.push(key);
+                      }
+
+                      if (!hasType(section)) {
+                        issues.push(label + ' section ' + sectionKey + ' is missing type');
+                      }
+
+                      const related = section.relatedContracts
+                        ? uniqueKeys(asList(section.relatedContracts), label + ' section ' + sectionKey + ' relatedContracts')
+                        : null;
+                      if (related && !sameStringSet(related, contractKeys)) {
+                        issues.push(label + ' section ' + sectionKey + ' relatedContracts must match contracts');
+                      }
+
+                      const normalizedRelated = related || contractKeys;
+                      const normalizedSection = Object.assign({}, section, {
+                        type: 'Conversation/Document Section',
+                        relatedContracts: normalizedRelated
+                      });
+
+                      return {
+                        sectionKey,
+                        section: normalizedSection,
+                        contractDefs,
+                        contractKeys
+                      };
+                    };
+
+                    const sectionChangeset = [];
+                    const seenSectionKeys = new Set();
+                    const seenContractKeys = new Set();
+
+                    const addList = asList(requestSectionChanges.add);
+                    const modifyList = asList(requestSectionChanges.modify);
+                    const removeList = asList(requestSectionChanges.remove);
+
+                    for (const entry of addList) {
+                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.add');
+                      if (!normalized) continue;
+                      const sectionKey = normalized.sectionKey;
+                      if (seenSectionKeys.has(sectionKey)) {
+                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+                        continue;
+                      }
+                      seenSectionKeys.add(sectionKey);
+
+                      if (contracts[sectionKey]) {
+                        issues.push('section key already exists at /contracts/' + sectionKey);
+                      }
+
+                      for (const contractKey of normalized.contractKeys) {
+                        if (seenContractKeys.has(contractKey)) {
+                          issues.push('contract key used by multiple sections in request: ' + contractKey);
+                          continue;
+                        }
+                        seenContractKeys.add(contractKey);
+                        if (contracts[contractKey]) {
+                          issues.push('contract key already exists at /contracts/' + contractKey);
+                        }
+                      }
+
+                      for (const contractDef of normalized.contractDefs) {
+                        sectionChangeset.push({
+                          op: 'add',
+                          path: '/contracts/' + escapePointer(contractDef.key),
+                          val: contractDef.contract
+                        });
+                      }
+                      sectionChangeset.push({
+                        op: 'add',
+                        path: '/contracts/' + escapePointer(sectionKey),
+                        val: normalized.section
+                      });
+                    }
+
+                    for (const entry of modifyList) {
+                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.modify');
+                      if (!normalized) continue;
+                      const sectionKey = normalized.sectionKey;
+                      if (seenSectionKeys.has(sectionKey)) {
+                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+                        continue;
+                      }
+                      seenSectionKeys.add(sectionKey);
+
+                      const existingSection = contracts[sectionKey];
+                      if (!existingSection) {
+                        issues.push('section key does not exist at /contracts/' + sectionKey);
+                      } else if (!isDocumentSection(existingSection)) {
+                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
+                      }
+
+                      const existingRelated =
+                        existingSection && existingSection.relatedContracts
+                          ? asList(existingSection.relatedContracts)
+                          : [];
+                      if (existingSection && !existingSection.relatedContracts) {
+                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+                      }
+
+                      for (const contractKey of normalized.contractKeys) {
+                        if (seenContractKeys.has(contractKey)) {
+                          issues.push('contract key used by multiple sections in request: ' + contractKey);
+                          continue;
+                        }
+                        seenContractKeys.add(contractKey);
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          issues.push('contract key ' + contractKey + ' is linked to another section');
+                        }
+                      }
+
+                      for (const contractDef of normalized.contractDefs) {
+                        const op = contracts[contractDef.key] ? 'replace' : 'add';
+                        sectionChangeset.push({
+                          op,
+                          path: '/contracts/' + escapePointer(contractDef.key),
+                          val: contractDef.contract
+                        });
+                      }
+
+                      const toRemove = uniqueKeys(existingRelated, 'sectionChanges.modify remove list').filter(
+                        (key) => !normalized.contractKeys.includes(key)
+                      );
+                      for (const contractKey of toRemove) {
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          issues.push('contract key ' + contractKey + ' is linked to another section');
+                          continue;
+                        }
+                        sectionChangeset.push({
+                          op: 'remove',
+                          path: '/contracts/' + escapePointer(contractKey)
+                        });
+                      }
+
+                      sectionChangeset.push({
+                        op: 'replace',
+                        path: '/contracts/' + escapePointer(sectionKey),
+                        val: normalized.section
+                      });
+                    }
+
+                    const removeKeys = uniqueKeys(removeList, 'sectionChanges.remove');
+                    for (const sectionKey of removeKeys) {
+                      if (seenSectionKeys.has(sectionKey)) {
+                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+                        continue;
+                      }
+                      seenSectionKeys.add(sectionKey);
+
+                      const existingSection = contracts[sectionKey];
+                      if (!existingSection) {
+                        issues.push('section key does not exist at /contracts/' + sectionKey);
+                        continue;
+                      }
+                      if (!isDocumentSection(existingSection)) {
+                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
+                        continue;
+                      }
+
+                      const related = existingSection.relatedContracts
+                        ? uniqueKeys(asList(existingSection.relatedContracts), 'sectionChanges.remove relatedContracts')
+                        : [];
+                      if (!existingSection.relatedContracts) {
+                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+                      }
+
+                      for (const contractKey of related) {
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          issues.push('contract key ' + contractKey + ' is linked to another section');
+                          continue;
+                        }
+                        sectionChangeset.push({
+                          op: 'remove',
+                          path: '/contracts/' + escapePointer(contractKey)
+                        });
+                      }
+                      sectionChangeset.push({
+                        op: 'remove',
+                        path: '/contracts/' + escapePointer(sectionKey)
+                      });
+                    }
+                    const combinedChangeset = sectionChangeset.concat(hasChangeset ? requestChangeset : []);
+
+                    if (combinedChangeset.length === 0) {
+                      issues.push('no changes provided');
                     }
 
                     if (issues.length > 0) {
@@ -145,7 +502,7 @@ packages:
                         changeset: [],
                         events: [
                           {
-                            type: "Conversation/Event",
+                            type: "Conversation/Proposed Change Invalid",
                             reason: issues.join('; ')
                           }
                         ]
@@ -153,7 +510,7 @@ packages:
                     }
 
                     return {
-                      changeset
+                      changeset: combinedChangeset
                     };
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -165,8 +522,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 8dEMWKPqzV6E9nEecrNZgAx9VULdhXdoxWg4yT2qzWM7
+          - repositoryVersionIndex: 1
+            typeBlueId: AZ7kV2EzGpRMzUBCi5cYKd17gngvGDF9PVAdqaKRDqno
             attributesAdded: []
       - status: stable
         content:
@@ -203,6 +560,21 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: HsNatiPt2YvmkWQoqtfrFCbdp75ZUBLBUkWeq84WTfnr
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Contracts Change Policy
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Policy marker that restricts /contracts mutations to explicit sectionChanges and rejects JSON Patch entries targeting /contracts.
+          requireSectionChanges:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: Policy flag; when present and not false, /contracts changes must use sectionChanges. Set false to allow direct changeset edits.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: 6FDVZRQwuhXdXtnXq8kRg3f3DM8SUdbN3TT8rSGJcS2U
             attributesAdded: []
       - status: dev
         content:
@@ -294,22 +666,81 @@ packages:
           type:
             blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
           description: |
-            Declarative marker used to document a logical section of a document and link it to relevant fields and contracts. No runtime behavior.
+            Declarative marker that documents a logical section of a document and links it to relevant fields and contracts. Used as the section anchor for sectionChanges.
+          title:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Short, human-readable title shown in UI summaries.
+          summary:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Brief functional summary of the section's purpose and behavior.
           relatedFields:
             type:
               blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
             itemType:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Absolute JSON Pointer paths of fields that belong to this section.
+            description: Absolute JSON Pointer paths of fields covered by this section.
           relatedContracts:
             type:
               blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
             itemType:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Contract keys in the same scope that implement/affect the section.
+            description: Contract keys in the same scope that implement or affect the section.
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: jvUyZxPToTrcvJHLaYcmvKXrVJfbL1xvcaeK9ekKkJp
+          - repositoryVersionIndex: 1
+            typeBlueId: JBfupL6eyZsqj7CYbReFaS5ga784SLT8aP8r9W64vbLm
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Section Change Entry
+          description: |
+            Single section change entry used by sectionChanges.add/modify. The section's relatedContracts should align with the keys provided in contracts.
+          sectionKey:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Contracts key under /contracts for the Document Section marker.
+          section:
+            type:
+              blueId: JBfupL6eyZsqj7CYbReFaS5ga784SLT8aP8r9W64vbLm
+            description: Document Section contract node; must include type Conversation/Document Section and relatedContracts should list keys in contracts.
+          contracts:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: AERp8BWnuUsjoPciAeNXuUWS9fmqPNMdWbxmKn3tcitx
+            description: Map of contractKey -> contract node to add or replace for this section.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: 9xv7YjqsSn7W7P8rnUhSpdWGfSrgL4Jt3cmiACJT5VQs
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Section Changes
+          description: Structured /contracts changes grouped by logical sections, used by change workflows.
+          add:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 9xv7YjqsSn7W7P8rnUhSpdWGfSrgL4Jt3cmiACJT5VQs
+            description: New sections to create with their Document Section and contracts.
+          modify:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: 9xv7YjqsSn7W7P8rnUhSpdWGfSrgL4Jt3cmiACJT5VQs
+            description: Existing sections to update with a full contracts map.
+          remove:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Section keys to remove (also removes the section's related contracts).
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: DEmFwGa1sWm2BKhrN98LREKiB8j8B8kFAo7KBkkaojnN
             attributesAdded: []
       - status: stable
         content:
@@ -475,10 +906,10 @@ packages:
           description: Operation to propose a document change for later acceptance or rejection.
           request:
             type:
-              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: D96pLVtZPE4Q6MgF31NDyUTQKazaTqJnA6koSW8SaS2g
+          - repositoryVersionIndex: 1
+            typeBlueId: 2mJhqggRy7YTHK5bSeAitqhhjynpe8mApvQXXpcwPCxx
             attributesAdded: []
       - status: dev
         content:
@@ -488,7 +919,7 @@ packages:
           description: Stores a proposed change under /proposedChange{postfix}.
           request:
             type:
-              blueId: Dfdxevr94oumtBfXyFBhx9tawqcFESioqmJxhVJBL5M5
+              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
             description: Expected request payload for this workflow.
           postfix:
             type:
@@ -505,15 +936,350 @@ packages:
 
                     const request = event.message.request || {};
 
-                    const proposedChangesetDescription = request.changesetDescription;
-                    const proposedChangeset = request.changeset;
+                    const changeDescription = request.changeDescription;
+                    const rawChangeset = request.changeset;
+                    const rawSectionChanges = request.sectionChanges;
+                    const requestSectionChanges = rawSectionChanges || {};
 
-                    if (!proposedChangesetDescription) {
-                      issues.push('changesetDescription is missing');
+                    const toText = (value) => {
+                      const raw = value && value.value ? value.value : value;
+                      return raw && raw.trim ? raw.trim() : '';
+                    };
+                    const asList = (value) => Array.isArray(value) ? value : [];
+                    const hasType = (value) => value && value.type;
+                    const escapePointer = (value) => {
+                      const text = toText(value);
+                      return text.split('~').join('~0').split('/').join('~1');
+                    };
+                    const requestChangeset = asList(rawChangeset);
+
+                    const uniqueKeys = (values, label) => {
+                      const seen = new Set();
+                      const output = [];
+                      for (const value of values) {
+                        const key = toText(value);
+                        if (!key) {
+                          issues.push(label + ' contains invalid key');
+                          continue;
+                        }
+                        if (seen.has(key)) {
+                          issues.push(label + ' contains duplicate key: ' + key);
+                          continue;
+                        }
+                        seen.add(key);
+                        output.push(key);
+                      }
+                      return output;
+                    };
+
+                    const sameStringSet = (left, right) => {
+                      if (left.length !== right.length) return false;
+                      const set = new Set(left);
+                      if (set.size !== right.length) return false;
+                      for (const value of right) {
+                        if (!set.has(value)) return false;
+                      }
+                      return true;
+                    };
+
+                    const contracts = Object(document('/contracts') || {});
+
+                    const isDocumentSection = (contract) =>
+                      !!contract && Array.isArray(contract.relatedContracts);
+
+                    const isContractsChangePolicy = (contract) => {
+                      if (!contract) return false;
+                      return 'requireSectionChanges' in contract;
+                    };
+
+                    const findPolicy = () => {
+                      for (const key of Object.keys(contracts)) {
+                        const contract = contracts[key];
+                        if (isContractsChangePolicy(contract)) {
+                          return contract;
+                        }
+                      }
+                      return null;
+                    };
+
+                    const policy = findPolicy();
+                    const policyEnabled = !!policy && policy.requireSectionChanges !== false;
+
+                    if (!toText(changeDescription)) {
+                      issues.push('changeDescription is missing');
                     }
 
-                    if (!proposedChangeset) {
-                      issues.push('changeset is missing');
+                    const hasChangeset = !!rawChangeset;
+                    const hasSectionChanges = !!rawSectionChanges;
+
+                    if (!hasChangeset && !hasSectionChanges) {
+                      issues.push('changeset or sectionChanges is required');
+                    }
+
+                    const isContractsPath = (path) => {
+                      const value = toText(path);
+                      return value === '/contracts' || value.startsWith('/contracts/');
+                    };
+                    if (policyEnabled && hasChangeset) {
+                      for (const entry of requestChangeset) {
+                        if (entry && isContractsPath(entry.path)) {
+                          issues.push('changeset cannot modify /contracts when Contracts Change Policy is enabled');
+                          break;
+                        }
+                      }
+                    }
+                    const isProposedChangePath = (path) =>
+                      toText(path).startsWith('/proposedChange');
+                    if (hasChangeset) {
+                      for (const entry of requestChangeset) {
+                        if (entry && isProposedChangePath(entry.path)) {
+                          issues.push('changeset cannot modify /proposedChange');
+                          break;
+                        }
+                      }
+                    }
+
+                    const existingSections = {};
+                    for (const key of Object.keys(contracts)) {
+                      const contract = contracts[key];
+                      if (isDocumentSection(contract)) {
+                        existingSections[key] = contract;
+                      }
+                    }
+
+                    const contractIndex = {};
+                    for (const sectionKey of Object.keys(existingSections)) {
+                      const section = existingSections[sectionKey];
+                      const related = asList(section.relatedContracts);
+                      for (const relatedKey of related) {
+                        const contractKey = toText(relatedKey);
+                        if (!contractKey) continue;
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          contractIndex[contractKey] = null;
+                        } else if (!contractIndex[contractKey]) {
+                          contractIndex[contractKey] = sectionKey;
+                        }
+                      }
+                    }
+
+                    const normalizeSectionDefinition = (sectionDef, label) => {
+                      if (!sectionDef) {
+                        issues.push(label + ' entry must be an object');
+                        return null;
+                      }
+                      const sectionKey = toText(sectionDef.sectionKey);
+                      if (!sectionKey) {
+                        issues.push(label + ' sectionKey is missing');
+                        return null;
+                      }
+                      const section = sectionDef.section;
+                      if (!section) {
+                        issues.push(label + ' section is missing');
+                        return null;
+                      }
+
+                      const contractsMap = sectionDef.contracts || {};
+                      const contractDefs = [];
+                      const contractKeys = [];
+                      for (const [rawKey, contract] of Object.entries(contractsMap)) {
+                        const key = toText(rawKey);
+                        if (!key) {
+                          issues.push(label + ' contract key is missing');
+                          continue;
+                        }
+                        if (!contract) {
+                          issues.push(label + ' contract ' + key + ' is missing or invalid');
+                          continue;
+                        }
+                        if (!hasType(contract)) {
+                          issues.push(label + ' contract ' + key + ' is missing type');
+                        }
+                        contractDefs.push({ key, contract });
+                        contractKeys.push(key);
+                      }
+
+                      if (!hasType(section)) {
+                        issues.push(label + ' section ' + sectionKey + ' is missing type');
+                      }
+
+                      const related = section.relatedContracts
+                        ? uniqueKeys(asList(section.relatedContracts), label + ' section ' + sectionKey + ' relatedContracts')
+                        : null;
+                      if (related && !sameStringSet(related, contractKeys)) {
+                        issues.push(label + ' section ' + sectionKey + ' relatedContracts must match contracts');
+                      }
+
+                      const normalizedRelated = related || contractKeys;
+                      const normalizedSection = Object.assign({}, section, {
+                        type: 'Conversation/Document Section',
+                        relatedContracts: normalizedRelated
+                      });
+
+                      return {
+                        sectionKey,
+                        section: normalizedSection,
+                        contractDefs,
+                        contractKeys
+                      };
+                    };
+
+                    const sectionChangeset = [];
+                    const seenSectionKeys = new Set();
+                    const seenContractKeys = new Set();
+
+                    const addList = asList(requestSectionChanges.add);
+                    const modifyList = asList(requestSectionChanges.modify);
+                    const removeList = asList(requestSectionChanges.remove);
+
+                    for (const entry of addList) {
+                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.add');
+                      if (!normalized) continue;
+                      const sectionKey = normalized.sectionKey;
+                      if (seenSectionKeys.has(sectionKey)) {
+                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+                        continue;
+                      }
+                      seenSectionKeys.add(sectionKey);
+
+                      if (contracts[sectionKey]) {
+                        issues.push('section key already exists at /contracts/' + sectionKey);
+                      }
+
+                      for (const contractKey of normalized.contractKeys) {
+                        if (seenContractKeys.has(contractKey)) {
+                          issues.push('contract key used by multiple sections in request: ' + contractKey);
+                          continue;
+                        }
+                        seenContractKeys.add(contractKey);
+                        if (contracts[contractKey]) {
+                          issues.push('contract key already exists at /contracts/' + contractKey);
+                        }
+                      }
+
+                      for (const contractDef of normalized.contractDefs) {
+                        sectionChangeset.push({
+                          op: 'add',
+                          path: '/contracts/' + escapePointer(contractDef.key),
+                          val: contractDef.contract
+                        });
+                      }
+                      sectionChangeset.push({
+                        op: 'add',
+                        path: '/contracts/' + escapePointer(sectionKey),
+                        val: normalized.section
+                      });
+                    }
+
+                    for (const entry of modifyList) {
+                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.modify');
+                      if (!normalized) continue;
+                      const sectionKey = normalized.sectionKey;
+                      if (seenSectionKeys.has(sectionKey)) {
+                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+                        continue;
+                      }
+                      seenSectionKeys.add(sectionKey);
+
+                      const existingSection = contracts[sectionKey];
+                      if (!existingSection) {
+                        issues.push('section key does not exist at /contracts/' + sectionKey);
+                      } else if (!isDocumentSection(existingSection)) {
+                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
+                      }
+
+                      const existingRelated =
+                        existingSection && existingSection.relatedContracts
+                          ? asList(existingSection.relatedContracts)
+                          : [];
+                      if (existingSection && !existingSection.relatedContracts) {
+                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+                      }
+
+                      for (const contractKey of normalized.contractKeys) {
+                        if (seenContractKeys.has(contractKey)) {
+                          issues.push('contract key used by multiple sections in request: ' + contractKey);
+                          continue;
+                        }
+                        seenContractKeys.add(contractKey);
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          issues.push('contract key ' + contractKey + ' is linked to another section');
+                        }
+                      }
+
+                      for (const contractDef of normalized.contractDefs) {
+                        const op = contracts[contractDef.key] ? 'replace' : 'add';
+                        sectionChangeset.push({
+                          op,
+                          path: '/contracts/' + escapePointer(contractDef.key),
+                          val: contractDef.contract
+                        });
+                      }
+
+                      const toRemove = uniqueKeys(existingRelated, 'sectionChanges.modify remove list').filter(
+                        (key) => !normalized.contractKeys.includes(key)
+                      );
+                      for (const contractKey of toRemove) {
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          issues.push('contract key ' + contractKey + ' is linked to another section');
+                          continue;
+                        }
+                        sectionChangeset.push({
+                          op: 'remove',
+                          path: '/contracts/' + escapePointer(contractKey)
+                        });
+                      }
+
+                      sectionChangeset.push({
+                        op: 'replace',
+                        path: '/contracts/' + escapePointer(sectionKey),
+                        val: normalized.section
+                      });
+                    }
+
+                    const removeKeys = uniqueKeys(removeList, 'sectionChanges.remove');
+                    for (const sectionKey of removeKeys) {
+                      if (seenSectionKeys.has(sectionKey)) {
+                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
+                        continue;
+                      }
+                      seenSectionKeys.add(sectionKey);
+
+                      const existingSection = contracts[sectionKey];
+                      if (!existingSection) {
+                        issues.push('section key does not exist at /contracts/' + sectionKey);
+                        continue;
+                      }
+                      if (!isDocumentSection(existingSection)) {
+                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
+                        continue;
+                      }
+
+                      const related = existingSection.relatedContracts
+                        ? uniqueKeys(asList(existingSection.relatedContracts), 'sectionChanges.remove relatedContracts')
+                        : [];
+                      if (!existingSection.relatedContracts) {
+                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+                      }
+
+                      for (const contractKey of related) {
+                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
+                          issues.push('contract key ' + contractKey + ' is linked to another section');
+                          continue;
+                        }
+                        sectionChangeset.push({
+                          op: 'remove',
+                          path: '/contracts/' + escapePointer(contractKey)
+                        });
+                      }
+                      sectionChangeset.push({
+                        op: 'remove',
+                        path: '/contracts/' + escapePointer(sectionKey)
+                      });
+                    }
+                    const combinedChangeset = sectionChangeset.concat(hasChangeset ? requestChangeset : []);
+
+                    if (combinedChangeset.length === 0) {
+                      issues.push('no changes provided');
                     }
 
                     if (issues.length > 0) {
@@ -528,11 +1294,10 @@ packages:
                       }
                     }
 
-                    const postfix = currentContract.postfix ?? ''
-                    const path = '/proposedChange' + postfix
+                    const postfixValue = currentContract.postfix || '';
+                    const path = '/proposedChange' + postfixValue;
 
-                    const existing = document(path)
-                    if (existing) {
+                    if (document(path)) {
                       return {
                         changeset: [],
                         events: [
@@ -544,14 +1309,26 @@ packages:
                       }
                     }
 
+                    const proposedPayload = {
+                      changeDescription
+                    };
+
+                    proposedPayload.preparedChangeset = combinedChangeset;
+
+                    if (hasChangeset) {
+                      proposedPayload.changeset = requestChangeset;
+                    }
+
+                    const hasSectionChangesData = addList.length || modifyList.length || removeList.length;
+                    if (hasSectionChangesData) {
+                      proposedPayload.sectionChanges = rawSectionChanges;
+                    }
+
                     return {
                       changeset: [{
                         op: 'add',
                         path,
-                        val: {
-                          changesetDescription: proposedChangesetDescription,
-                          changeset: proposedChangeset
-                        }
+                        val: proposedPayload
                       }]
                     };
                   type:
@@ -564,8 +1341,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: HBKMi42NAbj1yntTYCWxF1TrymXxjxxHvuEbeGfZYaEu
+          - repositoryVersionIndex: 1
+            typeBlueId: HWJfFpYwwYTs88XKXrShRdKy3yCUcTKTFTAkv1zLrSEp
             attributesAdded: []
       - status: dev
         content:
@@ -608,7 +1385,7 @@ packages:
                   blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                 code:
                   value: |
-                    const postfix = currentContract.postfix ?? ''
+                    const postfix = currentContract.postfix || ''
                     const path = '/proposedChange' + postfix
 
                     const proposedChange = document(path)
@@ -637,8 +1414,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 45v49NERDirLBd4eTZ2HVAxwnwuu15rZ5USWsZPgw1X7
+          - repositoryVersionIndex: 1
+            typeBlueId: GfqZJJtSJfd69v3pJ67XURdzhC4byWJZAstCh6i4X6MZ
             attributesAdded: []
       - status: stable
         content:
@@ -4741,3 +5518,4 @@ packages:
             attributesAdded: []
 repositoryVersions:
   - 5C7dGdtZGYPee4HtCXqFF4XpRuhhXeuaiWNDpdcG2iie
+  - 2m6QjrS7SGeuhqufTcuunxLCpHmrqykEFXZcqSyU6wUc
