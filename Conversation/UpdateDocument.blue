@@ -3,12 +3,14 @@ type: Conversation/Sequential Workflow Step
 description: >
   Updates the document with the provided changeset.
 
-  - Gas accounting (when & what is charged):
-      - Base step charge (once per run of this step): 40 + 5 × changesetLength.
+  - Gas accounting (when and what is charged):
+      - Base step charge (once per run of this step): 40 + 5 * changesetLength.
       - Expression/template resolution under "/changeset/**" (if present):
-          - For each standalone expression ${…}: 5 + ceil(bytes(expr)/100).
-          - For each template string containing one or more ${…} placeholders:
-            3 × placeholderCount + ceil(bytes(template)/100).
+          - Expressions run in the deterministic QuickJS VM (same sandbox and
+            bindings as the JavaScript Code step).
+          - VM gas is converted to host gas as:
+            hostGas = ceil(wasmFuel / 1700)
+            (calibration factor currently 1700 fuel per host gas unit).
           - Any document(<pointer>) used inside expressions/templates charges
             per call: 8 + depth(pointer) + ceil(snapshotBytes/100).
       - Per change (applied in order after boundary validation):
@@ -18,7 +20,7 @@ description: >
                 canonical JSON size of val).
               - remove: 10.
           - Cascade routing (Document Update delivery):
-            10 × N, where N is the number of scopes that receive the resulting
+            10 * N, where N is the number of scopes that receive the resulting
             Document Update (origin scope and each participating ancestor up to root).
 
 changeset:
