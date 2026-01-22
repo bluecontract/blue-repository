@@ -157,10 +157,20 @@ steps:
           return null;
         }
 
-        const contractsMap = sectionDef.contracts || {};
+        const rawContractsMap = sectionDef.contracts && sectionDef.contracts.value
+          ? sectionDef.contracts.value
+          : sectionDef.contracts || {};
         const contractDefs = [];
         const contractKeys = [];
-        for (const [rawKey, contract] of Object.entries(contractsMap)) {
+        for (const [rawKey, contract] of Object.entries(rawContractsMap)) {
+          if (
+            rawKey === 'type' ||
+            rawKey === 'keyType' ||
+            rawKey === 'valueType' ||
+            rawKey === 'description'
+          ) {
+            continue;
+          }
           const key = toText(rawKey);
           if (!key) {
             issues.push(label + ' contract key is missing');
