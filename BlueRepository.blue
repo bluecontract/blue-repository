@@ -293,10 +293,20 @@ packages:
                         return null;
                       }
 
-                      const contractsMap = sectionDef.contracts || {};
+                      const rawContractsMap = sectionDef.contracts && sectionDef.contracts.value
+                        ? sectionDef.contracts.value
+                        : sectionDef.contracts || {};
                       const contractDefs = [];
                       const contractKeys = [];
-                      for (const [rawKey, contract] of Object.entries(contractsMap)) {
+                      for (const [rawKey, contract] of Object.entries(rawContractsMap)) {
+                        if (
+                          rawKey === 'type' ||
+                          rawKey === 'keyType' ||
+                          rawKey === 'valueType' ||
+                          rawKey === 'description'
+                        ) {
+                          continue;
+                        }
                         const key = toText(rawKey);
                         if (!key) {
                           issues.push(label + ' contract key is missing');
@@ -522,8 +532,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: AZ7kV2EzGpRMzUBCi5cYKd17gngvGDF9PVAdqaKRDqno
+          - repositoryVersionIndex: 2
+            typeBlueId: AKNj5zwzgAkXZo3psikJfoVxUcNfMBVgDrf4HDGWL1gm
             attributesAdded: []
       - status: stable
         content:
@@ -1078,10 +1088,20 @@ packages:
                         return null;
                       }
 
-                      const contractsMap = sectionDef.contracts || {};
+                      const rawContractsMap = sectionDef.contracts && sectionDef.contracts.value
+                        ? sectionDef.contracts.value
+                        : sectionDef.contracts || {};
                       const contractDefs = [];
                       const contractKeys = [];
-                      for (const [rawKey, contract] of Object.entries(contractsMap)) {
+                      for (const [rawKey, contract] of Object.entries(rawContractsMap)) {
+                        if (
+                          rawKey === 'type' ||
+                          rawKey === 'keyType' ||
+                          rawKey === 'valueType' ||
+                          rawKey === 'description'
+                        ) {
+                          continue;
+                        }
                         const key = toText(rawKey);
                         if (!key) {
                           issues.push(label + ' contract key is missing');
@@ -1341,8 +1361,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: HWJfFpYwwYTs88XKXrShRdKy3yCUcTKTFTAkv1zLrSEp
+          - repositoryVersionIndex: 2
+            typeBlueId: Ecj8Y7rb7kMCkNFfvyZ36CNB2JjCWrqy7BiHcvcNELEL
             attributesAdded: []
       - status: dev
         content:
@@ -5519,3 +5539,4 @@ packages:
 repositoryVersions:
   - 5C7dGdtZGYPee4HtCXqFF4XpRuhhXeuaiWNDpdcG2iie
   - 2m6QjrS7SGeuhqufTcuunxLCpHmrqykEFXZcqSyU6wUc
+  - fWQgpx2U9V1wz6MqurHqeYfAbWxHP6ym1hsJfSb6aqt
