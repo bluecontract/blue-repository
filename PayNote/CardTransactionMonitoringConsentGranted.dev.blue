@@ -1,0 +1,9 @@
+name: Card Transaction Monitoring Consent Granted
+type: Conversation/Response
+description: The client granted consent for the bank to monitor card transactions at the target merchant and report them into this document.
+targetMerchantId:
+  type: Text
+  description: External merchant identifier requested for monitoring.
+grantedAt:
+  type: Integer
+  description: Timestamp (microseconds since epoch) when consent was granted.
