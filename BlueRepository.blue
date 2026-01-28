@@ -4,6 +4,16 @@ packages:
     types:
       - status: dev
         content:
+          name: Currency
+          type:
+            blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          description: ISO 4217 currency code (e.g., USD, EUR).
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            attributesAdded: []
+      - status: dev
+        content:
           name: Timestamp
           type:
             blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -4531,6 +4541,132 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
             attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Monitoring Consent Granted
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The client granted consent for the bank to monitor card transactions at the target merchant and report them into this document.
+          targetMerchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier requested for monitoring.
+          grantedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when consent was granted.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: A9iWmccmaijQqQUBvVUkpHswPbMJ8AoxzoSWmSTTpz5R
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Monitoring Consent Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: The client rejected consent for the bank to monitor card transactions at the target merchant.
+          targetMerchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier requested for monitoring.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional reason the client rejected consent.
+          rejectedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when consent was rejected.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 6VsER7gR2EEqJuEkjRMrwfqu3iDeXsTQb2hcsiVxGHfP
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Monitoring Consent Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: The document requests the client to grant consent for card transaction monitoring.
+          targetMerchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier requested for monitoring.
+          requestedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when consent was requested.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 7ZrGRtDg9NA9DTWmBboDhScAvAF1nnVEogLV3wn1aqr3
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Monitoring Request Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Notification that card transaction monitoring was rejected.
+          targetMerchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier requested for monitoring.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Reason monitoring was rejected.
+          rejectedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when monitoring was rejected.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: GYTfBKhq8H79vZcGNSHLXyiLPJfGtprJ8CvTayTCNZss
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Monitoring Started
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Confirmation that card transaction monitoring has started.
+          targetMerchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier being monitored.
+          startedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when monitoring started.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 5X6HGwYT2Z2x1sjz9LSDYN7sdJ9ee3cuqwz9PD33pBwu
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Transaction Report
+          description: Standard report payload describing a captured card transaction.
+          transactionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Unique transaction identifier used for idempotency.
+          merchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier for the purchase.
+          amountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Purchase amount in minor currency units.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: ISO 4217 currency code.
+          occurredAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the transaction occurred.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: CTbHBf2xvYzi2JzwbwSR1B2z5NP566dKDyb1TkBGHfYp
+            attributesAdded: []
       - status: stable
         content:
           name: Child PayNote Issuance Declined
@@ -4555,6 +4691,24 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: FAZCx2s5eq9zPV64LdHNFYbjjxD3ci1ZqyTcQk5WhXAs
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Eligible Card Transaction Reported
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: A reported card transaction was eligible for voucher cashback.
+          report:
+            type:
+              blueId: CTbHBf2xvYzi2JzwbwSR1B2z5NP566dKDyb1TkBGHfYp
+            description: Report payload for the eligible transaction.
+          eligibleCashbackMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Cashback amount eligible for this transaction.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: CNuH6dfnFaWMenCaVBf7NRz2KNBcHyddjYKakbYehAf8
             attributesAdded: []
       - status: stable
         content:
@@ -4581,6 +4735,24 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: AopfdGqnwcxsw4mJzXbmjDMnASRtkce9BZB1n6QSRNXX
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Ineligible Card Transaction Reported
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: A reported card transaction was not eligible for voucher cashback.
+          report:
+            type:
+              blueId: CTbHBf2xvYzi2JzwbwSR1B2z5NP566dKDyb1TkBGHfYp
+            description: Report payload for the ineligible transaction.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Reason the transaction was ineligible.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 3imL7991LsorpZHtBjvmyyatGQnaWwABWKAsQP5S79ma
             attributesAdded: []
       - status: stable
         content:
@@ -5408,6 +5580,1234 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: EGRRGwNnReqfQQhKnML28DWz9MvvC3B5JgbBrCUxrZ3G
             attributesAdded: []
+      - status: dev
+        content:
+          name: PayNote Voucher
+          description: Voucher contract that funds cashback for eligible card transactions.
+          voucher:
+            description: Voucher configuration supplied at issuance.
+            issuerMerchantId:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: External merchant identifier funding the voucher (payer).
+            targetMerchantId:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: External merchant identifier whose purchases are eligible.
+            limitMinor:
+              type:
+                blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+              description: Maximum cashback amount in minor currency units.
+          activatedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when the voucher was activated.
+          status:
+            type:
+              blueId: 58B8orsFkxxy7bWqjLXJmtBs2b5rwnNQNbeoAbGhPkJc
+            description: Current voucher status.
+            value:
+              type:
+                blueId: ETAPjwZVyYEfPUWvXkCWAuybBhYUayg4hKC2V7mLXmsv
+          terminatedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when the voucher was terminated.
+          monitoringStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Monitoring lifecycle status (requested, started, rejected).
+          monitoringStartedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when monitoring started.
+          monitoringRejectedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when monitoring was rejected.
+          monitoringRejectionReason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Reason monitoring was rejected.
+          reportedTransactionsById:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: CTbHBf2xvYzi2JzwbwSR1B2z5NP566dKDyb1TkBGHfYp
+            description: Map of reported transactions keyed by transactionId for idempotency.
+          voucherCashbackCaptureByTransactionId:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              name: Capture Record
+              description: Voucher cashback capture lifecycle record for an eligible transaction.
+              status:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Voucher cashback capture status (requested, captured, declined, failed).
+              requestedAmountMinor:
+                type:
+                  blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                description: Cashback amount requested for capture, in minor units.
+              capturedAmountMinor:
+                type:
+                  blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                description: Cashback amount confirmed as captured, in minor units.
+              failureReason:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Reason for declined or failed cashback capture, if applicable.
+            description: Voucher cashback capture record per transaction.
+          paidOutAmountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Total cashback amount confirmed as paid out.
+            value: 0
+          remainingAmountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Remaining cashback amount available for future payouts.
+            value: 0
+          contracts:
+            payerChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Voucher issuer (merchant/payer).
+            payeeChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Voucher recipient (client/payee).
+            guarantorChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Bank/guarantor responsible for monitoring and payouts.
+            eventsChannel:
+              type:
+                blueId: C77W4kVGcxL7Mkx9WL9QESPEFFL2GzWAe647s1Efprt
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            activateVoucher:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Client grants consent for the bank to monitor card transactions at the target merchant and report them into this document, then activates the voucher.
+              channel:
+                value: payeeChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            rejectVoucher:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Client rejects the voucher and declines consent for monitoring.
+              channel:
+                value: payeeChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Optional reason for rejecting the voucher.
+            activateVoucherImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: activateVoucher
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Prepare Activation
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+                        const currentActivatedAt = document('/activatedAt');
+                        const alreadyActivated = currentActivatedAt > 0;
+                        const targetMerchantId = document('/voucher/targetMerchantId') || '';
+                        const limitMinor = document('/voucher/limitMinor');
+                        const events = [];
+                        const changeset = [];
+
+                        if (!alreadyActivated) {
+                          changeset.push({ op: 'replace', path: '/activatedAt', val: timestamp });
+                          changeset.push({
+                            op: 'replace',
+                            path: '/status',
+                            val: { type: 'Conversation/Status In Progress' }
+                          });
+
+                          if (Number.isFinite(limitMinor) && limitMinor >= 0) {
+                            changeset.push({ op: 'replace', path: '/paidOutAmountMinor', val: 0 });
+                            changeset.push({ op: 'replace', path: '/remainingAmountMinor', val: limitMinor });
+                            events.push({
+                              type: 'PayNote/Reserve Funds Requested',
+                              amount: limitMinor
+                            });
+                          }
+
+                          if (targetMerchantId.trim().length > 0) {
+                            events.push({
+                              type: 'PayNote/Card Transaction Monitoring Consent Granted',
+                              targetMerchantId,
+                              grantedAt: timestamp
+                            });
+                          }
+                        }
+
+                        return {
+                          changeset,
+                          events
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Activation
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Activation'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            rejectVoucherImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: rejectVoucher
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Prepare Rejection
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+                        const request = event?.message?.request || {};
+                        const reason = request.reason || '';
+                        const targetMerchantId = document('/voucher/targetMerchantId') || '';
+                        const activatedAt = document('/activatedAt');
+                        const limitMinor = document('/voucher/limitMinor');
+                        const changeset = [
+                          { op: 'replace', path: '/monitoringStatus', val: 'rejected' },
+                          { op: 'replace', path: '/monitoringRejectedAt', val: timestamp },
+                          { op: 'replace', path: '/monitoringRejectionReason', val: reason }
+                        ];
+
+                        const events = [
+                          {
+                            type: 'PayNote/Card Transaction Monitoring Consent Rejected',
+                            targetMerchantId,
+                            reason,
+                            rejectedAt: timestamp
+                          }
+                        ];
+
+                        if (activatedAt > 0 && Number.isFinite(limitMinor) && limitMinor >= 0) {
+                          events.push({
+                            type: 'PayNote/Reservation Release Requested',
+                            amount: limitMinor
+                          });
+                        } else if (!(activatedAt > 0)) {
+                          changeset.push({
+                            op: 'replace',
+                            path: '/status',
+                            val: { type: 'Conversation/Status Completed' }
+                          });
+                          changeset.push({ op: 'replace', path: '/terminatedAt', val: timestamp });
+                        }
+
+                        return { changeset, events };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Rejection
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Rejection'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            requestMonitoringConsentOnInit:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Consent Requested
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+                        const targetMerchantId = document('/voucher/targetMerchantId') || '';
+                        if (!targetMerchantId.trim()) {
+                          return { events: [] };
+                        }
+
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Card Transaction Monitoring Consent Requested',
+                              targetMerchantId,
+                              requestedAt: timestamp
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            confirmCardTransactionMonitoringStarted:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank confirms that monitoring has started.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            confirmCardTransactionMonitoringStartedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: confirmCardTransactionMonitoringStarted
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Prepare Confirmation
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+                        const currentStatus = document('/monitoringStatus');
+                        const targetMerchantId = document('/voucher/targetMerchantId');
+                        const events = [];
+                        const changeset = [];
+
+                        if (currentStatus === 'requested') {
+                          changeset.push({ op: 'replace', path: '/monitoringStatus', val: 'started' });
+                          changeset.push({ op: 'replace', path: '/monitoringStartedAt', val: timestamp });
+                          events.push({
+                            type: 'PayNote/Card Transaction Monitoring Started',
+                            targetMerchantId,
+                            startedAt: timestamp
+                          });
+                        }
+
+                        return {
+                          changeset,
+                          events
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Confirmation
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Confirmation'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            rejectCardTransactionMonitoringRequest:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank rejects the monitoring request.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Reason for rejecting monitoring.
+            confirmFundsReserved:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank confirms that funds were reserved for the voucher.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                amountReserved:
+                  type:
+                    blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                  description: Amount reserved in minor currency units.
+            reportReservationDeclined:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank reports that the voucher reservation request was declined.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Reason reservation was declined.
+            confirmReservationReleased:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank confirms that reserved funds were released.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                amountReleased:
+                  type:
+                    blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                  description: Amount released in minor currency units.
+            reportReservationReleaseDeclined:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank reports that the reservation release request was declined.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Reason release was declined.
+            confirmFundsCaptured:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank confirms that cashback funds were captured.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                amountCaptured:
+                  type:
+                    blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                  description: Amount captured in minor currency units.
+            reportCaptureDeclined:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank reports that the cashback capture request was declined.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Reason capture was declined.
+            reportCaptureFailure:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank reports cashback capture failed for a technical reason.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                reason:
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  description: Reason capture failed.
+            rejectCardTransactionMonitoringRequestImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: rejectCardTransactionMonitoringRequest
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Prepare Rejection
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+                        const currentStatus = document('/monitoringStatus');
+                        const alreadyStarted = currentStatus === 'started';
+                        const alreadyRejected = currentStatus === 'rejected';
+                        const targetMerchantId = document('/voucher/targetMerchantId');
+                        const request = event?.message?.request || {};
+                        const reason = request.reason || '';
+                        const events = [];
+                        const changeset = [];
+
+                        if (!alreadyStarted && !alreadyRejected) {
+                          changeset.push({ op: 'replace', path: '/monitoringStatus', val: 'rejected' });
+                          changeset.push({ op: 'replace', path: '/monitoringRejectedAt', val: timestamp });
+                          changeset.push({ op: 'replace', path: '/monitoringRejectionReason', val: reason });
+                          changeset.push({
+                            op: 'replace',
+                            path: '/status',
+                            val: { type: 'Conversation/Status Failed' }
+                          });
+                          changeset.push({ op: 'replace', path: '/terminatedAt', val: timestamp });
+                          events.push({
+                            type: 'PayNote/Card Transaction Monitoring Request Rejected',
+                            targetMerchantId,
+                            reason,
+                            rejectedAt: timestamp
+                          });
+
+                          const limitMinor = document('/voucher/limitMinor');
+                          if (Number.isFinite(limitMinor) && limitMinor >= 0) {
+                            events.push({
+                              type: 'PayNote/Reservation Release Requested',
+                              amount: limitMinor
+                            });
+                          }
+                        }
+
+                        return {
+                          changeset,
+                          events
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Rejection
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Rejection'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            confirmFundsReservedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: confirmFundsReserved
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Funds Reserved
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const amountReserved = request.amountReserved;
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Funds Reserved',
+                              amountReserved
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            reportReservationDeclinedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: reportReservationDeclined
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Reservation Declined
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const reason = request.reason || '';
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Reservation Declined',
+                              reason
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            confirmReservationReleasedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: confirmReservationReleased
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Reservation Released
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const amountReleased = request.amountReleased;
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Reservation Released',
+                              amountReleased
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            reportReservationReleaseDeclinedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: reportReservationReleaseDeclined
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Reservation Release Declined
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const reason = request.reason || '';
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Reservation Release Declined',
+                              reason
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            confirmFundsCapturedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: confirmFundsCaptured
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Funds Captured
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const amountCaptured = request.amountCaptured;
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Funds Captured',
+                              amountCaptured
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            reportCaptureDeclinedImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: reportCaptureDeclined
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Capture Declined
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const reason = request.reason || '';
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Capture Declined',
+                              reason
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            reportCaptureFailureImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: reportCaptureFailure
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Emit Capture Failed
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const reason = request.reason || '';
+                        return {
+                          events: [
+                            {
+                              type: 'PayNote/Capture Failed',
+                              reason
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleFundsReserved:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: AopfdGqnwcxsw4mJzXbmjDMnASRtkce9BZB1n6QSRNXX
+              steps:
+                items:
+                  - name: Prepare Monitoring Request
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+
+                        const activatedAt = document('/activatedAt');
+                        if (!(activatedAt > 0)) {
+                          return { changeset: [], events: [] };
+                        }
+
+                        const monitoringStatus = document('/monitoringStatus');
+                        if (monitoringStatus === 'requested' || monitoringStatus === 'started' || monitoringStatus === 'rejected') {
+                          return { changeset: [], events: [] };
+                        }
+
+                        const targetMerchantId = document('/voucher/targetMerchantId') || '';
+                        if (!targetMerchantId.trim()) {
+                          return { changeset: [], events: [] };
+                        }
+
+                        return {
+                          changeset: [{ op: 'replace', path: '/monitoringStatus', val: 'requested' }],
+                          events: [
+                            {
+                              type: 'PayNote/Start Card Transaction Monitoring Requested',
+                              targetMerchantId,
+                              reportOperationName: 'reportCardTransaction',
+                              requestedAt: timestamp
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Monitoring Request
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Monitoring Request'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleReservationDeclined:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: 4xS8bmZQBGPENmaPfsrtYguYfq4hTtaZAXrefdyFNkKq
+              steps:
+                items:
+                  - name: Prepare Termination
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+
+                        return {
+                          changeset: [
+                            { op: 'replace', path: '/status', val: { type: 'Conversation/Status Failed' } },
+                            { op: 'replace', path: '/terminatedAt', val: timestamp }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Termination
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Termination'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleReservationReleased:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: CFqiZigjKE5JatANkaAkWw2NbgvEmb2BVEVPf3ckUrWg
+              steps:
+                items:
+                  - name: Prepare Termination
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+
+                        return {
+                          changeset: [
+                            { op: 'replace', path: '/status', val: { type: 'Conversation/Status Completed' } },
+                            { op: 'replace', path: '/terminatedAt', val: timestamp }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Termination
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Termination'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleReservationReleaseDeclined:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: 653sCbbRH3RiKhGjmVxh6wFVs4rn54wJRKDXRMKBZtjA
+              steps:
+                items:
+                  - name: Prepare Termination
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const timestamp = event?.timestamp;
+
+                        return {
+                          changeset: [
+                            { op: 'replace', path: '/status', val: { type: 'Conversation/Status Failed' } },
+                            { op: 'replace', path: '/terminatedAt', val: timestamp }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Termination
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Termination'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleEligibleCardTransactionReported:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: CNuH6dfnFaWMenCaVBf7NRz2KNBcHyddjYKakbYehAf8
+              steps:
+                items:
+                  - name: Prepare Capture Request
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const report = event?.report || {};
+                        const transactionId = report.transactionId || '';
+                        const eligibleCashbackMinor = event?.eligibleCashbackMinor;
+                        const captureByTransactionId = document('/voucherCashbackCaptureByTransactionId') || {};
+                        const remainingAmountMinor = document('/remainingAmountMinor');
+                        const limitMinor = document('/voucher/limitMinor');
+
+                        if (!transactionId) {
+                          return { changeset: [], events: [] };
+                        }
+                        if (captureByTransactionId[transactionId]) {
+                          return { changeset: [], events: [] };
+                        }
+                        if (!Number.isFinite(eligibleCashbackMinor) || eligibleCashbackMinor <= 0) {
+                          return { changeset: [], events: [] };
+                        }
+
+                        const availableRemaining = Number.isFinite(remainingAmountMinor)
+                          ? remainingAmountMinor
+                          : Number.isFinite(limitMinor)
+                            ? limitMinor
+                            : 0;
+                        const captureAmount = Math.min(eligibleCashbackMinor, availableRemaining);
+                        if (!Number.isFinite(captureAmount) || captureAmount <= 0) {
+                          return { changeset: [], events: [] };
+                        }
+
+                        return {
+                          changeset: [
+                            {
+                              op: 'replace',
+                              path: `/voucherCashbackCaptureByTransactionId/${transactionId}`,
+                              val: {
+                                status: 'requested',
+                                requestedAmountMinor: captureAmount,
+                                capturedAmountMinor: 0,
+                                failureReason: ''
+                              }
+                            }
+                          ],
+                          events: [
+                            {
+                              type: 'PayNote/Capture Funds Requested',
+                              requestId: `voucher-capture:${transactionId}`,
+                              amount: captureAmount
+                            }
+                          ]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Capture Request
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Capture Request'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleFundsCaptured:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: BJvjorbC5ed5KTV7SxoV3CvrJXjrFPcFxY9QT4jHBbXi
+              steps:
+                items:
+                  - name: Prepare Capture Confirmation
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const amountCaptured = event?.amountCaptured;
+                        if (!Number.isFinite(amountCaptured) || amountCaptured <= 0) {
+                          return { changeset: [] };
+                        }
+
+                        const paidOutAmountMinor = document('/paidOutAmountMinor');
+                        const remainingAmountMinor = document('/remainingAmountMinor');
+                        const limitMinor = document('/voucher/limitMinor');
+                        const nextPaidOutAmountMinor =
+                          (Number.isFinite(paidOutAmountMinor) ? paidOutAmountMinor : 0) +
+                          amountCaptured;
+                        let nextRemainingAmountMinor;
+                        if (Number.isFinite(remainingAmountMinor)) {
+                          nextRemainingAmountMinor = Math.max(0, remainingAmountMinor - amountCaptured);
+                        } else if (Number.isFinite(limitMinor)) {
+                          nextRemainingAmountMinor = Math.max(0, limitMinor - nextPaidOutAmountMinor);
+                        }
+
+                        const changeset = [
+                          { op: 'replace', path: '/paidOutAmountMinor', val: nextPaidOutAmountMinor }
+                        ];
+                        if (Number.isFinite(nextRemainingAmountMinor)) {
+                          changeset.push({
+                            op: 'replace',
+                            path: '/remainingAmountMinor',
+                            val: nextRemainingAmountMinor
+                          });
+                        }
+
+                        const responseRequestId = event?.inResponseTo?.requestId || '';
+                        const requestPrefix = 'voucher-capture:';
+                        const transactionId = responseRequestId.startsWith(requestPrefix)
+                          ? responseRequestId.slice(requestPrefix.length)
+                          : '';
+                        if (transactionId) {
+                          const existingRecord =
+                            document(`/voucherCashbackCaptureByTransactionId/${transactionId}`) || {};
+                          changeset.push({
+                            op: 'replace',
+                            path: `/voucherCashbackCaptureByTransactionId/${transactionId}`,
+                            val: {
+                              status: 'captured',
+                              requestedAmountMinor: existingRecord.requestedAmountMinor,
+                              capturedAmountMinor: amountCaptured,
+                              failureReason: ''
+                            }
+                          });
+                        }
+
+                        return { changeset };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Capture Confirmation
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Capture Confirmation'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleCaptureDeclined:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: FzJqLm7Ek58LsVstJV2c37JfiMhRiWtjZNsiMz2ZfCYG
+              steps:
+                items:
+                  - name: Prepare Capture Decline
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const reason = event?.reason || '';
+                        const responseRequestId = event?.inResponseTo?.requestId || '';
+                        const requestPrefix = 'voucher-capture:';
+                        const transactionId = responseRequestId.startsWith(requestPrefix)
+                          ? responseRequestId.slice(requestPrefix.length)
+                          : '';
+                        if (!transactionId) {
+                          return { changeset: [] };
+                        }
+
+                        const existingRecord =
+                          document(`/voucherCashbackCaptureByTransactionId/${transactionId}`) || {};
+                        const changeset = [
+                          {
+                            op: 'replace',
+                            path: `/voucherCashbackCaptureByTransactionId/${transactionId}`,
+                            val: {
+                              status: 'declined',
+                              requestedAmountMinor: existingRecord.requestedAmountMinor,
+                              capturedAmountMinor: existingRecord.capturedAmountMinor,
+                              failureReason: reason
+                            }
+                          }
+                        ];
+
+                        return { changeset };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Capture Decline
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Capture Decline'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            handleCaptureFailed:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: eventsChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              event:
+                type:
+                  blueId: FUh3TARSh4TjnWKAkM5ydjFWLWEmrFByKMBQzcgQfqRW
+              steps:
+                items:
+                  - name: Prepare Capture Failure
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const reason = event?.reason || '';
+                        const responseRequestId = event?.inResponseTo?.requestId || '';
+                        const requestPrefix = 'voucher-capture:';
+                        const transactionId = responseRequestId.startsWith(requestPrefix)
+                          ? responseRequestId.slice(requestPrefix.length)
+                          : '';
+                        if (!transactionId) {
+                          return { changeset: [] };
+                        }
+
+                        const existingRecord =
+                          document(`/voucherCashbackCaptureByTransactionId/${transactionId}`) || {};
+                        const changeset = [
+                          {
+                            op: 'replace',
+                            path: `/voucherCashbackCaptureByTransactionId/${transactionId}`,
+                            val: {
+                              status: 'failed',
+                              requestedAmountMinor: existingRecord.requestedAmountMinor,
+                              capturedAmountMinor: existingRecord.capturedAmountMinor,
+                              failureReason: reason
+                            }
+                          }
+                        ];
+
+                        return { changeset };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Capture Failure
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Capture Failure'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            reportCardTransaction:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Bank reports a captured card transaction into the voucher.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: CTbHBf2xvYzi2JzwbwSR1B2z5NP566dKDyb1TkBGHfYp
+            reportCardTransactionImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: reportCardTransaction
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Prepare Report
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request = event?.message?.request || {};
+                        const transactionId = request.transactionId?.trim() || '';
+                        const events = [];
+                        const changeset = [];
+
+                        const amountMinor = request.amountMinor;
+                        const currency = request.currency || '';
+                        const merchantId = request.merchantId || '';
+                        const occurredAt = request.occurredAt || '';
+                        const report = {
+                          transactionId,
+                          merchantId,
+                          amountMinor,
+                          currency,
+                          occurredAt
+                        };
+
+                        if (!transactionId) {
+                          events.push({
+                            type: 'PayNote/Ineligible Card Transaction Reported',
+                            report,
+                            reason: 'Transaction id is missing.'
+                          });
+                          return { changeset, events };
+                        }
+
+                        const existing = document(`/reportedTransactionsById/${transactionId}`);
+                        if (existing) {
+                          events.push({
+                            type: 'PayNote/Ineligible Card Transaction Reported',
+                            report,
+                            reason: 'Duplicate transaction id.'
+                          });
+                          return { changeset, events };
+                        }
+
+                        const targetMerchantId = document('/voucher/targetMerchantId');
+                        const monitoringStatus = document('/monitoringStatus');
+                        const activatedAt = document('/activatedAt');
+                        const limitMinor = document('/voucher/limitMinor');
+                        const remainingAmountMinor = document('/remainingAmountMinor');
+                        const reasons = [];
+
+                        if (!(activatedAt > 0)) {
+                          reasons.push('Voucher is not activated.');
+                        }
+                        if (monitoringStatus !== 'started') {
+                          reasons.push('Monitoring has not started.');
+                        }
+                        if (!merchantId || merchantId !== targetMerchantId) {
+                          reasons.push('Merchant does not match the voucher target merchant.');
+                        }
+                        if (!Number.isFinite(amountMinor) || amountMinor < 0) {
+                          reasons.push('Amount is invalid.');
+                        }
+                        if (!currency) {
+                          reasons.push('Currency is missing.');
+                        }
+                        if (!occurredAt) {
+                          reasons.push('Occurred-at timestamp is missing.');
+                        }
+                        const availableLimit = Number.isFinite(remainingAmountMinor)
+                          ? remainingAmountMinor
+                          : limitMinor;
+                        if (!Number.isFinite(availableLimit) || availableLimit < 0) {
+                          reasons.push('Voucher limit is invalid.');
+                        } else if (availableLimit === 0) {
+                          reasons.push('Voucher has no remaining balance.');
+                        }
+
+                        if (reasons.length === 0) {
+                          const eligibleCashbackMinor = Math.min(availableLimit, amountMinor);
+                          changeset.push({
+                            op: 'replace',
+                            path: `/reportedTransactionsById/${transactionId}`,
+                            val: report
+                          });
+                          events.push({
+                            type: 'PayNote/Eligible Card Transaction Reported',
+                            report,
+                            eligibleCashbackMinor
+                          });
+                        } else {
+                          events.push({
+                            type: 'PayNote/Ineligible Card Transaction Reported',
+                            report,
+                            reason: reasons.join('; ')
+                          });
+                        }
+
+                        return {
+                          changeset,
+                          events
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Apply Report
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      value: ${steps['Prepare Report'].changeset}
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: AUsta1K6pa7Gfj9UqmwCmhwKZmzmuLX5PcMBpjCFWj5M
+            attributesAdded: []
       - status: stable
         content:
           name: Reservation Declined
@@ -5514,6 +6914,28 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Start Card Transaction Monitoring Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to start monitoring card transactions for a target merchant and report them into a document.
+          targetMerchantId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: External merchant identifier to monitor for card transactions.
+          reportOperationName:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Operation name to call with PayNote/Card Transaction Report payloads.
+          requestedAt:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Timestamp (microseconds since epoch) when monitoring was requested.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: HQYgfw9sSv46ctN63B4emWefBcUgEoxxCuk7ENxpPq5V
+            attributesAdded: []
+      - status: dev
+        content:
           name: Transaction Identification Failed
           type:
             blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
@@ -5540,3 +6962,4 @@ repositoryVersions:
   - 5C7dGdtZGYPee4HtCXqFF4XpRuhhXeuaiWNDpdcG2iie
   - 2m6QjrS7SGeuhqufTcuunxLCpHmrqykEFXZcqSyU6wUc
   - fWQgpx2U9V1wz6MqurHqeYfAbWxHP6ym1hsJfSb6aqt
+  - 86We3PQVRxhQak3PKXAKhDSZXukMTpyMTM8PEettEENw
