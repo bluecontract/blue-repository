@@ -1,0 +1,9 @@
+name: Card Transaction Monitoring Started
+type: Conversation/Response
+description: Confirmation that card transaction monitoring has started.
+targetMerchantId:
+  type: Text
+  description: External merchant identifier being monitored.
+startedAt:
+  type: Integer
+  description: Timestamp (microseconds since epoch) when monitoring started.

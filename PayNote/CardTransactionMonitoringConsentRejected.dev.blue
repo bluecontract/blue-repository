@@ -1,0 +1,12 @@
+name: Card Transaction Monitoring Consent Rejected
+type: Conversation/Response
+description: The client rejected consent for the bank to monitor card transactions at the target merchant.
+targetMerchantId:
+  type: Text
+  description: External merchant identifier requested for monitoring.
+reason:
+  type: Text
+  description: Optional reason the client rejected consent.
+rejectedAt:
+  type: Integer
+  description: Timestamp (microseconds since epoch) when consent was rejected.

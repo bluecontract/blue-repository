@@ -1,0 +1,12 @@
+name: Start Card Transaction Monitoring Requested
+type: Conversation/Request
+description: Request to start monitoring card transactions for a target merchant and report them into a document.
+targetMerchantId:
+  type: Text
+  description: External merchant identifier to monitor for card transactions.
+reportOperationName:
+  type: Text
+  description: Operation name to call with PayNote/Card Transaction Report payloads.
+requestedAt:
+  type: Integer # TODO: replace with Timestamp when we can use Date class to format ISO Timestamp in JS expressions
+  description: Timestamp (microseconds since epoch) when monitoring was requested.
