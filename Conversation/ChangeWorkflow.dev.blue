@@ -12,7 +12,7 @@ steps:
 
       const request = event.message.request || {};
 
-      const changeDescription = request.changeDescription;
+      const summary = request.summary;
       const rawChangeset = request.changeset;
       const rawSectionChanges = request.sectionChanges;
       const requestSectionChanges = rawSectionChanges || {};
@@ -81,15 +81,15 @@ steps:
       const policy = findPolicy();
       const policyEnabled = !!policy && policy.requireSectionChanges !== false;
 
-      if (!toText(changeDescription)) {
-        issues.push('changeDescription is missing');
-      }
-
       const hasChangeset = !!rawChangeset;
       const hasSectionChanges = !!rawSectionChanges;
 
       if (!hasChangeset && !hasSectionChanges) {
         issues.push('changeset or sectionChanges is required');
+      }
+
+      if (!toText(summary)) {
+        issues.push('summary is missing');
       }
 
       const isContractsPath = (path) => {

@@ -1,12 +1,12 @@
 name: Change Request
-description: Payload for propose/make change operations (changeset + sectionChanges).
-changeDescription:
+description: Payload for propose/make change operations.
+summary:
   type: Text
-  description: Required human-readable summary used for review and audit.
+  description: Human-readable summary of the requested change. Required when proposal is created.
 changeset:
   type: List
   itemType: Core/Json Patch Entry
-  description: RFC 6902 patch entries outside /contracts (blocked by policy when touching /contracts).
+  description: RFC 6902 patch entries outside /contracts (blocked by policy if it touches /contracts).
 sectionChanges:
   type: Conversation/Document Section Changes
   description: Section-based /contracts mutations (required when Contracts Change Policy is enabled).
