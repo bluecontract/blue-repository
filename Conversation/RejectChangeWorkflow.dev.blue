@@ -8,25 +8,22 @@ steps:
   - name: Prepare
     type: Conversation/JavaScript Code
     code: |
-      const postfix = currentContract.postfix || ''
-      const path = '/proposedChange' + postfix
+      const invalid = (reason) => ({
+        changeset: [],
+        events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
+      });
 
-      const proposedChange = document(path)
-      if (proposedChange) {
-        return {
-          changeset: [{ op: 'remove', path }]
-        }
+      const postfixValue = currentContract?.postfix || '';
+      const path = '/proposedChange' + postfixValue;
+
+      if (!document(path)) {
+        return invalid('no proposed change at ' + path);
       }
 
       return {
-        changeset: [],
-        events: [
-          {
-            type: "Conversation/Proposed Change Invalid",
-            reason: "Proposed change does not exist at " + path
-          }
-        ]
+        changeset: [{ op: 'remove', path }]
       };
+
   - name: Apply
     type: Conversation/Update Document
-    changeset: '${steps.Prepare.changeset}'
+    changeset: ${steps.Prepare.changeset}
