@@ -4,6 +4,13 @@ description: Confirmation that card transaction monitoring has started.
 targetMerchantId:
   type: Text
   description: External merchant identifier being monitored.
+events:
+  type: List
+  itemType: Text
 startedAt:
   type: Integer
   description: Timestamp (microseconds since epoch) when monitoring started.
+consentDocumentId:
+  type: Text
+consentSessionId:
+  type: Text

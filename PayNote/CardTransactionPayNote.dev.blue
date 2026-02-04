@@ -1,0 +1,6 @@
+name: Card Transaction PayNote
+type: PayNote/PayNote
+description: PayNote tied to a specific card transaction via ISO scheme identifiers.
+
+cardTransactionDetails:
+  type: PayNote/Card Transaction Details

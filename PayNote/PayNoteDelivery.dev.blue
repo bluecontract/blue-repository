@@ -1,5 +1,5 @@
 name: PayNote Delivery
-description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer).
+description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer - client).
 
 payNoteBootstrapRequest:
   type: Conversation/Document Bootstrap Requested
@@ -39,10 +39,6 @@ contracts:
   payNoteSender:
     type: MyOS/MyOS Timeline Channel
     description: Participant submitting the PayNote delivery (merchant or processor).
-
-  payNoteReceiver:
-    type: MyOS/MyOS Timeline Channel
-    description: Participant receiving the PayNote delivery (payer).
 
   payNoteDeliverer:
     type: MyOS/MyOS Timeline Channel
@@ -142,7 +138,7 @@ contracts:
 
   acceptPayNote:
     type: Conversation/Operation
-    channel: payNoteReceiver
+    channel: payNoteDeliverer
     request:
       acceptedAt:
         type: Common/Timestamp
@@ -245,7 +241,7 @@ contracts:
 
   rejectPayNote:
     type: Conversation/Operation
-    channel: payNoteReceiver
+    channel: payNoteDeliverer
     request:
       reason:
         type: Text

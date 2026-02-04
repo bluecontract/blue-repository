@@ -1,9 +1,0 @@
-name: Ineligible Card Transaction Reported
-type: Conversation/Event
-description: A reported card transaction was not eligible for voucher cashback.
-report:
-  type: PayNote/Card Transaction Report
-  description: Report payload for the ineligible transaction.
-reason:
-  type: Text
-  description: Reason the transaction was ineligible.

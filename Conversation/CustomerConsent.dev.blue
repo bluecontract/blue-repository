@@ -1,0 +1,102 @@
+name: Customer Consent
+description: Generic customer consent granted to a grantee (e.g., merchant).
+
+consentKind:
+  type: Text
+  description: Classification of the consent (e.g., cardTransactionMonitoring).
+
+consentDetails:
+  type: Dictionary
+  keyType: Text
+  valueType: Text
+  description: Generic scope details (merchant id, event categories, requesting contract refs, etc.).
+
+consentStatus:
+  type: Text
+  description: Consent state (granted, revoked).
+  value: granted
+
+grantedAt:
+  type: Common/Timestamp
+  description: Timestamp when consent was granted.
+
+revokedAt:
+  type: Common/Timestamp
+  description: Timestamp when consent was revoked.
+
+revocationReason:
+  type: Text
+  description: Reason for revocation.
+
+contracts:
+  granteeChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Grantee (e.g., merchant MyOS timeline).
+
+  granterChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Granter (customer represented by the bank; customer has no MyOS account).
+
+  guarantorChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Bank/admin channel.
+
+  initLifecycleChannel:
+    type: Core/Lifecycle Event Channel
+    event:
+      type: Core/Document Processing Initiated
+
+  initialize:
+    type: Conversation/Sequential Workflow
+    channel: initLifecycleChannel
+    steps:
+      - name: Initialize
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /consentStatus
+            val: granted
+
+  revokeConsent:
+    type: Conversation/Operation
+    description: Customer revokes the consent.
+    channel: granterChannel
+    request:
+      reason:
+        type: Text
+      revokedAt:
+        type: Common/Timestamp
+
+  revokeConsentImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: revokeConsent
+    steps:
+      - name: Capture
+        type: Conversation/JavaScript Code
+        code: |
+          const request = event?.message?.request || {};
+          const reason = request.reason || "";
+          const revokedAt = request.revokedAt || "";
+          const canRevoke = document('/consentStatus') === "granted";
+
+          return {
+            reason,
+            revokedAt,
+            canRevoke,
+            events: canRevoke
+              ? [{ type: "Conversation/Customer Consent Revoked", reason, revokedAt }]
+              : []
+          };
+
+      - name: Apply
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /consentStatus
+            val: revoked
+          - op: replace
+            path: /revocationReason
+            val: "${steps['Capture'].reason}"
+          - op: replace
+            path: /revokedAt
+            val: "${steps['Capture'].revokedAt}"

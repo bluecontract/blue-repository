@@ -1,5 +1,6 @@
 name: Card Transaction Report
-description: Standard report payload describing a captured card transaction.
+type: Conversation/Event
+description: Bank reports a posted card transaction into the requesting contract timeline.
 transactionId:
   type: Text
   description: Unique transaction identifier used for idempotency.
@@ -15,3 +16,5 @@ currency:
 occurredAt:
   type: Common/Timestamp
   description: Timestamp when the transaction occurred.
+cardTransactionDetails:
+  type: PayNote/Card Transaction Details

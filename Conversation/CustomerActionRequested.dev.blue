@@ -1,0 +1,27 @@
+name: Customer Action Requested
+type: Conversation/Request
+description: A document suggests that the bank should ask the customer to take a specific action in the bank UI.
+
+actionId:
+  type: Text
+  description: Optional idempotency key for the action request.
+
+actionType:
+  type: Text
+  description: consentApproval | callOperation | informational
+
+title:
+  type: Text
+  description: Short title for the pending action.
+
+message:
+  type: Text
+  description: Human-readable message describing what is expected.
+
+operationName:
+  type: Text
+  description: Optional contract operation to execute (used for callOperation).
+
+prefillRequestJson:
+  type: Text
+  description: Optional JSON string to prefill the operation request form.

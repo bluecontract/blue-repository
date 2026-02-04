@@ -1,0 +1,6 @@
+name: Customer Consent Revoked
+type: Conversation/Event
+reason:
+  type: Text
+revokedAt:
+  type: Common/Timestamp

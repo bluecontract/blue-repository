@@ -1,9 +1,0 @@
-name: Eligible Card Transaction Reported
-type: Conversation/Event
-description: A reported card transaction was eligible for voucher cashback.
-report:
-  type: PayNote/Card Transaction Report
-  description: Report payload for the eligible transaction.
-eligibleCashbackMinor:
-  type: Integer
-  description: Cashback amount eligible for this transaction.
