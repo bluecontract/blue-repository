@@ -1,0 +1,15 @@
+name: Transaction Status
+description: Status snapshot of the referenced card transaction.
+
+status:
+  type: Text
+  description: authorized | captured | partiallyCaptured
+
+authorizedAmountMinor:
+  type: Integer
+
+capturedAmountMinor:
+  type: Integer
+
+currency:
+  type: Common/Currency

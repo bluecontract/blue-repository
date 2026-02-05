@@ -4,6 +4,9 @@ description: Notification that card transaction monitoring was rejected.
 targetMerchantId:
   type: Text
   description: External merchant identifier requested for monitoring.
+events:
+  type: List
+  itemType: Text
 reason:
   type: Text
   description: Reason monitoring was rejected.

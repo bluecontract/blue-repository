@@ -1,0 +1,3 @@
+name: Merchant To Customer PayNote
+type: PayNote/PayNote
+description: Base PayNote where payer is merchant and payee is customer. Bank sets/validates payer channel bindings.

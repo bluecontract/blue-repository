@@ -6,6 +6,10 @@ status:
   type: Text
   value: Pending
 
+transactionStatus:
+  type: PayNote/Transaction Status
+  description: Optional status snapshot. If present in proposal, bank validates it; if missing bank sets it at bootstrap.
+
 currency:
   description: The ISO 4217 currency code for the transaction.
   type: Text
@@ -44,3 +48,18 @@ contracts:
     type: Conversation/Timeline Channel
   guarantorChannel:
     type: Conversation/Timeline Channel
+
+  guarantorUpdate:
+    type: Conversation/Operation
+    description: Standard operation used by the guarantor (bank) to deliver events into the document.
+    channel: guarantorChannel
+
+  guarantorUpdateImpl:
+    type: Conversation/Sequential Workflow Operation
+    description: Re-emits provided events (MyOS-admin style).
+    operation: guarantorUpdate
+    steps:
+      - name: EmitGuarantorEvents
+        type: Conversation/JavaScript Code
+        code: |
+          return { events: event.message.request };

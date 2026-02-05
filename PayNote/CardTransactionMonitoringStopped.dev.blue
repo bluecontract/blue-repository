@@ -1,0 +1,15 @@
+name: Card Transaction Monitoring Stopped
+type: Conversation/Event
+
+targetMerchantId:
+  type: Text
+
+events:
+  type: List
+  itemType: Text
+
+stoppedAt:
+  type: Integer
+
+reason:
+  type: Text

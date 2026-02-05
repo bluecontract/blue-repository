@@ -1,9 +1,0 @@
-name: Card Transaction Monitoring Consent Requested
-type: Conversation/Request
-description: The document requests the client to grant consent for card transaction monitoring.
-targetMerchantId:
-  type: Text
-  description: External merchant identifier requested for monitoring.
-requestedAt:
-  type: Integer
-  description: Timestamp (microseconds since epoch) when consent was requested.
