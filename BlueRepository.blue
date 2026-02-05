@@ -296,15 +296,15 @@ packages:
           description: Operation that applies a changeset immediately without proposal/accept.
           request:
             type:
-              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
+              blueId: FW7iYkzig4fepCdwfCdgNJw4DQ1fKwnAUf3YpjgfTPmG
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: A3jjsMRLxrKo5pyPgLoT6e9jPGWfFPdkMs2wjyYMRpXk
+          - repositoryVersionIndex: 2
+            typeBlueId: Hd5uuFjqxyw5mrFPgJf2mcatij8ddtmGAMJu9ij5K1tc
             attributesAdded: []
       - status: dev
         content:
           name: Change Request
-          description: Payload for propose/make change operations.
+          description: Payload for propose and direct change operations.
           summary:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -320,8 +320,8 @@ packages:
               blueId: DEmFwGa1sWm2BKhrN98LREKiB8j8B8kFAo7KBkkaojnN
             description: Section-based /contracts mutations (required when Contracts Change Policy is enabled).
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
+          - repositoryVersionIndex: 2
+            typeBlueId: FW7iYkzig4fepCdwfCdgNJw4DQ1fKwnAUf3YpjgfTPmG
             attributesAdded: []
       - status: dev
         content:
@@ -331,7 +331,7 @@ packages:
           description: Applies a requested changeset immediately to the document.
           request:
             type:
-              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
+              blueId: FW7iYkzig4fepCdwfCdgNJw4DQ1fKwnAUf3YpjgfTPmG
             description: Expected request payload for this workflow.
           steps:
             items:
@@ -562,8 +562,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: 2jSne57MeM1HvhrQscpbDqhR46TwpmpiEpfG6h8PfMZP
+          - repositoryVersionIndex: 2
+            typeBlueId: 4pFvBSYyitoq8rWqTmY5rLywU2tpZsivDUCAo5vwoAT9
             attributesAdded: []
       - status: stable
         content:
@@ -1162,10 +1162,10 @@ packages:
           description: Operation to propose a document change for later acceptance or rejection.
           request:
             type:
-              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
+              blueId: FW7iYkzig4fepCdwfCdgNJw4DQ1fKwnAUf3YpjgfTPmG
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: GzA8QNJnfYyFpFKmeM2HWzXJxYXoWgW6PtbyCAHhgoy4
+          - repositoryVersionIndex: 2
+            typeBlueId: BeiedmmcKDhStxDnnQqUaXDJLofWSnqX6CazKTvVpfbW
             attributesAdded: []
       - status: dev
         content:
@@ -1175,7 +1175,7 @@ packages:
           description: Stores a proposed change under /proposedChange{postfix}.
           request:
             type:
-              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
+              blueId: FW7iYkzig4fepCdwfCdgNJw4DQ1fKwnAUf3YpjgfTPmG
             description: Expected request payload for this workflow.
           postfix:
             type:
@@ -1220,8 +1220,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: 5Ptp4ykWNiYNCmSbYEDpxjE21DGpBxdDR6CQeAaZUSva
+          - repositoryVersionIndex: 2
+            typeBlueId: 7dUt8jiX5vGeZL7wVzWFA8uEw37T6oPgC8KyDZmqxeSj
             attributesAdded: []
       - status: dev
         content:
@@ -5602,3 +5602,4 @@ packages:
 repositoryVersions:
   - CQn9FCus2xkhgCdSZQqKQmKGRLKnqTboSyiJXn3pya68
   - 22xxEjtpjUSpttaRiHX5XbmGNcFhpgLipai685YMdMWv
+  - 58apGqo2EExaKTQQJmjASbj8p7tHvrWkoQVjWeWzaox5
