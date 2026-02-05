@@ -223,4 +223,4 @@ steps:
 
   - name: Apply
     type: Conversation/Update Document
-    changeset: ${steps.Prepare.changeset}
+    changeset: '${steps.Prepare.changeset}'
