@@ -1,5 +1,5 @@
 name: Change Request
-description: Payload for propose/make change operations.
+description: Payload for propose and direct change operations.
 summary:
   type: Text
   description: Human-readable summary of the requested change. Required when proposal is created.
