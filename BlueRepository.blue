@@ -51,37 +51,220 @@ packages:
                   blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                 code:
                   value: |
-                    const postfix = currentContract.postfix || '';
-                    const path = '/proposedChange' + postfix;
+                    const invalid = (reason) => ({
+                      changeset: [],
+                      events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
+                    });
 
-                    const proposedChange = document(path);
-                    if (!proposedChange) {
-                      return {
-                        changeset: [],
-                        events: [
-                          {
-                            type: "Conversation/Proposed Change Invalid",
-                            reason: "Proposed change does not exist at " + path
-                          }
-                        ]
-                      };
+                    const isArray = Array.isArray;
+
+                    const postfixValue = currentContract?.postfix || '';
+                    const proposedPath = '/proposedChange' + postfixValue;
+
+                    const change = document(proposedPath);
+                    if (!change) {
+                      return invalid('no proposed change at ' + proposedPath);
                     }
 
-                    const preparedChangeset = proposedChange.preparedChangeset;
-                    if (!preparedChangeset || preparedChangeset.length === 0) {
-                      return {
-                        changeset: [],
-                        events: [
-                          {
-                            type: "Conversation/Proposed Change Invalid",
-                            reason: "Proposed change is missing prepared changeset at " + path
-                          }
-                        ]
-                      };
+                    const requestChangeset = isArray(change?.changeset) ? change.changeset : [];
+                    const sectionChanges = change.sectionChanges;
+
+                    const entryPath = (entry) => `${entry?.path || ''}`;
+                    const isContractsPath = (p) => p === '/contracts' || p.startsWith('/contracts/');
+                    const isProposedChangePath = (p) => p.startsWith('/proposedChange');
+
+                    const contracts = document('/contracts') || {};
+                    const policy = Object.values(contracts).find((c) => c?.requireSectionChanges !== undefined);
+                    const policyEnabled = !!policy && policy.requireSectionChanges !== false;
+
+                    if (
+                      policyEnabled &&
+                      requestChangeset.some((e) => isContractsPath(entryPath(e)))
+                    ) {
+                      return invalid('changeset cannot modify /contracts when Contracts Change Policy is enabled');
+                    }
+
+                    if (requestChangeset.some((e) => isProposedChangePath(entryPath(e)))) {
+                      return invalid('changeset cannot modify /proposedChange');
+                    }
+
+                    const escapePointer = (value) =>
+                      `${value}`.split('~').join('~0').split('/').join('~1');
+
+                    const contractPtr = (key) => '/contracts/' + escapePointer(key);
+
+                    const isMetaKey = (key) =>
+                      key === 'type' || key === 'keyType' || key === 'valueType' || key === 'description';
+
+                    const contractKeysFromMap = (contractsMap) =>
+                      Object.keys(contractsMap || {}).filter((k) => !isMetaKey(k));
+
+                    const normalizeSection = (section, contractKeys) => ({
+                      ...(section || {}),
+                      type: 'Conversation/Document Section',
+                      relatedContracts: (section?.relatedContracts?.length ? section.relatedContracts : contractKeys)
+                    });
+
+                    const hasMatchingRelatedContracts = (section, contractKeys) => {
+                      const related = isArray(section?.relatedContracts)
+                        ? section.relatedContracts.map((value) => `${value}`)
+                        : [];
+                      if (!related.length) {
+                        return true;
+                      }
+                      if (related.length !== contractKeys.length) {
+                        return false;
+                      }
+                      const relatedMap = {};
+                      for (const value of related) {
+                        const key = `${value}`;
+                        relatedMap[key] = (relatedMap[key] || 0) + 1;
+                      }
+                      if (Object.keys(relatedMap).length !== contractKeys.length) {
+                        return false;
+                      }
+                      for (const key of contractKeys) {
+                        if (!relatedMap[key]) {
+                          return false;
+                        }
+                      }
+                      return true;
+                    };
+
+                    const sectionChangeset = [];
+                    const seenSectionKeys = {};
+                    const seenContractKeys = {};
+                    const existingContractKeys = {};
+                    for (const key of Object.keys(contracts || {}).filter((k) => !isMetaKey(k))) {
+                      existingContractKeys[key] = true;
+                    }
+
+                    const trackSectionKey = (sectionKey) => {
+                      if (seenSectionKeys[sectionKey]) {
+                        return invalid(`section key duplicated in sectionChanges: ${sectionKey}`);
+                      }
+                      seenSectionKeys[sectionKey] = true;
+                      return null;
+                    };
+
+                    const trackContractKey = (sectionKey, contractKey) => {
+                      const existingSection = seenContractKeys[contractKey];
+                      if (existingSection && existingSection !== sectionKey) {
+                        return invalid(`contract key used by multiple sections in request: ${contractKey}`);
+                      }
+                      seenContractKeys[contractKey] = sectionKey;
+                      return null;
+                    };
+
+                    const addList = isArray(sectionChanges?.add) ? sectionChanges.add : [];
+                    for (const entry of addList) {
+                      const sectionKey = `${entry?.sectionKey || ''}`;
+                      if (!sectionKey) return invalid('sectionChanges.add is missing sectionKey');
+
+                      const sectionKeyDup = trackSectionKey(sectionKey);
+                      if (sectionKeyDup) return sectionKeyDup;
+
+                      if (existingContractKeys[sectionKey]) {
+                        return invalid(`contract key already exists at ${contractPtr(sectionKey)}`);
+                      }
+
+                      const contractsMap = entry?.contracts || {};
+                      const contractKeys = contractKeysFromMap(contractsMap).map((key) => `${key}`);
+
+                      if (!hasMatchingRelatedContracts(entry?.section, contractKeys)) {
+                        return invalid('relatedContracts must match contracts');
+                      }
+
+                      for (const key of contractKeys) {
+                        if (existingContractKeys[key]) {
+                          return invalid(`contract key already exists at ${contractPtr(key)}`);
+                        }
+                        const dup = trackContractKey(sectionKey, key);
+                        if (dup) return dup;
+                      }
+
+                      for (const key of contractKeys) {
+                        sectionChangeset.push({ op: 'add', path: contractPtr(key), val: contractsMap[key] });
+                      }
+
+                      sectionChangeset.push({
+                        op: 'add',
+                        path: contractPtr(sectionKey),
+                        val: normalizeSection(entry?.section, contractKeys)
+                      });
+                    }
+
+                    const modifyList = isArray(sectionChanges?.modify) ? sectionChanges.modify : [];
+                    for (const entry of modifyList) {
+                      const sectionKey = `${entry?.sectionKey || ''}`;
+                      if (!sectionKey) return invalid('sectionChanges.modify is missing sectionKey');
+
+                      const sectionKeyDup = trackSectionKey(sectionKey);
+                      if (sectionKeyDup) return sectionKeyDup;
+
+                      const existingRelated = isArray(contracts?.[sectionKey]?.relatedContracts)
+                        ? contracts[sectionKey].relatedContracts.map((value) => `${value}`)
+                        : [];
+                      const existingRelatedMap = {};
+                      for (const value of existingRelated) {
+                        existingRelatedMap[`${value}`] = true;
+                      }
+
+                      const contractsMap = entry?.contracts || {};
+                      const contractKeys = contractKeysFromMap(contractsMap).map((key) => `${key}`);
+
+                      if (!hasMatchingRelatedContracts(entry?.section, contractKeys)) {
+                        return invalid('relatedContracts must match contracts');
+                      }
+
+                      for (const key of contractKeys) {
+                        const dup = trackContractKey(sectionKey, key);
+                        if (dup) return dup;
+                        if (existingContractKeys[key] && !existingRelatedMap[key]) {
+                          return invalid(`contract key already exists at ${contractPtr(key)}`);
+                        }
+                      }
+
+                      for (const key of contractKeys) {
+                        sectionChangeset.push({ op: 'add', path: contractPtr(key), val: contractsMap[key] });
+                      }
+
+                      for (const oldKey of existingRelated) {
+                        if (contractKeys.indexOf(oldKey) === -1) {
+                          sectionChangeset.push({ op: 'remove', path: contractPtr(oldKey) });
+                        }
+                      }
+
+                      sectionChangeset.push({
+                        op: 'add',
+                        path: contractPtr(sectionKey),
+                        val: normalizeSection(entry?.section, contractKeys)
+                      });
+                    }
+
+                    const removeList = isArray(sectionChanges?.remove) ? sectionChanges.remove : [];
+                    for (const entry of removeList) {
+                      const sectionKey = `${entry?.sectionKey || entry || ''}`;
+                      if (!sectionKey) return invalid('sectionChanges.remove is missing sectionKey');
+
+                      const related = isArray(contracts?.[sectionKey]?.relatedContracts)
+                        ? contracts[sectionKey].relatedContracts
+                        : [];
+
+                      for (const key of related) {
+                        sectionChangeset.push({ op: 'remove', path: contractPtr(key) });
+                      }
+                      sectionChangeset.push({ op: 'remove', path: contractPtr(sectionKey) });
+                    }
+
+                    const combined = sectionChangeset.concat(requestChangeset);
+
+                    if (combined.length === 0) {
+                      return invalid('no changes provided');
                     }
 
                     return {
-                      changeset: preparedChangeset.concat({ op: 'remove', path })
+                      changeset: combined.concat({ op: 'remove', path: proposedPath })
                     };
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -93,8 +276,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: G6GMCB3AQvH2xR12RiDvaCiEbCjgz4uhjKssDMRXbCTG
+          - repositoryVersionIndex: 1
+            typeBlueId: 29xcoYKf9p47xagTDwGLuQyFrT9WBN3Sd7FaPtqLvydy
             attributesAdded: []
       - status: stable
         content:
@@ -113,32 +296,32 @@ packages:
           description: Operation that applies a changeset immediately without proposal/accept.
           request:
             type:
-              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
+              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: BoyJNkH7CAzjuuzbZFpxB7HguZVtLCxpBLnuYY5k1eqB
+          - repositoryVersionIndex: 1
+            typeBlueId: A3jjsMRLxrKo5pyPgLoT6e9jPGWfFPdkMs2wjyYMRpXk
             attributesAdded: []
       - status: dev
         content:
           name: Change Request
-          description: Payload for propose/make change operations (changeset + sectionChanges).
-          changeDescription:
+          description: Payload for propose/make change operations.
+          summary:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Required human-readable summary used for review and audit.
+            description: Human-readable summary of the requested change. Required when proposal is created.
           changeset:
             type:
               blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
             itemType:
               blueId: Bz49DbfqKC1yJeCfv5RYPZUKTfb7rtZnmreCaz4RsXn5
-            description: RFC 6902 patch entries outside /contracts (blocked by policy when touching /contracts).
+            description: RFC 6902 patch entries outside /contracts (blocked by policy if it touches /contracts).
           sectionChanges:
             type:
               blueId: DEmFwGa1sWm2BKhrN98LREKiB8j8B8kFAo7KBkkaojnN
             description: Section-based /contracts mutations (required when Contracts Change Policy is enabled).
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
+          - repositoryVersionIndex: 1
+            typeBlueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
             attributesAdded: []
       - status: dev
         content:
@@ -148,7 +331,7 @@ packages:
           description: Applies a requested changeset immediately to the document.
           request:
             type:
-              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
+              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
             description: Expected request payload for this workflow.
           steps:
             items:
@@ -157,381 +340,218 @@ packages:
                   blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                 code:
                   value: |
-                    const issues = [];
+                    const invalid = (reason) => ({
+                      changeset: [],
+                      events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
+                    });
 
-                    const request = event.message.request || {};
+                    const isArray = Array.isArray;
 
-                    const changeDescription = request.changeDescription;
-                    const rawChangeset = request.changeset;
-                    const rawSectionChanges = request.sectionChanges;
-                    const requestSectionChanges = rawSectionChanges || {};
+                    const change = event.message.request;
 
-                    const toText = (value) => {
-                      const raw = value && value.value ? value.value : value;
-                      return raw && raw.trim ? raw.trim() : '';
-                    };
-                    const asList = (value) => Array.isArray(value) ? value : [];
-                    const hasType = (value) => value && value.type;
-                    const escapePointer = (value) => {
-                      const text = toText(value);
-                      return text.split('~').join('~0').split('/').join('~1');
-                    };
-                    const requestChangeset = asList(rawChangeset);
+                    const summary = change?.summary;
+                    if (!summary || typeof summary !== 'string') {
+                      return invalid('summary is missing');
+                    }
 
-                    const uniqueKeys = (values, label) => {
-                      const seen = new Set();
-                      const output = [];
-                      for (const value of values) {
-                        const key = toText(value);
-                        if (!key) {
-                          issues.push(label + ' contains invalid key');
-                          continue;
-                        }
-                        if (seen.has(key)) {
-                          issues.push(label + ' contains duplicate key: ' + key);
-                          continue;
-                        }
-                        seen.add(key);
-                        output.push(key);
+                    const requestChangeset = isArray(change?.changeset) ? change.changeset : [];
+                    const sectionChanges = change.sectionChanges;
+
+                    const entryPath = (entry) => `${entry?.path || ''}`;
+                    const isContractsPath = (p) => p === '/contracts' || p.startsWith('/contracts/');
+                    const isProposedChangePath = (p) => p.startsWith('/proposedChange');
+
+                    const contracts = document('/contracts') || {};
+                    const policy = Object.values(contracts).find((c) => c?.requireSectionChanges !== undefined);
+                    const policyEnabled = !!policy && policy.requireSectionChanges !== false;
+
+                    if (
+                      policyEnabled &&
+                      requestChangeset.some((e) => isContractsPath(entryPath(e)))
+                    ) {
+                      return invalid('changeset cannot modify /contracts when Contracts Change Policy is enabled');
+                    }
+
+                    if (requestChangeset.some((e) => isProposedChangePath(entryPath(e)))) {
+                      return invalid('changeset cannot modify /proposedChange');
+                    }
+
+                    const escapePointer = (value) =>
+                      `${value}`.split('~').join('~0').split('/').join('~1');
+
+                    const contractPtr = (key) => '/contracts/' + escapePointer(key);
+
+                    const isMetaKey = (key) =>
+                      key === 'type' || key === 'keyType' || key === 'valueType' || key === 'description';
+
+                    const contractKeysFromMap = (contractsMap) =>
+                      Object.keys(contractsMap || {}).filter((k) => !isMetaKey(k));
+
+                    const normalizeSection = (section, contractKeys) => ({
+                      ...(section || {}),
+                      type: 'Conversation/Document Section',
+                      relatedContracts: (section?.relatedContracts?.length ? section.relatedContracts : contractKeys)
+                    });
+
+                    const hasMatchingRelatedContracts = (section, contractKeys) => {
+                      const related = isArray(section?.relatedContracts)
+                        ? section.relatedContracts.map((value) => `${value}`)
+                        : [];
+                      if (!related.length) {
+                        return true;
                       }
-                      return output;
-                    };
-
-                    const sameStringSet = (left, right) => {
-                      if (left.length !== right.length) return false;
-                      const set = new Set(left);
-                      if (set.size !== right.length) return false;
-                      for (const value of right) {
-                        if (!set.has(value)) return false;
+                      if (related.length !== contractKeys.length) {
+                        return false;
+                      }
+                      const relatedMap = {};
+                      for (const value of related) {
+                        const key = `${value}`;
+                        relatedMap[key] = (relatedMap[key] || 0) + 1;
+                      }
+                      if (Object.keys(relatedMap).length !== contractKeys.length) {
+                        return false;
+                      }
+                      for (const key of contractKeys) {
+                        if (!relatedMap[key]) {
+                          return false;
+                        }
                       }
                       return true;
                     };
 
-                    const contracts = Object(document('/contracts') || {});
+                    const sectionChangeset = [];
+                    const seenSectionKeys = {};
+                    const seenContractKeys = {};
+                    const existingContractKeys = {};
+                    for (const key of Object.keys(contracts || {}).filter((k) => !isMetaKey(k))) {
+                      existingContractKeys[key] = true;
+                    }
 
-                    const isDocumentSection = (contract) =>
-                      !!contract && Array.isArray(contract.relatedContracts);
-
-                    const isContractsChangePolicy = (contract) => {
-                      if (!contract) return false;
-                      return 'requireSectionChanges' in contract;
-                    };
-
-                    const findPolicy = () => {
-                      for (const key of Object.keys(contracts)) {
-                        const contract = contracts[key];
-                        if (isContractsChangePolicy(contract)) {
-                          return contract;
-                        }
+                    const trackSectionKey = (sectionKey) => {
+                      if (seenSectionKeys[sectionKey]) {
+                        return invalid(`section key duplicated in sectionChanges: ${sectionKey}`);
                       }
+                      seenSectionKeys[sectionKey] = true;
                       return null;
                     };
 
-                    const policy = findPolicy();
-                    const policyEnabled = !!policy && policy.requireSectionChanges !== false;
-
-                    if (!toText(changeDescription)) {
-                      issues.push('changeDescription is missing');
-                    }
-
-                    const hasChangeset = !!rawChangeset;
-                    const hasSectionChanges = !!rawSectionChanges;
-
-                    if (!hasChangeset && !hasSectionChanges) {
-                      issues.push('changeset or sectionChanges is required');
-                    }
-
-                    const isContractsPath = (path) => {
-                      const value = toText(path);
-                      return value === '/contracts' || value.startsWith('/contracts/');
-                    };
-                    if (policyEnabled && hasChangeset) {
-                      for (const entry of requestChangeset) {
-                        if (entry && isContractsPath(entry.path)) {
-                          issues.push('changeset cannot modify /contracts when Contracts Change Policy is enabled');
-                          break;
-                        }
+                    const trackContractKey = (sectionKey, contractKey) => {
+                      const existingSection = seenContractKeys[contractKey];
+                      if (existingSection && existingSection !== sectionKey) {
+                        return invalid(`contract key used by multiple sections in request: ${contractKey}`);
                       }
-                    }
-                    const isProposedChangePath = (path) =>
-                      toText(path).startsWith('/proposedChange');
-                    if (hasChangeset) {
-                      for (const entry of requestChangeset) {
-                        if (entry && isProposedChangePath(entry.path)) {
-                          issues.push('changeset cannot modify /proposedChange');
-                          break;
-                        }
-                      }
-                    }
-
-                    const existingSections = {};
-                    for (const key of Object.keys(contracts)) {
-                      const contract = contracts[key];
-                      if (isDocumentSection(contract)) {
-                        existingSections[key] = contract;
-                      }
-                    }
-
-                    const contractIndex = {};
-                    for (const sectionKey of Object.keys(existingSections)) {
-                      const section = existingSections[sectionKey];
-                      const related = asList(section.relatedContracts);
-                      for (const relatedKey of related) {
-                        const contractKey = toText(relatedKey);
-                        if (!contractKey) continue;
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          contractIndex[contractKey] = null;
-                        } else if (!contractIndex[contractKey]) {
-                          contractIndex[contractKey] = sectionKey;
-                        }
-                      }
-                    }
-
-                    const normalizeSectionDefinition = (sectionDef, label) => {
-                      if (!sectionDef) {
-                        issues.push(label + ' entry must be an object');
-                        return null;
-                      }
-                      const sectionKey = toText(sectionDef.sectionKey);
-                      if (!sectionKey) {
-                        issues.push(label + ' sectionKey is missing');
-                        return null;
-                      }
-                      const section = sectionDef.section;
-                      if (!section) {
-                        issues.push(label + ' section is missing');
-                        return null;
-                      }
-
-                      const rawContractsMap = sectionDef.contracts && sectionDef.contracts.value
-                        ? sectionDef.contracts.value
-                        : sectionDef.contracts || {};
-                      const contractDefs = [];
-                      const contractKeys = [];
-                      for (const [rawKey, contract] of Object.entries(rawContractsMap)) {
-                        if (
-                          rawKey === 'type' ||
-                          rawKey === 'keyType' ||
-                          rawKey === 'valueType' ||
-                          rawKey === 'description'
-                        ) {
-                          continue;
-                        }
-                        const key = toText(rawKey);
-                        if (!key) {
-                          issues.push(label + ' contract key is missing');
-                          continue;
-                        }
-                        if (!contract) {
-                          issues.push(label + ' contract ' + key + ' is missing or invalid');
-                          continue;
-                        }
-                        if (!hasType(contract)) {
-                          issues.push(label + ' contract ' + key + ' is missing type');
-                        }
-                        contractDefs.push({ key, contract });
-                        contractKeys.push(key);
-                      }
-
-                      if (!hasType(section)) {
-                        issues.push(label + ' section ' + sectionKey + ' is missing type');
-                      }
-
-                      const related = section.relatedContracts
-                        ? uniqueKeys(asList(section.relatedContracts), label + ' section ' + sectionKey + ' relatedContracts')
-                        : null;
-                      if (related && !sameStringSet(related, contractKeys)) {
-                        issues.push(label + ' section ' + sectionKey + ' relatedContracts must match contracts');
-                      }
-
-                      const normalizedRelated = related || contractKeys;
-                      const normalizedSection = Object.assign({}, section, {
-                        type: 'Conversation/Document Section',
-                        relatedContracts: normalizedRelated
-                      });
-
-                      return {
-                        sectionKey,
-                        section: normalizedSection,
-                        contractDefs,
-                        contractKeys
-                      };
+                      seenContractKeys[contractKey] = sectionKey;
+                      return null;
                     };
 
-                    const sectionChangeset = [];
-                    const seenSectionKeys = new Set();
-                    const seenContractKeys = new Set();
-
-                    const addList = asList(requestSectionChanges.add);
-                    const modifyList = asList(requestSectionChanges.modify);
-                    const removeList = asList(requestSectionChanges.remove);
-
+                    const addList = isArray(sectionChanges?.add) ? sectionChanges.add : [];
                     for (const entry of addList) {
-                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.add');
-                      if (!normalized) continue;
-                      const sectionKey = normalized.sectionKey;
-                      if (seenSectionKeys.has(sectionKey)) {
-                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
-                        continue;
-                      }
-                      seenSectionKeys.add(sectionKey);
+                      const sectionKey = `${entry?.sectionKey || ''}`;
+                      if (!sectionKey) return invalid('sectionChanges.add is missing sectionKey');
 
-                      if (contracts[sectionKey]) {
-                        issues.push('section key already exists at /contracts/' + sectionKey);
+                      const sectionKeyDup = trackSectionKey(sectionKey);
+                      if (sectionKeyDup) return sectionKeyDup;
+
+                      if (existingContractKeys[sectionKey]) {
+                        return invalid(`contract key already exists at ${contractPtr(sectionKey)}`);
                       }
 
-                      for (const contractKey of normalized.contractKeys) {
-                        if (seenContractKeys.has(contractKey)) {
-                          issues.push('contract key used by multiple sections in request: ' + contractKey);
-                          continue;
+                      const contractsMap = entry?.contracts || {};
+                      const contractKeys = contractKeysFromMap(contractsMap).map((key) => `${key}`);
+
+                      if (!hasMatchingRelatedContracts(entry?.section, contractKeys)) {
+                        return invalid('relatedContracts must match contracts');
+                      }
+
+                      for (const key of contractKeys) {
+                        if (existingContractKeys[key]) {
+                          return invalid(`contract key already exists at ${contractPtr(key)}`);
                         }
-                        seenContractKeys.add(contractKey);
-                        if (contracts[contractKey]) {
-                          issues.push('contract key already exists at /contracts/' + contractKey);
-                        }
+                        const dup = trackContractKey(sectionKey, key);
+                        if (dup) return dup;
                       }
 
-                      for (const contractDef of normalized.contractDefs) {
-                        sectionChangeset.push({
-                          op: 'add',
-                          path: '/contracts/' + escapePointer(contractDef.key),
-                          val: contractDef.contract
-                        });
+                      for (const key of contractKeys) {
+                        sectionChangeset.push({ op: 'add', path: contractPtr(key), val: contractsMap[key] });
                       }
+
                       sectionChangeset.push({
                         op: 'add',
-                        path: '/contracts/' + escapePointer(sectionKey),
-                        val: normalized.section
+                        path: contractPtr(sectionKey),
+                        val: normalizeSection(entry?.section, contractKeys)
                       });
                     }
 
+                    const modifyList = isArray(sectionChanges?.modify) ? sectionChanges.modify : [];
                     for (const entry of modifyList) {
-                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.modify');
-                      if (!normalized) continue;
-                      const sectionKey = normalized.sectionKey;
-                      if (seenSectionKeys.has(sectionKey)) {
-                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
-                        continue;
-                      }
-                      seenSectionKeys.add(sectionKey);
+                      const sectionKey = `${entry?.sectionKey || ''}`;
+                      if (!sectionKey) return invalid('sectionChanges.modify is missing sectionKey');
 
-                      const existingSection = contracts[sectionKey];
-                      if (!existingSection) {
-                        issues.push('section key does not exist at /contracts/' + sectionKey);
-                      } else if (!isDocumentSection(existingSection)) {
-                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
-                      }
+                      const sectionKeyDup = trackSectionKey(sectionKey);
+                      if (sectionKeyDup) return sectionKeyDup;
 
-                      const existingRelated =
-                        existingSection && existingSection.relatedContracts
-                          ? asList(existingSection.relatedContracts)
-                          : [];
-                      if (existingSection && !existingSection.relatedContracts) {
-                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
-                      }
-
-                      for (const contractKey of normalized.contractKeys) {
-                        if (seenContractKeys.has(contractKey)) {
-                          issues.push('contract key used by multiple sections in request: ' + contractKey);
-                          continue;
-                        }
-                        seenContractKeys.add(contractKey);
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          issues.push('contract key ' + contractKey + ' is linked to another section');
-                        }
-                      }
-
-                      for (const contractDef of normalized.contractDefs) {
-                        const op = contracts[contractDef.key] ? 'replace' : 'add';
-                        sectionChangeset.push({
-                          op,
-                          path: '/contracts/' + escapePointer(contractDef.key),
-                          val: contractDef.contract
-                        });
-                      }
-
-                      const toRemove = uniqueKeys(existingRelated, 'sectionChanges.modify remove list').filter(
-                        (key) => !normalized.contractKeys.includes(key)
-                      );
-                      for (const contractKey of toRemove) {
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          issues.push('contract key ' + contractKey + ' is linked to another section');
-                          continue;
-                        }
-                        sectionChangeset.push({
-                          op: 'remove',
-                          path: '/contracts/' + escapePointer(contractKey)
-                        });
-                      }
-
-                      sectionChangeset.push({
-                        op: 'replace',
-                        path: '/contracts/' + escapePointer(sectionKey),
-                        val: normalized.section
-                      });
-                    }
-
-                    const removeKeys = uniqueKeys(removeList, 'sectionChanges.remove');
-                    for (const sectionKey of removeKeys) {
-                      if (seenSectionKeys.has(sectionKey)) {
-                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
-                        continue;
-                      }
-                      seenSectionKeys.add(sectionKey);
-
-                      const existingSection = contracts[sectionKey];
-                      if (!existingSection) {
-                        issues.push('section key does not exist at /contracts/' + sectionKey);
-                        continue;
-                      }
-                      if (!isDocumentSection(existingSection)) {
-                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
-                        continue;
-                      }
-
-                      const related = existingSection.relatedContracts
-                        ? uniqueKeys(asList(existingSection.relatedContracts), 'sectionChanges.remove relatedContracts')
+                      const existingRelated = isArray(contracts?.[sectionKey]?.relatedContracts)
+                        ? contracts[sectionKey].relatedContracts.map((value) => `${value}`)
                         : [];
-                      if (!existingSection.relatedContracts) {
-                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
+                      const existingRelatedMap = {};
+                      for (const value of existingRelated) {
+                        existingRelatedMap[`${value}`] = true;
                       }
 
-                      for (const contractKey of related) {
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          issues.push('contract key ' + contractKey + ' is linked to another section');
-                          continue;
-                        }
-                        sectionChangeset.push({
-                          op: 'remove',
-                          path: '/contracts/' + escapePointer(contractKey)
-                        });
+                      const contractsMap = entry?.contracts || {};
+                      const contractKeys = contractKeysFromMap(contractsMap).map((key) => `${key}`);
+
+                      if (!hasMatchingRelatedContracts(entry?.section, contractKeys)) {
+                        return invalid('relatedContracts must match contracts');
                       }
+
+                      for (const key of contractKeys) {
+                        const dup = trackContractKey(sectionKey, key);
+                        if (dup) return dup;
+                        if (existingContractKeys[key] && !existingRelatedMap[key]) {
+                          return invalid(`contract key already exists at ${contractPtr(key)}`);
+                        }
+                      }
+
+                      for (const key of contractKeys) {
+                        sectionChangeset.push({ op: 'add', path: contractPtr(key), val: contractsMap[key] });
+                      }
+
+                      for (const oldKey of existingRelated) {
+                        if (contractKeys.indexOf(oldKey) === -1) {
+                          sectionChangeset.push({ op: 'remove', path: contractPtr(oldKey) });
+                        }
+                      }
+
                       sectionChangeset.push({
-                        op: 'remove',
-                        path: '/contracts/' + escapePointer(sectionKey)
+                        op: 'add',
+                        path: contractPtr(sectionKey),
+                        val: normalizeSection(entry?.section, contractKeys)
                       });
                     }
-                    const combinedChangeset = sectionChangeset.concat(hasChangeset ? requestChangeset : []);
 
-                    if (combinedChangeset.length === 0) {
-                      issues.push('no changes provided');
-                    }
+                    const removeList = isArray(sectionChanges?.remove) ? sectionChanges.remove : [];
+                    for (const entry of removeList) {
+                      const sectionKey = `${entry?.sectionKey || entry || ''}`;
+                      if (!sectionKey) return invalid('sectionChanges.remove is missing sectionKey');
 
-                    if (issues.length > 0) {
-                      return {
-                        changeset: [],
-                        events: [
-                          {
-                            type: "Conversation/Proposed Change Invalid",
-                            reason: issues.join('; ')
-                          }
-                        ]
+                      const related = isArray(contracts?.[sectionKey]?.relatedContracts)
+                        ? contracts[sectionKey].relatedContracts
+                        : [];
+
+                      for (const key of related) {
+                        sectionChangeset.push({ op: 'remove', path: contractPtr(key) });
                       }
+                      sectionChangeset.push({ op: 'remove', path: contractPtr(sectionKey) });
                     }
 
-                    return {
-                      changeset: combinedChangeset
-                    };
+                    const combined = sectionChangeset.concat(requestChangeset);
+
+                    if (combined.length === 0) {
+                      return invalid('no changes provided');
+                    }
+
+                    return { changeset: combined };
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               - name: Apply
@@ -542,8 +562,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: AKNj5zwzgAkXZo3psikJfoVxUcNfMBVgDrf4HDGWL1gm
+          - repositoryVersionIndex: 1
+            typeBlueId: 2jSne57MeM1HvhrQscpbDqhR46TwpmpiEpfG6h8PfMZP
             attributesAdded: []
       - status: stable
         content:
@@ -1142,10 +1162,10 @@ packages:
           description: Operation to propose a document change for later acceptance or rejection.
           request:
             type:
-              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
+              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 2mJhqggRy7YTHK5bSeAitqhhjynpe8mApvQXXpcwPCxx
+          - repositoryVersionIndex: 1
+            typeBlueId: GzA8QNJnfYyFpFKmeM2HWzXJxYXoWgW6PtbyCAHhgoy4
             attributesAdded: []
       - status: dev
         content:
@@ -1155,7 +1175,7 @@ packages:
           description: Stores a proposed change under /proposedChange{postfix}.
           request:
             type:
-              blueId: 9KDfK6k1HBAyHckj5VuWXFMLkgY5cJBESKT4eoq1bnrw
+              blueId: 6KZwmcsyYNiJhn2pAfS9LAFTxTRHcDw4yzPwV3A3SSQp
             description: Expected request payload for this workflow.
           postfix:
             type:
@@ -1168,414 +1188,27 @@ packages:
                   blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                 code:
                   value: |
-                    const issues = [];
+                    const invalid = (reason) => ({
+                      changeset: [],
+                      events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
+                    });
 
-                    const request = event.message.request || {};
+                    const request = event.message.request;
 
-                    const changeDescription = request.changeDescription;
-                    const rawChangeset = request.changeset;
-                    const rawSectionChanges = request.sectionChanges;
-                    const requestSectionChanges = rawSectionChanges || {};
-
-                    const toText = (value) => {
-                      const raw = value && value.value ? value.value : value;
-                      return raw && raw.trim ? raw.trim() : '';
-                    };
-                    const asList = (value) => Array.isArray(value) ? value : [];
-                    const hasType = (value) => value && value.type;
-                    const escapePointer = (value) => {
-                      const text = toText(value);
-                      return text.split('~').join('~0').split('/').join('~1');
-                    };
-                    const requestChangeset = asList(rawChangeset);
-
-                    const uniqueKeys = (values, label) => {
-                      const seen = new Set();
-                      const output = [];
-                      for (const value of values) {
-                        const key = toText(value);
-                        if (!key) {
-                          issues.push(label + ' contains invalid key');
-                          continue;
-                        }
-                        if (seen.has(key)) {
-                          issues.push(label + ' contains duplicate key: ' + key);
-                          continue;
-                        }
-                        seen.add(key);
-                        output.push(key);
-                      }
-                      return output;
-                    };
-
-                    const sameStringSet = (left, right) => {
-                      if (left.length !== right.length) return false;
-                      const set = new Set(left);
-                      if (set.size !== right.length) return false;
-                      for (const value of right) {
-                        if (!set.has(value)) return false;
-                      }
-                      return true;
-                    };
-
-                    const contracts = Object(document('/contracts') || {});
-
-                    const isDocumentSection = (contract) =>
-                      !!contract && Array.isArray(contract.relatedContracts);
-
-                    const isContractsChangePolicy = (contract) => {
-                      if (!contract) return false;
-                      return 'requireSectionChanges' in contract;
-                    };
-
-                    const findPolicy = () => {
-                      for (const key of Object.keys(contracts)) {
-                        const contract = contracts[key];
-                        if (isContractsChangePolicy(contract)) {
-                          return contract;
-                        }
-                      }
-                      return null;
-                    };
-
-                    const policy = findPolicy();
-                    const policyEnabled = !!policy && policy.requireSectionChanges !== false;
-
-                    if (!toText(changeDescription)) {
-                      issues.push('changeDescription is missing');
+                    const summary = request?.summary;
+                    if (!summary || typeof summary !== 'string') {
+                      return invalid('summary is missing');
                     }
 
-                    const hasChangeset = !!rawChangeset;
-                    const hasSectionChanges = !!rawSectionChanges;
-
-                    if (!hasChangeset && !hasSectionChanges) {
-                      issues.push('changeset or sectionChanges is required');
-                    }
-
-                    const isContractsPath = (path) => {
-                      const value = toText(path);
-                      return value === '/contracts' || value.startsWith('/contracts/');
-                    };
-                    if (policyEnabled && hasChangeset) {
-                      for (const entry of requestChangeset) {
-                        if (entry && isContractsPath(entry.path)) {
-                          issues.push('changeset cannot modify /contracts when Contracts Change Policy is enabled');
-                          break;
-                        }
-                      }
-                    }
-                    const isProposedChangePath = (path) =>
-                      toText(path).startsWith('/proposedChange');
-                    if (hasChangeset) {
-                      for (const entry of requestChangeset) {
-                        if (entry && isProposedChangePath(entry.path)) {
-                          issues.push('changeset cannot modify /proposedChange');
-                          break;
-                        }
-                      }
-                    }
-
-                    const existingSections = {};
-                    for (const key of Object.keys(contracts)) {
-                      const contract = contracts[key];
-                      if (isDocumentSection(contract)) {
-                        existingSections[key] = contract;
-                      }
-                    }
-
-                    const contractIndex = {};
-                    for (const sectionKey of Object.keys(existingSections)) {
-                      const section = existingSections[sectionKey];
-                      const related = asList(section.relatedContracts);
-                      for (const relatedKey of related) {
-                        const contractKey = toText(relatedKey);
-                        if (!contractKey) continue;
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          contractIndex[contractKey] = null;
-                        } else if (!contractIndex[contractKey]) {
-                          contractIndex[contractKey] = sectionKey;
-                        }
-                      }
-                    }
-
-                    const normalizeSectionDefinition = (sectionDef, label) => {
-                      if (!sectionDef) {
-                        issues.push(label + ' entry must be an object');
-                        return null;
-                      }
-                      const sectionKey = toText(sectionDef.sectionKey);
-                      if (!sectionKey) {
-                        issues.push(label + ' sectionKey is missing');
-                        return null;
-                      }
-                      const section = sectionDef.section;
-                      if (!section) {
-                        issues.push(label + ' section is missing');
-                        return null;
-                      }
-
-                      const rawContractsMap = sectionDef.contracts && sectionDef.contracts.value
-                        ? sectionDef.contracts.value
-                        : sectionDef.contracts || {};
-                      const contractDefs = [];
-                      const contractKeys = [];
-                      for (const [rawKey, contract] of Object.entries(rawContractsMap)) {
-                        if (
-                          rawKey === 'type' ||
-                          rawKey === 'keyType' ||
-                          rawKey === 'valueType' ||
-                          rawKey === 'description'
-                        ) {
-                          continue;
-                        }
-                        const key = toText(rawKey);
-                        if (!key) {
-                          issues.push(label + ' contract key is missing');
-                          continue;
-                        }
-                        if (!contract) {
-                          issues.push(label + ' contract ' + key + ' is missing or invalid');
-                          continue;
-                        }
-                        if (!hasType(contract)) {
-                          issues.push(label + ' contract ' + key + ' is missing type');
-                        }
-                        contractDefs.push({ key, contract });
-                        contractKeys.push(key);
-                      }
-
-                      if (!hasType(section)) {
-                        issues.push(label + ' section ' + sectionKey + ' is missing type');
-                      }
-
-                      const related = section.relatedContracts
-                        ? uniqueKeys(asList(section.relatedContracts), label + ' section ' + sectionKey + ' relatedContracts')
-                        : null;
-                      if (related && !sameStringSet(related, contractKeys)) {
-                        issues.push(label + ' section ' + sectionKey + ' relatedContracts must match contracts');
-                      }
-
-                      const normalizedRelated = related || contractKeys;
-                      const normalizedSection = Object.assign({}, section, {
-                        type: 'Conversation/Document Section',
-                        relatedContracts: normalizedRelated
-                      });
-
-                      return {
-                        sectionKey,
-                        section: normalizedSection,
-                        contractDefs,
-                        contractKeys
-                      };
-                    };
-
-                    const sectionChangeset = [];
-                    const seenSectionKeys = new Set();
-                    const seenContractKeys = new Set();
-
-                    const addList = asList(requestSectionChanges.add);
-                    const modifyList = asList(requestSectionChanges.modify);
-                    const removeList = asList(requestSectionChanges.remove);
-
-                    for (const entry of addList) {
-                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.add');
-                      if (!normalized) continue;
-                      const sectionKey = normalized.sectionKey;
-                      if (seenSectionKeys.has(sectionKey)) {
-                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
-                        continue;
-                      }
-                      seenSectionKeys.add(sectionKey);
-
-                      if (contracts[sectionKey]) {
-                        issues.push('section key already exists at /contracts/' + sectionKey);
-                      }
-
-                      for (const contractKey of normalized.contractKeys) {
-                        if (seenContractKeys.has(contractKey)) {
-                          issues.push('contract key used by multiple sections in request: ' + contractKey);
-                          continue;
-                        }
-                        seenContractKeys.add(contractKey);
-                        if (contracts[contractKey]) {
-                          issues.push('contract key already exists at /contracts/' + contractKey);
-                        }
-                      }
-
-                      for (const contractDef of normalized.contractDefs) {
-                        sectionChangeset.push({
-                          op: 'add',
-                          path: '/contracts/' + escapePointer(contractDef.key),
-                          val: contractDef.contract
-                        });
-                      }
-                      sectionChangeset.push({
-                        op: 'add',
-                        path: '/contracts/' + escapePointer(sectionKey),
-                        val: normalized.section
-                      });
-                    }
-
-                    for (const entry of modifyList) {
-                      const normalized = normalizeSectionDefinition(entry, 'sectionChanges.modify');
-                      if (!normalized) continue;
-                      const sectionKey = normalized.sectionKey;
-                      if (seenSectionKeys.has(sectionKey)) {
-                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
-                        continue;
-                      }
-                      seenSectionKeys.add(sectionKey);
-
-                      const existingSection = contracts[sectionKey];
-                      if (!existingSection) {
-                        issues.push('section key does not exist at /contracts/' + sectionKey);
-                      } else if (!isDocumentSection(existingSection)) {
-                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
-                      }
-
-                      const existingRelated =
-                        existingSection && existingSection.relatedContracts
-                          ? asList(existingSection.relatedContracts)
-                          : [];
-                      if (existingSection && !existingSection.relatedContracts) {
-                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
-                      }
-
-                      for (const contractKey of normalized.contractKeys) {
-                        if (seenContractKeys.has(contractKey)) {
-                          issues.push('contract key used by multiple sections in request: ' + contractKey);
-                          continue;
-                        }
-                        seenContractKeys.add(contractKey);
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          issues.push('contract key ' + contractKey + ' is linked to another section');
-                        }
-                      }
-
-                      for (const contractDef of normalized.contractDefs) {
-                        const op = contracts[contractDef.key] ? 'replace' : 'add';
-                        sectionChangeset.push({
-                          op,
-                          path: '/contracts/' + escapePointer(contractDef.key),
-                          val: contractDef.contract
-                        });
-                      }
-
-                      const toRemove = uniqueKeys(existingRelated, 'sectionChanges.modify remove list').filter(
-                        (key) => !normalized.contractKeys.includes(key)
-                      );
-                      for (const contractKey of toRemove) {
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          issues.push('contract key ' + contractKey + ' is linked to another section');
-                          continue;
-                        }
-                        sectionChangeset.push({
-                          op: 'remove',
-                          path: '/contracts/' + escapePointer(contractKey)
-                        });
-                      }
-
-                      sectionChangeset.push({
-                        op: 'replace',
-                        path: '/contracts/' + escapePointer(sectionKey),
-                        val: normalized.section
-                      });
-                    }
-
-                    const removeKeys = uniqueKeys(removeList, 'sectionChanges.remove');
-                    for (const sectionKey of removeKeys) {
-                      if (seenSectionKeys.has(sectionKey)) {
-                        issues.push('section key duplicated in sectionChanges: ' + sectionKey);
-                        continue;
-                      }
-                      seenSectionKeys.add(sectionKey);
-
-                      const existingSection = contracts[sectionKey];
-                      if (!existingSection) {
-                        issues.push('section key does not exist at /contracts/' + sectionKey);
-                        continue;
-                      }
-                      if (!isDocumentSection(existingSection)) {
-                        issues.push('existing section at /contracts/' + sectionKey + ' is not a Document Section');
-                        continue;
-                      }
-
-                      const related = existingSection.relatedContracts
-                        ? uniqueKeys(asList(existingSection.relatedContracts), 'sectionChanges.remove relatedContracts')
-                        : [];
-                      if (!existingSection.relatedContracts) {
-                        issues.push('existing section ' + sectionKey + ' is missing relatedContracts');
-                      }
-
-                      for (const contractKey of related) {
-                        if (contractIndex[contractKey] && contractIndex[contractKey] !== sectionKey) {
-                          issues.push('contract key ' + contractKey + ' is linked to another section');
-                          continue;
-                        }
-                        sectionChangeset.push({
-                          op: 'remove',
-                          path: '/contracts/' + escapePointer(contractKey)
-                        });
-                      }
-                      sectionChangeset.push({
-                        op: 'remove',
-                        path: '/contracts/' + escapePointer(sectionKey)
-                      });
-                    }
-                    const combinedChangeset = sectionChangeset.concat(hasChangeset ? requestChangeset : []);
-
-                    if (combinedChangeset.length === 0) {
-                      issues.push('no changes provided');
-                    }
-
-                    if (issues.length > 0) {
-                      return {
-                        changeset: [],
-                        events: [
-                          {
-                            type: "Conversation/Proposed Change Invalid",
-                            reason: issues.join('; ')
-                          }
-                        ]
-                      }
-                    }
-
-                    const postfixValue = currentContract.postfix || '';
+                    const postfixValue = currentContract?.postfix || '';
                     const path = '/proposedChange' + postfixValue;
 
                     if (document(path)) {
-                      return {
-                        changeset: [],
-                        events: [
-                          {
-                            type: "Conversation/Proposed Change Invalid",
-                            reason: "Can not propose change when it already exists at " + path
-                          }
-                        ]
-                      }
-                    }
-
-                    const proposedPayload = {
-                      changeDescription
-                    };
-
-                    proposedPayload.preparedChangeset = combinedChangeset;
-
-                    if (hasChangeset) {
-                      proposedPayload.changeset = requestChangeset;
-                    }
-
-                    const hasSectionChangesData = addList.length || modifyList.length || removeList.length;
-                    if (hasSectionChangesData) {
-                      proposedPayload.sectionChanges = rawSectionChanges;
+                      return invalid('proposed change already exists at ' + path);
                     }
 
                     return {
-                      changeset: [{
-                        op: 'add',
-                        path,
-                        val: proposedPayload
-                      }]
+                      changeset: [{ op: 'add', path, val: request }]
                     };
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -1587,8 +1220,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: Ecj8Y7rb7kMCkNFfvyZ36CNB2JjCWrqy7BiHcvcNELEL
+          - repositoryVersionIndex: 1
+            typeBlueId: 5Ptp4ykWNiYNCmSbYEDpxjE21DGpBxdDR6CQeAaZUSva
             attributesAdded: []
       - status: dev
         content:
@@ -1631,24 +1264,20 @@ packages:
                   blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                 code:
                   value: |
-                    const postfix = currentContract.postfix || ''
-                    const path = '/proposedChange' + postfix
+                    const invalid = (reason) => ({
+                      changeset: [],
+                      events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
+                    });
 
-                    const proposedChange = document(path)
-                    if (proposedChange) {
-                      return {
-                        changeset: [{ op: 'remove', path }]
-                      }
+                    const postfixValue = currentContract?.postfix || '';
+                    const path = '/proposedChange' + postfixValue;
+
+                    if (!document(path)) {
+                      return invalid('no proposed change at ' + path);
                     }
 
                     return {
-                      changeset: [],
-                      events: [
-                        {
-                          type: "Conversation/Proposed Change Invalid",
-                          reason: "Proposed change does not exist at " + path
-                        }
-                      ]
+                      changeset: [{ op: 'remove', path }]
                     };
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -1660,8 +1289,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: GfqZJJtSJfd69v3pJ67XURdzhC4byWJZAstCh6i4X6MZ
+          - repositoryVersionIndex: 1
+            typeBlueId: 9fnXwi4Za8hjEj6zDSEjhbA5dLrDzs7sxoDMGLmRT2Gz
             attributesAdded: []
       - status: stable
         content:
@@ -5972,3 +5601,4 @@ packages:
             attributesAdded: []
 repositoryVersions:
   - CQn9FCus2xkhgCdSZQqKQmKGRLKnqTboSyiJXn3pya68
+  - 22xxEjtpjUSpttaRiHX5XbmGNcFhpgLipai685YMdMWv
