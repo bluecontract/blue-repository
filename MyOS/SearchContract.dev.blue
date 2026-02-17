@@ -1,0 +1,23 @@
+name: Search Contract
+type: Core/Marker
+description: |
+  Marker contract that describes how a document should project search fields
+  for indexing (`q`, `kv`, `geo`). Paths must follow BlueNode.get(path)
+  semantics and be absolute.
+q:
+  type: List
+  itemType: Text
+  description: Absolute paths whose extracted values should be appended to the indexed `q` text.
+kv:
+  type: Dictionary
+  keyType: Text
+  valueType: Text
+  description: Map of index key -> absolute source path for `kv.<key>` extraction.
+geo:
+  description: Absolute source paths for latitude/longitude extraction.
+  lat:
+    type: Text
+    description: Absolute path to latitude value.
+  lon:
+    type: Text
+    description: Absolute path to longitude value.

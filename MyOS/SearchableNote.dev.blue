@@ -1,0 +1,24 @@
+name: Searchable Note
+description: Sample MyOS document type that declares a `contracts.search` contract.
+title:
+  type: Text
+summary:
+  type: Text
+category:
+  type: Text
+location:
+  lat:
+    type: Double
+  lon:
+    type: Double
+contracts:
+  search:
+    type: MyOS/Search Contract
+    q:
+      - /title
+      - /summary
+    kv:
+      category: /category
+    geo:
+      lat: /location/lat
+      lon: /location/lon
