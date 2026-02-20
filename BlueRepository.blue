@@ -3204,6 +3204,43 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 6efzqM67y1po3YWbsbYSkKW8L41Tx8THeMv1q1TksAmr
             attributesAdded: []
+      - status: dev
+        content:
+          name: Search Contract
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: |
+            Marker contract that describes how a document should project search fields
+            for indexing (`q`, `kv`, `geo`). Paths must follow BlueNode.get(path)
+            semantics and be absolute.
+          q:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Absolute paths whose extracted values should be appended to the indexed `q` text.
+          kv:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Map of index key -> absolute source path for `kv.<key>` extraction.
+          geo:
+            description: Absolute source paths for latitude/longitude extraction.
+            lat:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Absolute path to latitude value.
+            lon:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Absolute path to longitude value.
+        versions:
+          - repositoryVersionIndex: 3
+            typeBlueId: 5KdjguBmn7AwB9d8tjKxRh4xUHU9T8WDJ4dbaY6qgPvx
+            attributesAdded: []
       - status: stable
         content:
           name: Session Epoch Advanced
@@ -5603,3 +5640,4 @@ repositoryVersions:
   - CQn9FCus2xkhgCdSZQqKQmKGRLKnqTboSyiJXn3pya68
   - 22xxEjtpjUSpttaRiHX5XbmGNcFhpgLipai685YMdMWv
   - 58apGqo2EExaKTQQJmjASbj8p7tHvrWkoQVjWeWzaox5
+  - C6oygUcsKjgqmSej2DMZkuDMqT7frfFL3t11gHGMFebY
