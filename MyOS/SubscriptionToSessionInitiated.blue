@@ -10,3 +10,8 @@ targetSessionId:
 at:
   type: Text
   description: ISO 8601 timestamp when the subscription became active.
+epoch:
+  type: Integer
+  description: The epoch number at which the subscription became active.
+document:
+  description: The document state at the time the subscription became active.
