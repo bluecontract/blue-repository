@@ -3805,10 +3805,21 @@ packages:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: ISO 8601 timestamp when the subscription became active.
+          epoch:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: The epoch number at which the subscription became active.
+          document:
+            description: The document state at the time the subscription became active.
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: GZPDibWTKDudqwPufgmNo7AHMLwY5FGeeHFx3EkegzLj
             attributesAdded: []
+          - repositoryVersionIndex: 4
+            typeBlueId: 4sJYYU5tjqKy43Mbe1Mt5WKfaynHs9rTj3QGAvTAZkM6
+            attributesAdded:
+              - /epoch
+              - /document
       - status: stable
         content:
           name: Subscription to Session Revoked
@@ -5641,3 +5652,4 @@ repositoryVersions:
   - 22xxEjtpjUSpttaRiHX5XbmGNcFhpgLipai685YMdMWv
   - 58apGqo2EExaKTQQJmjASbj8p7tHvrWkoQVjWeWzaox5
   - C6oygUcsKjgqmSej2DMZkuDMqT7frfFL3t11gHGMFebY
+  - 5FLaqPWQ7FJF5DFyCy1H4Ry9SHvX2ByfLbgJ2U3QTqUx
