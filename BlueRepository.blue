@@ -670,7 +670,6 @@ packages:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Consent state (granted, revoked).
-            value: granted
           grantedAt:
             type:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
@@ -814,8 +813,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 7czpW4QyEqJy3d2X8dqsxcu3Q1G2CftTJUCTTyJSY6J8
+          - repositoryVersionIndex: 5
+            typeBlueId: 5UeiZ6EC1y3KMafuX6ioNqHHM62S5Xf3ULrC9L3m7MJx
             attributesAdded: []
       - status: dev
         content:
@@ -4344,6 +4343,54 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Card Charge Completed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Final outcome for a card charge request.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Completion status ("succeeded" | "failed").
+          holdId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Hold id created for authorize-only or authorize+capture flows.
+          transactionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Resulting transaction id when available.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional failure reason.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: Hrz9kzWXTXDfK2XEkRJtHqdKzHaQq919NcRL8QMAvEEQ
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Card Charge Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Decision response for a card charge request.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Request decision status ("accepted" | "rejected" | "pending").
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional explanation for rejected or pending decisions.
+          paymentMandateDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Payment Mandate document id used for this charge decision when available.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: CFoaaYn29o7Mg7VaN7bkM87KrfE8fvnVYWkGXd6YnQ7S
+            attributesAdded: []
+      - status: dev
+        content:
           name: Card Transaction Capture Lock Change Failed
           type:
             blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
@@ -4517,14 +4564,14 @@ packages:
         content:
           name: Card Transaction PayNote
           type:
-            blueId: 6HxvsQMTdbmynxNgqtxcNuCr2RhiLHowVinyD5h3fXmE
+            blueId: Dh2LtUN8Umc478kif8VWsNM1FrL5usVEeevv2GKnKP4F
           description: PayNote tied to a specific card transaction via ISO scheme identifiers.
           cardTransactionDetails:
             type:
               blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 31FeauChLTApQ7FmwwUPuYnYPtgPC9kiu737UkbgK495
+          - repositoryVersionIndex: 5
+            typeBlueId: 2wqxtvdRHf7Z3qNNKnycnu3SBVqw4BenK8et9xeT7n86
             attributesAdded: []
       - status: dev
         content:
@@ -4552,12 +4599,16 @@ packages:
             type:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
             description: Timestamp when the transaction occurred.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Transaction status ("authorized" | "partially captured" | "captured").
           cardTransactionDetails:
             type:
               blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: GHjSaPm9ceTkRZn2QGxRkzptkiyVYi7AvF8LRgvWzVc2
+          - repositoryVersionIndex: 5
+            typeBlueId: 2ibvMNB7oxcpkYpxpag2HLC81sRs3PUBFtqjbqN7ET8X
             attributesAdded: []
       - status: stable
         content:
@@ -4628,13 +4679,103 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Linked Card Charge and Capture Immediately Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to create a linked card charge and capture it immediately.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Charge amount in minor currency units.
+          paymentMandateDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional Payment Mandate document id used to authorize charge execution.
+          paynote:
+            description: Optional PayNote document to bootstrap for the created charge context.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 2LqGeXL7WWYQJMqviyseKCekpY3wYdB6K1f9sqakBUY7
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked Card Charge Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to create a new card charge linked to the root card transaction context.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Charge amount in minor currency units.
+          paymentMandateDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional Payment Mandate document id used to authorize charge execution.
+          paynote:
+            description: Optional PayNote document to bootstrap for the created charge context.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: Aq4dNFtLHLWYfCS7aqAgWwGi48MgbQmp2EZJtDBN7FSg
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked PayNote Start Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Linked PayNote startup failed after charge processing.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Failure reason.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 8dggwonfALwrTSRhg8g8ncXFXierke2mogtEZQXHab64
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked PayNote Start Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Decision response for starting a linked PayNote after successful charge.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Decision status ("accepted" | "rejected").
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional rejection reason.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: BQioEtRPYv2fWVryRsSYQc1Vnp9eyX3CYDrNY1hEy1Ye
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Linked PayNote Started
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Confirmation that linked PayNote startup was requested successfully.
+          payNoteSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session id of the bootstrapped linked PayNote document.
+          payNoteDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Document id of the bootstrapped linked PayNote when available.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 6vnMMWuq6qJ1hxLqL1P2ckCqC9JtJF3QNW8s7rMTgZ4Q
+            attributesAdded: []
+      - status: dev
+        content:
           name: Merchant To Customer PayNote
           type:
-            blueId: 6HxvsQMTdbmynxNgqtxcNuCr2RhiLHowVinyD5h3fXmE
+            blueId: Dh2LtUN8Umc478kif8VWsNM1FrL5usVEeevv2GKnKP4F
           description: Base PayNote where payer is merchant and payee is customer. Bank sets/validates payer channel bindings.
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 7d7HJZ39tANAtmeRus31iSpNEidCdAsMLd33S1FEy7zA
+          - repositoryVersionIndex: 5
+            typeBlueId: 9dJ3W19EJ8MqtTJR8oidX8eRrkeB8xNQyqeTZeqBHZjo
             attributesAdded: []
       - status: stable
         content:
@@ -4651,13 +4792,927 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Payment Mandate
+          description: |
+            Payment mandate authorizing a grantee to execute payment requests on behalf of a granter, under explicit limits, with deterministic spend tracking and optional linked PayNote bootstrap rules.
+          granterType:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Party granting authority to use funds:
+              - merchant
+              - customer
+          granterId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Identifier of the granting party:
+              - merchantId when granterType is merchant
+              - customerId (bank user id) when granterType is customer
+          granteeType:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Party allowed to invoke this mandate:
+              - documentId
+              - merchantId
+              - customerId
+          granteeId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Identifier interpreted according to granteeType.
+          amountLimit:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Maximum amount in minor currency units allowed by this mandate.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: Currency code used for amountLimit validation.
+          amountReserved:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: |
+              Running reserved amount in minor currency units. Increased after successful reserve/authorize, decreased after release/capture.
+          amountCaptured:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: |
+              Running captured amount in minor currency units. Increased after successful capture.
+          sourceAccount:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Funds source to use when this mandate executes: - root (uses root account context; for merchant this maps to active credit line) - specific account number
+          expiresAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Optional mandate expiry timestamp.
+          revokedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Optional revocation timestamp. When set, mandate is inactive.
+          allowLinkedPayNote:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: Whether this mandate allows linked PayNote startup after charge execution.
+          allowedPayNotes:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              typeBlueId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: |
+                  Optional blue-id of an allowed PayNote type. Mutually exclusive with documentBlueId.
+              documentBlueId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: |
+                  Optional blue-id of an allowed concrete PayNote document. Mutually exclusive with typeBlueId.
+            description: |
+              Optional linked PayNote allowlist. Used only when allowLinkedPayNote is true. Missing list means wildcard (any linked PayNote is allowed). Each entry must set exactly one selector: typeBlueId or documentBlueId.
+          allowedPaymentCounterparties:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              counterpartyType:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: |
+                  Allowed payment counterparty identifier type:
+                  - merchantId
+                  - customerId
+                  - accountNumber
+              counterpartyId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Counterparty identifier interpreted according to counterpartyType.
+            description: |
+              Optional payment counterparty allowlist. Missing list means wildcard (any counterparty is allowed).
+          chargeAttempts:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              blueId: JADRqXZ7UWNDqPt9Zhnn6831Nz2X5yeSuyew4hu6ciVq
+            description: Stateful map of chargeAttemptId -> attempt state (authorization + settlement).
+          contracts:
+            granterChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Granting party timeline channel.
+            granteeChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Grantee timeline channel (party allowed to use the mandate).
+            guarantorChannel:
+              type:
+                blueId: HCF8mXnX3dFjQ8osjxb4Wzm2Nm1DoXnTYuA5sPnV7NTs
+              description: Bank/admin channel executing mandate checks and settlement updates.
+            initLifecycleChannel:
+              type:
+                blueId: H2aCCTUcLMTJozWkn7HPUjyFBFxamraw1q8DyWk87zxr
+              event:
+                type:
+                  blueId: BrpmpNt5JkapeUvPqYcxgXZrHNZX3R757dRwuXXdfNM2
+            initialize:
+              type:
+                blueId: 7X3LkN54Yp88JgZbppPhP6hM3Jqiqv8Z2i4kS7phXtQe
+              channel:
+                value: initLifecycleChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Initialize mandate runtime state
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /chargeAttempts
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val: {}
+            authorizeSpend:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Validate a charge attempt against mandate policy and reserve capacity.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: 4STBHLJjxjCZVgeW2ScFfmsx8Vm16FenEbaNMyL8ZJUT
+            authorizeSpendImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: authorizeSpend
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Decide Spend Authorization
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request =
+                          event && event.message && event.message.request
+                            ? event.message.request
+                            : {};
+
+                        const unwrapNodeValue = function (value) {
+                          if (
+                            value &&
+                            typeof value === 'object' &&
+                            Object.prototype.hasOwnProperty.call(value, 'value')
+                          ) {
+                            return value.value;
+                          }
+                          return value;
+                        };
+
+                        const toText = function (value) {
+                          const unwrapped = unwrapNodeValue(value);
+                          return typeof unwrapped === 'string' ? unwrapped : '';
+                        };
+
+                        const toTimestampText = function (value) {
+                          const unwrapped = unwrapNodeValue(value);
+                          if (typeof unwrapped === 'string') {
+                            return unwrapped;
+                          }
+                          if (typeof unwrapped === 'number') {
+                            return String(unwrapped);
+                          }
+                          return '';
+                        };
+
+                        const nowIso =
+                          toText(request.requestedAt) ||
+                          toTimestampText(event && event.timestamp ? event.timestamp : '');
+
+                        const normalizeTimestamp = function (value) {
+                          if (typeof value !== 'string' || !value) {
+                            return '';
+                          }
+                          let digits = '';
+                          let index = 0;
+                          while (index < value.length) {
+                            const code = value.charCodeAt(index);
+                            if (code >= 48 && code <= 57) {
+                              digits += value.charAt(index);
+                            }
+                            index += 1;
+                          }
+                          if (digits.length < 14) {
+                            return '';
+                          }
+                          return digits.slice(0, 14);
+                        };
+
+                        const toInteger = function (value, fallback) {
+                          const safeFallback =
+                            typeof fallback === 'number' && Number.isFinite(fallback)
+                              ? Math.trunc(fallback)
+                              : 0;
+                          const unwrapped = unwrapNodeValue(value);
+                          if (typeof unwrapped === 'number' && Number.isFinite(unwrapped)) {
+                            return Math.trunc(unwrapped);
+                          }
+                          if (typeof unwrapped !== 'string' || !unwrapped) {
+                            return safeFallback;
+                          }
+                          const parsed = Number(unwrapped);
+                          return Number.isFinite(parsed) ? Math.trunc(parsed) : safeFallback;
+                        };
+
+                        const cloneObject = function (value) {
+                          const source = value && typeof value === 'object' ? value : {};
+                          const clone = {};
+                          Object.keys(source).forEach(function (key) {
+                            clone[key] = source[key];
+                          });
+                          return clone;
+                        };
+
+                        const chargeAttemptId = toText(request.chargeAttemptId);
+                        const amountMinor = toInteger(request.amountMinor, 0);
+                        const counterpartyType = toText(request.counterpartyType);
+                        const counterpartyId = toText(request.counterpartyId);
+                        const requestedCurrency = toText(request.currency);
+
+                        const chargeAttempts = document.canonical('/chargeAttempts') || {};
+                        const nextChargeAttempts = cloneObject(chargeAttempts);
+
+                        const existingAttempt =
+                          chargeAttemptId &&
+                          chargeAttempts[chargeAttemptId] &&
+                          typeof chargeAttempts[chargeAttemptId] === 'object'
+                            ? chargeAttempts[chargeAttemptId]
+                            : null;
+                        const existingDecision =
+                          existingAttempt ? toText(existingAttempt.authorizationStatus) : '';
+                        const existingReason =
+                          existingAttempt ? toText(existingAttempt.authorizationReason) : '';
+
+                        const amountLimit = toInteger(document('/amountLimit'), 0);
+                        const amountReserved = toInteger(document('/amountReserved'), 0);
+                        const amountCaptured = toInteger(document('/amountCaptured'), 0);
+                        const mandateCurrency = toText(document('/currency'));
+                        const expiresAt = toText(document('/expiresAt'));
+                        const revokedAt = toText(document('/revokedAt'));
+                        const nowComparable = normalizeTimestamp(nowIso);
+
+                        const allowedCounterparties = document.canonical('/allowedPaymentCounterparties');
+                        const isCounterpartyAllowed =
+                          !Array.isArray(allowedCounterparties) ||
+                          allowedCounterparties.length === 0 ||
+                          allowedCounterparties.some(function (item) {
+                            return (
+                              item &&
+                              toText(item.counterpartyType) === counterpartyType &&
+                              toText(item.counterpartyId) === counterpartyId
+                            );
+                          });
+
+                        let status = 'rejected';
+                        let reason = '';
+                        let nextAmountReserved = amountReserved;
+
+                        if (existingDecision === 'approved' || existingDecision === 'rejected') {
+                          status = existingDecision;
+                          reason = existingDecision === 'rejected' ? existingReason : '';
+                        } else if (!chargeAttemptId) {
+                          reason = 'Missing chargeAttemptId.';
+                        } else if (amountMinor <= 0) {
+                          reason = 'Amount must be greater than zero.';
+                        } else if (!requestedCurrency || requestedCurrency !== mandateCurrency) {
+                          reason = 'Currency does not match mandate currency.';
+                        } else if (revokedAt) {
+                          reason = 'Mandate is revoked.';
+                        } else if (
+                          expiresAt &&
+                          normalizeTimestamp(expiresAt) &&
+                          nowComparable &&
+                          normalizeTimestamp(expiresAt) < nowComparable
+                        ) {
+                          reason = 'Mandate is expired.';
+                        } else if (!isCounterpartyAllowed) {
+                          reason = 'Counterparty is not allowed by mandate.';
+                        } else if (amountReserved + amountCaptured + amountMinor > amountLimit) {
+                          reason = 'Mandate amount limit exceeded.';
+                        } else {
+                          status = 'approved';
+                          nextAmountReserved = amountReserved + amountMinor;
+                        }
+
+                        if (chargeAttemptId && !existingDecision) {
+                          nextChargeAttempts[chargeAttemptId] = {
+                            amountMinor,
+                            currency: requestedCurrency,
+                            counterpartyType,
+                            counterpartyId,
+                            chargeMode:
+                              toText(request.chargeMode),
+                            authorizationStatus: status,
+                            authorizationReason: reason,
+                            authorizationRespondedAt: nowIso,
+                            authorizedAmountMinor: status === 'approved' ? amountMinor : 0,
+                            settled: false,
+                            lastSettlementRequestStatus: '',
+                            lastSettlementProcessingStatus: '',
+                            settlementReason: '',
+                            settlementRespondedAt: '',
+                            reservedDeltaMinor: 0,
+                            capturedDeltaMinor: 0,
+                            holdId: '',
+                            transactionId: ''
+                          };
+                        }
+
+                        const remainingAmountMinor = Math.max(
+                          0,
+                          amountLimit - (nextAmountReserved + amountCaptured)
+                        );
+
+                        const responseEvent = {
+                          type: 'PayNote/Payment Mandate Spend Authorization Responded',
+                          chargeAttemptId,
+                          status,
+                          remainingAmountMinor,
+                          respondedAt: nowIso
+                        };
+
+                        if (reason) {
+                          responseEvent.reason = reason;
+                        }
+
+                        return {
+                          nextChargeAttempts: nextChargeAttempts,
+                          nextAmountReserved: nextAmountReserved,
+                          events: [responseEvent]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Persist Authorization Decision
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /chargeAttempts
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Decide Spend Authorization'].nextChargeAttempts}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /amountReserved
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Decide Spend Authorization'].nextAmountReserved}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            settleSpend:
+              type:
+                blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
+              description: Apply final reserve/capture deltas for a previously authorized charge attempt.
+              channel:
+                value: guarantorChannel
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              request:
+                type:
+                  blueId: 3TW3tRAQdYoMTFeeqmnWLR9JFibTVaJuiRJfJ3ggeVTJ
+            settleSpendImpl:
+              type:
+                blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
+              operation:
+                value: settleSpend
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              steps:
+                items:
+                  - name: Validate and Apply Settlement
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const request =
+                          event && event.message && event.message.request
+                            ? event.message.request
+                            : {};
+
+                        const unwrapNodeValue = function (value) {
+                          if (
+                            value &&
+                            typeof value === 'object' &&
+                            Object.prototype.hasOwnProperty.call(value, 'value')
+                          ) {
+                            return value.value;
+                          }
+                          return value;
+                        };
+
+                        const toText = function (value) {
+                          const unwrapped = unwrapNodeValue(value);
+                          return typeof unwrapped === 'string' ? unwrapped : '';
+                        };
+
+                        const toTimestampText = function (value) {
+                          const unwrapped = unwrapNodeValue(value);
+                          if (typeof unwrapped === 'string') {
+                            return unwrapped;
+                          }
+                          if (typeof unwrapped === 'number') {
+                            return String(unwrapped);
+                          }
+                          return '';
+                        };
+
+                        const nowIso =
+                          toText(request.settledAt) ||
+                          toTimestampText(event && event.timestamp ? event.timestamp : '');
+
+                        const toInteger = function (value, fallback) {
+                          const safeFallback =
+                            typeof fallback === 'number' && Number.isFinite(fallback)
+                              ? Math.trunc(fallback)
+                              : 0;
+                          const unwrapped = unwrapNodeValue(value);
+                          if (typeof unwrapped === 'number' && Number.isFinite(unwrapped)) {
+                            return Math.trunc(unwrapped);
+                          }
+                          if (typeof unwrapped !== 'string' || !unwrapped) {
+                            return safeFallback;
+                          }
+                          const parsed = Number(unwrapped);
+                          return Number.isFinite(parsed) ? Math.trunc(parsed) : safeFallback;
+                        };
+
+                        const cloneObject = function (value) {
+                          const source = value && typeof value === 'object' ? value : {};
+                          const clone = {};
+                          Object.keys(source).forEach(function (key) {
+                            clone[key] = source[key];
+                          });
+                          return clone;
+                        };
+
+                        const chargeAttemptId = toText(request.chargeAttemptId);
+                        const settlementStatus = toText(request.status);
+                        const reservedDeltaMinor = toInteger(request.reservedDeltaMinor, 0);
+                        const capturedDeltaMinor = toInteger(request.capturedDeltaMinor, 0);
+
+                        const amountLimit = toInteger(document('/amountLimit'), 0);
+                        const amountReserved = toInteger(document('/amountReserved'), 0);
+                        const amountCaptured = toInteger(document('/amountCaptured'), 0);
+
+                        const chargeAttempts = document.canonical('/chargeAttempts') || {};
+                        const nextChargeAttempts = cloneObject(chargeAttempts);
+                        const existingAttempt =
+                          chargeAttemptId &&
+                          chargeAttempts[chargeAttemptId] &&
+                          typeof chargeAttempts[chargeAttemptId] === 'object'
+                            ? chargeAttempts[chargeAttemptId]
+                            : null;
+
+                        const alreadySettled = !!existingAttempt && existingAttempt.settled === true;
+                        const approved =
+                          !!existingAttempt && toText(existingAttempt.authorizationStatus) === 'approved';
+                        const authorizedAmount = toInteger(
+                          existingAttempt ? existingAttempt.authorizedAmountMinor : 0,
+                          0
+                        );
+
+                        const holdId = toText(request.holdId);
+                        const transactionId = toText(request.transactionId);
+                        const requestReason = toText(request.reason);
+
+                        let status = 'rejected';
+                        let reason = '';
+                        let nextAmountReserved = amountReserved;
+                        let nextAmountCaptured = amountCaptured;
+                        let nextAttempt = existingAttempt ? cloneObject(existingAttempt) : null;
+
+                        if (!chargeAttemptId) {
+                          reason = 'Missing chargeAttemptId.';
+                        } else if (alreadySettled) {
+                          status = 'accepted';
+                          reason = 'Charge attempt already settled.';
+                        } else if (!approved) {
+                          reason = 'Charge attempt is not approved.';
+                        } else if (
+                          settlementStatus !== 'succeeded' &&
+                          settlementStatus !== 'failed'
+                        ) {
+                          reason = 'Unsupported settlement status.';
+                        } else if (capturedDeltaMinor < 0) {
+                          reason = 'capturedDeltaMinor cannot be negative.';
+                        } else if (
+                          settlementStatus === 'failed' &&
+                          capturedDeltaMinor !== 0
+                        ) {
+                          reason = 'capturedDeltaMinor must be 0 for failed settlement.';
+                        } else if (capturedDeltaMinor > authorizedAmount) {
+                          reason = 'capturedDeltaMinor exceeds authorized amount.';
+                        } else {
+                          const candidateAmountReserved = amountReserved + reservedDeltaMinor;
+                          const candidateAmountCaptured = amountCaptured + capturedDeltaMinor;
+                          const candidateUsed = candidateAmountReserved + candidateAmountCaptured;
+
+                          if (candidateAmountReserved < 0) {
+                            reason = 'Settlement would make amountReserved negative.';
+                          } else if (candidateAmountCaptured < 0) {
+                            reason = 'Settlement would make amountCaptured negative.';
+                          } else if (candidateUsed > amountLimit) {
+                            reason = 'Settlement would exceed amountLimit.';
+                          } else {
+                            status = 'accepted';
+                            nextAmountReserved = candidateAmountReserved;
+                            nextAmountCaptured = candidateAmountCaptured;
+                            nextAttempt = cloneObject(existingAttempt);
+                            nextAttempt.settled = true;
+                            nextAttempt.lastSettlementRequestStatus = settlementStatus;
+                            nextAttempt.lastSettlementProcessingStatus = 'accepted';
+                            nextAttempt.settlementReason = requestReason;
+                            nextAttempt.settlementRespondedAt = nowIso;
+                            nextAttempt.reservedDeltaMinor = reservedDeltaMinor;
+                            nextAttempt.capturedDeltaMinor = capturedDeltaMinor;
+                            nextAttempt.holdId = holdId;
+                            nextAttempt.transactionId = transactionId;
+                            nextChargeAttempts[chargeAttemptId] = nextAttempt;
+                          }
+                        }
+
+                        if (nextAttempt && status === 'rejected') {
+                          nextAttempt = cloneObject(nextAttempt);
+                          nextAttempt.lastSettlementRequestStatus = settlementStatus;
+                          nextAttempt.lastSettlementProcessingStatus = 'rejected';
+                          nextAttempt.settlementReason = reason;
+                          nextAttempt.settlementRespondedAt = nowIso;
+                          nextChargeAttempts[chargeAttemptId] = nextAttempt;
+                        }
+
+                        const responseEvent = {
+                          type: 'PayNote/Payment Mandate Spend Settlement Responded',
+                          chargeAttemptId,
+                          status,
+                          amountReserved: nextAmountReserved,
+                          amountCaptured: nextAmountCaptured,
+                          respondedAt: nowIso
+                        };
+
+                        if (reason) {
+                          responseEvent.reason = reason;
+                        }
+
+                        return {
+                          nextChargeAttempts: nextChargeAttempts,
+                          nextAmountReserved: nextAmountReserved,
+                          nextAmountCaptured: nextAmountCaptured,
+                          events: [responseEvent]
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                  - name: Persist Settlement
+                    type:
+                      blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
+                    changeset:
+                      items:
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /chargeAttempts
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Validate and Apply Settlement'].nextChargeAttempts}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /amountReserved
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Validate and Apply Settlement'].nextAmountReserved}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                        - op:
+                            value: replace
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          path:
+                            value: /amountCaptured
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                          val:
+                            value: ${steps['Validate and Apply Settlement'].nextAmountCaptured}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: Cb8EjAE531e9RVa9RgFJzKmN9h6z8Xp3tAYaBFgqfHoP
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Attached
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Payment Mandate was successfully attached to the PayNote context.
+          paymentMandateDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Document id of the attached Payment Mandate.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 49TYrHpnk2gepJiGduJP3afrnT2DJ6kDxqF4Y9M4C4t7
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Attachment Failed
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: Payment Mandate attachment to PayNote failed.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Failure reason explaining why attachment failed.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: GTwsVrbVb31sMub1vvU2KyY2nA8ekKWYDoqNAB1m4Vh2
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Charge Attempt State
+          description: Stateful record for a single charge attempt tracked by Payment Mandate.
+          amountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Requested amount in minor currency units.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: Requested currency.
+          counterpartyType:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Counterparty identifier type ("merchantId" | "customerId" | "accountNumber").
+          counterpartyId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Counterparty identifier interpreted according to counterpartyType.
+          chargeMode:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Requested charge mode ("authorize_only" | "authorize_and_capture").
+          authorizationStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Authorization decision status ("approved" | "rejected").
+          authorizationReason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional authorization rejection reason.
+          authorizationRespondedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp of authorization decision response.
+          authorizedAmountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Authorized amount reserved against mandate capacity for this attempt.
+          settled:
+            type:
+              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+            description: Whether mandate accepted settlement for this attempt.
+          lastSettlementRequestStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Last settlement request status received from bank ("succeeded" | "failed").
+          lastSettlementProcessingStatus:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Mandate processing status for last settlement ("accepted" | "rejected").
+          settlementReason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional settlement rejection/info reason.
+          settlementRespondedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp of last settlement processing response.
+          reservedDeltaMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Reserved delta applied for accepted settlement.
+          capturedDeltaMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Captured delta applied for accepted settlement.
+          holdId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional hold id associated with settlement.
+          transactionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional transaction id associated with settlement.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: JADRqXZ7UWNDqPt9Zhnn6831Nz2X5yeSuyew4hu6ciVq
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Spend Authorization Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: |
+            Bank asks a Payment Mandate document to authorize a single charge attempt before reserve/capture execution.
+          chargeAttemptId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Correlation and idempotency key for a single charge attempt. Must be stable across retries of the same attempt.
+          amountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Requested amount in minor currency units.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: Currency used to validate amountMinor against mandate limits.
+          counterpartyType:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Counterparty identifier type ("merchantId" | "customerId" | "accountNumber").
+          counterpartyId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Counterparty identifier interpreted according to counterpartyType.
+          chargeMode:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Requested charge execution mode ("authorize_only" | "authorize_and_capture").
+          requestingDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Document id that requested the charge.
+          requestingSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Session id that requested the charge.
+          requestedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the authorization request was created.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 4STBHLJjxjCZVgeW2ScFfmsx8Vm16FenEbaNMyL8ZJUT
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Spend Authorization Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Decision from Payment Mandate for a spend authorization request.
+          chargeAttemptId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Correlation key copied from Payment Mandate Spend Authorization Requested.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Decision status ("approved" | "rejected").
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional rejection reason.
+          remainingAmountMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Optional remaining mandate capacity in minor currency units after decision.
+          respondedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the decision was emitted.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 8qdhLemMQ5MFtu9Aebpd9gKfKuLuRBEnT6yTTzr9F78E
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Spend Settled
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: |
+            Settlement update sent by bank to Payment Mandate after charge execution, used to apply deterministic reserved/captured deltas in mandate state. For approved authorizations, mandate may already reserve capacity at authorize step. Deltas should express net post-execution adjustment from current mandate state.
+          chargeAttemptId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Correlation key copied from Payment Mandate Spend Authorization Requested.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Settlement status ("succeeded" | "failed").
+          reservedDeltaMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: |
+              Net change to amountReserved in minor units. Positive for new reserve, negative for release/capture settlement. For authorize-only success this is typically 0 when authorization already reserved capacity.
+          capturedDeltaMinor:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: |
+              Net change to amountCaptured in minor units. Positive for successful capture.
+          holdId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional hold id produced by banking execution.
+          transactionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional transaction id produced by banking execution.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional failure reason.
+          settledAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when settlement result was emitted.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 3TW3tRAQdYoMTFeeqmnWLR9JFibTVaJuiRJfJ3ggeVTJ
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Mandate Spend Settlement Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Validation result emitted by Payment Mandate after processing a settlement update.
+          chargeAttemptId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Correlation key copied from Payment Mandate Spend Settled.
+          status:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Settlement processing status ("accepted" | "rejected").
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional rejection or informational reason.
+          amountReserved:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Current mandate amountReserved after applying (or rejecting) settlement.
+          amountCaptured:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Current mandate amountCaptured after applying (or rejecting) settlement.
+          respondedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when mandate emitted settlement processing result.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: 6P1iVKFwG9jgWV7Ye3Co6pWByuu5QpR4tpqu9oVVvawY
+            attributesAdded: []
+      - status: dev
+        content:
           name: PayNote
           description: A verifiable instrument for managing a commitment of value between a Payer, Payee, and Guarantor.
           status:
             description: The current state of the PayNote (e.g., Pending, Approved, Reserved, Captured, Released, Rejected).
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            value: Pending
           transactionStatus:
             type:
               blueId: FutWoAEUEb3wkmEm4YP4JGFPtu3B3PQ3m71BmnRFFnsQ
@@ -4676,12 +5731,10 @@ packages:
               description: The amount currently reserved by the Guarantor.
               type:
                 blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
-              value: 0
             captured:
               description: The amount that has been successfully captured.
               type:
                 blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
-              value: 0
           payNoteInitialStateDescription:
             summary:
               type:
@@ -4733,8 +5786,8 @@ packages:
                       type:
                         blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 6HxvsQMTdbmynxNgqtxcNuCr2RhiLHowVinyD5h3fXmE
+          - repositoryVersionIndex: 5
+            typeBlueId: Dh2LtUN8Umc478kif8VWsNM1FrL5usVEeevv2GKnKP4F
             attributesAdded: []
       - status: dev
         content:
@@ -4828,8 +5881,15 @@ packages:
               blueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
             document:
               type:
-                blueId: 6HxvsQMTdbmynxNgqtxcNuCr2RhiLHowVinyD5h3fXmE
+                blueId: Dh2LtUN8Umc478kif8VWsNM1FrL5usVEeevv2GKnKP4F
             description: PayNote bootstrap request details.
+          paymentMandateBootstrapRequest:
+            type:
+              blueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
+            document:
+              type:
+                blueId: Cb8EjAE531e9RVa9RgFJzKmN9h6z8Xp3tAYaBFgqfHoP
+            description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
           cardTransactionDetails:
             type:
               blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
@@ -5424,8 +6484,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 9jxRnexZ3DMoBAn1xZmjfV7pD1hkrd75qQ1p9a4Eeg4Y
+          - repositoryVersionIndex: 5
+            typeBlueId: 2QkcYqeXBPfAzjYtasCrt91CKjQjcfdjfnHpZ3EX132g
             attributesAdded: []
       - status: dev
         content:
@@ -5550,6 +6610,46 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 3Y3TYmSfZMmPYKmF5i3eR8YcVPNP5Sic2bZN8xRnvMWm
             attributesAdded: []
+      - status: dev
+        content:
+          name: Reverse Card Charge and Capture Immediately Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to create a reverse-direction card charge and capture it immediately.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Charge amount in minor currency units.
+          paymentMandateDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional Payment Mandate document id used to authorize charge execution.
+          paynote:
+            description: Optional PayNote document to bootstrap for the created charge context.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: F4gfZeY8P8dkfwNSbEfq7xQ8axiHdfqgzGQQr3HLDyzC
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Reverse Card Charge Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request to create a reverse-direction card charge (merchant to card owner) in root context.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Charge amount in minor currency units.
+          paymentMandateDocumentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional Payment Mandate document id used to authorize charge execution.
+          paynote:
+            description: Optional PayNote document to bootstrap for the created charge context.
+        versions:
+          - repositoryVersionIndex: 5
+            typeBlueId: Fg5CEPi8Dbr1vBwGjzf8PbQNfuWfPP7HcLFChYwpRJq5
+            attributesAdded: []
       - status: stable
         content:
           name: Settlement Amount Rejected
@@ -5653,3 +6753,4 @@ repositoryVersions:
   - 58apGqo2EExaKTQQJmjASbj8p7tHvrWkoQVjWeWzaox5
   - C6oygUcsKjgqmSej2DMZkuDMqT7frfFL3t11gHGMFebY
   - 5FLaqPWQ7FJF5DFyCy1H4Ry9SHvX2ByfLbgJ2U3QTqUx
+  - EpNsiwie3wUf5Hqeo9fdiycvemBQm681hXEaWPEKNAuF
