@@ -1,0 +1,12 @@
+name: Card Charge Responded
+type: Conversation/Response
+description: Decision response for a card charge request.
+status:
+  type: Text
+  description: Request decision status ("accepted" | "rejected" | "pending").
+reason:
+  type: Text
+  description: Optional explanation for rejected or pending decisions.
+paymentMandateDocumentId:
+  type: Text
+  description: Payment Mandate document id used for this charge decision when available.

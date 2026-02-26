@@ -7,6 +7,12 @@ payNoteBootstrapRequest:
     type: PayNote/PayNote
   description: PayNote bootstrap request details.
 
+paymentMandateBootstrapRequest:
+  type: Conversation/Document Bootstrap Requested
+  document:
+    type: PayNote/Payment Mandate
+  description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
+
 cardTransactionDetails:
   type: PayNote/Card Transaction Details
   description: Card network identifiers used to match processor and issuer records.

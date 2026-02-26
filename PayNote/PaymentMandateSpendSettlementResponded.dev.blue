@@ -1,0 +1,27 @@
+name: Payment Mandate Spend Settlement Responded
+type: Conversation/Response
+description: Validation result emitted by Payment Mandate after processing a settlement update.
+
+chargeAttemptId:
+  type: Text
+  description: Correlation key copied from Payment Mandate Spend Settled.
+
+status:
+  type: Text
+  description: Settlement processing status ("accepted" | "rejected").
+
+reason:
+  type: Text
+  description: Optional rejection or informational reason.
+
+amountReserved:
+  type: Integer
+  description: Current mandate amountReserved after applying (or rejecting) settlement.
+
+amountCaptured:
+  type: Integer
+  description: Current mandate amountCaptured after applying (or rejecting) settlement.
+
+respondedAt:
+  type: Common/Timestamp
+  description: Timestamp when mandate emitted settlement processing result.

@@ -1,0 +1,23 @@
+name: Payment Mandate Spend Authorization Responded
+type: Conversation/Response
+description: Decision from Payment Mandate for a spend authorization request.
+
+chargeAttemptId:
+  type: Text
+  description: Correlation key copied from Payment Mandate Spend Authorization Requested.
+
+status:
+  type: Text
+  description: Decision status ("approved" | "rejected").
+
+reason:
+  type: Text
+  description: Optional rejection reason.
+
+remainingAmountMinor:
+  type: Integer
+  description: Optional remaining mandate capacity in minor currency units after decision.
+
+respondedAt:
+  type: Common/Timestamp
+  description: Timestamp when the decision was emitted.

@@ -1,0 +1,9 @@
+name: Linked PayNote Started
+type: Conversation/Response
+description: Confirmation that linked PayNote startup was requested successfully.
+payNoteSessionId:
+  type: Text
+  description: Session id of the bootstrapped linked PayNote document.
+payNoteDocumentId:
+  type: Text
+  description: Document id of the bootstrapped linked PayNote when available.

@@ -1,0 +1,11 @@
+name: Linked Card Charge Requested
+type: Conversation/Request
+description: Request to create a new card charge linked to the root card transaction context.
+amount:
+  type: Integer
+  description: Charge amount in minor currency units.
+paymentMandateDocumentId:
+  type: Text
+  description: Optional Payment Mandate document id used to authorize charge execution.
+paynote:
+  description: Optional PayNote document to bootstrap for the created charge context.
