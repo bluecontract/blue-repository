@@ -1,0 +1,44 @@
+name: Payment Mandate Spend Settled
+type: Conversation/Response
+description: >
+  Settlement update sent by bank to Payment Mandate after charge execution,
+  used to apply deterministic reserved/captured deltas in mandate state.
+  For approved authorizations, mandate may already reserve capacity at authorize step.
+  Deltas should express net post-execution adjustment from current mandate state.
+
+chargeAttemptId:
+  type: Text
+  description: Correlation key copied from Payment Mandate Spend Authorization Requested.
+
+status:
+  type: Text
+  description: Settlement status ("succeeded" | "failed").
+
+reservedDeltaMinor:
+  type: Integer
+  description: >
+    Net change to amountReserved in minor units.
+    Positive for new reserve, negative for release/capture settlement.
+    For authorize-only success this is typically 0 when authorization already reserved capacity.
+
+capturedDeltaMinor:
+  type: Integer
+  description: >
+    Net change to amountCaptured in minor units.
+    Positive for successful capture.
+
+holdId:
+  type: Text
+  description: Optional hold id produced by banking execution.
+
+transactionId:
+  type: Text
+  description: Optional transaction id produced by banking execution.
+
+reason:
+  type: Text
+  description: Optional failure reason.
+
+settledAt:
+  type: Common/Timestamp
+  description: Timestamp when settlement result was emitted.

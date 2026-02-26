@@ -1,0 +1,6 @@
+name: Linked PayNote Start Failed
+type: Conversation/Response
+description: Linked PayNote startup failed after charge processing.
+reason:
+  type: Text
+  description: Failure reason.

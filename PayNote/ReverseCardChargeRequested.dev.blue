@@ -1,0 +1,11 @@
+name: Reverse Card Charge Requested
+type: Conversation/Request
+description: Request to create a reverse-direction card charge (merchant to card owner) in root context.
+amount:
+  type: Integer
+  description: Charge amount in minor currency units.
+paymentMandateDocumentId:
+  type: Text
+  description: Optional Payment Mandate document id used to authorize charge execution.
+paynote:
+  description: Optional PayNote document to bootstrap for the created charge context.

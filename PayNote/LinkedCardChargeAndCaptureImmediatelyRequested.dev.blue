@@ -1,0 +1,11 @@
+name: Linked Card Charge and Capture Immediately Requested
+type: Conversation/Request
+description: Request to create a linked card charge and capture it immediately.
+amount:
+  type: Integer
+  description: Charge amount in minor currency units.
+paymentMandateDocumentId:
+  type: Text
+  description: Optional Payment Mandate document id used to authorize charge execution.
+paynote:
+  description: Optional PayNote document to bootstrap for the created charge context.

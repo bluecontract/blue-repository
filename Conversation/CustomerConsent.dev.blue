@@ -14,7 +14,6 @@ consentDetails:
 consentStatus:
   type: Text
   description: Consent state (granted, revoked).
-  value: granted
 
 grantedAt:
   type: Common/Timestamp

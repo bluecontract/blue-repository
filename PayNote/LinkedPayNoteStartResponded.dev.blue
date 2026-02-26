@@ -1,0 +1,9 @@
+name: Linked PayNote Start Responded
+type: Conversation/Response
+description: Decision response for starting a linked PayNote after successful charge.
+status:
+  type: Text
+  description: Decision status ("accepted" | "rejected").
+reason:
+  type: Text
+  description: Optional rejection reason.

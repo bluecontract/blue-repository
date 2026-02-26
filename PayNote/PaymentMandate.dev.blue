@@ -1,0 +1,564 @@
+name: Payment Mandate
+description: >
+  Payment mandate authorizing a grantee to execute payment requests on behalf of a granter,
+  under explicit limits, with deterministic spend tracking and optional linked PayNote bootstrap rules.
+
+granterType:
+  type: Text
+  description: |
+    Party granting authority to use funds:
+    - merchant
+    - customer
+
+granterId:
+  type: Text
+  description: |
+    Identifier of the granting party:
+    - merchantId when granterType is merchant
+    - customerId (bank user id) when granterType is customer
+
+granteeType:
+  type: Text
+  description: |
+    Party allowed to invoke this mandate:
+    - documentId
+    - merchantId
+    - customerId
+
+granteeId:
+  type: Text
+  description: Identifier interpreted according to granteeType.
+
+amountLimit:
+  type: Integer
+  description: Maximum amount in minor currency units allowed by this mandate.
+
+currency:
+  type: Common/Currency
+  description: Currency code used for amountLimit validation.
+
+amountReserved:
+  type: Integer
+  description: >
+    Running reserved amount in minor currency units.
+    Increased after successful reserve/authorize, decreased after release/capture.
+
+amountCaptured:
+  type: Integer
+  description: >
+    Running captured amount in minor currency units.
+    Increased after successful capture.
+
+sourceAccount:
+  type: Text
+  description: >
+    Funds source to use when this mandate executes:
+    - root (uses root account context; for merchant this maps to active credit line)
+    - specific account number
+
+expiresAt:
+  type: Common/Timestamp
+  description: Optional mandate expiry timestamp.
+
+revokedAt:
+  type: Common/Timestamp
+  description: Optional revocation timestamp. When set, mandate is inactive.
+
+allowLinkedPayNote:
+  type: Boolean
+  description: Whether this mandate allows linked PayNote startup after charge execution.
+
+allowedPayNotes:
+  type: List
+  itemType:
+    typeBlueId:
+      type: Text
+      description: >
+        Optional blue-id of an allowed PayNote type.
+        Mutually exclusive with documentBlueId.
+    documentBlueId:
+      type: Text
+      description: >
+        Optional blue-id of an allowed concrete PayNote document.
+        Mutually exclusive with typeBlueId.
+  description: >
+    Optional linked PayNote allowlist. Used only when allowLinkedPayNote is true.
+    Missing list means wildcard (any linked PayNote is allowed).
+    Each entry must set exactly one selector: typeBlueId or documentBlueId.
+
+allowedPaymentCounterparties:
+  type: List
+  itemType:
+    counterpartyType:
+      type: Text
+      description: |
+        Allowed payment counterparty identifier type:
+        - merchantId
+        - customerId
+        - accountNumber
+    counterpartyId:
+      type: Text
+      description: Counterparty identifier interpreted according to counterpartyType.
+  description: >
+    Optional payment counterparty allowlist.
+    Missing list means wildcard (any counterparty is allowed).
+
+chargeAttempts:
+  type: Dictionary
+  keyType: Text
+  valueType: PayNote/Payment Mandate Charge Attempt State
+  description: Stateful map of chargeAttemptId -> attempt state (authorization + settlement).
+
+contracts:
+  granterChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Granting party timeline channel.
+
+  granteeChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Grantee timeline channel (party allowed to use the mandate).
+
+  guarantorChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Bank/admin channel executing mandate checks and settlement updates.
+
+  initLifecycleChannel:
+    type: Core/Lifecycle Event Channel
+    event:
+      type: Core/Document Processing Initiated
+
+  initialize:
+    type: Conversation/Sequential Workflow
+    channel: initLifecycleChannel
+    steps:
+      - name: Initialize mandate runtime state
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /chargeAttempts
+            val: {}
+
+  authorizeSpend:
+    type: Conversation/Operation
+    description: Validate a charge attempt against mandate policy and reserve capacity.
+    channel: guarantorChannel
+    request:
+      type: PayNote/Payment Mandate Spend Authorization Requested
+
+  authorizeSpendImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: authorizeSpend
+    steps:
+      - name: Decide Spend Authorization
+        type: Conversation/JavaScript Code
+        code: |
+          const request =
+            event && event.message && event.message.request
+              ? event.message.request
+              : {};
+
+          const unwrapNodeValue = function (value) {
+            if (
+              value &&
+              typeof value === 'object' &&
+              Object.prototype.hasOwnProperty.call(value, 'value')
+            ) {
+              return value.value;
+            }
+            return value;
+          };
+
+          const toText = function (value) {
+            const unwrapped = unwrapNodeValue(value);
+            return typeof unwrapped === 'string' ? unwrapped : '';
+          };
+
+          const toTimestampText = function (value) {
+            const unwrapped = unwrapNodeValue(value);
+            if (typeof unwrapped === 'string') {
+              return unwrapped;
+            }
+            if (typeof unwrapped === 'number') {
+              return String(unwrapped);
+            }
+            return '';
+          };
+
+          const nowIso =
+            toText(request.requestedAt) ||
+            toTimestampText(event && event.timestamp ? event.timestamp : '');
+
+          const normalizeTimestamp = function (value) {
+            if (typeof value !== 'string' || !value) {
+              return '';
+            }
+            let digits = '';
+            let index = 0;
+            while (index < value.length) {
+              const code = value.charCodeAt(index);
+              if (code >= 48 && code <= 57) {
+                digits += value.charAt(index);
+              }
+              index += 1;
+            }
+            if (digits.length < 14) {
+              return '';
+            }
+            return digits.slice(0, 14);
+          };
+
+          const toInteger = function (value, fallback) {
+            const safeFallback =
+              typeof fallback === 'number' && Number.isFinite(fallback)
+                ? Math.trunc(fallback)
+                : 0;
+            const unwrapped = unwrapNodeValue(value);
+            if (typeof unwrapped === 'number' && Number.isFinite(unwrapped)) {
+              return Math.trunc(unwrapped);
+            }
+            if (typeof unwrapped !== 'string' || !unwrapped) {
+              return safeFallback;
+            }
+            const parsed = Number(unwrapped);
+            return Number.isFinite(parsed) ? Math.trunc(parsed) : safeFallback;
+          };
+
+          const cloneObject = function (value) {
+            const source = value && typeof value === 'object' ? value : {};
+            const clone = {};
+            Object.keys(source).forEach(function (key) {
+              clone[key] = source[key];
+            });
+            return clone;
+          };
+
+          const chargeAttemptId = toText(request.chargeAttemptId);
+          const amountMinor = toInteger(request.amountMinor, 0);
+          const counterpartyType = toText(request.counterpartyType);
+          const counterpartyId = toText(request.counterpartyId);
+          const requestedCurrency = toText(request.currency);
+
+          const chargeAttempts = document.canonical('/chargeAttempts') || {};
+          const nextChargeAttempts = cloneObject(chargeAttempts);
+
+          const existingAttempt =
+            chargeAttemptId &&
+            chargeAttempts[chargeAttemptId] &&
+            typeof chargeAttempts[chargeAttemptId] === 'object'
+              ? chargeAttempts[chargeAttemptId]
+              : null;
+          const existingDecision =
+            existingAttempt ? toText(existingAttempt.authorizationStatus) : '';
+          const existingReason =
+            existingAttempt ? toText(existingAttempt.authorizationReason) : '';
+
+          const amountLimit = toInteger(document('/amountLimit'), 0);
+          const amountReserved = toInteger(document('/amountReserved'), 0);
+          const amountCaptured = toInteger(document('/amountCaptured'), 0);
+          const mandateCurrency = toText(document('/currency'));
+          const expiresAt = toText(document('/expiresAt'));
+          const revokedAt = toText(document('/revokedAt'));
+          const nowComparable = normalizeTimestamp(nowIso);
+
+          const allowedCounterparties = document.canonical('/allowedPaymentCounterparties');
+          const isCounterpartyAllowed =
+            !Array.isArray(allowedCounterparties) ||
+            allowedCounterparties.length === 0 ||
+            allowedCounterparties.some(function (item) {
+              return (
+                item &&
+                toText(item.counterpartyType) === counterpartyType &&
+                toText(item.counterpartyId) === counterpartyId
+              );
+            });
+
+          let status = 'rejected';
+          let reason = '';
+          let nextAmountReserved = amountReserved;
+
+          if (existingDecision === 'approved' || existingDecision === 'rejected') {
+            status = existingDecision;
+            reason = existingDecision === 'rejected' ? existingReason : '';
+          } else if (!chargeAttemptId) {
+            reason = 'Missing chargeAttemptId.';
+          } else if (amountMinor <= 0) {
+            reason = 'Amount must be greater than zero.';
+          } else if (!requestedCurrency || requestedCurrency !== mandateCurrency) {
+            reason = 'Currency does not match mandate currency.';
+          } else if (revokedAt) {
+            reason = 'Mandate is revoked.';
+          } else if (
+            expiresAt &&
+            normalizeTimestamp(expiresAt) &&
+            nowComparable &&
+            normalizeTimestamp(expiresAt) < nowComparable
+          ) {
+            reason = 'Mandate is expired.';
+          } else if (!isCounterpartyAllowed) {
+            reason = 'Counterparty is not allowed by mandate.';
+          } else if (amountReserved + amountCaptured + amountMinor > amountLimit) {
+            reason = 'Mandate amount limit exceeded.';
+          } else {
+            status = 'approved';
+            nextAmountReserved = amountReserved + amountMinor;
+          }
+
+          if (chargeAttemptId && !existingDecision) {
+            nextChargeAttempts[chargeAttemptId] = {
+              amountMinor,
+              currency: requestedCurrency,
+              counterpartyType,
+              counterpartyId,
+              chargeMode:
+                toText(request.chargeMode),
+              authorizationStatus: status,
+              authorizationReason: reason,
+              authorizationRespondedAt: nowIso,
+              authorizedAmountMinor: status === 'approved' ? amountMinor : 0,
+              settled: false,
+              lastSettlementRequestStatus: '',
+              lastSettlementProcessingStatus: '',
+              settlementReason: '',
+              settlementRespondedAt: '',
+              reservedDeltaMinor: 0,
+              capturedDeltaMinor: 0,
+              holdId: '',
+              transactionId: ''
+            };
+          }
+
+          const remainingAmountMinor = Math.max(
+            0,
+            amountLimit - (nextAmountReserved + amountCaptured)
+          );
+
+          const responseEvent = {
+            type: 'PayNote/Payment Mandate Spend Authorization Responded',
+            chargeAttemptId,
+            status,
+            remainingAmountMinor,
+            respondedAt: nowIso
+          };
+
+          if (reason) {
+            responseEvent.reason = reason;
+          }
+
+          return {
+            nextChargeAttempts: nextChargeAttempts,
+            nextAmountReserved: nextAmountReserved,
+            events: [responseEvent]
+          };
+
+      - name: Persist Authorization Decision
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /chargeAttempts
+            val: "${steps['Decide Spend Authorization'].nextChargeAttempts}"
+          - op: replace
+            path: /amountReserved
+            val: "${steps['Decide Spend Authorization'].nextAmountReserved}"
+
+  settleSpend:
+    type: Conversation/Operation
+    description: Apply final reserve/capture deltas for a previously authorized charge attempt.
+    channel: guarantorChannel
+    request:
+      type: PayNote/Payment Mandate Spend Settled
+
+  settleSpendImpl:
+    type: Conversation/Sequential Workflow Operation
+    operation: settleSpend
+    steps:
+      - name: Validate and Apply Settlement
+        type: Conversation/JavaScript Code
+        code: |
+          const request =
+            event && event.message && event.message.request
+              ? event.message.request
+              : {};
+
+          const unwrapNodeValue = function (value) {
+            if (
+              value &&
+              typeof value === 'object' &&
+              Object.prototype.hasOwnProperty.call(value, 'value')
+            ) {
+              return value.value;
+            }
+            return value;
+          };
+
+          const toText = function (value) {
+            const unwrapped = unwrapNodeValue(value);
+            return typeof unwrapped === 'string' ? unwrapped : '';
+          };
+
+          const toTimestampText = function (value) {
+            const unwrapped = unwrapNodeValue(value);
+            if (typeof unwrapped === 'string') {
+              return unwrapped;
+            }
+            if (typeof unwrapped === 'number') {
+              return String(unwrapped);
+            }
+            return '';
+          };
+
+          const nowIso =
+            toText(request.settledAt) ||
+            toTimestampText(event && event.timestamp ? event.timestamp : '');
+
+          const toInteger = function (value, fallback) {
+            const safeFallback =
+              typeof fallback === 'number' && Number.isFinite(fallback)
+                ? Math.trunc(fallback)
+                : 0;
+            const unwrapped = unwrapNodeValue(value);
+            if (typeof unwrapped === 'number' && Number.isFinite(unwrapped)) {
+              return Math.trunc(unwrapped);
+            }
+            if (typeof unwrapped !== 'string' || !unwrapped) {
+              return safeFallback;
+            }
+            const parsed = Number(unwrapped);
+            return Number.isFinite(parsed) ? Math.trunc(parsed) : safeFallback;
+          };
+
+          const cloneObject = function (value) {
+            const source = value && typeof value === 'object' ? value : {};
+            const clone = {};
+            Object.keys(source).forEach(function (key) {
+              clone[key] = source[key];
+            });
+            return clone;
+          };
+
+          const chargeAttemptId = toText(request.chargeAttemptId);
+          const settlementStatus = toText(request.status);
+          const reservedDeltaMinor = toInteger(request.reservedDeltaMinor, 0);
+          const capturedDeltaMinor = toInteger(request.capturedDeltaMinor, 0);
+
+          const amountLimit = toInteger(document('/amountLimit'), 0);
+          const amountReserved = toInteger(document('/amountReserved'), 0);
+          const amountCaptured = toInteger(document('/amountCaptured'), 0);
+
+          const chargeAttempts = document.canonical('/chargeAttempts') || {};
+          const nextChargeAttempts = cloneObject(chargeAttempts);
+          const existingAttempt =
+            chargeAttemptId &&
+            chargeAttempts[chargeAttemptId] &&
+            typeof chargeAttempts[chargeAttemptId] === 'object'
+              ? chargeAttempts[chargeAttemptId]
+              : null;
+
+          const alreadySettled = !!existingAttempt && existingAttempt.settled === true;
+          const approved =
+            !!existingAttempt && toText(existingAttempt.authorizationStatus) === 'approved';
+          const authorizedAmount = toInteger(
+            existingAttempt ? existingAttempt.authorizedAmountMinor : 0,
+            0
+          );
+
+          const holdId = toText(request.holdId);
+          const transactionId = toText(request.transactionId);
+          const requestReason = toText(request.reason);
+
+          let status = 'rejected';
+          let reason = '';
+          let nextAmountReserved = amountReserved;
+          let nextAmountCaptured = amountCaptured;
+          let nextAttempt = existingAttempt ? cloneObject(existingAttempt) : null;
+
+          if (!chargeAttemptId) {
+            reason = 'Missing chargeAttemptId.';
+          } else if (alreadySettled) {
+            status = 'accepted';
+            reason = 'Charge attempt already settled.';
+          } else if (!approved) {
+            reason = 'Charge attempt is not approved.';
+          } else if (
+            settlementStatus !== 'succeeded' &&
+            settlementStatus !== 'failed'
+          ) {
+            reason = 'Unsupported settlement status.';
+          } else if (capturedDeltaMinor < 0) {
+            reason = 'capturedDeltaMinor cannot be negative.';
+          } else if (
+            settlementStatus === 'failed' &&
+            capturedDeltaMinor !== 0
+          ) {
+            reason = 'capturedDeltaMinor must be 0 for failed settlement.';
+          } else if (capturedDeltaMinor > authorizedAmount) {
+            reason = 'capturedDeltaMinor exceeds authorized amount.';
+          } else {
+            const candidateAmountReserved = amountReserved + reservedDeltaMinor;
+            const candidateAmountCaptured = amountCaptured + capturedDeltaMinor;
+            const candidateUsed = candidateAmountReserved + candidateAmountCaptured;
+
+            if (candidateAmountReserved < 0) {
+              reason = 'Settlement would make amountReserved negative.';
+            } else if (candidateAmountCaptured < 0) {
+              reason = 'Settlement would make amountCaptured negative.';
+            } else if (candidateUsed > amountLimit) {
+              reason = 'Settlement would exceed amountLimit.';
+            } else {
+              status = 'accepted';
+              nextAmountReserved = candidateAmountReserved;
+              nextAmountCaptured = candidateAmountCaptured;
+              nextAttempt = cloneObject(existingAttempt);
+              nextAttempt.settled = true;
+              nextAttempt.lastSettlementRequestStatus = settlementStatus;
+              nextAttempt.lastSettlementProcessingStatus = 'accepted';
+              nextAttempt.settlementReason = requestReason;
+              nextAttempt.settlementRespondedAt = nowIso;
+              nextAttempt.reservedDeltaMinor = reservedDeltaMinor;
+              nextAttempt.capturedDeltaMinor = capturedDeltaMinor;
+              nextAttempt.holdId = holdId;
+              nextAttempt.transactionId = transactionId;
+              nextChargeAttempts[chargeAttemptId] = nextAttempt;
+            }
+          }
+
+          if (nextAttempt && status === 'rejected') {
+            nextAttempt = cloneObject(nextAttempt);
+            nextAttempt.lastSettlementRequestStatus = settlementStatus;
+            nextAttempt.lastSettlementProcessingStatus = 'rejected';
+            nextAttempt.settlementReason = reason;
+            nextAttempt.settlementRespondedAt = nowIso;
+            nextChargeAttempts[chargeAttemptId] = nextAttempt;
+          }
+
+          const responseEvent = {
+            type: 'PayNote/Payment Mandate Spend Settlement Responded',
+            chargeAttemptId,
+            status,
+            amountReserved: nextAmountReserved,
+            amountCaptured: nextAmountCaptured,
+            respondedAt: nowIso
+          };
+
+          if (reason) {
+            responseEvent.reason = reason;
+          }
+
+          return {
+            nextChargeAttempts: nextChargeAttempts,
+            nextAmountReserved: nextAmountReserved,
+            nextAmountCaptured: nextAmountCaptured,
+            events: [responseEvent]
+          };
+
+      - name: Persist Settlement
+        type: Conversation/Update Document
+        changeset:
+          - op: replace
+            path: /chargeAttempts
+            val: "${steps['Validate and Apply Settlement'].nextChargeAttempts}"
+          - op: replace
+            path: /amountReserved
+            val: "${steps['Validate and Apply Settlement'].nextAmountReserved}"
+          - op: replace
+            path: /amountCaptured
+            val: "${steps['Validate and Apply Settlement'].nextAmountCaptured}"

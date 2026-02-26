@@ -1,0 +1,6 @@
+name: Payment Mandate Attachment Failed
+type: Conversation/Event
+description: Payment Mandate attachment to PayNote failed.
+reason:
+  type: Text
+  description: Failure reason explaining why attachment failed.

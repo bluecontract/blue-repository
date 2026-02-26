@@ -1,0 +1,42 @@
+name: Payment Mandate Spend Authorization Requested
+type: Conversation/Request
+description: >
+  Bank asks a Payment Mandate document to authorize a single charge attempt before reserve/capture execution.
+
+chargeAttemptId:
+  type: Text
+  description: >
+    Correlation and idempotency key for a single charge attempt.
+    Must be stable across retries of the same attempt.
+
+amountMinor:
+  type: Integer
+  description: Requested amount in minor currency units.
+
+currency:
+  type: Common/Currency
+  description: Currency used to validate amountMinor against mandate limits.
+
+counterpartyType:
+  type: Text
+  description: Counterparty identifier type ("merchantId" | "customerId" | "accountNumber").
+
+counterpartyId:
+  type: Text
+  description: Counterparty identifier interpreted according to counterpartyType.
+
+chargeMode:
+  type: Text
+  description: Requested charge execution mode ("authorize_only" | "authorize_and_capture").
+
+requestingDocumentId:
+  type: Text
+  description: Document id that requested the charge.
+
+requestingSessionId:
+  type: Text
+  description: Session id that requested the charge.
+
+requestedAt:
+  type: Common/Timestamp
+  description: Timestamp when the authorization request was created.

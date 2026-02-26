@@ -4,7 +4,6 @@ description: A verifiable instrument for managing a commitment of value between 
 status:
   description: The current state of the PayNote (e.g., Pending, Approved, Reserved, Captured, Released, Rejected).
   type: Text
-  value: Pending
 
 transactionStatus:
   type: PayNote/Transaction Status
@@ -22,11 +21,9 @@ amount:
   reserved:
     description: The amount currently reserved by the Guarantor.
     type: Integer
-    value: 0
   captured:
     description: The amount that has been successfully captured.
     type: Integer
-    value: 0
 
 payNoteInitialStateDescription:
   summary:

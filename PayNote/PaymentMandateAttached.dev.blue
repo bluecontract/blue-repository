@@ -1,0 +1,6 @@
+name: Payment Mandate Attached
+type: Conversation/Event
+description: Payment Mandate was successfully attached to the PayNote context.
+paymentMandateDocumentId:
+  type: Text
+  description: Document id of the attached Payment Mandate.

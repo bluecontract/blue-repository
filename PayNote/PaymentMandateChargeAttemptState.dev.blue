@@ -1,0 +1,74 @@
+name: Payment Mandate Charge Attempt State
+description: Stateful record for a single charge attempt tracked by Payment Mandate.
+
+amountMinor:
+  type: Integer
+  description: Requested amount in minor currency units.
+
+currency:
+  type: Common/Currency
+  description: Requested currency.
+
+counterpartyType:
+  type: Text
+  description: Counterparty identifier type ("merchantId" | "customerId" | "accountNumber").
+
+counterpartyId:
+  type: Text
+  description: Counterparty identifier interpreted according to counterpartyType.
+
+chargeMode:
+  type: Text
+  description: Requested charge mode ("authorize_only" | "authorize_and_capture").
+
+authorizationStatus:
+  type: Text
+  description: Authorization decision status ("approved" | "rejected").
+
+authorizationReason:
+  type: Text
+  description: Optional authorization rejection reason.
+
+authorizationRespondedAt:
+  type: Common/Timestamp
+  description: Timestamp of authorization decision response.
+
+authorizedAmountMinor:
+  type: Integer
+  description: Authorized amount reserved against mandate capacity for this attempt.
+
+settled:
+  type: Boolean
+  description: Whether mandate accepted settlement for this attempt.
+
+lastSettlementRequestStatus:
+  type: Text
+  description: Last settlement request status received from bank ("succeeded" | "failed").
+
+lastSettlementProcessingStatus:
+  type: Text
+  description: Mandate processing status for last settlement ("accepted" | "rejected").
+
+settlementReason:
+  type: Text
+  description: Optional settlement rejection/info reason.
+
+settlementRespondedAt:
+  type: Common/Timestamp
+  description: Timestamp of last settlement processing response.
+
+reservedDeltaMinor:
+  type: Integer
+  description: Reserved delta applied for accepted settlement.
+
+capturedDeltaMinor:
+  type: Integer
+  description: Captured delta applied for accepted settlement.
+
+holdId:
+  type: Text
+  description: Optional hold id associated with settlement.
+
+transactionId:
+  type: Text
+  description: Optional transaction id associated with settlement.

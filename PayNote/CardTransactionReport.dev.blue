@@ -16,5 +16,8 @@ currency:
 occurredAt:
   type: Common/Timestamp
   description: Timestamp when the transaction occurred.
+status:
+  type: Text
+  description: Transaction status ("authorized" | "partially captured" | "captured").
 cardTransactionDetails:
   type: PayNote/Card Transaction Details

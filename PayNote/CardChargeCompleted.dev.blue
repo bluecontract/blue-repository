@@ -1,0 +1,15 @@
+name: Card Charge Completed
+type: Conversation/Response
+description: Final outcome for a card charge request.
+status:
+  type: Text
+  description: Completion status ("succeeded" | "failed").
+holdId:
+  type: Text
+  description: Hold id created for authorize-only or authorize+capture flows.
+transactionId:
+  type: Text
+  description: Resulting transaction id when available.
+reason:
+  type: Text
+  description: Optional failure reason.
