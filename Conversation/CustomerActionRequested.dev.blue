@@ -2,13 +2,9 @@ name: Customer Action Requested
 type: Conversation/Request
 description: A document suggests that the bank should ask the customer to take a specific action in the bank UI.
 
-actionId:
+mode:
   type: Text
-  description: Optional idempotency key for the action request.
-
-actionType:
-  type: Text
-  description: consentApproval | callOperation | informational
+  description: "Pending action mode. Supported values: options | input."
 
 title:
   type: Text
@@ -18,10 +14,10 @@ message:
   type: Text
   description: Human-readable message describing what is expected.
 
-operationName:
-  type: Text
-  description: Optional contract operation to execute (used for callOperation).
+options:
+  type: List
+  itemType: Text
+  description: Optional list of labels to render for mode=options.
 
-prefillRequestJson:
-  type: Text
-  description: Optional JSON string to prefill the operation request form.
+inputSchema:
+  description: Optional input schema to render for mode=input.
