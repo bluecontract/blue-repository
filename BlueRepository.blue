@@ -622,14 +622,10 @@ packages:
           type:
             blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
           description: A document suggests that the bank should ask the customer to take a specific action in the bank UI.
-          actionId:
+          mode:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional idempotency key for the action request.
-          actionType:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: consentApproval | callOperation | informational
+            description: 'Pending action mode. Supported values: options | input.'
           title:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -638,17 +634,37 @@ packages:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Human-readable message describing what is expected.
-          operationName:
+          options:
             type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional contract operation to execute (used for callOperation).
-          prefillRequestJson:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional JSON string to prefill the operation request form.
+            description: Optional list of labels to render for mode=options.
+          inputSchema:
+            description: Optional input schema to render for mode=input.
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: AemAG9Bb3XUZm6hLPMipUeYmpFFG6X4CUYZFSLC88WjV
+          - repositoryVersionIndex: 6
+            typeBlueId: 6BBtNuLc2PR5G1bmtDfo429WWyP8QD13VwooMbHthfmM
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Customer Action Responded
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Bank response event that reports a user decision for a previously requested pending action.
+          mode:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: 'Pending action mode. Supported values: options | input.'
+          input:
+            description: User-provided decision payload. For mode=options this should be a selected option label. For mode=input this should match the requested input schema.
+          respondedAt:
+            type:
+              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+            description: Timestamp when the user decision was recorded by the bank.
+        versions:
+          - repositoryVersionIndex: 6
+            typeBlueId: 951RFxKXpzbJiyMC7fYGSxMeSEqewmTwgZBtHMhVVsaj
             attributesAdded: []
       - status: dev
         content:
@@ -6754,3 +6770,4 @@ repositoryVersions:
   - C6oygUcsKjgqmSej2DMZkuDMqT7frfFL3t11gHGMFebY
   - 5FLaqPWQ7FJF5DFyCy1H4Ry9SHvX2ByfLbgJ2U3QTqUx
   - EpNsiwie3wUf5Hqeo9fdiycvemBQm681hXEaWPEKNAuF
+  - EpCTtQtiyxppoVxqFbVZLiV7684165ENL3M2qwJigMFP
