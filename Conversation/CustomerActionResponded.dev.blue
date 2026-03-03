@@ -1,0 +1,14 @@
+name: Customer Action Responded
+type: Conversation/Response
+description: Bank response event that reports a user decision for a previously requested pending action.
+
+mode:
+  type: Text
+  description: "Pending action mode. Supported values: options | input."
+
+input:
+  description: User-provided decision payload. For mode=options this should be a selected option label. For mode=input this should match the requested input schema.
+
+respondedAt:
+  type: Common/Timestamp
+  description: Timestamp when the user decision was recorded by the bank.
