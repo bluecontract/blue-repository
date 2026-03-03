@@ -622,10 +622,6 @@ packages:
           type:
             blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
           description: A document suggests that the bank should ask the customer to take a specific action in the bank UI.
-          mode:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: 'Pending action mode. Supported values: options | input.'
           title:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -634,17 +630,36 @@ packages:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Human-readable message describing what is expected.
-          options:
+          actions:
             type:
               blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
             itemType:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional list of labels to render for mode=options.
-          inputSchema:
-            description: Optional input schema to render for mode=input.
+              label:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: User-facing action label shown in the pending action card.
+              variant:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: 'Optional button style variant. Supported values: primary | secondary | reject.'
+              inputSchema:
+                description: Optional input schema. If present, the selected action may collect user input.
+              inputRequired:
+                type:
+                  blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+                description: Optional flag indicating whether input is required for this action.
+              inputTitle:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional title displayed above the action input control.
+              inputPlaceholder:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional placeholder/help text shown in the action input control.
+            description: List of available user actions for this pending action request.
         versions:
-          - repositoryVersionIndex: 6
-            typeBlueId: 6BBtNuLc2PR5G1bmtDfo429WWyP8QD13VwooMbHthfmM
+          - repositoryVersionIndex: 7
+            typeBlueId: 6ZLHE59mb1ytEjW78jmYCU3DXxj4Fzfjea7tz3VEkwyX
             attributesAdded: []
       - status: dev
         content:
@@ -652,19 +667,19 @@ packages:
           type:
             blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
           description: Bank response event that reports a user decision for a previously requested pending action.
-          mode:
+          actionLabel:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: 'Pending action mode. Supported values: options | input.'
+            description: Label of the action selected by the user.
           input:
-            description: User-provided decision payload. For mode=options this should be a selected option label. For mode=input this should match the requested input schema.
+            description: Optional user-provided payload for the selected action.
           respondedAt:
             type:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
             description: Timestamp when the user decision was recorded by the bank.
         versions:
-          - repositoryVersionIndex: 6
-            typeBlueId: 951RFxKXpzbJiyMC7fYGSxMeSEqewmTwgZBtHMhVVsaj
+          - repositoryVersionIndex: 7
+            typeBlueId: GFyes2Px1cY5Yfk2oiA1qpzhz2purMED3g1L74Bu1Ho6
             attributesAdded: []
       - status: dev
         content:
@@ -6771,3 +6786,4 @@ repositoryVersions:
   - 5FLaqPWQ7FJF5DFyCy1H4Ry9SHvX2ByfLbgJ2U3QTqUx
   - EpNsiwie3wUf5Hqeo9fdiycvemBQm681hXEaWPEKNAuF
   - EpCTtQtiyxppoVxqFbVZLiV7684165ENL3M2qwJigMFP
+  - 9HWPEq8AoXuWtmsqgbxYqFqpuizJg1RdXmfEQA1qhsbi
