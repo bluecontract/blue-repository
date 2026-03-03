@@ -2,10 +2,6 @@ name: Customer Action Requested
 type: Conversation/Request
 description: A document suggests that the bank should ask the customer to take a specific action in the bank UI.
 
-mode:
-  type: Text
-  description: "Pending action mode. Supported values: options | input."
-
 title:
   type: Text
   description: Short title for the pending action.
@@ -14,10 +10,24 @@ message:
   type: Text
   description: Human-readable message describing what is expected.
 
-options:
+actions:
   type: List
-  itemType: Text
-  description: Optional list of labels to render for mode=options.
-
-inputSchema:
-  description: Optional input schema to render for mode=input.
+  itemType:
+    label:
+      type: Text
+      description: User-facing action label shown in the pending action card.
+    variant:
+      type: Text
+      description: "Optional button style variant. Supported values: primary | secondary | reject."
+    inputSchema:
+      description: Optional input schema. If present, the selected action may collect user input.
+    inputRequired:
+      type: Boolean
+      description: Optional flag indicating whether input is required for this action.
+    inputTitle:
+      type: Text
+      description: Optional title displayed above the action input control.
+    inputPlaceholder:
+      type: Text
+      description: Optional placeholder/help text shown in the action input control.
+  description: List of available user actions for this pending action request.
