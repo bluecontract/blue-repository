@@ -1,13 +1,11 @@
 name: Payment Mandate Spend Authorization Requested
 type: Conversation/Request
 description: >
-  Bank asks a Payment Mandate document to authorize a single charge attempt before reserve/capture execution.
+  Bank asks a Payment Mandate document to authorize a single spend before reserve/capture execution.
 
-chargeAttemptId:
+authorizationId:
   type: Text
-  description: >
-    Correlation and idempotency key for a single charge attempt.
-    Must be stable across retries of the same attempt.
+  description: Correlation and idempotency key for a single authorization lifecycle.
 
 amountMinor:
   type: Integer
@@ -24,10 +22,6 @@ counterpartyType:
 counterpartyId:
   type: Text
   description: Counterparty identifier interpreted according to counterpartyType.
-
-chargeMode:
-  type: Text
-  description: Requested charge execution mode ("authorize_only" | "authorize_and_capture").
 
 requestingDocumentId:
   type: Text
