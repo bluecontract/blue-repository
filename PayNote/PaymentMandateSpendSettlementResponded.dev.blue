@@ -2,9 +2,13 @@ name: Payment Mandate Spend Settlement Responded
 type: Conversation/Response
 description: Validation result emitted by Payment Mandate after processing a settlement update.
 
-chargeAttemptId:
+authorizationId:
   type: Text
   description: Correlation key copied from Payment Mandate Spend Settled.
+
+settlementId:
+  type: Text
+  description: Optional settlement correlation id copied from settlement request.
 
 status:
   type: Text

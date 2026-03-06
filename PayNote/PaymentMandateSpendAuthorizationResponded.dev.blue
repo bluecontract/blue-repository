@@ -2,7 +2,7 @@ name: Payment Mandate Spend Authorization Responded
 type: Conversation/Response
 description: Decision from Payment Mandate for a spend authorization request.
 
-chargeAttemptId:
+authorizationId:
   type: Text
   description: Correlation key copied from Payment Mandate Spend Authorization Requested.
 
