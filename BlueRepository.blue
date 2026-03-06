@@ -4927,8 +4927,83 @@ packages:
             keyType:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             valueType:
-              blueId: JADRqXZ7UWNDqPt9Zhnn6831Nz2X5yeSuyew4hu6ciVq
-            description: Stateful map of chargeAttemptId -> attempt state (authorization + settlement).
+              amountMinor:
+                type:
+                  blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                description: Requested amount in minor currency units.
+              currency:
+                type:
+                  blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+                description: Requested currency.
+              counterpartyType:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Counterparty identifier type ("merchantId" | "customerId" | "accountNumber").
+              counterpartyId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Counterparty identifier interpreted according to counterpartyType.
+              chargeMode:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Requested charge mode ("authorize_only" | "authorize_and_capture").
+              authorizationStatus:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Authorization decision status ("approved" | "rejected").
+              authorizationReason:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional authorization rejection reason.
+              authorizationRespondedAt:
+                type:
+                  blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+                description: Timestamp of authorization decision response.
+              authorizedAmountMinor:
+                type:
+                  blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                description: Authorized amount reserved against mandate capacity for this attempt.
+              settled:
+                type:
+                  blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+                description: Whether mandate accepted settlement for this attempt.
+              lastSettlementRequestStatus:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Last settlement request status received from bank ("succeeded" | "failed").
+              lastSettlementProcessingStatus:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Mandate processing status for last settlement ("accepted" | "rejected").
+              settlementReason:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional settlement rejection/info reason.
+              settlementRespondedAt:
+                type:
+                  blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
+                description: Timestamp of last settlement processing response.
+              reservedDeltaMinor:
+                type:
+                  blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                description: Reserved delta applied for accepted settlement.
+              capturedDeltaMinor:
+                type:
+                  blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                description: Captured delta applied for accepted settlement.
+              holdId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional hold id associated with settlement.
+              transactionId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional transaction id associated with settlement.
+              lastSettlementId:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Optional last applied settlement id for idempotency tracking.
+            description: Stateful map of authorizationId -> authorization state (authorization + settlement).
           contracts:
             granterChannel:
               type:
@@ -4981,7 +5056,7 @@ packages:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               request:
                 type:
-                  blueId: 4STBHLJjxjCZVgeW2ScFfmsx8Vm16FenEbaNMyL8ZJUT
+                  blueId: 7EKvVzbT63C2taKWfLf9J2BiVL7BCL6Ld86tH8b9kmxF
             authorizeSpendImpl:
               type:
                 blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
@@ -4996,41 +5071,19 @@ packages:
                       blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                     code:
                       value: |
-                        const request =
-                          event && event.message && event.message.request
-                            ? event.message.request
-                            : {};
+                        const documentCanonical = document.canonical('/');
+                        const requestCanonical = eventCanonical
+                          ? canon.at(eventCanonical, '/message/request')
+                          : undefined;
 
-                        const unwrapNodeValue = function (value) {
-                          if (
-                            value &&
-                            typeof value === 'object' &&
-                            Object.prototype.hasOwnProperty.call(value, 'value')
-                          ) {
-                            return value.value;
-                          }
-                          return value;
-                        };
-
-                        const toText = function (value) {
-                          const unwrapped = unwrapNodeValue(value);
-                          return typeof unwrapped === 'string' ? unwrapped : '';
-                        };
-
-                        const toTimestampText = function (value) {
-                          const unwrapped = unwrapNodeValue(value);
-                          if (typeof unwrapped === 'string') {
-                            return unwrapped;
-                          }
-                          if (typeof unwrapped === 'number') {
-                            return String(unwrapped);
-                          }
-                          return '';
-                        };
-
+                        const requestedAtNode = requestCanonical
+                          ? canon.at(requestCanonical, '/requestedAt')
+                          : undefined;
+                        const requestedAtRaw = requestedAtNode ? canon.unwrap(requestedAtNode) : '';
+                        const requestedAt = typeof requestedAtRaw === 'string' ? requestedAtRaw : '';
                         const nowIso =
-                          toText(request.requestedAt) ||
-                          toTimestampText(event && event.timestamp ? event.timestamp : '');
+                          requestedAt ||
+                          (typeof event.timestamp === 'string' ? event.timestamp : '');
 
                         const normalizeTimestamp = function (value) {
                           if (typeof value !== 'string' || !value) {
@@ -5051,68 +5104,139 @@ packages:
                           return digits.slice(0, 14);
                         };
 
-                        const toInteger = function (value, fallback) {
-                          const safeFallback =
-                            typeof fallback === 'number' && Number.isFinite(fallback)
-                              ? Math.trunc(fallback)
-                              : 0;
-                          const unwrapped = unwrapNodeValue(value);
-                          if (typeof unwrapped === 'number' && Number.isFinite(unwrapped)) {
-                            return Math.trunc(unwrapped);
-                          }
-                          if (typeof unwrapped !== 'string' || !unwrapped) {
-                            return safeFallback;
-                          }
-                          const parsed = Number(unwrapped);
-                          return Number.isFinite(parsed) ? Math.trunc(parsed) : safeFallback;
-                        };
+                        const authorizationIdNode = requestCanonical
+                          ? canon.at(requestCanonical, '/authorizationId')
+                          : undefined;
+                        const authorizationIdRaw = authorizationIdNode
+                          ? canon.unwrap(authorizationIdNode)
+                          : '';
+                        const authorizationId =
+                          typeof authorizationIdRaw === 'string' ? authorizationIdRaw : '';
 
-                        const cloneObject = function (value) {
-                          const source = value && typeof value === 'object' ? value : {};
-                          const clone = {};
-                          Object.keys(source).forEach(function (key) {
-                            clone[key] = source[key];
-                          });
-                          return clone;
-                        };
+                        const amountMinorNode = requestCanonical
+                          ? canon.at(requestCanonical, '/amountMinor')
+                          : undefined;
+                        const amountMinorRaw = amountMinorNode ? canon.unwrap(amountMinorNode) : 0;
+                        const amountMinor = typeof amountMinorRaw === 'number' ? amountMinorRaw : 0;
 
-                        const chargeAttemptId = toText(request.chargeAttemptId);
-                        const amountMinor = toInteger(request.amountMinor, 0);
-                        const counterpartyType = toText(request.counterpartyType);
-                        const counterpartyId = toText(request.counterpartyId);
-                        const requestedCurrency = toText(request.currency);
+                        const counterpartyTypeNode = requestCanonical
+                          ? canon.at(requestCanonical, '/counterpartyType')
+                          : undefined;
+                        const counterpartyTypeRaw = counterpartyTypeNode
+                          ? canon.unwrap(counterpartyTypeNode)
+                          : '';
+                        const counterpartyType =
+                          typeof counterpartyTypeRaw === 'string' ? counterpartyTypeRaw : '';
 
-                        const chargeAttempts = document.canonical('/chargeAttempts') || {};
-                        const nextChargeAttempts = cloneObject(chargeAttempts);
+                        const counterpartyIdNode = requestCanonical
+                          ? canon.at(requestCanonical, '/counterpartyId')
+                          : undefined;
+                        const counterpartyIdRaw = counterpartyIdNode
+                          ? canon.unwrap(counterpartyIdNode)
+                          : '';
+                        const counterpartyId =
+                          typeof counterpartyIdRaw === 'string' ? counterpartyIdRaw : '';
 
+                        const requestedCurrencyNode = requestCanonical
+                          ? canon.at(requestCanonical, '/currency')
+                          : undefined;
+                        const requestedCurrencyRaw = requestedCurrencyNode
+                          ? canon.unwrap(requestedCurrencyNode)
+                          : '';
+                        const requestedCurrency =
+                          typeof requestedCurrencyRaw === 'string' ? requestedCurrencyRaw : '';
+
+                        const chargeAttemptsNode = canon.at(documentCanonical, '/chargeAttempts');
+                        const chargeAttemptsRaw = chargeAttemptsNode
+                          ? canon.unwrap(chargeAttemptsNode)
+                          : {};
+                        const chargeAttempts =
+                          chargeAttemptsRaw &&
+                          typeof chargeAttemptsRaw === 'object' &&
+                          !Array.isArray(chargeAttemptsRaw)
+                            ? chargeAttemptsRaw
+                            : {};
+                        const nextChargeAttempts = { ...chargeAttempts };
+
+                        const existingAttemptRaw = authorizationId
+                          ? chargeAttempts[authorizationId]
+                          : undefined;
                         const existingAttempt =
-                          chargeAttemptId &&
-                          chargeAttempts[chargeAttemptId] &&
-                          typeof chargeAttempts[chargeAttemptId] === 'object'
-                            ? chargeAttempts[chargeAttemptId]
+                          existingAttemptRaw &&
+                          typeof existingAttemptRaw === 'object' &&
+                          !Array.isArray(existingAttemptRaw)
+                            ? existingAttemptRaw
                             : null;
                         const existingDecision =
-                          existingAttempt ? toText(existingAttempt.authorizationStatus) : '';
+                          existingAttempt &&
+                          typeof existingAttempt.authorizationStatus === 'string'
+                            ? existingAttempt.authorizationStatus
+                            : '';
                         const existingReason =
-                          existingAttempt ? toText(existingAttempt.authorizationReason) : '';
+                          existingAttempt && typeof existingAttempt.authorizationReason === 'string'
+                            ? existingAttempt.authorizationReason
+                            : '';
 
-                        const amountLimit = toInteger(document('/amountLimit'), 0);
-                        const amountReserved = toInteger(document('/amountReserved'), 0);
-                        const amountCaptured = toInteger(document('/amountCaptured'), 0);
-                        const mandateCurrency = toText(document('/currency'));
-                        const expiresAt = toText(document('/expiresAt'));
-                        const revokedAt = toText(document('/revokedAt'));
+                        const amountLimitNode = canon.at(documentCanonical, '/amountLimit');
+                        const amountLimitRaw = amountLimitNode ? canon.unwrap(amountLimitNode) : 0;
+                        const amountLimit = typeof amountLimitRaw === 'number' ? amountLimitRaw : 0;
+
+                        const amountReservedNode = canon.at(documentCanonical, '/amountReserved');
+                        const amountReservedRaw = amountReservedNode
+                          ? canon.unwrap(amountReservedNode)
+                          : 0;
+                        const amountReserved =
+                          typeof amountReservedRaw === 'number' ? amountReservedRaw : 0;
+
+                        const amountCapturedNode = canon.at(documentCanonical, '/amountCaptured');
+                        const amountCapturedRaw = amountCapturedNode
+                          ? canon.unwrap(amountCapturedNode)
+                          : 0;
+                        const amountCaptured =
+                          typeof amountCapturedRaw === 'number' ? amountCapturedRaw : 0;
+
+                        const mandateCurrencyNode = canon.at(documentCanonical, '/currency');
+                        const mandateCurrencyRaw = mandateCurrencyNode
+                          ? canon.unwrap(mandateCurrencyNode)
+                          : '';
+                        const mandateCurrency =
+                          typeof mandateCurrencyRaw === 'string' ? mandateCurrencyRaw : '';
+
+                        const expiresAtNode = canon.at(documentCanonical, '/expiresAt');
+                        const expiresAtRaw = expiresAtNode ? canon.unwrap(expiresAtNode) : '';
+                        const expiresAt = typeof expiresAtRaw === 'string' ? expiresAtRaw : '';
+
+                        const revokedAtNode = canon.at(documentCanonical, '/revokedAt');
+                        const revokedAtRaw = revokedAtNode ? canon.unwrap(revokedAtNode) : '';
+                        const revokedAt = typeof revokedAtRaw === 'string' ? revokedAtRaw : '';
+
                         const nowComparable = normalizeTimestamp(nowIso);
 
-                        const allowedCounterparties = document.canonical('/allowedPaymentCounterparties');
+                        const allowedCounterpartiesNode = canon.at(
+                          documentCanonical,
+                          '/allowedPaymentCounterparties'
+                        );
+                        const allowedCounterpartiesRaw = allowedCounterpartiesNode
+                          ? canon.unwrap(allowedCounterpartiesNode)
+                          : [];
+                        const allowedCounterparties = Array.isArray(allowedCounterpartiesRaw)
+                          ? allowedCounterpartiesRaw
+                          : [];
                         const isCounterpartyAllowed =
-                          !Array.isArray(allowedCounterparties) ||
                           allowedCounterparties.length === 0 ||
                           allowedCounterparties.some(function (item) {
+                            const itemType =
+                              item && typeof item.counterpartyType === 'string'
+                                ? item.counterpartyType
+                                : '';
+                            const itemId =
+                              item && typeof item.counterpartyId === 'string'
+                                ? item.counterpartyId
+                                : '';
                             return (
                               item &&
-                              toText(item.counterpartyType) === counterpartyType &&
-                              toText(item.counterpartyId) === counterpartyId
+                              itemType === counterpartyType &&
+                              itemId === counterpartyId
                             );
                           });
 
@@ -5123,8 +5247,8 @@ packages:
                         if (existingDecision === 'approved' || existingDecision === 'rejected') {
                           status = existingDecision;
                           reason = existingDecision === 'rejected' ? existingReason : '';
-                        } else if (!chargeAttemptId) {
-                          reason = 'Missing chargeAttemptId.';
+                        } else if (!authorizationId) {
+                          reason = 'Missing authorizationId.';
                         } else if (amountMinor <= 0) {
                           reason = 'Amount must be greater than zero.';
                         } else if (!requestedCurrency || requestedCurrency !== mandateCurrency) {
@@ -5147,14 +5271,19 @@ packages:
                           nextAmountReserved = amountReserved + amountMinor;
                         }
 
-                        if (chargeAttemptId && !existingDecision) {
-                          nextChargeAttempts[chargeAttemptId] = {
+                        if (authorizationId && !existingDecision) {
+                          const chargeModeNode = requestCanonical
+                            ? canon.at(requestCanonical, '/chargeMode')
+                            : undefined;
+                          const chargeModeRaw = chargeModeNode ? canon.unwrap(chargeModeNode) : '';
+                          const chargeMode = typeof chargeModeRaw === 'string' ? chargeModeRaw : '';
+
+                          nextChargeAttempts[authorizationId] = {
                             amountMinor,
                             currency: requestedCurrency,
                             counterpartyType,
                             counterpartyId,
-                            chargeMode:
-                              toText(request.chargeMode),
+                            chargeMode,
                             authorizationStatus: status,
                             authorizationReason: reason,
                             authorizationRespondedAt: nowIso,
@@ -5178,7 +5307,7 @@ packages:
 
                         const responseEvent = {
                           type: 'PayNote/Payment Mandate Spend Authorization Responded',
-                          chargeAttemptId,
+                          authorizationId,
                           status,
                           remainingAmountMinor,
                           respondedAt: nowIso
@@ -5234,7 +5363,7 @@ packages:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               request:
                 type:
-                  blueId: 3TW3tRAQdYoMTFeeqmnWLR9JFibTVaJuiRJfJ3ggeVTJ
+                  blueId: 6aPqmL9AQV31CCV576ZmEcUgysbdbQAfAig9J5VYeR6v
             settleSpendImpl:
               type:
                 blueId: CGdxkNjPcsdescqLPz6SNLsMyak6demQQr7RoKNHbCyv
@@ -5249,110 +5378,147 @@ packages:
                       blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
                     code:
                       value: |
-                        const request =
-                          event && event.message && event.message.request
-                            ? event.message.request
-                            : {};
+                        const documentCanonical = document.canonical('/');
+                        const requestCanonical = eventCanonical
+                          ? canon.at(eventCanonical, '/message/request')
+                          : undefined;
 
-                        const unwrapNodeValue = function (value) {
-                          if (
-                            value &&
-                            typeof value === 'object' &&
-                            Object.prototype.hasOwnProperty.call(value, 'value')
-                          ) {
-                            return value.value;
-                          }
-                          return value;
-                        };
-
-                        const toText = function (value) {
-                          const unwrapped = unwrapNodeValue(value);
-                          return typeof unwrapped === 'string' ? unwrapped : '';
-                        };
-
-                        const toTimestampText = function (value) {
-                          const unwrapped = unwrapNodeValue(value);
-                          if (typeof unwrapped === 'string') {
-                            return unwrapped;
-                          }
-                          if (typeof unwrapped === 'number') {
-                            return String(unwrapped);
-                          }
-                          return '';
-                        };
-
+                        const settledAtNode = requestCanonical
+                          ? canon.at(requestCanonical, '/settledAt')
+                          : undefined;
+                        const settledAtRaw = settledAtNode ? canon.unwrap(settledAtNode) : '';
+                        const settledAt = typeof settledAtRaw === 'string' ? settledAtRaw : '';
                         const nowIso =
-                          toText(request.settledAt) ||
-                          toTimestampText(event && event.timestamp ? event.timestamp : '');
+                          settledAt || (typeof event.timestamp === 'string' ? event.timestamp : '');
 
-                        const toInteger = function (value, fallback) {
-                          const safeFallback =
-                            typeof fallback === 'number' && Number.isFinite(fallback)
-                              ? Math.trunc(fallback)
-                              : 0;
-                          const unwrapped = unwrapNodeValue(value);
-                          if (typeof unwrapped === 'number' && Number.isFinite(unwrapped)) {
-                            return Math.trunc(unwrapped);
-                          }
-                          if (typeof unwrapped !== 'string' || !unwrapped) {
-                            return safeFallback;
-                          }
-                          const parsed = Number(unwrapped);
-                          return Number.isFinite(parsed) ? Math.trunc(parsed) : safeFallback;
-                        };
+                        const authorizationIdNode = requestCanonical
+                          ? canon.at(requestCanonical, '/authorizationId')
+                          : undefined;
+                        const authorizationIdRaw = authorizationIdNode
+                          ? canon.unwrap(authorizationIdNode)
+                          : '';
+                        const authorizationId =
+                          typeof authorizationIdRaw === 'string' ? authorizationIdRaw : '';
 
-                        const cloneObject = function (value) {
-                          const source = value && typeof value === 'object' ? value : {};
-                          const clone = {};
-                          Object.keys(source).forEach(function (key) {
-                            clone[key] = source[key];
-                          });
-                          return clone;
-                        };
+                        const settlementStatusNode = requestCanonical
+                          ? canon.at(requestCanonical, '/status')
+                          : undefined;
+                        const settlementStatusRaw = settlementStatusNode
+                          ? canon.unwrap(settlementStatusNode)
+                          : '';
+                        const settlementStatus =
+                          typeof settlementStatusRaw === 'string' ? settlementStatusRaw : '';
 
-                        const chargeAttemptId = toText(request.chargeAttemptId);
-                        const settlementStatus = toText(request.status);
-                        const reservedDeltaMinor = toInteger(request.reservedDeltaMinor, 0);
-                        const capturedDeltaMinor = toInteger(request.capturedDeltaMinor, 0);
+                        const reservedDeltaNode = requestCanonical
+                          ? canon.at(requestCanonical, '/reservedDeltaMinor')
+                          : undefined;
+                        const reservedDeltaRaw = reservedDeltaNode ? canon.unwrap(reservedDeltaNode) : 0;
+                        const reservedDeltaMinor =
+                          typeof reservedDeltaRaw === 'number' ? reservedDeltaRaw : 0;
 
-                        const amountLimit = toInteger(document('/amountLimit'), 0);
-                        const amountReserved = toInteger(document('/amountReserved'), 0);
-                        const amountCaptured = toInteger(document('/amountCaptured'), 0);
+                        const capturedDeltaNode = requestCanonical
+                          ? canon.at(requestCanonical, '/capturedDeltaMinor')
+                          : undefined;
+                        const capturedDeltaRaw = capturedDeltaNode ? canon.unwrap(capturedDeltaNode) : 0;
+                        const capturedDeltaMinor =
+                          typeof capturedDeltaRaw === 'number' ? capturedDeltaRaw : 0;
 
-                        const chargeAttempts = document.canonical('/chargeAttempts') || {};
-                        const nextChargeAttempts = cloneObject(chargeAttempts);
+                        const amountLimitNode = canon.at(documentCanonical, '/amountLimit');
+                        const amountLimitRaw = amountLimitNode ? canon.unwrap(amountLimitNode) : 0;
+                        const amountLimit = typeof amountLimitRaw === 'number' ? amountLimitRaw : 0;
+
+                        const amountReservedNode = canon.at(documentCanonical, '/amountReserved');
+                        const amountReservedRaw = amountReservedNode
+                          ? canon.unwrap(amountReservedNode)
+                          : 0;
+                        const amountReserved =
+                          typeof amountReservedRaw === 'number' ? amountReservedRaw : 0;
+
+                        const amountCapturedNode = canon.at(documentCanonical, '/amountCaptured');
+                        const amountCapturedRaw = amountCapturedNode
+                          ? canon.unwrap(amountCapturedNode)
+                          : 0;
+                        const amountCaptured =
+                          typeof amountCapturedRaw === 'number' ? amountCapturedRaw : 0;
+
+                        const chargeAttemptsNode = canon.at(documentCanonical, '/chargeAttempts');
+                        const chargeAttemptsRaw = chargeAttemptsNode
+                          ? canon.unwrap(chargeAttemptsNode)
+                          : {};
+                        const chargeAttempts =
+                          chargeAttemptsRaw &&
+                          typeof chargeAttemptsRaw === 'object' &&
+                          !Array.isArray(chargeAttemptsRaw)
+                            ? chargeAttemptsRaw
+                            : {};
+                        const nextChargeAttempts = { ...chargeAttempts };
+
+                        const existingAttemptRaw = authorizationId
+                          ? chargeAttempts[authorizationId]
+                          : undefined;
                         const existingAttempt =
-                          chargeAttemptId &&
-                          chargeAttempts[chargeAttemptId] &&
-                          typeof chargeAttempts[chargeAttemptId] === 'object'
-                            ? chargeAttempts[chargeAttemptId]
+                          existingAttemptRaw &&
+                          typeof existingAttemptRaw === 'object' &&
+                          !Array.isArray(existingAttemptRaw)
+                            ? existingAttemptRaw
                             : null;
 
                         const alreadySettled = !!existingAttempt && existingAttempt.settled === true;
                         const approved =
-                          !!existingAttempt && toText(existingAttempt.authorizationStatus) === 'approved';
-                        const authorizedAmount = toInteger(
-                          existingAttempt ? existingAttempt.authorizedAmountMinor : 0,
-                          0
-                        );
+                          !!existingAttempt &&
+                          typeof existingAttempt.authorizationStatus === 'string' &&
+                          existingAttempt.authorizationStatus === 'approved';
+                        const authorizedAmount =
+                          existingAttempt && typeof existingAttempt.authorizedAmountMinor === 'number'
+                            ? existingAttempt.authorizedAmountMinor
+                            : 0;
 
-                        const holdId = toText(request.holdId);
-                        const transactionId = toText(request.transactionId);
-                        const requestReason = toText(request.reason);
+                        const holdIdNode = requestCanonical
+                          ? canon.at(requestCanonical, '/holdId')
+                          : undefined;
+                        const holdIdRaw = holdIdNode ? canon.unwrap(holdIdNode) : '';
+                        const holdId = typeof holdIdRaw === 'string' ? holdIdRaw : '';
+
+                        const transactionIdNode = requestCanonical
+                          ? canon.at(requestCanonical, '/transactionId')
+                          : undefined;
+                        const transactionIdRaw = transactionIdNode
+                          ? canon.unwrap(transactionIdNode)
+                          : '';
+                        const transactionId =
+                          typeof transactionIdRaw === 'string' ? transactionIdRaw : '';
+
+                        const settlementIdNode = requestCanonical
+                          ? canon.at(requestCanonical, '/settlementId')
+                          : undefined;
+                        const settlementIdRaw = settlementIdNode
+                          ? canon.unwrap(settlementIdNode)
+                          : '';
+                        const settlementId =
+                          typeof settlementIdRaw === 'string' ? settlementIdRaw : '';
+
+                        const requestReasonNode = requestCanonical
+                          ? canon.at(requestCanonical, '/reason')
+                          : undefined;
+                        const requestReasonRaw = requestReasonNode
+                          ? canon.unwrap(requestReasonNode)
+                          : '';
+                        const requestReason =
+                          typeof requestReasonRaw === 'string' ? requestReasonRaw : '';
 
                         let status = 'rejected';
                         let reason = '';
                         let nextAmountReserved = amountReserved;
                         let nextAmountCaptured = amountCaptured;
-                        let nextAttempt = existingAttempt ? cloneObject(existingAttempt) : null;
+                        let nextAttempt = existingAttempt ? { ...existingAttempt } : null;
 
-                        if (!chargeAttemptId) {
-                          reason = 'Missing chargeAttemptId.';
+                        if (!authorizationId) {
+                          reason = 'Missing authorizationId.';
                         } else if (alreadySettled) {
                           status = 'accepted';
-                          reason = 'Charge attempt already settled.';
+                          reason = 'Authorization already settled.';
                         } else if (!approved) {
-                          reason = 'Charge attempt is not approved.';
+                          reason = 'Authorization is not approved.';
                         } else if (
                           settlementStatus !== 'succeeded' &&
                           settlementStatus !== 'failed'
@@ -5382,7 +5548,7 @@ packages:
                             status = 'accepted';
                             nextAmountReserved = candidateAmountReserved;
                             nextAmountCaptured = candidateAmountCaptured;
-                            nextAttempt = cloneObject(existingAttempt);
+                            nextAttempt = { ...existingAttempt };
                             nextAttempt.settled = true;
                             nextAttempt.lastSettlementRequestStatus = settlementStatus;
                             nextAttempt.lastSettlementProcessingStatus = 'accepted';
@@ -5392,22 +5558,25 @@ packages:
                             nextAttempt.capturedDeltaMinor = capturedDeltaMinor;
                             nextAttempt.holdId = holdId;
                             nextAttempt.transactionId = transactionId;
-                            nextChargeAttempts[chargeAttemptId] = nextAttempt;
+                            nextAttempt.lastSettlementId = settlementId;
+                            nextChargeAttempts[authorizationId] = nextAttempt;
                           }
                         }
 
                         if (nextAttempt && status === 'rejected') {
-                          nextAttempt = cloneObject(nextAttempt);
+                          nextAttempt = { ...nextAttempt };
                           nextAttempt.lastSettlementRequestStatus = settlementStatus;
                           nextAttempt.lastSettlementProcessingStatus = 'rejected';
                           nextAttempt.settlementReason = reason;
                           nextAttempt.settlementRespondedAt = nowIso;
-                          nextChargeAttempts[chargeAttemptId] = nextAttempt;
+                          nextAttempt.lastSettlementId = settlementId;
+                          nextChargeAttempts[authorizationId] = nextAttempt;
                         }
 
                         const responseEvent = {
                           type: 'PayNote/Payment Mandate Spend Settlement Responded',
-                          chargeAttemptId,
+                          authorizationId,
+                          settlementId,
                           status,
                           amountReserved: nextAmountReserved,
                           amountCaptured: nextAmountCaptured,
@@ -5468,8 +5637,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: Cb8EjAE531e9RVa9RgFJzKmN9h6z8Xp3tAYaBFgqfHoP
+          - repositoryVersionIndex: 8
+            typeBlueId: BKKgKnHFhLmmUxq4WRvhV7HYZNu6ngDEce1LvHjZimJr
             attributesAdded: []
       - status: dev
         content:
@@ -5501,96 +5670,15 @@ packages:
             attributesAdded: []
       - status: dev
         content:
-          name: Payment Mandate Charge Attempt State
-          description: Stateful record for a single charge attempt tracked by Payment Mandate.
-          amountMinor:
-            type:
-              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
-            description: Requested amount in minor currency units.
-          currency:
-            type:
-              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
-            description: Requested currency.
-          counterpartyType:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Counterparty identifier type ("merchantId" | "customerId" | "accountNumber").
-          counterpartyId:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Counterparty identifier interpreted according to counterpartyType.
-          chargeMode:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Requested charge mode ("authorize_only" | "authorize_and_capture").
-          authorizationStatus:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Authorization decision status ("approved" | "rejected").
-          authorizationReason:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional authorization rejection reason.
-          authorizationRespondedAt:
-            type:
-              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
-            description: Timestamp of authorization decision response.
-          authorizedAmountMinor:
-            type:
-              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
-            description: Authorized amount reserved against mandate capacity for this attempt.
-          settled:
-            type:
-              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
-            description: Whether mandate accepted settlement for this attempt.
-          lastSettlementRequestStatus:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Last settlement request status received from bank ("succeeded" | "failed").
-          lastSettlementProcessingStatus:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Mandate processing status for last settlement ("accepted" | "rejected").
-          settlementReason:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional settlement rejection/info reason.
-          settlementRespondedAt:
-            type:
-              blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
-            description: Timestamp of last settlement processing response.
-          reservedDeltaMinor:
-            type:
-              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
-            description: Reserved delta applied for accepted settlement.
-          capturedDeltaMinor:
-            type:
-              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
-            description: Captured delta applied for accepted settlement.
-          holdId:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional hold id associated with settlement.
-          transactionId:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Optional transaction id associated with settlement.
-        versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: JADRqXZ7UWNDqPt9Zhnn6831Nz2X5yeSuyew4hu6ciVq
-            attributesAdded: []
-      - status: dev
-        content:
           name: Payment Mandate Spend Authorization Requested
           type:
             blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
           description: |
-            Bank asks a Payment Mandate document to authorize a single charge attempt before reserve/capture execution.
-          chargeAttemptId:
+            Bank asks a Payment Mandate document to authorize a single spend before reserve/capture execution.
+          authorizationId:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: |
-              Correlation and idempotency key for a single charge attempt. Must be stable across retries of the same attempt.
+            description: Correlation and idempotency key for a single authorization lifecycle.
           amountMinor:
             type:
               blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
@@ -5607,10 +5695,6 @@ packages:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Counterparty identifier interpreted according to counterpartyType.
-          chargeMode:
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-            description: Requested charge execution mode ("authorize_only" | "authorize_and_capture").
           requestingDocumentId:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -5624,8 +5708,8 @@ packages:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
             description: Timestamp when the authorization request was created.
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 4STBHLJjxjCZVgeW2ScFfmsx8Vm16FenEbaNMyL8ZJUT
+          - repositoryVersionIndex: 8
+            typeBlueId: 7EKvVzbT63C2taKWfLf9J2BiVL7BCL6Ld86tH8b9kmxF
             attributesAdded: []
       - status: dev
         content:
@@ -5633,7 +5717,7 @@ packages:
           type:
             blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
           description: Decision from Payment Mandate for a spend authorization request.
-          chargeAttemptId:
+          authorizationId:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Correlation key copied from Payment Mandate Spend Authorization Requested.
@@ -5654,8 +5738,8 @@ packages:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
             description: Timestamp when the decision was emitted.
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 8qdhLemMQ5MFtu9Aebpd9gKfKuLuRBEnT6yTTzr9F78E
+          - repositoryVersionIndex: 8
+            typeBlueId: 6UFd89oNox3PCpeVFaaCXwbGDp3k3Qc56e4DktnK3F8P
             attributesAdded: []
       - status: dev
         content:
@@ -5664,10 +5748,14 @@ packages:
             blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
           description: |
             Settlement update sent by bank to Payment Mandate after charge execution, used to apply deterministic reserved/captured deltas in mandate state. For approved authorizations, mandate may already reserve capacity at authorize step. Deltas should express net post-execution adjustment from current mandate state.
-          chargeAttemptId:
+          authorizationId:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Correlation key copied from Payment Mandate Spend Authorization Requested.
+          settlementId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional settlement correlation id for idempotent settlement updates.
           status:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -5699,8 +5787,8 @@ packages:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
             description: Timestamp when settlement result was emitted.
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 3TW3tRAQdYoMTFeeqmnWLR9JFibTVaJuiRJfJ3ggeVTJ
+          - repositoryVersionIndex: 8
+            typeBlueId: 6aPqmL9AQV31CCV576ZmEcUgysbdbQAfAig9J5VYeR6v
             attributesAdded: []
       - status: dev
         content:
@@ -5708,10 +5796,14 @@ packages:
           type:
             blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
           description: Validation result emitted by Payment Mandate after processing a settlement update.
-          chargeAttemptId:
+          authorizationId:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Correlation key copied from Payment Mandate Spend Settled.
+          settlementId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional settlement correlation id copied from settlement request.
           status:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -5733,8 +5825,8 @@ packages:
               blueId: GQaGqFxHDz64L1c9QkCbz52ths6bMVtpHnw4QDngzQYs
             description: Timestamp when mandate emitted settlement processing result.
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 6P1iVKFwG9jgWV7Ye3Co6pWByuu5QpR4tpqu9oVVvawY
+          - repositoryVersionIndex: 8
+            typeBlueId: CoGAMipt8rhmnkMgKsyZ5aendkHvFc4muC6pVgrUT1rJ
             attributesAdded: []
       - status: dev
         content:
@@ -5919,7 +6011,7 @@ packages:
               blueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
             document:
               type:
-                blueId: Cb8EjAE531e9RVa9RgFJzKmN9h6z8Xp3tAYaBFgqfHoP
+                blueId: BKKgKnHFhLmmUxq4WRvhV7HYZNu6ngDEce1LvHjZimJr
             description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
           cardTransactionDetails:
             type:
@@ -6515,8 +6607,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 2QkcYqeXBPfAzjYtasCrt91CKjQjcfdjfnHpZ3EX132g
+          - repositoryVersionIndex: 8
+            typeBlueId: FLTwmZbvgDuFodwUAqh16PBu3a8aU7Pu4cssCGqVCRh2
             attributesAdded: []
       - status: dev
         content:
@@ -6787,3 +6879,4 @@ repositoryVersions:
   - EpNsiwie3wUf5Hqeo9fdiycvemBQm681hXEaWPEKNAuF
   - EpCTtQtiyxppoVxqFbVZLiV7684165ENL3M2qwJigMFP
   - 9HWPEq8AoXuWtmsqgbxYqFqpuizJg1RdXmfEQA1qhsbi
+  - 2X96EiMnmws7kmgtS3bgGm38NHGBwXeViAxmGqkxyiDT
