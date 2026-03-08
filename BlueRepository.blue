@@ -2176,6 +2176,10 @@ packages:
           description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
           document:
             description: Target Blue document to be bootstrapped
+          avatarUrl:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Uploaded avatar URL propagated to the bootstrapped target sessions
           channelBindings:
             type:
               blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
@@ -2415,6 +2419,10 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 6HC9zdAPTChMDo8okX3rYTz4aeCEKCr8TtU2WmfugdSJ
             attributesAdded: []
+          - repositoryVersionIndex: 9
+            typeBlueId: 4Mse3bdSz9YQbp5KkbUiVmkseK8upp5wexNDUq2rHuEy
+            attributesAdded:
+              - /avatarUrl
       - status: stable
         content:
           name: Document Type Link
@@ -6880,3 +6888,4 @@ repositoryVersions:
   - EpCTtQtiyxppoVxqFbVZLiV7684165ENL3M2qwJigMFP
   - 9HWPEq8AoXuWtmsqgbxYqFqpuizJg1RdXmfEQA1qhsbi
   - 2X96EiMnmws7kmgtS3bgGm38NHGBwXeViAxmGqkxyiDT
+  - Aig1A2dxJCJkXPYQLyPSXhXJUdBDULKq2cFVv1mv2Uvg
