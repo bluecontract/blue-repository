@@ -1,0 +1,6 @@
+name: Named Event
+type: Conversation/Event
+description: |
+  Lightweight conversation event identified by the instance `name` field.
+  Use it to emit, forward, or match a well-known signal
+  without introducing a dedicated repository event type.
