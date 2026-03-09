@@ -14,6 +14,19 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Named Event
+          type:
+            blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
+          description: |
+            Lightweight conversation event identified by the instance `name` field.
+            Use it to emit, forward, or match a well-known signal
+            without introducing a dedicated repository event type.
+        versions:
+          - repositoryVersionIndex: 10
+            typeBlueId: GrD4wCAmKoK8rm8Pztmv9GkFBRwJy4zpDUzDWHtsEJCX
+            attributesAdded: []
+      - status: dev
+        content:
           name: Timestamp
           type:
             blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -6889,3 +6902,4 @@ repositoryVersions:
   - 9HWPEq8AoXuWtmsqgbxYqFqpuizJg1RdXmfEQA1qhsbi
   - 2X96EiMnmws7kmgtS3bgGm38NHGBwXeViAxmGqkxyiDT
   - Aig1A2dxJCJkXPYQLyPSXhXJUdBDULKq2cFVv1mv2Uvg
+  - FLEAJh7wxmniwWikxfZmDDZvHKjBKuNQeBbQUbBqdJ7E
