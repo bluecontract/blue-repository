@@ -21,3 +21,6 @@ initialMessages:
 bootstrapAssignee:
   type: Text
   description: Channel name of a participant in the requesting document which is asked to bootstrap the requested document
+onBehalfOf:
+  type: Text
+  description: account (channe name) on whose behalf the document is being created
