@@ -71,7 +71,9 @@ packages:
 
                     const isArray = Array.isArray;
 
-                    const postfixValue = currentContract?.postfix || '';
+                    const postfixNode = canon.at(currentContractCanonical, '/postfix');
+                    const postfixValue =
+                      typeof postfixNode?.value === 'string' ? postfixNode.value : '';
                     const proposedPath = '/proposedChange' + postfixValue;
 
                     const change = document(proposedPath);
@@ -289,8 +291,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: 29xcoYKf9p47xagTDwGLuQyFrT9WBN3Sd7FaPtqLvydy
+          - repositoryVersionIndex: 12
+            typeBlueId: Eh2y8JypsGTdFMpEGEK64vBdGtaJ9Q7Q5t7ChqHafwCV
             attributesAdded: []
       - status: stable
         content:
@@ -1247,7 +1249,9 @@ packages:
                       return invalid('summary is missing');
                     }
 
-                    const postfixValue = currentContract?.postfix || '';
+                    const postfixNode = canon.at(currentContractCanonical, '/postfix');
+                    const postfixValue =
+                      typeof postfixNode?.value === 'string' ? postfixNode.value : '';
                     const path = '/proposedChange' + postfixValue;
 
                     if (document(path)) {
@@ -1267,8 +1271,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 2
-            typeBlueId: 7dUt8jiX5vGeZL7wVzWFA8uEw37T6oPgC8KyDZmqxeSj
+          - repositoryVersionIndex: 12
+            typeBlueId: 7icTT1chbH3UA2ybXgpfSSyNEAR4Wmm3EkbdGFaZSydo
             attributesAdded: []
       - status: dev
         content:
@@ -1316,7 +1320,9 @@ packages:
                       events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
                     });
 
-                    const postfixValue = currentContract?.postfix || '';
+                    const postfixNode = canon.at(currentContractCanonical, '/postfix');
+                    const postfixValue =
+                      typeof postfixNode?.value === 'string' ? postfixNode.value : '';
                     const path = '/proposedChange' + postfixValue;
 
                     if (!document(path)) {
@@ -1336,8 +1342,8 @@ packages:
                   type:
                     blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: 9fnXwi4Za8hjEj6zDSEjhbA5dLrDzs7sxoDMGLmRT2Gz
+          - repositoryVersionIndex: 12
+            typeBlueId: DUjCaEniHH5oDXU3Ss5jWWft3pT9TUcNhv7HoCDU1NTB
             attributesAdded: []
       - status: stable
         content:
@@ -6908,3 +6914,4 @@ repositoryVersions:
   - Aig1A2dxJCJkXPYQLyPSXhXJUdBDULKq2cFVv1mv2Uvg
   - FLEAJh7wxmniwWikxfZmDDZvHKjBKuNQeBbQUbBqdJ7E
   - 8woWtWYyJxmzPJhAv5SptmZJsyXAq2Q2ckF4jtwDQJPE
+  - EQTRE5bBZZb7P6GB6r3p9scPTTgwbR1SHFhYePo3ji4x
