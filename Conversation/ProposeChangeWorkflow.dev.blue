@@ -23,7 +23,9 @@ steps:
         return invalid('summary is missing');
       }
 
-      const postfixValue = currentContract?.postfix || '';
+      const postfixNode = canon.at(currentContractCanonical, '/postfix');
+      const postfixValue =
+        typeof postfixNode?.value === 'string' ? postfixNode.value : '';
       const path = '/proposedChange' + postfixValue;
 
       if (document(path)) {

@@ -15,7 +15,9 @@ steps:
 
       const isArray = Array.isArray;
 
-      const postfixValue = currentContract?.postfix || '';
+      const postfixNode = canon.at(currentContractCanonical, '/postfix');
+      const postfixValue =
+        typeof postfixNode?.value === 'string' ? postfixNode.value : '';
       const proposedPath = '/proposedChange' + postfixValue;
 
       const change = document(proposedPath);

@@ -13,7 +13,9 @@ steps:
         events: [{ type: 'Conversation/Proposed Change Invalid', reason }]
       });
 
-      const postfixValue = currentContract?.postfix || '';
+      const postfixNode = canon.at(currentContractCanonical, '/postfix');
+      const postfixValue =
+        typeof postfixNode?.value === 'string' ? postfixNode.value : '';
       const path = '/proposedChange' + postfixValue;
 
       if (!document(path)) {
