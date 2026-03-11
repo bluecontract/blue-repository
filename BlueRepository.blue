@@ -937,9 +937,13 @@ packages:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             description: Channel name of a participant in the requesting document which is asked to bootstrap the requested document
+          onBehalfOf:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: account (channe name) on whose behalf the document is being created
         versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
+          - repositoryVersionIndex: 11
+            typeBlueId: 4derXUpwPZDDkBpYPCTMr6t3mbeGU7AUYmvfW22cZior
             attributesAdded: []
       - status: dev
         content:
@@ -6022,14 +6026,14 @@ packages:
           description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer - client).
           payNoteBootstrapRequest:
             type:
-              blueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
+              blueId: 4derXUpwPZDDkBpYPCTMr6t3mbeGU7AUYmvfW22cZior
             document:
               type:
                 blueId: Dh2LtUN8Umc478kif8VWsNM1FrL5usVEeevv2GKnKP4F
             description: PayNote bootstrap request details.
           paymentMandateBootstrapRequest:
             type:
-              blueId: 7JqBn4KcmZbHBBiQf3CAfpHBNaTKS1qhtkATsF7f6Sxg
+              blueId: 4derXUpwPZDDkBpYPCTMr6t3mbeGU7AUYmvfW22cZior
             document:
               type:
                 blueId: BKKgKnHFhLmmUxq4WRvhV7HYZNu6ngDEce1LvHjZimJr
@@ -6628,8 +6632,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 8
-            typeBlueId: FLTwmZbvgDuFodwUAqh16PBu3a8aU7Pu4cssCGqVCRh2
+          - repositoryVersionIndex: 11
+            typeBlueId: E22dx85oPtGX2DPRaKJzHVizREJmioNCJPurgBcHHhJ
             attributesAdded: []
       - status: dev
         content:
@@ -6903,3 +6907,4 @@ repositoryVersions:
   - 2X96EiMnmws7kmgtS3bgGm38NHGBwXeViAxmGqkxyiDT
   - Aig1A2dxJCJkXPYQLyPSXhXJUdBDULKq2cFVv1mv2Uvg
   - FLEAJh7wxmniwWikxfZmDDZvHKjBKuNQeBbQUbBqdJ7E
+  - 8woWtWYyJxmzPJhAv5SptmZJsyXAq2Q2ckF4jtwDQJPE
