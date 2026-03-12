@@ -1,33 +1,28 @@
-name: Linked Documents Permission Grant To Document
+name: Single Document Permission Grant To Document
 type: MyOS/MyOS Admin Base
 
 # ----------------- Document fields -----------------
-
 targetSessionId:
   type: Text
-  description: Base document session id whose anchors define the scope of this grant.
+  description: Target document session id to grant access to
 
 granteeDocumentId:
   type: Text
-  description: Required original document id (blueId) that will act as the 'document' principal.
+  description: Required original document id (blueId) that will act as the grantee principal ('document').
 
 granterDocumentSessionId:
   type: Text
-  description: |
-    Optional. If set, MyOS should evaluate authority as this document session
-    (principalType='document', granteeId=documentId of this session),
-    instead of the granter accountId.
+  description: Optional. If set, MyOS should evaluate authority using this document session as the principal (instead of granter accountId).
 
-links:
-  type: MyOS/Linked Documents Permission Set
-  description: Map from anchor name to permissions that will be granted for documents linked to the base document via that anchor.
+permissions:
+  type: MyOS/Single Document Permission Set
+  description: Rights to grant on the target session (READ required; allOps and singleOps are mutually exclusive; singleOps is optional but must be non-empty if provided).
 
 skipValidation:
   type: Boolean
   description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant).
 
-# ----------------- Contracts -----------------
-
+# ---------- Contracts (participants, operations, workflows) ----------
 contracts:
   granterChannel:
     type: MyOS/MyOS Timeline Channel
@@ -56,7 +51,7 @@ contracts:
           return {
             events: [
               {
-                type: "MyOS/Linked Documents Permission Revoke Requested",
+                type: "MyOS/Single Document Permission Revoke Requested",
                 reason: event.message.request
               }
             ]
@@ -81,28 +76,23 @@ contracts:
           if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
 
           const gdoc = document('/granteeDocumentId');
-          if (typeof gdoc !== 'string' || gdoc.trim().length === 0) issues.push("granteeDocumentId must be a non-empty string");
+          if (typeof gdoc !== 'string' || gdoc.trim().length === 0) issues.push("granteeDocumentId must be a non-empty string (originalBlueId)");
 
-          const links = document('/links');
-          if (!links || typeof links !== 'object') issues.push("links is missing or invalid");
-
-          const anchors = Object.keys(links).filter(key => !['description', 'type', 'keyType', 'valueType'].includes(key));
-          if (anchors.length === 0) {
-            issues.push("links must have at least one anchor entry");
-          }
-          for (const anchor of anchors) {
-            const perms = links[anchor];
-            if (!perms || perms.read !== true) {
-              issues.push(`links['${anchor}'].read must be true`);
-            }
-            const hasSingle = Array.isArray(perms.singleOps) && perms.singleOps.length > 0;
-            if (hasSingle && perms.singleOps.some(x => typeof x !== "string" || x.trim().length === 0)) {
-              issues.push(`links['${anchor}'].singleOps must contain only non-empty strings`);
+          const perms = document('/permissions');
+          if (!perms || typeof perms !== 'object') {
+            issues.push("permissions block is missing");
+          } else {
+            if (perms.read !== true) issues.push("permissions.read must be true for SDPG");
+            const hasSingle = Array.isArray(perms?.singleOps) && perms.singleOps.length > 0;
+            if (hasSingle) {
+              if (perms.singleOps.some(x => typeof x !== 'string' || x.trim().length === 0)) {
+                issues.push("permissions.singleOps must contain only non-empty strings");
+              }
             }
             if (perms.allOps === true && hasSingle) {
-              issues.push(`links['${anchor}'].allOps=true and singleOps are mutually exclusive`);
+              issues.push("permissions.allOps=true and permissions.singleOps are mutually exclusive");
             }
           }
 
-          if (issues.length > 0) return { events: [ { type: "MyOS/Linked Documents Permission Invalid", issues } ] };
-          return { events: [ { type: "MyOS/Linked Documents Permission Validated" } ] };
+          if (issues.length > 0) return { events: [ { type: "MyOS/Single Document Permission Invalid", issues } ] };
+          return { events: [ { type: "MyOS/Single Document Permission Validated" } ] };

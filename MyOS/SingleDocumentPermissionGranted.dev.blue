@@ -1,12 +1,12 @@
-name: Linked Documents Permission Granted
+name: Single Document Permission Granted
 type: Conversation/Response
-description: All initial rights from this LDPG have been persisted.
+description: DB rows written; rights are effective.
 
 targetSessionId:
   type: Text
 
-links:
-  type: MyOS/Linked Documents Permission Set
+permissions:
+  type: MyOS/Single Document Permission Set
 
 grantDocumentId:
   type: Text

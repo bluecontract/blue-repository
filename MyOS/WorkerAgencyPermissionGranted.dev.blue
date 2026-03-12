@@ -1,12 +1,13 @@
-name: Linked Documents Permission Granted
+name: Worker Agency Permission Granted
 type: Conversation/Response
-description: All initial rights from this LDPG have been persisted.
+description: DB rows written; rights are effective.
 
-targetSessionId:
+granteeDocumentId:
   type: Text
 
-links:
-  type: MyOS/Linked Documents Permission Set
+allowedWorkerAgencyPermissions:
+  type: List
+  itemType: MyOS/Worker Agency Permission
 
 grantDocumentId:
   type: Text
