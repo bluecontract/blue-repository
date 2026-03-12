@@ -1,8 +1,0 @@
-name: Worker Agency Permission Granted
-type: Conversation/Response
-description: DB rows written; rights are effective.
-granteeDocumentId:
-  type: Text
-allowedWorkerAgencyPermissions:
-  type: List
-  itemType: MyOS/Worker Agency Permission
