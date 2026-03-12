@@ -1,8 +1,14 @@
 name: Worker Agency Permission Granted
 type: Conversation/Response
 description: DB rows written; rights are effective.
+
 granteeDocumentId:
   type: Text
+
 allowedWorkerAgencyPermissions:
   type: List
   itemType: MyOS/Worker Agency Permission
+
+grantDocumentId:
+  type: Text
+  description: Optional. Stable handle of the created permission grant document. Required in request/response document-grant flows that later support self-revoke from the grantee document.

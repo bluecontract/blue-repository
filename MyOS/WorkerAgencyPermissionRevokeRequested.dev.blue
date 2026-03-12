@@ -1,4 +1,4 @@
-name: Linked Documents Permission Revoke Requested
+name: Worker Agency Permission Revoke Requested
 type: Conversation/Request
 description: Emitted either by revoke operation on the grant document or by grantee-document self-revoke flow when grantDocumentId is provided.
 

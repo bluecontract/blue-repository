@@ -1,26 +1,31 @@
 name: Worker Agency Permission Grant
 type: MyOS/MyOS Admin Base
-granteeDocumentId: # parent worker document id
+
+granteeDocumentId:
   type: Text
+
 allowedWorkerAgencyPermissions:
   type: List
   itemType: MyOS/Worker Agency Permission
+
 contracts:
-  # Participants (channels)
   granterChannel:
     type: MyOS/MyOS Timeline Channel
-    description: Granter/owner’s timeline (actor allowed to request revoke)
+    description: Granter/owner’s timeline (direct grant-document revoke lives here).
+
   initLifecycleChannel:
     type: Core/Lifecycle Event Channel
     event:
       type: Core/Document Processing Initiated
+
   revoke:
     type: Conversation/Operation
-    description: Granter requests revocation (handled by MyOS Admin)
+    description: Granter requests revocation on the grant document. Grantee-document self-revoke uses the existing revoke-request event with grantDocumentId emitted from the grantee document itself.
     channel: granterChannel
     request:
       type: Text
       description: Optional human-readable reason
+
   revokeImplGranter:
     type: Conversation/Sequential Workflow Operation
     operation: revoke
@@ -36,12 +41,12 @@ contracts:
               }
             ]
           };
-  # --- Initial validation on first tick ---
+
   validateOnInit:
     type: Conversation/Sequential Workflow
     channel: initLifecycleChannel
     steps:
-      - name: ValidateBasicShape # TODO: review the implementation
+      - name: ValidateBasicShape
         type: Conversation/JavaScript Code
         code: |
           const issues = [];
@@ -126,12 +131,11 @@ contracts:
             return {};
           };
 
-          // --- granter binding (owner account) ---
           const granterId = document('/contracts/granterChannel/accountId');
           if (typeof granterId !== 'string' || granterId.length === 0) {
             issues.push("granterChannel must be bound to an accountId");
           }
-          // --- grantee (parent worker) session id ---
+
           const granteeDocumentId = document('/granteeDocumentId');
           if (
             typeof granteeDocumentId !== 'string' ||
@@ -139,19 +143,17 @@ contracts:
           ) {
             issues.push("granteeDocumentId must be a non-empty string");
           }
-          // --- allowedWorkerAgencyPermissions : list of { workerType, permissions } ---
+
           const list = document('/allowedWorkerAgencyPermissions');
           if (!Array.isArray(list) || list.length === 0) {
             issues.push("allowedWorkerAgencyPermissions must be a non-empty array");
           } else {
-            // helper: validate Single Document Permission Set
             const validateSDPS = (p, path) => {
               const record = unwrapRecord(p);
               if (Object.keys(record).length === 0) {
                 issues.push(`${path} must be an object`);
                 return;
               }
-              // read must be true to allow any access at all
               const read = unwrapBoolean(record.read);
               if (read !== true) {
                 issues.push(`${path}.read must be true`);
@@ -177,17 +179,14 @@ contracts:
               if (allOpsValue === true && hasSingle) {
                 issues.push(`${path}.allOps=true and ${path}.singleOps are mutually exclusive`);
               }
-              // Note: it is valid to have read=true with neither allOps nor singleOps (read-only template)
             };
             const seenTypes = new Set();
             list.forEach((item, idx) => {
               const itemPath = `/allowedWorkerAgencyPermissions[${idx}]`;
-              // shape
               if (typeof item !== 'object' || item === null) {
                 issues.push(`${itemPath} must be an object`);
                 return;
               }
-              // workerType
               const workerType = unwrapText(item.workerType);
               if (!workerType) {
                 issues.push(`${itemPath}.workerType must be a non-empty string`);
@@ -198,7 +197,6 @@ contracts:
                   seenTypes.add(workerType);
                 }
               }
-              // permissions (Single Document Permission Set)
               const perms = item.permissions;
               if (typeof perms === 'undefined') {
                 issues.push(`${itemPath}.permissions is required`);

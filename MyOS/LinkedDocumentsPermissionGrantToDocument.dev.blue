@@ -24,15 +24,14 @@ links:
 
 skipValidation:
   type: Boolean
-  description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant)
+  description: If true, the validation will be skipped (MyOS Admin won't be triggered to create permission grant).
 
 # ----------------- Contracts -----------------
 
 contracts:
-  # Participants (channels)
   granterChannel:
     type: MyOS/MyOS Timeline Channel
-    description: Granter/owner’s timeline (actor allowed to request revoke)
+    description: Granter/owner’s timeline (direct grant-document revoke lives here).
 
   initLifecycleChannel:
     type: Core/Lifecycle Event Channel
@@ -41,7 +40,7 @@ contracts:
 
   revoke:
     type: Conversation/Operation
-    description: Granter indicates the grant should be revoked (MyOS Admin will handle)
+    description: Granter requests revocation on the grant document. Grantee-document self-revoke uses the existing revoke-request event with grantDocumentId emitted from the grantee document itself.
     channel: granterChannel
     request:
       type: Text
@@ -63,7 +62,6 @@ contracts:
             ]
           };
 
-  # --- Initial validation on first tick ---
   validateOnInit:
     type: Conversation/Sequential Workflow
     channel: initLifecycleChannel
@@ -76,19 +74,15 @@ contracts:
 
           const issues = [];
 
-          // Required: target session
           const target = document('/targetSessionId');
           if (!target || typeof target !== 'string') issues.push("targetSessionId is missing or invalid");
 
-          // Required: bound granter identity
           const granterId = document('/contracts/granterChannel/accountId');
           if (typeof granterId !== 'string' || granterId.length === 0) issues.push("granterChannel must be bound to an accountId");
 
-          // Required: grantee document id
           const gdoc = document('/granteeDocumentId');
           if (typeof gdoc !== 'string' || gdoc.trim().length === 0) issues.push("granteeDocumentId must be a non-empty string");
 
-          // Required: links
           const links = document('/links');
           if (!links || typeof links !== 'object') issues.push("links is missing or invalid");
 
