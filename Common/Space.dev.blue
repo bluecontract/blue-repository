@@ -1,0 +1,12 @@
+name: Space
+type: Common/Document
+description: |
+  Broad document family for a long-lived place in some reality.
+  Use it directly as the document `type` and express business meaning through
+  the top-level `kind`, such as `Online Shop`, `Legal Office`, or `Research Lab`.
+website:
+  type: Text
+  description: Optional primary website or canonical public URL for this space.
+anchors:
+  type: Common/Document Anchors
+  description: Optional named connection points where matching documents can link in.

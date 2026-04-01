@@ -1,0 +1,6 @@
+name: Task
+type: Common/Document
+description: |
+  Broad document family for a bounded unit of work over time.
+  Use the top-level `kind` to describe the business task,
+  such as `Weekly Report`, `Inbox Monitoring`, or `Order Triage`.

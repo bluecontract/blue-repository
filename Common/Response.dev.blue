@@ -1,0 +1,6 @@
+name: Response
+type: Common/Document
+description: |
+  Broad document family for a response to a request.
+  Use the top-level `kind` to describe the specific response,
+  such as `Legal Review Response`, `Report Delivery`, or `Intake Response`.

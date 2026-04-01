@@ -1,0 +1,8 @@
+name: Document Anchors
+description: |
+  Dictionary-like container of named document anchors.
+  The container is typed, while named entries can stay inline and do not need
+  to repeat `type: Common/Document Anchor` in public document shape.
+type: Dictionary
+keyType: Text
+valueType: Common/Document Anchor

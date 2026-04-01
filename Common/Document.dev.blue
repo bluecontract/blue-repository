@@ -1,0 +1,8 @@
+name: Document
+description: |
+  Broad base type for semantic documents that describe what they are directly.
+  Use the top-level `kind` field for business-level meaning on top of the
+  concrete document family type.
+kind:
+  type: Text
+  description: Human-readable business meaning for this document.

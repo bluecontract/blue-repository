@@ -1,0 +1,6 @@
+name: Relationship
+type: Common/Document
+description: |
+  Broad document family for a shared document between parties.
+  Use the top-level `kind` to describe the specific relationship shape,
+  such as `Service Agreement`, `Partnership Proposal`, or `Legal Engagement`.

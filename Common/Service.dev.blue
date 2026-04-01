@@ -1,0 +1,10 @@
+name: Service
+type: Common/Document
+description: |
+  Broad document family for a document that is itself a service offering.
+  Use the top-level `kind` to describe the specific offering,
+  such as `Legal Service`, `Tutoring Service`, or `Analytics Service`.
+categories:
+  type: List
+  itemType: Text
+  description: Optional broad categories used to help humans discover the service.
