@@ -1,0 +1,6 @@
+name: PermissionGrant
+type: Common/Document
+description: |
+  Broad document family for documents whose main purpose is granting or revoking authority.
+  Use the top-level `kind` to describe the business permission shape,
+  such as `Single Document Permission Grant` or `Linked Documents Permission Grant`.

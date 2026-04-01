@@ -1,0 +1,6 @@
+name: Payment
+type: Common/Document
+description: |
+  Broad document family for a value-moving or value-committing document.
+  Use the top-level `kind` to describe the payment intent,
+  such as `Invoice Settlement`, `Payout`, or `Milestone Payment`.

@@ -1,0 +1,6 @@
+name: Request
+type: Common/Document
+description: |
+  Broad document family for a request for something from a provider or participant.
+  Use the top-level `kind` to describe the specific request,
+  such as `Legal Review Request`, `Service Request`, or `Intake Request`.

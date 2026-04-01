@@ -1,0 +1,6 @@
+name: Profile
+type: Common/Document
+description: |
+  Broad document family for a public-facing identity or presence.
+  Use the top-level `kind` to describe the specific profile,
+  such as `Business Profile`, `Creator Profile`, or `Directory Listing`.

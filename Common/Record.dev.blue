@@ -1,0 +1,6 @@
+name: Record
+type: Common/Document
+description: |
+  Broad document family for a single item that belongs somewhere.
+  Use the top-level `kind` to express the specific business meaning, such as
+  `Shopping Order`, `Comment`, `Invoice`, or `Report`.

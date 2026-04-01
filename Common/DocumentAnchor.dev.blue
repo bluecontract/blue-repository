@@ -1,0 +1,9 @@
+name: Document Anchor
+description: |
+  One named connection point where matching documents can link in.
+  Anchor entries are typically used inline inside `Common/Document Anchors`
+  and can describe the expected matching document shape through `template`.
+template:
+  description: |
+    Optional Blue document-shaped template describing what matches this anchor.
+    It may be a minimal `{ type, kind }` hint or a richer nested document shape.
