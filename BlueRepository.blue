@@ -14,6 +14,53 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Document
+          description: |
+            Broad base type for semantic documents that describe what they are directly.
+            Use the top-level `kind` field for business-level meaning on top of the
+            concrete document family type.
+          kind:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Human-readable business meaning for this document.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Anchor
+          description: |
+            One named connection point where matching documents can link in.
+            Anchor entries are typically used inline inside `Common/Document Anchors`
+            and can describe the expected matching document shape through `template`.
+          template:
+            description: |
+              Optional Blue document-shaped template describing what matches this anchor.
+              It may be a minimal `{ type, kind }` hint or a richer nested document shape.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: Bu4KzxxpJuHvET1RTBzioDXpWcqmvYzmqGRiDKmktHUo
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Document Anchors
+          description: |
+            Dictionary-like container of named document anchors.
+            The container is typed, while named entries can stay inline and do not need
+            to repeat `type: Common/Document Anchor` in public document shape.
+          type:
+            blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+          keyType:
+            blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+          valueType:
+            blueId: Bu4KzxxpJuHvET1RTBzioDXpWcqmvYzmqGRiDKmktHUo
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: 3KRfhgbFdvyW9SGuKiq3WxWF9bHSATEb8tMso8Pykpre
+            attributesAdded: []
+      - status: dev
+        content:
           name: Named Event
           type:
             blueId: 5Wz4G9qcnBJnntYRkz4dgLK5bSuoMpYJZj4j5M59z4we
@@ -24,6 +71,150 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: GrD4wCAmKoK8rm8Pztmv9GkFBRwJy4zpDUzDWHtsEJCX
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a value-moving or value-committing document.
+            Use the top-level `kind` to describe the payment intent,
+            such as `Invoice Settlement`, `Payout`, or `Milestone Payment`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: DoDF7Hm2Ss7ikirPwXZ7KFiWNmdwtb53vHCSwYFbCdPk
+            attributesAdded: []
+      - status: dev
+        content:
+          name: PermissionGrant
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for documents whose main purpose is granting or revoking authority.
+            Use the top-level `kind` to describe the business permission shape,
+            such as `Single Document Permission Grant` or `Linked Documents Permission Grant`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: EHTR6jFrqbmjPf7dNSJUsGUJrgr5kLh62QiT2bxD6KRp
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Profile
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a public-facing identity or presence.
+            Use the top-level `kind` to describe the specific profile,
+            such as `Business Profile`, `Creator Profile`, or `Directory Listing`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: EWfk8qkKZYqqTyeLs4wLJTfPCLufZBiNGFQY4M4PLv99
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Record
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a single item that belongs somewhere.
+            Use the top-level `kind` to express the specific business meaning, such as
+            `Shopping Order`, `Comment`, `Invoice`, or `Report`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: J18rFf6VX3ADe5gTnqmL4wXtivLkzrRXLPPhnoghnjzB
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Relationship
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a shared document between parties.
+            Use the top-level `kind` to describe the specific relationship shape,
+            such as `Service Agreement`, `Partnership Proposal`, or `Legal Engagement`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: 29BmTvgmhh9x7t2tGd38GqTH3b9v9rgqsuE21K73i86g
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Request
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a request for something from a provider or participant.
+            Use the top-level `kind` to describe the specific request,
+            such as `Legal Review Request`, `Service Request`, or `Intake Request`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: Ccj91K18JfH77i8bawJzR9GpRWXYf598uPjggxZU7Shd
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Response
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a response to a request.
+            Use the top-level `kind` to describe the specific response,
+            such as `Legal Review Response`, `Report Delivery`, or `Intake Response`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: cLkohDeea8vefzVvUwsQ56BwUfedXpqeoD66PvRe7LB
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Service
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a document that is itself a service offering.
+            Use the top-level `kind` to describe the specific offering,
+            such as `Legal Service`, `Tutoring Service`, or `Analytics Service`.
+          categories:
+            type:
+              blueId: 6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY
+            itemType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional broad categories used to help humans discover the service.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: ALFnjBeqP1hupQrZGddqbi276GkwnuPtkQjiFLjU716A
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Space
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a long-lived place in some reality.
+            Use it directly as the document `type` and express business meaning through
+            the top-level `kind`, such as `Online Shop`, `Legal Office`, or `Research Lab`.
+          website:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional primary website or canonical public URL for this space.
+          anchors:
+            type:
+              blueId: 3KRfhgbFdvyW9SGuKiq3WxWF9bHSATEb8tMso8Pykpre
+            description: Optional named connection points where matching documents can link in.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: Bdyasci5huobiunZqkShQUiWzCyHLhY4fpMkG4YF5BiS
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Task
+          type:
+            blueId: Co5guWscbTav1tmXvQPb4k3wtrsQEdxjDaj6WPPWpPo8
+          description: |
+            Broad document family for a bounded unit of work over time.
+            Use the top-level `kind` to describe the business task,
+            such as `Weekly Report`, `Inbox Monitoring`, or `Order Triage`.
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: FfJjBeSAe4JWfA5FVnPDgL9pzLPYELskQnBSanPC9E8L
             attributesAdded: []
       - status: dev
         content:
@@ -6921,3 +7112,4 @@ packages:
             attributesAdded: []
 repositoryVersions:
   - vb22qGkPkict5EnAXzF9oyoEGBW6PYxucfAFeegBb6G
+  - GzGCVkWasHpGFUWBvG71avwWvGWHeEdCPoMdKy47cTMe
