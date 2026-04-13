@@ -1,0 +1,28 @@
+name: Payment Target Prepared
+type: Conversation/Response
+description: Result emitted after MyOS Admin successfully prepares an opaque recipient payment target.
+recipient:
+  type: MyOS/MyOS Balance Account
+  description: Prepared recipient reference.
+  token:
+    type: Text
+    description: Opaque prepared recipient token.
+amount:
+  type: Integer
+  description: Optional effective amount constraint echoed back to the caller.
+currency:
+  type: Common/Currency
+  description: Optional effective currency constraint echoed back to the caller.
+expiresAt:
+  type: Text
+  description: Optional expiry echoed back to the caller.
+allowedPayer:
+  type: MyOS/MyOS User
+  description: Optional effective payer restriction echoed back to the caller.
+context:
+  description: Optional business-context reference.
+  documentId:
+    type: Text
+    description: Blue document id identifying the business document this payment is for.
+expectedPaynote:
+  description: Optional effective PayNote matcher echoed back to the caller.

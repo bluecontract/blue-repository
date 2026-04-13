@@ -1,0 +1,22 @@
+name: Payment Target Preparation Requested
+type: Conversation/Request
+description: Request emitted from a MyOS Balance Account document when its owner asks MyOS Admin to prepare an opaque recipient payment target.
+amount:
+  type: Integer
+  description: Optional expected payment amount in minor units.
+currency:
+  type: Common/Currency
+  description: Optional expected ISO 4217 currency code.
+expiresAt:
+  type: Text
+  description: Optional ISO-8601 expiry timestamp for the prepared target.
+allowedPayer:
+  type: MyOS/MyOS User
+  description: Optional payer identity restriction.
+context:
+  description: Optional business-context reference.
+  documentId:
+    type: Text
+    description: Blue document id identifying the business document this payment is for.
+expectedPaynote:
+  description: Optional matcher over the PayNote bootstrap input that will be accepted for this target.

@@ -1,0 +1,5 @@
+name: MyOS User
+description: A MyOS identity reference used in payment constraints and matching.
+accountId:
+  type: Text
+  description: Stable MyOS user identifier.

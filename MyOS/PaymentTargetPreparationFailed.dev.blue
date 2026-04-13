@@ -1,0 +1,9 @@
+name: Payment Target Preparation Failed
+type: Conversation/Response
+description: Failure result emitted when MyOS Admin cannot prepare an opaque recipient payment target.
+code:
+  type: Text
+  description: Stable machine-readable failure code.
+reason:
+  type: Text
+  description: Human-readable explanation of failure.
