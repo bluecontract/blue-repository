@@ -3210,6 +3210,18 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: GiYocGMGQcneiMPm4NH9MxVj7Fr4jwg2BUAMzwZcWRNR
             attributesAdded: []
+      - status: dev
+        content:
+          name: MyOS Balance Account
+          description: A prepared or direct MyOS balance-account reference used in payment requests.
+          token:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Opaque token representing a prepared recipient payment target.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 3WA2ppJtUKib2upsEARBgCNJuHXSqHJjm38uLtZf6dNb
+            attributesAdded: []
       - status: stable
         content:
           name: MyOS Document Session Reference
@@ -3354,6 +3366,18 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: Furgmg5xcJVMDmaQXZRfZ1XehSf7PWctrioo8etRYJHQ
             attributesAdded: []
+      - status: dev
+        content:
+          name: MyOS User
+          description: A MyOS identity reference used in payment constraints and matching.
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Stable MyOS user identifier.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 6VqxRuWBPVJ8qTBPWxYKaSi5UB3zb8Y9vadtxbsL4vzJ
+            attributesAdded: []
       - status: stable
         content:
           name: MyOS Worker Agency
@@ -3422,6 +3446,187 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: EQVu8aZyp5ivTyKpSm8ueVsDLgprfcrHzr5QWdH1p6Cz
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Initiation Accepted
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Result emitted after MyOS Admin accepts a payment initiation request.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: GiEwEdvT2jPoT4bK8hvmjTBJUVQqRtHoAejfdpM7HtuD
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Initiation Rejected
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Result emitted when MyOS Admin rejects a payment initiation request before or instead of starting the payment.
+          code:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: |
+              Stable machine-readable rejection reason, for example:
+              invalid_request,
+              token_not_found,
+              token_expired,
+              token_consumed,
+              payer_not_allowed,
+              context_mismatch,
+              amount_mismatch,
+              currency_mismatch,
+              paynote_mismatch,
+              insufficient_funds,
+              idempotency_conflict.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Human-readable explanation of rejection.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: EJkmgZa48d3knTpcqxWzu2zo34yWEbVKJVPcyLR7fgGU
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Initiation Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request emitted from a payment source document when a payment initiation is requested.
+          idempotencyKey:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Caller-supplied key identifying one logical initiation attempt.
+          recipient:
+            type:
+              blueId: 3WA2ppJtUKib2upsEARBgCNJuHXSqHJjm38uLtZf6dNb
+            description: Prepared recipient reference. At minimum it must carry the opaque token.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Payment amount in minor units.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: ISO 4217 currency code.
+          context:
+            description: Optional business-context reference.
+            documentId:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Blue document id identifying the business document this payment is for.
+          paynote:
+            description: |
+              Optional PayNote bootstrap input.
+              If omitted, MyOS creates the default PayNote during initiation.
+            document:
+              description: The PayNote document content to bootstrap.
+            channelBindings:
+              type:
+                blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+              keyType:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              valueType:
+                blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
+              description: |
+                Optional channel bindings keyed by the channel names declared in the PayNote document.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 26eFVecG5eovbFVYf7YcdN2bFhuFiNhRFxrCZSBb1H3r
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Target Preparation Failed
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Failure result emitted when MyOS Admin cannot prepare an opaque recipient payment target.
+          code:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Stable machine-readable failure code.
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Human-readable explanation of failure.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: GSfJG3nahccpaqXHWBXes8RvNDENL17bz2yXdvn1suRY
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Target Preparation Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          description: Request emitted from a MyOS Balance Account document when its owner asks MyOS Admin to prepare an opaque recipient payment target.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Optional expected payment amount in minor units.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: Optional expected ISO 4217 currency code.
+          expiresAt:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional ISO-8601 expiry timestamp for the prepared target.
+          allowedPayer:
+            type:
+              blueId: 6VqxRuWBPVJ8qTBPWxYKaSi5UB3zb8Y9vadtxbsL4vzJ
+            description: Optional payer identity restriction.
+          context:
+            description: Optional business-context reference.
+            documentId:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Blue document id identifying the business document this payment is for.
+          expectedPaynote:
+            description: Optional matcher over the PayNote bootstrap input that will be accepted for this target.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: EmMN2rpkHKmaw4Q1THLJAZBAiT7HyXex8RBu1yiapJP5
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Payment Target Prepared
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          description: Result emitted after MyOS Admin successfully prepares an opaque recipient payment target.
+          recipient:
+            type:
+              blueId: 3WA2ppJtUKib2upsEARBgCNJuHXSqHJjm38uLtZf6dNb
+            description: Prepared recipient reference.
+            token:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Opaque prepared recipient token.
+          amount:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Optional effective amount constraint echoed back to the caller.
+          currency:
+            type:
+              blueId: CBnZ7aaNetj9KEqXpUWj5jvjKbmviLivP98T2EiyxiYc
+            description: Optional effective currency constraint echoed back to the caller.
+          expiresAt:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Optional expiry echoed back to the caller.
+          allowedPayer:
+            type:
+              blueId: 6VqxRuWBPVJ8qTBPWxYKaSi5UB3zb8Y9vadtxbsL4vzJ
+            description: Optional effective payer restriction echoed back to the caller.
+          context:
+            description: Optional business-context reference.
+            documentId:
+              type:
+                blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+              description: Blue document id identifying the business document this payment is for.
+          expectedPaynote:
+            description: Optional effective PayNote matcher echoed back to the caller.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: 3KTJBMse6aFELjAG6iJa9bo5XdJagLzQZdPkee64iVW1
             attributesAdded: []
       - status: stable
         content:
@@ -7113,3 +7318,4 @@ packages:
 repositoryVersions:
   - vb22qGkPkict5EnAXzF9oyoEGBW6PYxucfAFeegBb6G
   - GzGCVkWasHpGFUWBvG71avwWvGWHeEdCPoMdKy47cTMe
+  - J7UTMwNkrjuBVtnB1AmtgCwgkNdQuuBotNoQbxanAJBw
