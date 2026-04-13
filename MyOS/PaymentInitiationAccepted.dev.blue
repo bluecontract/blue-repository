@@ -1,0 +1,3 @@
+name: Payment Initiation Accepted
+type: Conversation/Response
+description: Result emitted after MyOS Admin accepts a payment initiation request.

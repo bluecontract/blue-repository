@@ -1,0 +1,21 @@
+name: Payment Initiation Rejected
+type: Conversation/Response
+description: Result emitted when MyOS Admin rejects a payment initiation request before or instead of starting the payment.
+code:
+  type: Text
+  description: |
+    Stable machine-readable rejection reason, for example:
+    invalid_request,
+    token_not_found,
+    token_expired,
+    token_consumed,
+    payer_not_allowed,
+    context_mismatch,
+    amount_mismatch,
+    currency_mismatch,
+    paynote_mismatch,
+    insufficient_funds,
+    idempotency_conflict.
+reason:
+  type: Text
+  description: Human-readable explanation of rejection.

@@ -1,0 +1,32 @@
+name: Payment Initiation Requested
+type: Conversation/Request
+description: Request emitted from a payment source document when a payment initiation is requested.
+idempotencyKey:
+  type: Text
+  description: Caller-supplied key identifying one logical initiation attempt.
+recipient:
+  type: MyOS/MyOS Balance Account
+  description: Prepared recipient reference. At minimum it must carry the opaque token.
+amount:
+  type: Integer
+  description: Payment amount in minor units.
+currency:
+  type: Common/Currency
+  description: ISO 4217 currency code.
+context:
+  description: Optional business-context reference.
+  documentId:
+    type: Text
+    description: Blue document id identifying the business document this payment is for.
+paynote:
+  description: |
+    Optional PayNote bootstrap input.
+    If omitted, MyOS creates the default PayNote during initiation.
+  document:
+    description: The PayNote document content to bootstrap.
+  channelBindings:
+    type: Dictionary
+    keyType: Text
+    valueType: Core/Channel
+    description: |
+      Optional channel bindings keyed by the channel names declared in the PayNote document.
