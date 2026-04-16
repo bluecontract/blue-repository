@@ -1,0 +1,5 @@
+name: Final Amount Resolution Rejected
+type: Conversation/Response
+description: The Guarantor rejected the proposed final amount.
+reason:
+  type: Text

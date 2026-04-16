@@ -1,0 +1,5 @@
+name: Payment Completion Declined
+type: Conversation/Response
+description: The Guarantor declined the request to complete the payment.
+reason:
+  type: Text

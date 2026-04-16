@@ -1,0 +1,7 @@
+name: Payment Completion Lock Requested
+type: Conversation/Request
+description: >
+  Request that the Guarantor reject subsequent completion attempts
+  for the governed transaction.
+reason:
+  type: Text

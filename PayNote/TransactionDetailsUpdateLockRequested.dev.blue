@@ -1,0 +1,7 @@
+name: Transaction Details Update Lock Requested
+type: Conversation/Request
+description: >
+  Request that the Guarantor reject subsequent transaction-details updates
+  for the governed transaction.
+reason:
+  type: Text

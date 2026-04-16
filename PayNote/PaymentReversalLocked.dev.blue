@@ -1,0 +1,7 @@
+name: Payment Reversal Locked
+type: Conversation/Response
+description: >
+  Payment reversal was locked. Subsequent reversal attempts
+  must be rejected until explicitly unlocked.
+lockedAt:
+  type: Common/Timestamp

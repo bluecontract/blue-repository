@@ -1,0 +1,13 @@
+name: Transaction Initiated
+type: Conversation/Response
+description: >
+  The Guarantor confirms that the underlying transaction was initiated
+  and records how this PayNote was attached to it.
+railType:
+  type: Text
+attachmentPoint:
+  type: Text
+providerReference:
+  type: Text
+initiatedAmount:
+  type: Integer

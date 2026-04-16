@@ -1,0 +1,7 @@
+name: Transaction Details Update Unlock Requested
+type: Conversation/Request
+description: >
+  Request that the Guarantor allow subsequent transaction-details updates
+  for the governed transaction.
+reason:
+  type: Text

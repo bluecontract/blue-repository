@@ -1,0 +1,5 @@
+name: Secure Funds Requested
+type: Conversation/Request
+description: A participant requests that the Guarantor secure value for this transaction.
+amount:
+  type: Integer

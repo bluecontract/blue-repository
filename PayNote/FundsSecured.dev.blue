@@ -1,0 +1,5 @@
+name: Funds Secured
+type: Conversation/Response
+description: The Guarantor confirms that value is now secured / under its control.
+amountSecured:
+  type: Integer

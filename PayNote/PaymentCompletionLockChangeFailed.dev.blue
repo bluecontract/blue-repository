@@ -1,0 +1,5 @@
+name: Payment Completion Lock Change Failed
+type: Conversation/Response
+description: The requested completion-lock change failed.
+reason:
+  type: Text

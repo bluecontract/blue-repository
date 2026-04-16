@@ -1,0 +1,5 @@
+name: Payment Reversal Lock Change Failed
+type: Conversation/Response
+description: The requested reversal-lock change failed.
+reason:
+  type: Text

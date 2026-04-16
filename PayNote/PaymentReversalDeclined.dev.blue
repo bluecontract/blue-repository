@@ -1,0 +1,5 @@
+name: Payment Reversal Declined
+type: Conversation/Response
+description: The Guarantor declined the request to reverse after completion.
+reason:
+  type: Text
