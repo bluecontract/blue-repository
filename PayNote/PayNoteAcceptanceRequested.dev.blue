@@ -1,5 +1,0 @@
-name: PayNote Acceptance Requested
-type: Conversation/Request
-description: >
-  A participant requests that the Guarantor accept this PayNote
-  as governing the referenced transaction.

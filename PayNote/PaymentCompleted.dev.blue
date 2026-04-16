@@ -1,5 +1,0 @@
-name: Payment Completed
-type: Conversation/Response
-description: The Guarantor confirms that the payment was finalized.
-amountCompleted:
-  type: Integer

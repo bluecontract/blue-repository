@@ -1,5 +1,0 @@
-name: Transaction Details Updated
-type: Conversation/Response
-description: The Guarantor accepted and recorded updated transaction details.
-transactionDetails:
-  description: Opaque transaction details payload confirmed by the Guarantor.

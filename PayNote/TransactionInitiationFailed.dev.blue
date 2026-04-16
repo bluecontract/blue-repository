@@ -1,5 +1,0 @@
-name: Transaction Initiation Failed
-type: Conversation/Response
-description: The Guarantor attempted to initiate the transaction, but it failed.
-reason:
-  type: Text

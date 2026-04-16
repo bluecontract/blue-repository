@@ -1,7 +1,0 @@
-name: Payment Completion Unlocked
-type: Conversation/Response
-description: >
-  Payment completion was unlocked. Subsequent completion attempts
-  may now be processed again.
-unlockedAt:
-  type: Common/Timestamp

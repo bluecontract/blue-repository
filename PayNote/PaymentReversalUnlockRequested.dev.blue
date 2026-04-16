@@ -1,7 +1,0 @@
-name: Payment Reversal Unlock Requested
-type: Conversation/Request
-description: >
-  Request that the Guarantor allow subsequent reversal attempts
-  for the governed transaction.
-reason:
-  type: Text

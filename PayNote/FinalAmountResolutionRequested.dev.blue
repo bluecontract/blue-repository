@@ -1,8 +1,0 @@
-name: Final Amount Resolution Requested
-type: Conversation/Request
-description: >
-  A participant proposes the final amount this PayNote should complete for.
-finalAmount:
-  type: Integer
-reason:
-  type: Text

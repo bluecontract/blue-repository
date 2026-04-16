@@ -1,3 +1,0 @@
-name: PayNote Accepted
-type: Conversation/Response
-description: The Guarantor accepted this PayNote as governing the referenced transaction.

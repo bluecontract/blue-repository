@@ -1,7 +1,0 @@
-name: Payment Reversal Unlocked
-type: Conversation/Response
-description: >
-  Payment reversal was unlocked. Subsequent reversal attempts
-  may now be processed again.
-unlockedAt:
-  type: Common/Timestamp

@@ -1,5 +1,0 @@
-name: Payment Cancellation Declined
-type: Conversation/Response
-description: The Guarantor declined the request to cancel before completion.
-reason:
-  type: Text

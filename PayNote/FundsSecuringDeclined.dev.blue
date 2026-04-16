@@ -1,5 +1,0 @@
-name: Funds Securing Declined
-type: Conversation/Response
-description: The Guarantor declined the request to secure the funds.
-reason:
-  type: Text

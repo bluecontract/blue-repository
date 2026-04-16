@@ -1,5 +1,0 @@
-name: Payment Completion Failed
-type: Conversation/Response
-description: The Guarantor attempted to complete the payment, but it failed.
-reason:
-  type: Text

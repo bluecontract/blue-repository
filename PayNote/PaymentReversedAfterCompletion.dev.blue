@@ -1,5 +1,0 @@
-name: Payment Reversed After Completion
-type: Conversation/Response
-description: The Guarantor confirms that value was reversed after completion.
-amountReversed:
-  type: Integer
