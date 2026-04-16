@@ -1,0 +1,6 @@
+name: Transaction Details Update Requested
+type: Conversation/Request
+description: >
+  A participant requests that the Guarantor update transaction-specific details.
+transactionDetails:
+  description: Opaque transaction details payload proposed by the participant.

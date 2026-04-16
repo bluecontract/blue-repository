@@ -1,0 +1,7 @@
+name: Funds Securing Failed
+type: Conversation/Response
+description: >
+  The Guarantor attempted to secure the funds, but a technical or
+  provider-level failure occurred.
+reason:
+  type: Text

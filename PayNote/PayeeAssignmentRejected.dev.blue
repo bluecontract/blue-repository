@@ -1,0 +1,5 @@
+name: Payee Assignment Rejected
+type: Conversation/Response
+description: The Guarantor rejected the proposed payee assignment.
+reason:
+  type: Text

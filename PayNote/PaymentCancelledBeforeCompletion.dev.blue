@@ -1,0 +1,3 @@
+name: Payment Cancelled Before Completion
+type: Conversation/Response
+description: The Guarantor confirms that the transaction was cancelled before completion.

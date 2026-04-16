@@ -1,0 +1,6 @@
+name: Cancel Before Completion Requested
+type: Conversation/Request
+description: >
+  A participant requests that the Guarantor cancel the transaction before completion.
+reason:
+  type: Text

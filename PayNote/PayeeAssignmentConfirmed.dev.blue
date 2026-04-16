@@ -1,0 +1,5 @@
+name: Payee Assignment Confirmed
+type: Conversation/Response
+description: The Guarantor accepted and recorded payee assignment.
+payeeRef:
+  type: Text

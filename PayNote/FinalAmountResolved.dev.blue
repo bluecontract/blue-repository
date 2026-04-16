@@ -1,0 +1,5 @@
+name: Final Amount Resolved
+type: Conversation/Response
+description: The Guarantor confirms the final amount this PayNote should complete for.
+finalAmount:
+  type: Integer
