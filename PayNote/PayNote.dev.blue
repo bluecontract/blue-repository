@@ -81,36 +81,57 @@ contracts:
     type: Conversation/Sequential Workflow
     channel: initLifecycleChannel
     steps:
+      - name: Resolve PayNote Runtime Defaults
+        type: Conversation/JavaScript Code
+        code: |
+          const fallback = (current, value) =>
+            current === null || current === undefined ? value : current;
+
+          return {
+            status: fallback(document('/status'), 'Pending'),
+            amountFinalResolved: fallback(document('/amount/finalResolved'), 0),
+            amountSecured: fallback(document('/amount/secured'), 0),
+            amountCompleted: fallback(document('/amount/completed'), 0),
+            amountReversed: fallback(document('/amount/reversed'), 0),
+            completionLocked: fallback(document('/controls/completionLocked'), false),
+            reversalLocked: fallback(document('/controls/reversalLocked'), false),
+            transactionDetailsUpdateLocked: fallback(
+              document('/controls/transactionDetailsUpdateLocked'),
+              false
+            ),
+            transactionDetails: fallback(document('/transactionDetails'), {}),
+          };
+
       - name: Initialize PayNote Runtime State
         type: Conversation/Update Document
         changeset:
           - op: replace
             path: /status
-            val: Pending
+            val: "${steps['Resolve PayNote Runtime Defaults'].status}"
           - op: replace
             path: /amount/finalResolved
-            val: 0
+            val: "${steps['Resolve PayNote Runtime Defaults'].amountFinalResolved}"
           - op: replace
             path: /amount/secured
-            val: 0
+            val: "${steps['Resolve PayNote Runtime Defaults'].amountSecured}"
           - op: replace
             path: /amount/completed
-            val: 0
+            val: "${steps['Resolve PayNote Runtime Defaults'].amountCompleted}"
           - op: replace
             path: /amount/reversed
-            val: 0
+            val: "${steps['Resolve PayNote Runtime Defaults'].amountReversed}"
           - op: replace
             path: /controls/completionLocked
-            val: false
+            val: "${steps['Resolve PayNote Runtime Defaults'].completionLocked}"
           - op: replace
             path: /controls/reversalLocked
-            val: false
+            val: "${steps['Resolve PayNote Runtime Defaults'].reversalLocked}"
           - op: replace
             path: /controls/transactionDetailsUpdateLocked
-            val: false
+            val: "${steps['Resolve PayNote Runtime Defaults'].transactionDetailsUpdateLocked}"
           - op: replace
             path: /transactionDetails
-            val: {}
+            val: "${steps['Resolve PayNote Runtime Defaults'].transactionDetails}"
 
   # --- Guarantor operations ---
   acceptPayNote:
