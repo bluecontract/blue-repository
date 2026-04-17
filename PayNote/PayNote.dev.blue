@@ -117,7 +117,7 @@ contracts:
     type: Conversation/Operation
     channel: guarantorChannel
     request:
-      type: PayNote/PayNote Acceptance Requested
+      type: PayNote/PayNote Accepted
 
   acceptPayNoteImpl:
     type: Conversation/Sequential Workflow Operation
@@ -522,7 +522,7 @@ contracts:
     type: Conversation/Operation
     channel: guarantorChannel
     request:
-      type: PayNote/Cancel Before Completion Requested
+      type: PayNote/Payment Cancelled Before Completion
 
   cancelBeforeCompletionImpl:
     type: Conversation/Sequential Workflow Operation
