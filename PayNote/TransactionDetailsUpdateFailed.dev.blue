@@ -1,0 +1,7 @@
+name: Transaction Details Update Failed
+type: Conversation/Response
+description: >
+  The Guarantor attempted to apply the transaction details update,
+  but a technical or provider-level failure occurred.
+reason:
+  type: Text

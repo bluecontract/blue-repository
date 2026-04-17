@@ -1,0 +1,5 @@
+name: Complete Payment Requested
+type: Conversation/Request
+description: A participant requests that the Guarantor finalize the payment.
+amount:
+  type: Integer

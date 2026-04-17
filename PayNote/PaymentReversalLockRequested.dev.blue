@@ -1,0 +1,7 @@
+name: Payment Reversal Lock Requested
+type: Conversation/Request
+description: >
+  Request that the Guarantor reject subsequent reversal attempts
+  for the governed transaction.
+reason:
+  type: Text

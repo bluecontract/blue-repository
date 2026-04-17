@@ -1,0 +1,7 @@
+name: Transaction Details Update Locked
+type: Conversation/Response
+description: >
+  Transaction-details updates were locked. Subsequent details changes
+  must be rejected until explicitly unlocked.
+lockedAt:
+  type: Common/Timestamp

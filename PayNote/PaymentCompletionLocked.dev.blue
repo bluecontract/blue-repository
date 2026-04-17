@@ -1,0 +1,7 @@
+name: Payment Completion Locked
+type: Conversation/Response
+description: >
+  Payment completion was locked. Subsequent completion attempts
+  must be rejected until explicitly unlocked.
+lockedAt:
+  type: Common/Timestamp

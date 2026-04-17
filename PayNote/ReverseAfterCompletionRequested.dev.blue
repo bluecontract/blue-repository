@@ -1,0 +1,7 @@
+name: Reverse After Completion Requested
+type: Conversation/Request
+description: A participant requests that the Guarantor reverse value after completion.
+amount:
+  type: Integer
+reason:
+  type: Text
