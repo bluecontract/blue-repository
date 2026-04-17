@@ -5054,14 +5054,14 @@ packages:
         content:
           name: Card Transaction PayNote
           type:
-            blueId: 4kfReXTiPbwiptkS6DdriPwQubRnbiDm9ghWM9zkrQon
+            blueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
           description: PayNote tied to a specific card transaction via ISO scheme identifiers.
           cardTransactionDetails:
             type:
               blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 6DEqU222KQbg7YGb1EjF7ySj7x42oLCamLGf65V2gaZk
+          - repositoryVersionIndex: 6
+            typeBlueId: Ja5fvEx8oyx8GSLUdAhtB4gi4qUGtnJYGJsGxQ86q3z
             attributesAdded: []
       - status: dev
         content:
@@ -5357,11 +5357,11 @@ packages:
         content:
           name: Merchant To Customer PayNote
           type:
-            blueId: 4kfReXTiPbwiptkS6DdriPwQubRnbiDm9ghWM9zkrQon
+            blueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
           description: Base PayNote where payer is merchant and payee is customer. Bank sets/validates payer channel bindings.
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 7MnGGMg6HX7UAB1bGhTL7QfNAWKFeHH8SpnEkWgaWQtV
+          - repositoryVersionIndex: 6
+            typeBlueId: GRyCc29p1fQLpKARkjKNwTqt5zffv37rBsaE7RTjABtb
             attributesAdded: []
       - status: dev
         content:
@@ -6751,6 +6751,30 @@ packages:
                   blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
               steps:
                 items:
+                  - name: Resolve PayNote Runtime Defaults
+                    type:
+                      blueId: ExZxT61PSpWHpEAtP2WKMXXqxEYN7Z13j7Zv36Dp99kS
+                    code:
+                      value: |
+                        const fallback = (current, value) =>
+                          current === null || current === undefined ? value : current;
+
+                        return {
+                          status: fallback(document('/status'), 'Pending'),
+                          amountFinalResolved: fallback(document('/amount/finalResolved'), 0),
+                          amountSecured: fallback(document('/amount/secured'), 0),
+                          amountCompleted: fallback(document('/amount/completed'), 0),
+                          amountReversed: fallback(document('/amount/reversed'), 0),
+                          completionLocked: fallback(document('/controls/completionLocked'), false),
+                          reversalLocked: fallback(document('/controls/reversalLocked'), false),
+                          transactionDetailsUpdateLocked: fallback(
+                            document('/controls/transactionDetailsUpdateLocked'),
+                            false
+                          ),
+                          transactionDetails: fallback(document('/transactionDetails'), {}),
+                        };
+                      type:
+                        blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                   - name: Initialize PayNote Runtime State
                     type:
                       blueId: FtHZJzH4hqAoGxFBjsmy1svfT4BwEBB4aHpFSZycZLLa
@@ -6765,7 +6789,7 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: Pending
+                            value: ${steps['Resolve PayNote Runtime Defaults'].status}
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
@@ -6777,9 +6801,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: 0
+                            value: ${steps['Resolve PayNote Runtime Defaults'].amountFinalResolved}
                             type:
-                              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6789,9 +6813,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: 0
+                            value: ${steps['Resolve PayNote Runtime Defaults'].amountSecured}
                             type:
-                              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6801,9 +6825,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: 0
+                            value: ${steps['Resolve PayNote Runtime Defaults'].amountCompleted}
                             type:
-                              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6813,9 +6837,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: 0
+                            value: ${steps['Resolve PayNote Runtime Defaults'].amountReversed}
                             type:
-                              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6825,9 +6849,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: false
+                            value: ${steps['Resolve PayNote Runtime Defaults'].completionLocked}
                             type:
-                              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6837,9 +6861,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: false
+                            value: ${steps['Resolve PayNote Runtime Defaults'].reversalLocked}
                             type:
-                              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6849,9 +6873,9 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                           val:
-                            value: false
+                            value: ${steps['Resolve PayNote Runtime Defaults'].transactionDetailsUpdateLocked}
                             type:
-                              blueId: 4EzhSubEimSQD3zrYHRtobfPPWntUuhEz8YcdxHsi12u
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
                         - op:
                             value: replace
                             type:
@@ -6860,7 +6884,10 @@ packages:
                             value: /transactionDetails
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-                          val: {}
+                          val:
+                            value: ${steps['Resolve PayNote Runtime Defaults'].transactionDetails}
+                            type:
+                              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             acceptPayNote:
               type:
                 blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
@@ -8324,8 +8351,8 @@ packages:
                         type:
                           blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: 4kfReXTiPbwiptkS6DdriPwQubRnbiDm9ghWM9zkrQon
+          - repositoryVersionIndex: 6
+            typeBlueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
             attributesAdded: []
       - status: dev
         content:
@@ -8440,7 +8467,7 @@ packages:
               blueId: 4derXUpwPZDDkBpYPCTMr6t3mbeGU7AUYmvfW22cZior
             document:
               type:
-                blueId: 4kfReXTiPbwiptkS6DdriPwQubRnbiDm9ghWM9zkrQon
+                blueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
             description: PayNote bootstrap request details.
           paymentMandateBootstrapRequest:
             type:
@@ -9043,8 +9070,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 5
-            typeBlueId: EziPPW12NGQo8Brd9C2FpM46BSSn2RhRX6PJbzKonFCE
+          - repositoryVersionIndex: 6
+            typeBlueId: DuqP4xc5kdpFREraHi3HEwX4f4jZt8mpzARbWjELnJn8
             attributesAdded: []
       - status: dev
         content:
@@ -9499,3 +9526,4 @@ repositoryVersions:
   - 7x5HXkJCQPefxeQkAAC25hBM6x5XhDuoxNT618y9LWoV
   - 9g7Gnfrq1c8koa8Fkngs8J9V7oKzMhuXQ7JGfpUfdQGp
   - 2iUtnWCNhsh5arVZxx7Xum4D8PM2NWBAbJ4XoaEfr4Kc
+  - 9RQUZnXwdjk6YqSamBbaX5ZpDPBcHJeFsPF2rM7zncyu
