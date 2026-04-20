@@ -17,3 +17,5 @@ timestamp:
 actor:
   type: Conversation/Actor
   description: Actor attribution for the creator of this entry.
+source:
+  description: Optional delivery mechanism describing how the request reached the timeline provider, typically using a Conversation/Source specialization.

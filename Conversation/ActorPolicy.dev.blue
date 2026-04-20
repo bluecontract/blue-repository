@@ -1,0 +1,17 @@
+name: Actor Policy
+type: Core/Marker
+description: Policy marker describing allowed actor and source categories for operations.
+operations:
+  type: Dictionary
+  keyType: Text
+  valueType:
+    requiresActor:
+      type: Text
+      description: Required actor category ("principal" | "agent" | "any").
+    requiresSource:
+      type: Text
+      description: Required source category ("browserSession" | "apiCall" | "documentRequest").
+    excludeSource:
+      type: Text
+      description: Disallowed source category ("browserSession" | "apiCall" | "documentRequest").
+  description: Per-operation actor/source constraints keyed by operation name.

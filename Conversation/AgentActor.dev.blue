@@ -1,0 +1,6 @@
+name: Agent Actor
+type: Conversation/Actor
+description: Base actor type for a non-human actor exercising delegated authority.
+onBehalfOf:
+  type: Conversation/Actor
+  description: Actor whose authority this agent is using.

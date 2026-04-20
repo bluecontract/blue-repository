@@ -1,0 +1,6 @@
+name: MyOS Principal Actor
+type: Conversation/Principal Actor
+description: MyOS-specific principal actor specialization.
+accountId:
+  type: Text
+  description: MyOS account ID of the principal.
