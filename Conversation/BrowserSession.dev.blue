@@ -1,0 +1,6 @@
+name: Browser Session
+type: Conversation/Source
+description: Source describing an authenticated browser session.
+uiSessionNonce:
+  type: Text
+  description: Opaque nonce identifying the UI session.

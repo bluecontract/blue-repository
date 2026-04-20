@@ -496,6 +496,77 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Actor Policy
+          type:
+            blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
+          description: Policy marker describing allowed actor and source categories for operations.
+          operations:
+            type:
+              blueId: G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj
+            keyType:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            valueType:
+              requiresActor:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Required actor category ("principal" | "agent" | "any").
+              requiresSource:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Required source category ("browserSession" | "apiCall" | "documentRequest").
+              excludeSource:
+                type:
+                  blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+                description: Disallowed source category ("browserSession" | "apiCall" | "documentRequest").
+            description: Per-operation actor/source constraints keyed by operation name.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: EeWqP1Tw9WXo5nq8kx93FuTw9HRqpv34mbWFjH72nR7o
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Agent Actor
+          type:
+            blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+          description: Base actor type for a non-human actor exercising delegated authority.
+          onBehalfOf:
+            type:
+              blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+            description: Actor whose authority this agent is using.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: FM1K89eMHRDN6vHtHfGwFNojmgvSnACuYdtc3qQ6qPYB
+            attributesAdded: []
+      - status: dev
+        content:
+          name: API Call
+          type:
+            blueId: 6ADCPYXkusrp4dL1FC126L2ccuzYfqGdBf1w6EXh2hnC
+          description: Source describing a programmatic API request.
+          apiKeyId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Identifier of the API credential used for the request.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: HCTXeqkKBbVbsa3WfN2bPFSX7mthbtZ6ZhzByf9VDJJs
+            attributesAdded: []
+      - status: dev
+        content:
+          name: Browser Session
+          type:
+            blueId: 6ADCPYXkusrp4dL1FC126L2ccuzYfqGdBf1w6EXh2hnC
+          description: Source describing an authenticated browser session.
+          uiSessionNonce:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Opaque nonce identifying the UI session.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: 8UVUYbhSVBAx7BAupgjSeeFuuyrgdFcGbaXBitEZD9B1
+            attributesAdded: []
+      - status: dev
+        content:
           name: Change Operation
           type:
             blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
@@ -1158,6 +1229,24 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Document Request
+          type:
+            blueId: 6ADCPYXkusrp4dL1FC126L2ccuzYfqGdBf1w6EXh2hnC
+          description: Source describing a request triggered by document workflow execution.
+          documentId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: Identifier of the document that triggered the request.
+          epoch:
+            type:
+              blueId: 5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1
+            description: Epoch of the source document when the request was emitted.
+        versions:
+          - repositoryVersionIndex: 8
+            typeBlueId: 7jZFAkmthHTeg6zAu5kBCDHswd2J5HNVnYPo9y435sin
+            attributesAdded: []
+      - status: dev
+        content:
           name: Document Section
           type:
             blueId: 7QACj919YMRvFCTELCf6jfQTp41RVhtHdE6bPazLUZQ6
@@ -1396,6 +1485,16 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: Principal Actor
+          type:
+            blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
+          description: Base actor type for a human exercising their own authority.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: FqipbF4UATjCRTqovGdREPAoaxj59NECb9xtnWRW1SWi
+            attributesAdded: []
+      - status: dev
+        content:
           name: Propose Change Operation
           type:
             blueId: BoAiqVUZv9Fum3wFqaX2JnQMBHJLxJSo2V9U2UBmCfsC
@@ -1617,6 +1716,14 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: HYsLiqsqk7t98d5fK6YxKEQGeqBaHNVjM4rRNdxK4yUW
             attributesAdded: []
+      - status: dev
+        content:
+          name: Source
+          description: Base type describing how a request reached the timeline provider.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: 6ADCPYXkusrp4dL1FC126L2ccuzYfqGdBf1w6EXh2hnC
+            attributesAdded: []
       - status: stable
         content:
           name: Status Change
@@ -1745,10 +1852,16 @@ packages:
             type:
               blueId: CN5efWVizJbRsMCw8YWRfT2q9vM9XfeGDN9wFvYcvMnQ
             description: Actor attribution for the creator of this entry.
+          source:
+            description: Optional delivery mechanism describing how the request reached the timeline provider, typically using a Conversation/Source specialization.
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: EzDiC9Frs8V5yQBMtDYh1DobVnWtWpFemXDX5fGUULBn
             attributesAdded: []
+          - repositoryVersionIndex: 7
+            typeBlueId: 29tcU8MkrV3KL5HqH6DHJDPPfJMheoqwiKJsaHnrp9hT
+            attributesAdded:
+              - /source
       - status: stable
         content:
           name: Trigger Event
@@ -3174,6 +3287,20 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 8DQrCT6Mf9wHQyRc4NdYhjFW4FbKi83no2QPe54UhdQ5
             attributesAdded: []
+      - status: dev
+        content:
+          name: MyOS Agent Actor
+          type:
+            blueId: FM1K89eMHRDN6vHtHfGwFNojmgvSnACuYdtc3qQ6qPYB
+          description: MyOS-specific agent actor specialization.
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: MyOS account ID of the agent.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: ELnMo95Gduw4zFLakSGqg44AiaP27jEdeg1kMR14TFQN
+            attributesAdded: []
       - status: stable
         content:
           name: MyOS Agent Channel
@@ -3300,6 +3427,20 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 6tzp2YX1rei3aAXg22SqYbeiiteGthj1LesTNCWm7wbU
             attributesAdded: []
+      - status: dev
+        content:
+          name: MyOS Principal Actor
+          type:
+            blueId: FqipbF4UATjCRTqovGdREPAoaxj59NECb9xtnWRW1SWi
+          description: MyOS-specific principal actor specialization.
+          accountId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+            description: MyOS account ID of the principal.
+        versions:
+          - repositoryVersionIndex: 7
+            typeBlueId: 8CHJQMaaPFCmvSrDfrNWitRCBcMMiUzJFaW42HtH1Thw
+            attributesAdded: []
       - status: stable
         content:
           name: MyOS Session Interaction
@@ -3357,7 +3498,7 @@ packages:
         content:
           name: MyOS Timeline Entry
           type:
-            blueId: EzDiC9Frs8V5yQBMtDYh1DobVnWtWpFemXDX5fGUULBn
+            blueId: 29tcU8MkrV3KL5HqH6DHJDPPfJMheoqwiKJsaHnrp9hT
           description: MyOS-specific timeline entry with account and email information
           timeline:
             type:
@@ -3365,6 +3506,9 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: Furgmg5xcJVMDmaQXZRfZ1XehSf7PWctrioo8etRYJHQ
+            attributesAdded: []
+          - repositoryVersionIndex: 7
+            typeBlueId: F3mQaGQ1B48yMedKZojFTxeKxtee4xU66QBbiyEMvGeZ
             attributesAdded: []
       - status: dev
         content:
@@ -9527,3 +9671,5 @@ repositoryVersions:
   - 9g7Gnfrq1c8koa8Fkngs8J9V7oKzMhuXQ7JGfpUfdQGp
   - 2iUtnWCNhsh5arVZxx7Xum4D8PM2NWBAbJ4XoaEfr4Kc
   - 9RQUZnXwdjk6YqSamBbaX5ZpDPBcHJeFsPF2rM7zncyu
+  - HPEHDmhgTFYnW3RSmznSYCK75p5pmYcTPzCvEfT4G7qJ
+  - CkPLrtotEFyaM3PVnJyCznisszSgNaKN6ZzARE2CZRjY

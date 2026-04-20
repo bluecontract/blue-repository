@@ -1,0 +1,6 @@
+name: API Call
+type: Conversation/Source
+description: Source describing a programmatic API request.
+apiKeyId:
+  type: Text
+  description: Identifier of the API credential used for the request.

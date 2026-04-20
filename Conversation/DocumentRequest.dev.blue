@@ -1,0 +1,9 @@
+name: Document Request
+type: Conversation/Source
+description: Source describing a request triggered by document workflow execution.
+documentId:
+  type: Text
+  description: Identifier of the document that triggered the request.
+epoch:
+  type: Integer
+  description: Epoch of the source document when the request was emitted.
