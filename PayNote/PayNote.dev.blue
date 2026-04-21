@@ -2,6 +2,7 @@ name: PayNote
 description: >
   A document attached to exactly one transaction that governs what should happen
   with that transaction.
+kind: PayNote
 
 status:
   type: Text
@@ -62,6 +63,11 @@ payNoteInitialStateDescription:
       Markdown recommended.
 
 contracts:
+  search:
+    type: MyOS/Search Contract
+    kv:
+      kind: /kind
+
   payerChannel:
     type: Core/Channel
 
