@@ -5198,14 +5198,14 @@ packages:
         content:
           name: Card Transaction PayNote
           type:
-            blueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
+            blueId: 7fWr1Bguxi4xnhXx4dpGjaLtjEBgUjyjjaV3vt492Z9
           description: PayNote tied to a specific card transaction via ISO scheme identifiers.
           cardTransactionDetails:
             type:
               blueId: GZLRe2fEsvs1v7dVcg9kEnCrWEdM3cUZYhFH4XqN5jQT
         versions:
-          - repositoryVersionIndex: 6
-            typeBlueId: Ja5fvEx8oyx8GSLUdAhtB4gi4qUGtnJYGJsGxQ86q3z
+          - repositoryVersionIndex: 8
+            typeBlueId: DuNTUpW45aVkLzXh5C63KiiAk5SGCWGTdE3M5iKRBab4
             attributesAdded: []
       - status: dev
         content:
@@ -5501,11 +5501,11 @@ packages:
         content:
           name: Merchant To Customer PayNote
           type:
-            blueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
+            blueId: 7fWr1Bguxi4xnhXx4dpGjaLtjEBgUjyjjaV3vt492Z9
           description: Base PayNote where payer is merchant and payee is customer. Bank sets/validates payer channel bindings.
         versions:
-          - repositoryVersionIndex: 6
-            typeBlueId: GRyCc29p1fQLpKARkjKNwTqt5zffv37rBsaE7RTjABtb
+          - repositoryVersionIndex: 8
+            typeBlueId: 85z8zJij5hoyZSVXHbHKUcyrMPKUAXQ9QnFyVrtGegJ1
             attributesAdded: []
       - status: dev
         content:
@@ -6810,6 +6810,10 @@ packages:
           name: PayNote
           description: |
             A document attached to exactly one transaction that governs what should happen with that transaction.
+          kind:
+            value: PayNote
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
           status:
             type:
               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
@@ -6871,6 +6875,14 @@ packages:
               description: |
                 Full explanation of the process, conditions, and special rules. Markdown recommended.
           contracts:
+            search:
+              type:
+                blueId: 5KdjguBmn7AwB9d8tjKxRh4xUHU9T8WDJ4dbaY6qgPvx
+              kv:
+                kind:
+                  value: /kind
+                  type:
+                    blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
             payerChannel:
               type:
                 blueId: DcoJyCh7XXxy1nR5xjy7qfkUgQ1GiZnKKSxh8DJusBSr
@@ -8495,8 +8507,8 @@ packages:
                         type:
                           blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 6
-            typeBlueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
+          - repositoryVersionIndex: 8
+            typeBlueId: 7fWr1Bguxi4xnhXx4dpGjaLtjEBgUjyjjaV3vt492Z9
             attributesAdded: []
       - status: dev
         content:
@@ -8611,7 +8623,7 @@ packages:
               blueId: 4derXUpwPZDDkBpYPCTMr6t3mbeGU7AUYmvfW22cZior
             document:
               type:
-                blueId: DJ6q5W2JcVYR8NpZ6CTZoMNZ9P8TaiLXkwWwyeTjg2Uu
+                blueId: 7fWr1Bguxi4xnhXx4dpGjaLtjEBgUjyjjaV3vt492Z9
             description: PayNote bootstrap request details.
           paymentMandateBootstrapRequest:
             type:
@@ -9214,8 +9226,8 @@ packages:
                             type:
                               blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
         versions:
-          - repositoryVersionIndex: 6
-            typeBlueId: DuqP4xc5kdpFREraHi3HEwX4f4jZt8mpzARbWjELnJn8
+          - repositoryVersionIndex: 8
+            typeBlueId: FPsSzcPnRKzYdvXvzqSZ44dBPsTuGkbHwF47CEHt8EjH
             attributesAdded: []
       - status: dev
         content:
@@ -9672,3 +9684,4 @@ repositoryVersions:
   - 2iUtnWCNhsh5arVZxx7Xum4D8PM2NWBAbJ4XoaEfr4Kc
   - 9RQUZnXwdjk6YqSamBbaX5ZpDPBcHJeFsPF2rM7zncyu
   - HJT4uiGF9qWmZSgdZ3oChgRXkKaFzmrZHqwuNPoRCDpG
+  - 96W8M1cHNU9Vo7UGbFmiCXqQrNovqEK1WuADFmd9Nnko
