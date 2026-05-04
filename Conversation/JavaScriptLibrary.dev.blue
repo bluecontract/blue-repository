@@ -1,0 +1,108 @@
+name: JavaScript Library
+type: Core/Contract
+description: >
+  Reusable JavaScript module set for `Conversation/JavaScript Code` module mode.
+  A library lets authors share many modules through one Blue contract instead of
+  creating one Blue document per JavaScript file.
+
+  Libraries are source or artifact providers only; they are not workflow steps
+  and are not executed directly. A `Conversation/JavaScript Code` step consumes a
+  library through its `libraries` field, merges the provided modules or verified
+  artifacts into the step's module graph, and then evaluates a single canonical,
+  graph-hashed QuickJS ModulePack.
+
+  Determinism requirements:
+
+  - `modules` keys are canonical module specifiers and values are JavaScript
+    source text.
+  - Local module specifiers must start with `./`, must not contain `..` path
+    segments, must not contain backslashes, and must be unique after
+    normalization across every source provider used by a step.
+  - Source text is normalized for hashing by converting CRLF/CR line endings to
+    LF and otherwise preserving bytes.
+  - External packages are represented only by locked artifacts. Document
+    processing and runtime evaluation must not fetch from npm, read the
+    filesystem, or perform ambient package resolution.
+  - If both `modules` and `artifact` are present, the processor must verify that
+    their hashes and declared package metadata agree before using the library.
+
+  Local source library example:
+
+      contracts:
+        commonJavaScript:
+          type: Conversation/JavaScript Library
+          modules:
+            './math.js': |
+              export function add(left, right) {
+                return left + right;
+              }
+            './format.js': |
+              export function format(value) {
+                return 'value=' + value;
+              }
+
+  A workflow step can then import from the shared module set:
+
+      - type: Conversation/JavaScript Code
+        mode: module
+        libraries:
+          - /contracts/commonJavaScript
+        code: |
+          import { add } from './math.js';
+          import { format } from './format.js';
+          export default format(add(1, 2));
+
+modules:
+  type: Dictionary
+  keyType: Text
+  valueType: Text
+  description: >
+    Optional reusable ES module source map. Keys are canonical module specifiers;
+    values are JavaScript source text. A consuming step computes the static
+    import closure from its own `./entry.js`, so libraries may contain multiple
+    modules while only the reachable subset is executed.
+package:
+  description: >
+    Optional package identity for a locked external library artifact. This is
+    descriptive and verifiable metadata only; it must not trigger network,
+    registry, or filesystem lookup during document processing.
+  registry:
+    type: Text
+    description: Package registry identifier, for example `npm`.
+  packageName:
+    type: Text
+    description: Package name or import name, for example `chess.js`.
+  version:
+    type: Text
+    description: Exact package version used to build the artifact.
+  sourceIntegritySha256:
+    type: Text
+    description: SHA-256 integrity of the package source input used by the artifact builder.
+artifact:
+  description: >
+    Optional locked deterministic artifact for external or generated libraries.
+    The artifact must contain enough data for the processor to verify the module
+    pack without fetching or resolving dependencies at runtime. The exact module
+    pack shape is owned by the deterministic JavaScript runtime package, but the
+    fields below are the repository-level verification envelope.
+  builderVersion:
+    type: Text
+    description: Deterministic artifact builder version.
+  dependencyIntegrity:
+    type: Text
+    description: SHA-256 integrity of the resolved dependency set used by the artifact builder.
+  graphHash:
+    type: Text
+    description: Graph hash of the contained deterministic ModulePack.
+  modulePack:
+    description: The serialized deterministic QuickJS ModulePack to verify and merge.
+moduleAliases:
+  type: Dictionary
+  keyType: Text
+  valueType: Text
+  description: >
+    Optional deterministic import alias map. Keys are import specifiers accepted
+    by consuming code; values are canonical module specifiers provided by
+    `modules` or by the locked `artifact`. Aliases are useful for package-style
+    imports such as `chess.js` when the artifact stores canonical internal
+    module paths.

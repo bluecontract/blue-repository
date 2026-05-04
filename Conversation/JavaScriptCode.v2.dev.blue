@@ -1,0 +1,160 @@
+name: JavaScript Code v2
+type: Conversation/Sequential Workflow Step
+description: >
+  Conversation workflow step that executes provided JavaScript source as part of
+  a sequential workflow.
+
+  The step supports two source shapes while keeping one workflow step type:
+
+  - Script mode executes `code` with the existing JavaScript step semantics.
+    This is the default for existing documents.
+  - Module mode treats `code` as the entry ES module and builds a deterministic
+    module graph from the entry source, inline `modules`, and reusable
+    `libraries`. The processor must convert the graph to a canonical, hashed
+    QuickJS ModulePack before evaluation. Runtime execution must not resolve
+    modules from the filesystem, network, npm registry, or any other ambient
+    source.
+
+  Mode selection:
+
+  - `mode: script` always uses script semantics.
+  - `mode: module` always uses module semantics.
+  - `mode: auto` or omitted uses script semantics unless `entryExport`,
+    `modules`, or `libraries` is present; then it uses module semantics.
+
+  Deterministic module loading rules:
+
+  - The entry module has the implicit stable specifier `./entry.js`.
+  - `modules` is a dictionary from module specifier to JavaScript source.
+  - Local module specifiers must start with `./`, must not contain `..` path
+    segments, must not contain backslashes, and must be unique after
+    normalization.
+  - Static imports must resolve only to the entry module, inline modules,
+    reusable `Conversation/JavaScript Library` modules, or verified locked
+    artifacts. Missing imports are document-processing errors, not late runtime
+    lookups.
+  - Dynamic `import()`, CommonJS `require()`, Node built-ins, filesystem access,
+    network access, and package-manager resolution are not part of the runtime
+    module loader.
+  - Source text is normalized for hashing by converting CRLF/CR line endings to
+    LF and otherwise preserving bytes.
+  - The module graph must be canonicalized and graph-hashed before evaluation;
+    the runtime verifies the graph hash again before executing the pack.
+
+  - Deterministic JavaScript runtime (QuickJS in Wasm):
+      - Only deterministic APIs are available. Date, Math.random, eval/Function,
+        Promise/async, RegExp, Proxy, ArrayBuffer/typed arrays, WebAssembly,
+        console, JSON.parse/stringify, and Array.prototype.sort are disabled.
+      - Values passed into and returned from the VM must be DV-compatible
+        (null, boolean, number, string, array, object with string keys).
+  - Gas accounting (when and what is charged):
+      - JavaScript execution is metered by the QuickJS VM. The VM reports wasm
+        fuel used; the processor converts it to host gas with:
+          hostGas = ceil(wasmFuel / 1700)
+        (calibration factor currently 1700 fuel per host gas unit).
+      - Document snapshot reads (via document(<pointer>) inside the code):
+        8 + depth(pointer) + ceil(snapshotBytes/100) per call, where:
+          - depth("/") = 0, depth("/a/b") = 2 (number of path segments),
+          - snapshotBytes is the canonical JSON size of the retrieved snapshot.
+      - Event emissions (if the returned result contains events: [...]):
+        20 + ceil(eventBytes/100) per emitted event, where eventBytes is the
+        canonical JSON size of that event. (Delivery/handling of those events may incur
+        additional charges elsewhere, outside this step.)
+  - JavaScript bindings available to the code:
+      - `event`: triggering event rendered via the `'simple'` JSON strategy (plain
+        values/arrays, no metadata).
+      - `eventCanonical`: triggering event rendered via the `'official'` strategy.
+      - `currentContract`: the current handler contract rendered via the `'simple'`
+        JSON strategy.
+      - `currentContractCanonical`: current handler contract rendered via the
+        `'official'` strategy.
+      - `document(pointer?)`: document snapshot (absolute path or scope-relative) rendered
+        with the `'simple'` strategy; defaults to `/` when omitted.
+      - `document.canonical(pointer?)`: snapshot rendered using the `'official'`
+        strategy for canonical metadata.
+      - `steps`: results of previously executed steps.
+      - `canon.unwrap(canonical, deep=true)`: converts canonical JSON back to plain values.
+      - `canon.at(canonical, pointer)`: JSON Pointer navigation helper for canonical
+        JSON objects.
+
+  Examples:
+
+  Script mode:
+
+      - type: Conversation/JavaScript Code v2
+        code: |
+          return document('/counter') + 1;
+
+  Inline module mode:
+
+      - type: Conversation/JavaScript Code v2
+        mode: module
+        code: |
+          import { inc } from './math.js';
+          export default inc(document('/counter'));
+        modules:
+          './math.js': |
+            export function inc(value) {
+              return value + 1;
+            }
+
+  Reusable library mode:
+
+      contracts:
+        mathLibrary:
+          type: Conversation/JavaScript Library
+          modules:
+            './math.js': |
+              export function inc(value) {
+                return value + 1;
+              }
+
+        onInit:
+          type: Conversation/Sequential Workflow
+          steps:
+            - type: Conversation/JavaScript Code v2
+              mode: module
+              libraries:
+                - /contracts/mathLibrary
+              code: |
+                import { inc } from './math.js';
+                export default inc(1);
+
+code:
+  type: Text
+  description: >
+    JavaScript source to execute for this step. In script mode this is the
+    complete script body. In module mode this is the entry ES module and has the
+    implicit module specifier `./entry.js`.
+mode:
+  type: Text
+  description: >
+    Optional execution mode. Supported values are `script`, `module`, and
+    `auto`. Missing mode behaves as `auto`: existing plain `code` steps run as
+    scripts, while steps with `entryExport`, `modules`, or `libraries` run as
+    deterministic ES modules.
+entryExport:
+  type: Text
+  description: >
+    Optional module export to read in module mode. Defaults to `default`. This
+    field is not applicable in script mode and should be rejected when
+    `mode: script` is selected explicitly.
+modules:
+  type: Dictionary
+  keyType: Text
+  valueType: Text
+  description: >
+    Optional inline ES modules for module mode. Keys are canonical module
+    specifiers, and values are JavaScript source text. Local specifiers must use
+    `./` paths, must not contain `..` segments or backslashes, and must be unique
+    after normalization. The processor builds the static import closure from
+    `./entry.js` and rejects missing or ambiguous imports before evaluation.
+libraries:
+  type: List
+  itemType: Text
+  description: >
+    Optional ordered list of document pointers to reusable
+    `Conversation/JavaScript Library` contracts. Library modules and locked
+    artifacts are merged with the entry and inline modules deterministically.
+    Duplicate normalized specifiers across libraries, inline modules, and the
+    entry module are document-processing errors.
