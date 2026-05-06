@@ -2465,6 +2465,41 @@ packages:
             attributesAdded: []
       - status: stable
         content:
+          name: Document Initial Snapshot Requested
+          type:
+            blueId: 8f9UhHMbRe62sFgzQVheToaJPYi7t7HPNVvpQTbqfL5n
+          sourceSessionId:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: CTFByfge1uHNvbNNWP92XrGng1HnqAKVz9Wq1Tvg5x2T
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Initial Snapshot Resolved
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          document:
+            description: Initial snapshot of requested document session.
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: GAFsQ4MjLuJZfEgPE1J1jp8fpihkgRq6Q1meF4xsmJYv
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Initial Snapshot Unresolved
+          type:
+            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
+          reason:
+            type:
+              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
+        versions:
+          - repositoryVersionIndex: 2
+            typeBlueId: u64K6E1Yv7NWsaYuAExGJDaTcffX6Q4iSbUkgxZB1v9
+            attributesAdded: []
+      - status: stable
+        content:
           name: Document Link
           description: Link targeting a specific Blue document by its stable documentId (initial blueId before any processing). Used to point to a logical document regardless of session.
           type:
@@ -9689,3 +9724,4 @@ packages:
 repositoryVersions:
   - 5gmX9Fhnu4qM9ZJuqKAVZQXCQng3h4hZbWoaSEufSzij
   - B4qWEbNWRcgabYrDTxtebfRSP5nBnEYvpX5YWqa2PcE4
+  - sUk1iHFrf7UQXAMeQvWRyvYVxxStUjfARaE5e4EgDKv
