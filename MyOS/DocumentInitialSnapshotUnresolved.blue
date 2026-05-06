@@ -1,0 +1,5 @@
+name: Document Initial Snapshot Unresolved
+type: Conversation/Response
+reason:
+  type: Text
+
