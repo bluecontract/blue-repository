@@ -1,0 +1,4 @@
+name: Document Initial Snapshot Resolved
+type: Conversation/Response
+document:
+  description: Initial snapshot of requested document session.

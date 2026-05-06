@@ -1,0 +1,5 @@
+name: Document Initial Snapshot Requested
+type: Conversation/Request
+sourceSessionId:
+  type: Text
+
