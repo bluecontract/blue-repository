@@ -1,0 +1,9 @@
+name: Payment Initiated
+type: Conversation/Response
+description: Result emitted after MyOS initiated the payment and attached paynote.
+paynoteDocumentId:
+  type: Text
+  description: Blue document id of the initiated PayNote.
+paynotePayeeSessionId:
+  type: Text
+  description: MyOS payee session id for the initiated PayNote.
