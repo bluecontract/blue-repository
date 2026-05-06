@@ -3586,24 +3586,6 @@ packages:
             attributesAdded: []
       - status: dev
         content:
-          name: Payment Initiated
-          description: Result emitted after MyOS initiated the payment and attached paynote.
-          type:
-            blueId: 36epvrpVHZLjapbeZsNodz2NDnm7XZeNZcnkWHgkP1pp
-          paynoteDocumentId:
-            description: Blue document id of the initiated PayNote.
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-          paynotePayeeSessionId:
-            description: MyOS payee session id for the initiated PayNote.
-            type:
-              blueId: DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K
-        versions:
-          - repositoryVersionIndex: 1
-            typeBlueId: DVdWNtgwNrRFw2xoM6nbjPtSr9HhHNxxZVurf3Dr4cX2
-            attributesAdded: []
-      - status: dev
-        content:
           name: Payment Initiation Accepted
           description: Result emitted after MyOS Admin accepts a payment initiation request.
           type:
@@ -9688,4 +9670,3 @@ packages:
             attributesAdded: []
 repositoryVersions:
   - 5gmX9Fhnu4qM9ZJuqKAVZQXCQng3h4hZbWoaSEufSzij
-  - B4qWEbNWRcgabYrDTxtebfRSP5nBnEYvpX5YWqa2PcE4
