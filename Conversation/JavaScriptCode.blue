@@ -5,9 +5,16 @@ description: >
   a sequential workflow.
 
   - Deterministic JavaScript runtime (QuickJS in Wasm):
-      - Only deterministic APIs are available. Date, Math.random, eval/Function,
-        Promise/async, RegExp, Proxy, ArrayBuffer/typed arrays, WebAssembly,
-        console, JSON.parse/stringify, and Array.prototype.sort are disabled.
+      - Non-deterministic or unsupported APIs are disabled, including Date,
+        Math.random, eval/Function, Promise/async, RegExp, Proxy,
+        ArrayBuffer/typed arrays, WebAssembly, console, and
+        Array.prototype.sort.
+      - `JSON.parse` and `JSON.stringify` are available, but in a restricted
+        deterministic form:
+          - `JSON.parse` accepts standard JSON only. `reviver` is not
+            supported.
+          - `JSON.stringify` always produces canonical, minimal JSON.
+            `replacer` and pretty-printing are not supported.
       - Values passed into and returned from the VM must be DV-compatible
         (null, boolean, number, string, array, object with string keys).
   - Gas accounting (when and what is charged):
