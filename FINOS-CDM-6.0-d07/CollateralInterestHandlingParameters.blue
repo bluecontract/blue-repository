@@ -1,0 +1,70 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestHandlingParameters.schema.json
+name: CollateralInterestHandlingParameters
+namespace: cdm/product/collateral
+description: |
+  Represents parameters that describe how calculated interest amounts are handled, i.e. are they transferred/distributed, or is the collateral balance adjusted, is netting done, and any other special handling.
+accrueInterestOnUnsettledInterest:
+  description: |
+    Indicates whether interest accruing on unsettled interest amount is included (continues to be accrued) in the following period.
+  type: Boolean
+alternativeProvision:
+  description: "Specifies an alternative to interest amount, when the alternative provision clause is specified."
+  type: Text
+alternativeToInterestAmount:
+  description: Specifies the alternative to interest amounts.
+  type: FINOS-CDM-6.0-d07/AlternativeToInterestAmountEnum
+cutoffTime:
+  description: Specifies the time of day that interest needs to be confirmed by.
+  type: Text
+includeAccrualInMarginCalc:
+  description: Indicates whether or not to include the open interest accrual in the margin calculation.
+  type: Boolean
+  schema:
+    required: true
+interestAmountApplication:
+  description: The application of Interest Amount with respect to the Delivery Amount and the Return Amount.
+  type: FINOS-CDM-6.0-d07/InterestAmountApplication
+interestPaymentHandling:
+  description: Specifies how the collateral interest is to be handled.
+  type: FINOS-CDM-6.0-d07/CollateralInterestHandlingEnum
+  schema:
+    required: true
+interestRolloverLimit:
+  description: Specifies the level below which the interest will be rolled over.
+  type: FINOS-CDM-6.0-d07/NumberBound
+netInterestWithMarginCalls:
+  description: |
+    Indicates whether the interest amount may be offset against any margin call deliver or return amounts?   (aka 'net payments' indicator).
+  type: Boolean
+  schema:
+    required: true
+netPostedAndHeldInterest:
+  description: |
+    Indicates whether to net Held and Posted Interest Payments (i.e. whether interest payable for a period can be netted with interest receivable).
+  type: Boolean
+  schema:
+    required: true
+notification:
+  description: Specifies the terms describing notification requirements.
+  type: FINOS-CDM-6.0-d07/CollateralInterestNotification
+onFullReturn:
+  description: |
+    Indicates the option that accrued interest should be calculated and distributed when a full return of collateral occurs.
+  type: Boolean
+  schema:
+    required: true
+onPartialReturn:
+  description: |
+    Indicates the option that accrued interest should be calculated and distributed when a partial return collateral occurs.
+  type: Boolean
+  schema:
+    required: true
+paymentBusinessCenter:
+  description: Specifies applicable business centers for payments.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/BusinessCenterEnum
+  schema:
+    minItems: 0
+writeoffLimit:
+  description: "Specifies the level below which the interest will be written off; if omitted write-off is not applicable."
+  type: FINOS-CDM-6.0-d07/NumberBound

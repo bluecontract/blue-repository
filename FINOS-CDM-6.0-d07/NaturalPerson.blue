@@ -1,0 +1,41 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-NaturalPerson.schema.json
+name: NaturalPerson
+namespace: cdm/base/staticdata/party
+description: A class to represent the attributes that are specific to a natural person.
+contactInformation:
+  description: |
+    The contact information for such person, when different from the contact information associated with the party.
+  type: FINOS-CDM-6.0-d07/ContactInformation
+dateOfBirth:
+  description: "The natural person's date of birth."
+  type: Text
+firstName:
+  description: "The natural person's first name. It is optional in FpML."
+  type: Text
+honorific:
+  description: "An honorific title, such as Mr., Ms., Dr. etc."
+  type: Text
+initial:
+  description: "The natural person's middle initial(s). If a middle initial is provided then a name should be absent."
+  type: List
+  itemType: Text
+  schema:
+    minItems: 0
+middleName:
+  description: "The natural person's middle name(s). If a middle name is provided then an initial should be absent."
+  type: List
+  itemType: Text
+  schema:
+    minItems: 0
+personId:
+  description: "The identifier associated with a person, e.g. the internal identification code."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/FieldWithMetaPersonIdentifier
+  schema:
+    minItems: 0
+suffix:
+  description: "Name suffix, such as Jr., III, etc."
+  type: Text
+surname:
+  description: "The natural person's surname."
+  type: Text

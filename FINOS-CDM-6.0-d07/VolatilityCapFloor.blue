@@ -1,0 +1,19 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-VolatilityCapFloor.schema.json
+name: VolatilityCapFloor
+namespace: cdm/product/asset
+description: |
+  Contains volatility-based barriers. Volatility Cap needs to be specified in accordance with the ISDA 2011 Equity Derivatives Definitions.
+applicable:
+  description: |
+    Indicates whether the volatility cap is applicable in accordance with the ISDA 2011 Equity Derivatives Definitions. Setting the element 'applicable' to 'False' - means No Volatility Cap and no 'totalVolatilityCap' or 'volatilityCapFactor' should be provided. Setting the element 'applicable' to 'True' - means Volatility Cap election, then 'totalVolatilityCap' or 'volatilityCapFactor' should be provided, otherwise it defaults to volatilityCapFactor=2.5.
+  type: Boolean
+  schema:
+    required: true
+totalVolatilityCap:
+  description: |
+    Volatility Cap Amount in accordance with the ISDA 2011 Equity Derivatives Definitions. This means the Volatility Cap Amount election is a number.
+  type: Double
+volatilityCapFactor:
+  description: |
+    Volatility Cap Amount in accordance with the ISDA 2011 Equity Derivatives Definitions. The Calculated VolCapAmt can be optionally provided.
+  type: Double

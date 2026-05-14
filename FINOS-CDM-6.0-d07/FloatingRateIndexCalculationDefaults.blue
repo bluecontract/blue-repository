@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexCalculationDefaults.schema.json
+name: FloatingRateIndexCalculationDefaults
+namespace: cdm/observable/asset/fro
+description: This holds the rate calculation defaults applicable for a floating rate index.
+category:
+  description: "The ISDA FRO category (e.g. screen rate or calculated rate)."
+  type: FINOS-CDM-6.0-d07/FloatingRateIndexCategoryEnum
+indexStyle:
+  description: "The ISDA FRO style (e.g. term rate, swap rate, etc)."
+  type: FINOS-CDM-6.0-d07/FloatingRateIndexStyleEnum
+method:
+  description: "The ISDA FRO calculation method (e.g. OIS Compounding)."
+  type: FINOS-CDM-6.0-d07/FloatingRateIndexCalculationMethodEnum

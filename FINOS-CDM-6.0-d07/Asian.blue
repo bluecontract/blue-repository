@@ -1,0 +1,17 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-Asian.schema.json
+name: Asian
+namespace: cdm/product/template
+description: As per ISDA 2002 Definitions.
+averagingInOut:
+  type: FINOS-CDM-6.0-d07/AveragingInOutEnum
+  schema:
+    required: true
+averagingPeriodIn:
+  description: The averaging in period.
+  type: FINOS-CDM-6.0-d07/AveragingPeriod
+averagingPeriodOut:
+  description: The averaging out period.
+  type: FINOS-CDM-6.0-d07/AveragingPeriod
+strikeFactor:
+  description: The factor of strike.
+  type: Double

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-SpreadScheduleTypeEnum.schema.json
+name: SpreadScheduleTypeEnum
+namespace: cdm/product/asset
+description: The enumerated values to specify a long or short spread value.
+type: Text
+schema:
+  enum: [Long, Short]

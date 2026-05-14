@@ -1,0 +1,15 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-NumberBound.schema.json
+name: NumberBound
+namespace: cdm/base/math
+description: The number bound is defined as a number and whether the bound is inclusive.
+inclusive:
+  description: |
+    Whether the number bound is inclusive, e.g. for a lower bound, false would indicate greater than, whereas true would indicate greater than or equal to.
+  type: Boolean
+  schema:
+    required: true
+number:
+  description: "The number to be used as the bound, e.g. 5."
+  type: Double
+  schema:
+    required: true

@@ -1,0 +1,19 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-DerivInstrmAttrbts.schema.json
+name: DerivInstrmAttrbts
+namespace: cdm/regulation
+dlvryTp:
+  type: Text
+  schema:
+    required: true
+pricMltplr:
+  type: Text
+  schema:
+    required: true
+undrlygInstrm:
+  type: FINOS-CDM-6.0-d07/UndrlygInstrm
+  schema:
+    required: true
+xpryDt:
+  type: Text
+  schema:
+    required: true

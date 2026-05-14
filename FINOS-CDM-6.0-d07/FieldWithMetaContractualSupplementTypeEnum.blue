@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-metafields-FieldWithMetaContractualSupplementTypeEnum.schema.json
+name: FieldWithMetaContractualSupplementTypeEnum
+namespace: cdm/legaldocumentation/common
+meta:
+  type: FINOS-CDM-6.0-d07/MetaFields
+val:
+  type: FINOS-CDM-6.0-d07/ContractualSupplementTypeEnum

@@ -1,0 +1,29 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ExerciseEvent.schema.json
+name: ExerciseEvent
+namespace: cdm/event/common
+description: |
+  A data defining:  the adjusted dates associated with a particular exercise event.
+adjustedCashSettlementPaymentDate:
+  description: |
+    The date on which the cash settlement amount is paid. This date should already be adjusted for any applicable business day convention.
+  type: Text
+adjustedCashSettlementValuationDate:
+  description: |
+    The date by which the cash settlement amount must be agreed. This date should already be adjusted for any applicable business day convention.
+  type: Text
+adjustedExerciseDate:
+  description: |
+    The date on which the option exercise takes place. This date should already be adjusted for any applicable business day convention.
+  type: Text
+  schema:
+    required: true
+adjustedExerciseFeePaymentDate:
+  description: |
+    The date on which the exercise fee amount is paid. This date should already be adjusted for any applicable business day convention.
+  type: Text
+adjustedRelevantSwapEffectiveDate:
+  description: |
+    The effective date of the underlying swap associated with a given exercise date. This date should already be adjusted for any applicable business day convention.
+  type: Text
+  schema:
+    required: true

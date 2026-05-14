@@ -1,0 +1,17 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DiscountingMethod.schema.json
+name: DiscountingMethod
+namespace: cdm/product/asset
+description: |
+  A data defining:  discounting information. The 2000 ISDA definitions, section 8.4. discounting (related to the calculation of a discounted fixed amount or floating amount) apply. This type must only be included if discounting applies.
+discountingType:
+  description: The discounting method that is applicable.
+  type: FINOS-CDM-6.0-d07/DiscountingTypeEnum
+  schema:
+    required: true
+discountRate:
+  description: |
+    A discount rate, expressed as a decimal, to be used in the calculation of a discounted amount. A discount amount of 5% would be represented as 0.05.
+  type: Double
+discountRateDayCountFraction:
+  description: A discount day count fraction to be used in the calculation of a discounted amount.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaDayCountFractionEnum

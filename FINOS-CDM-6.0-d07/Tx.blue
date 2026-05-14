@@ -1,0 +1,31 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Tx.schema.json
+name: Tx
+namespace: cdm/regulation
+ctryOfBrnch:
+  type: Text
+  schema:
+    required: true
+newTx:
+  type: FINOS-CDM-6.0-d07/New
+  schema:
+    required: true
+pric:
+  type: FINOS-CDM-6.0-d07/Pric
+  schema:
+    required: true
+qty:
+  type: FINOS-CDM-6.0-d07/Qty
+  schema:
+    required: true
+tradDt:
+  type: Text
+  schema:
+    required: true
+tradgCpcty:
+  type: Text
+  schema:
+    required: true
+tradVn:
+  type: Text
+  schema:
+    required: true

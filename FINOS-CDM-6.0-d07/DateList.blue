@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-DateList.schema.json
+name: DateList
+namespace: cdm/base/datetime
+description: List of dates.
+date:
+  type: List
+  itemType: Text
+  schema:
+    minItems: 1

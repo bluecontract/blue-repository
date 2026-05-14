@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-metafields-ReferenceWithMetaCashSettlementTerms.schema.json
+name: ReferenceWithMetaCashSettlementTerms
+namespace: cdm/product/common/settlement/metafields
+address:
+  type: FINOS-CDM-6.0-d07/Reference
+externalReference:
+  type: Text
+globalReference:
+  type: Text

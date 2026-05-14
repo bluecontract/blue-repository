@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ObservationInstruction.schema.json
+name: ObservationInstruction
+namespace: cdm/event/common
+description: Specifies inputs needed to process an observation.
+observationEvent:
+  description: Contains all information related to an observation.
+  type: FINOS-CDM-6.0-d07/ObservationEvent
+  schema:
+    required: true

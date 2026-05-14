@@ -1,0 +1,31 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CounterpartyPositionBusinessEvent.schema.json
+name: CounterpartyPositionBusinessEvent
+namespace: cdm/event/common
+description: |
+  A business event represents a life cycle event of a position. The combination of the state changes results in a qualifiable life cycle event.
+after:
+  description: "Specifies the after position state(s) created."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/CounterpartyPositionState
+  schema:
+    minItems: 0
+corporateActionIntent:
+  description: The intent of a corporate action on the position.
+  type: FINOS-CDM-6.0-d07/CorporateActionTypeEnum
+effectiveDate:
+  description: "The date on which the event contractually takes effect, when different from the event date."
+  type: Text
+eventDate:
+  description: |
+    Specifies the date on which the event is taking place. This date is equal to the trade date in the case of a simple execution.  However it can be different from the trade date, for example in the case of a partial termination.
+  type: Text
+intent:
+  description: |
+    The intent attribute is meant to be specified when the event qualification cannot be programmatically inferred from the event features. As a result it is only associated with those primitives that can give way to such ambiguity, the quantityChange being one of those.
+  type: FINOS-CDM-6.0-d07/PositionEventIntentEnum
+  schema:
+    required: true
+packageInformation:
+  description: |
+    Specifies the package information in case the business event represents several trades executed as a package (hence this attribute is optional). The package information is only instantiated once at the business event level to preserve referential integrity, whereas individual trades make reference to it to identify that they are part of a package.
+  type: FINOS-CDM-6.0-d07/IdentifiedList

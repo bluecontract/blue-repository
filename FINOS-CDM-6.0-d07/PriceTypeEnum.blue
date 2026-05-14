@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PriceTypeEnum.schema.json
+name: PriceTypeEnum
+namespace: cdm/observable/asset
+description: |
+  Provides enumerated values for types of prices in the Price data type in order to explain how to interpret the amount and use it in calculations.
+type: Text
+schema:
+  enum: [AssetPrice, CashPrice, Correlation, Dividend, ExchangeRate, InterestRate, Variance, Volatility]

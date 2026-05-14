@@ -1,0 +1,39 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-AggregationParameters.schema.json
+name: AggregationParameters
+namespace: cdm/event/position
+description: |
+  Parameters to be used to filter events that are relevant to a given portfolio in order to calculate the state of this portfolio. The attributes correspond to all the possible aggregation criteria that can be used and these criteria can be combined. All the attributes are optional.
+dateTime:
+  description: To aggregate as of a particular date
+  type: Text
+  schema:
+    required: true
+party:
+  description: "To aggregate based on a selection of party(ies) / legal entity(ies)."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  schema:
+    minItems: 0
+positionStatus:
+  description: "To aggregate based on position status (EXECUTED, SETTLED etc)"
+  type: FINOS-CDM-6.0-d07/PositionStatusEnum
+product:
+  description: To aggregate based on a selection of products.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/NonTransferableProduct
+  schema:
+    minItems: 0
+productQualifier:
+  description: "To aggregate based on a selection of product type(s)."
+  type: List
+  itemType: Text
+  schema:
+    minItems: 0
+totalPosition:
+  description: "Specifies whether to calculate total position to given date, or only daily position for the given date."
+  type: Boolean
+tradeReference:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaTrade
+  schema:
+    minItems: 0

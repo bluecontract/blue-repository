@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexCalculationMethodEnum.schema.json
+name: FloatingRateIndexCalculationMethodEnum
+namespace: cdm/observable/asset/fro
+description: 3rd level ISDA FRO category.
+type: Text
+schema:
+  enum: [All-In Compounded Index, Overnight Averaging, Compounded Index, OIS Compounding]

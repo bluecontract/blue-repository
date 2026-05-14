@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-SettledEntityMatrix.schema.json
+name: SettledEntityMatrix
+namespace: cdm/product/asset
+description: A class to specify the Relevant Settled Entity Matrix.
+matrixSource:
+  description: Relevant settled entity matrix source.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaSettledEntityMatrixSourceEnum
+  schema:
+    required: true
+publicationDate:
+  description: |
+    Specifies the publication date of the applicable version of the matrix. When this element is omitted, the Standard Terms Supplement defines rules for which version of the matrix is applicable.
+  type: Text

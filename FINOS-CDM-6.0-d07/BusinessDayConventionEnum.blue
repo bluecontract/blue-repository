@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-BusinessDayConventionEnum.schema.json
+name: BusinessDayConventionEnum
+namespace: cdm/base/datetime
+description: |
+  The enumerated values to specify the convention for adjusting any relevant date if it would otherwise fall on a day that is not a valid business day.
+type: Text
+schema:
+  enum: [FOLLOWING, FRN, MODFOLLOWING, MODPRECEDING, NEAREST, NONE, NotApplicable, PRECEDING]

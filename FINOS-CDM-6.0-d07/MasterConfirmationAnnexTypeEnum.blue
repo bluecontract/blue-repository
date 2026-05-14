@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterConfirmationAnnexTypeEnum.schema.json
+name: MasterConfirmationAnnexTypeEnum
+namespace: cdm/legaldocumentation/master
+description: |
+  The enumerated values to specify the type of annex to be used with master confirmation agreement governing the transaction.
+type: Text
+schema:
+  enum: [ISDA2004IndexVarianceSwapAmericasInterdealer, ISDA2004ShareVarianceSwapAmericasInterdealer, ISDA2007DispersionVarianceSwapEuropean, ISDA2007EquityFinanceSwapEuropean, ISDA2007IndexVarianceSwapAmericasInterdealer, ISDA2007ShareVarianceSwapAmericasInterdealer, ISDA2007VarianceOptionEuropean, ISDA2008EquityFinanceSwapAsiaExcludingJapan, ISDA2008EquityFinanceSwapAsiaExcludingJapanRev1, ISDA2008EquityOptionAsiaExcludingJapan, ISDA2008EquityOptionAsiaExcludingJapanRev1, ISDA2008EquityOptionJapan, ISDA2009ClosedMarketsOptionsAsiaExcludingJapan, ISDA2009EquityEuropeanIS, ISDA2009EquityEuropeanInterdealerSS, ISDA2009IndexShareOptionAmericas, ISDA2009IndexSwapEuropeanInterdealer, ISDA2009IndexSwapPanAsiaInterdealer, ISDA2009ShareSwapPanAsia, ISDA2010FairValueShareSwapEuropeanInterdealer, ISDA2010IndexShareOptionEMEAInterdealer]

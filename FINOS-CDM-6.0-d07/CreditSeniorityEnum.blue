@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-CreditSeniorityEnum.schema.json
+name: CreditSeniorityEnum
+namespace: cdm/product/asset
+description: Seniority of debt instruments comprising the index.
+type: Text
+schema:
+  enum: [Other, SeniorLossAbsorbingCapacity, SeniorSec, SeniorUnSec, SubLowerTier2, SubTier1, SubTier3, SubUpperTier2]

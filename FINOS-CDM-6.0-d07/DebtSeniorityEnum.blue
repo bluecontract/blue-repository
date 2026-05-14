@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DebtSeniorityEnum.schema.json
+name: DebtSeniorityEnum
+namespace: cdm/base/staticdata/asset/common
+description: |
+  Specifies the order of repayment in the event of a sale or bankruptcy of the issuer or a related party (eg guarantor).
+type: Text
+schema:
+  enum: [Secured, Senior, Subordinated]

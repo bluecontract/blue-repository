@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-InterestRateCurve.schema.json
+name: InterestRateCurve
+namespace: cdm/observable/asset
+floatingRateIndex:
+  type: FINOS-CDM-6.0-d07/FieldWithMetaFloatingRateIndexEnum
+  schema:
+    required: true
+tenor:
+  type: FINOS-CDM-6.0-d07/Period
+  schema:
+    required: true

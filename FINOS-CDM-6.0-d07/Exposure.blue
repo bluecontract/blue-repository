@@ -1,0 +1,24 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-Exposure.schema.json
+name: Exposure
+namespace: cdm/event/common
+description: |
+  Represents the current mark to market value or IM calculation value of the trade portfolio as recorded by the principle (in base currency).
+aggregateValue:
+  description: Represents the aggregate value of the portfolio in base currency.
+  type: FINOS-CDM-6.0-d07/Money
+  schema:
+    required: true
+calculationDateTime:
+  description: Indicates the date when the exposure is calculated if different from valuation date.
+  type: Text
+tradePortfolio:
+  description: |
+    Represents a Portfolio that describes all the positions held at a given time, in various states which can be either traded, settled, etc., with lineage information to the previous state.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaPortfolioState
+  schema:
+    required: true
+valuationDateTime:
+  description: Indicates the valuation date of the exposure underlying the calculation.
+  type: Text
+  schema:
+    required: true

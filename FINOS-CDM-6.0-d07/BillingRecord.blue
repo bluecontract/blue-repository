@@ -1,0 +1,27 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-BillingRecord.schema.json
+name: BillingRecord
+namespace: cdm/event/common
+description: Specifies individual records within a billing invoice.
+minimumFee:
+  description: "Indicates the minimum fee amount applied to the billing record, if any."
+  type: FINOS-CDM-6.0-d07/Money
+recordEndDate:
+  description: The ending date of the period described by this record
+  type: Text
+  schema:
+    required: true
+recordStartDate:
+  description: The starting date of the period described by this record
+  type: Text
+  schema:
+    required: true
+recordTransfer:
+  description: The settlement terms for the billing record
+  type: FINOS-CDM-6.0-d07/Transfer
+  schema:
+    required: true
+tradeState:
+  description: The trade for the individual billing record.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaTradeState
+  schema:
+    required: true

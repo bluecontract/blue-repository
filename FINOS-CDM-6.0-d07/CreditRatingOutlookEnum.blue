@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CreditRatingOutlookEnum.schema.json
+name: CreditRatingOutlookEnum
+namespace: cdm/observable/asset
+description: Represents the enumerated values to specify the credit rating outlook.
+type: Text
+schema:
+  enum: [Developing, Negative, Positive, Stable]

@@ -1,0 +1,24 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CorporateAction.schema.json
+name: CorporateAction
+namespace: cdm/event/common
+description: Specifies the relevant data regarding a corporate action.
+corporateActionType:
+  description: The type of corporate action taking place.
+  type: FINOS-CDM-6.0-d07/CorporateActionTypeEnum
+  schema:
+    required: true
+exDate:
+  description: The date on which the corporate action is known to have taken place.
+  type: Text
+  schema:
+    required: true
+payDate:
+  description: The date on which resulting from the corporate action are delivered.
+  type: Text
+  schema:
+    required: true
+underlier:
+  description: The underlier impacted by the corporate action.
+  type: FINOS-CDM-6.0-d07/Underlier
+  schema:
+    required: true

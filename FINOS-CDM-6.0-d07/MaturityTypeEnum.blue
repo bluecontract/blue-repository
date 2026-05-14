@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-MaturityTypeEnum.schema.json
+name: MaturityTypeEnum
+namespace: cdm/base/staticdata/asset/common
+description: Represents an enumeration list to identify the Maturity.
+type: Text
+schema:
+  enum: [FromIssuance, OriginalMaturity, RemainingMaturity]

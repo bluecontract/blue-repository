@@ -1,0 +1,40 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestCalculationParameters.schema.json
+name: CollateralInterestCalculationParameters
+namespace: cdm/product/collateral
+description: |
+  Represents parameters for calculating the amount the floating interest calculation, e.g.  for a single currency or defaults for all currencies.
+compoundingBusinessCenter:
+  description: Specifies the applicable business centers for compounding.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/BusinessCenterEnum
+  schema:
+    minItems: 0
+compoundingType:
+  description: "Specifies the type of compounding to be applied (None, Business, Calendar)."
+  type: FINOS-CDM-6.0-d07/CompoundingTypeEnum
+dayCountFraction:
+  description: Specifies the day count fraction to use for that currency.
+  type: FINOS-CDM-6.0-d07/DayCountFractionEnum
+  schema:
+    required: true
+fixedRate:
+  description: Specifies the applicable fixed rate  if used.
+  type: Double
+floatingRate:
+  description: Specifies the floating interest rate to be used.
+  type: FINOS-CDM-6.0-d07/CollateralAgreementFloatingRate
+inBaseCurrency:
+  description: |
+    If True, specifies that the interest transfers should be converted to base currency equivalent, or if False specifies that the transfer should be in the currency of the collateral.
+  type: Boolean
+  schema:
+    required: true
+rounding:
+  description: Specifies the rounding rules for settling in that currency.
+  type: FINOS-CDM-6.0-d07/Rounding
+roundingFrequency:
+  description: "Specifies when/how often is rounding applied?"
+  type: FINOS-CDM-6.0-d07/RoundingFrequencyEnum
+withholdingTaxRate:
+  description: Specifies the withholding tax rate if a withholding tax is applicable.
+  type: Double

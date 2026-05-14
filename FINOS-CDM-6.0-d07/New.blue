@@ -1,0 +1,51 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-New.schema.json
+name: New
+namespace: cdm/regulation
+addtlAttrbts:
+  type: FINOS-CDM-6.0-d07/AddtlAttrbts
+  schema:
+    required: true
+buyr:
+  type: FINOS-CDM-6.0-d07/Buyr
+  schema:
+    required: true
+exctgPrsn:
+  type: FINOS-CDM-6.0-d07/ExctgPrsn
+  schema:
+    required: true
+exctgPty:
+  type: Text
+  schema:
+    required: true
+finInstrm:
+  type: FINOS-CDM-6.0-d07/FinInstrm
+  schema:
+    required: true
+invstmtDcsnPrsn:
+  type: FINOS-CDM-6.0-d07/InvstmtDcsnPrsn
+  schema:
+    required: true
+invstmtPtyInd:
+  type: Text
+  schema:
+    required: true
+ordrTrnsmssn:
+  type: FINOS-CDM-6.0-d07/OrdrTrnsmssn
+  schema:
+    required: true
+sellr:
+  type: FINOS-CDM-6.0-d07/Sellr
+  schema:
+    required: true
+submitgPty:
+  type: Text
+  schema:
+    required: true
+tx:
+  type: FINOS-CDM-6.0-d07/Tx
+  schema:
+    required: true
+txId:
+  type: Text
+  schema:
+    required: true

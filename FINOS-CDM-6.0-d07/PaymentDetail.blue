@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PaymentDetail.schema.json
+name: PaymentDetail
+namespace: cdm/product/common/settlement
+paymentAmount:
+  description: A fixed payment amount.
+  type: FINOS-CDM-6.0-d07/Money
+paymentDate:
+  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+paymentRule:
+  description: The calculation rule.
+  type: FINOS-CDM-6.0-d07/PaymentRule
+  schema:
+    required: true

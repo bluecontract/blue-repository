@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-Velocity.schema.json
+name: Velocity
+namespace: cdm/event/workflow
+period:
+  type: FINOS-CDM-6.0-d07/PeriodTimeEnum
+periodMultiplier:
+  type: Integer

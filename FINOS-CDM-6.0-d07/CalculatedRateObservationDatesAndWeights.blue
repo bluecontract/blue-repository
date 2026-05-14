@@ -1,0 +1,16 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-CalculatedRateObservationDatesAndWeights.schema.json
+name: CalculatedRateObservationDatesAndWeights
+namespace: cdm/observable/asset/calculatedrate
+description: Type for reporting the observations dates and the corresponding weights going into a daily calculated rate
+observationDates:
+  description: The observation date upon which the rate is observed.
+  type: List
+  itemType: Text
+  schema:
+    minItems: 0
+weights:
+  description: The corresponding weight for each date.
+  type: List
+  itemType: Double
+  schema:
+    minItems: 0

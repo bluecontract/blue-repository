@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-AssetIdTypeEnum.schema.json
+name: AssetIdTypeEnum
+namespace: cdm/base/staticdata/asset/common
+description: Extends product identifiers with additional identifier sources for Assets.
+type: Text
+schema:
+  enum: [BBGID, BBGTICKER, CUSIP, ClearingCode, CurrencyCode, ExchangeCode, FIGI, ISDACRP, ISIN, Name, Other, RIC, SEDOL, Sicovam, UPI, Wertpapier]

@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-FxRateSourceFixing.schema.json
+name: FxRateSourceFixing
+namespace: cdm/observable/asset
+description: Describes a rate source to be fixed and the date the fixing occurs
+fixingDate:
+  description: The date on which the fixing is scheduled to occur.
+  type: FINOS-CDM-6.0-d07/AdjustableDate
+  schema:
+    required: true
+settlementRateSource:
+  type: FINOS-CDM-6.0-d07/FxSettlementRateSource
+  schema:
+    required: true

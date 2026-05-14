@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-EntityTypeEnum.schema.json
+name: EntityTypeEnum
+namespace: cdm/base/staticdata/party
+description: |
+  The enumerated values to specify the reference entity types corresponding to a list of types defined in the ISDA First to Default documentation.
+type: Text
+schema:
+  enum: [Asian, AustralianAndNewZealand, EuropeanEmergingMarkets, Japanese, NorthAmericanHighYield, NorthAmericanInsurance, NorthAmericanInvestmentGrade, Singaporean, WesternEuropean, WesternEuropeanInsurance]

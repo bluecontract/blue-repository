@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-LegalAgreementPublisherEnum.schema.json
+name: LegalAgreementPublisherEnum
+namespace: cdm/legaldocumentation/common
+description: The enumerated values to specify the legal agreement publisher.
+type: Text
+schema:
+  enum: [AFB, BNYM, EMTA, ICMA, ISDA, ISDAClearstream, ISDAEuroclear, ISLA, JPMorgan, TheFXCommittee]

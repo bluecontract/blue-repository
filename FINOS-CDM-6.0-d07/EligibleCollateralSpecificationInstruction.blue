@@ -1,0 +1,12 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-EligibleCollateralSpecificationInstruction.schema.json
+name: EligibleCollateralSpecificationInstruction
+namespace: cdm/product/collateral
+common:
+  type: FINOS-CDM-6.0-d07/EligibleCollateralCriteria
+  schema:
+    required: true
+variable:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/EligibleCollateralCriteria
+  schema:
+    minItems: 1

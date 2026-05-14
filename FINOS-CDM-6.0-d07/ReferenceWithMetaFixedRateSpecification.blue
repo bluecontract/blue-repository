@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-metafields-ReferenceWithMetaFixedRateSpecification.schema.json
+name: ReferenceWithMetaFixedRateSpecification
+namespace: cdm/product/asset/metafields
+address:
+  type: FINOS-CDM-6.0-d07/Reference
+externalReference:
+  type: Text
+globalReference:
+  type: Text

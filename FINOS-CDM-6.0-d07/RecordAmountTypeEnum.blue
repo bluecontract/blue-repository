@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-RecordAmountTypeEnum.schema.json
+name: RecordAmountTypeEnum
+namespace: cdm/event/common
+description: The enumeration of the account level for the billing summary.
+type: Text
+schema:
+  enum: [AccountTotal, GrandTotal, ParentTotal]

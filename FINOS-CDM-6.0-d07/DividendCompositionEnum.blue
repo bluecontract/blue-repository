@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendCompositionEnum.schema.json
+name: DividendCompositionEnum
+namespace: cdm/product/asset
+description: The enumerated values to specify how the composition of Dividends is to be determined.
+type: Text
+schema:
+  enum: [CalculationAgentElection, EquityAmountReceiverElection]

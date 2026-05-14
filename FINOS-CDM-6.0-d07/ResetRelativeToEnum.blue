@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-ResetRelativeToEnum.schema.json
+name: ResetRelativeToEnum
+namespace: cdm/product/common/schedule
+description: |
+  The enumerated values to specify whether resets occur relative to the first or last day of a calculation period.
+type: Text
+schema:
+  enum: [CalculationPeriodEndDate, CalculationPeriodStartDate]

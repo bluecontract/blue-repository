@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-LoadTypeEnum.schema.json
+name: LoadTypeEnum
+namespace: cdm/product/asset
+description: Specifies the load type of the delivery.
+type: Text
+schema:
+  enum: [BaseLoad, BlockHours, GasDay, OffPeak, Other, PeakLoad, Shaped]

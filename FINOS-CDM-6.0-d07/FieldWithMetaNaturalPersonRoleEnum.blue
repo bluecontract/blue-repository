@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-metafields-FieldWithMetaNaturalPersonRoleEnum.schema.json
+name: FieldWithMetaNaturalPersonRoleEnum
+namespace: cdm/base/staticdata/party
+meta:
+  type: FINOS-CDM-6.0-d07/MetaFields
+val:
+  type: FINOS-CDM-6.0-d07/NaturalPersonRoleEnum

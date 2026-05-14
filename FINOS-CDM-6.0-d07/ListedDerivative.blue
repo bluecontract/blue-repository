@@ -1,0 +1,42 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-ListedDerivative.schema.json
+name: ListedDerivative
+namespace: cdm/base/staticdata/asset/common
+description: A securitized derivative on another asset.
+deliveryTerm:
+  description: |
+    Also called contract month or delivery month. However, it's not always a month. It is usually expressed using a code, e.g. Z23 would be the Dec 2023 contract, (Z = December). For crude oil, the corresponding contract might be called CLZ23. Optional as this can be uniquely identified in the identifier.
+  type: Text
+exchange:
+  description: "If the Asset is listed, defines the public exchange of the listing."
+  type: FINOS-CDM-6.0-d07/LegalEntity
+identifier:
+  description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  schema:
+    minItems: 1
+instrumentType:
+  description: Identifies the type of an instrument using an enumerated list.
+  type: FINOS-CDM-6.0-d07/InstrumentTypeEnum
+isExchangeListed:
+  description: Defines whether the Asset is listed on a public exchange.
+  type: Boolean
+optionType:
+  description: "The type of option, ie Put or Call. Left empty if it is a Future."
+  type: FINOS-CDM-6.0-d07/PutCallEnum
+relatedExchange:
+  description: "Provides the related Exchanges, if applicable."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  schema:
+    minItems: 0
+strike:
+  description: Specifies the strike of the option.
+  type: Double
+taxonomy:
+  description: |
+    Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  schema:
+    minItems: 0

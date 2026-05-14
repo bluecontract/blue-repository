@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-NationalizationOrInsolvencyOrDelistingEventEnum.schema.json
+name: NationalizationOrInsolvencyOrDelistingEventEnum
+namespace: cdm/legaldocumentation/master
+description: "Defines the consequences of nationalization, insolvency and delisting events relating to the underlying."
+type: Text
+schema:
+  enum: [CancellationAndPayment, NegotiatedCloseout]

@@ -1,0 +1,35 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CreditEvent.schema.json
+name: CreditEvent
+namespace: cdm/event/common
+description: Specifies the relevant data regarding a credit event.
+auctionDate:
+  description: The date on which the auction is scheduled to occur.
+  type: Text
+creditEventType:
+  description: The type of credit event taking place.
+  type: FINOS-CDM-6.0-d07/CreditEventTypeEnum
+  schema:
+    required: true
+eventDeterminationDate:
+  description: The date in which the credit event is determined by the Credit Derivatives Determinations Comitee.
+  type: Text
+  schema:
+    required: true
+finalPrice:
+  description: The final price resulting from the auction.
+  type: FINOS-CDM-6.0-d07/Price
+publiclyAvailableInformation:
+  description: |
+    A public information source, e.g. a particular newspaper or electronic news service, that may publish relevant information used in the determination of whether or not a credit event has occurred.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Resource
+  schema:
+    minItems: 0
+recoveryPercent:
+  description: The percentage of the original value of the asset affected by the credit event that can be recovered.
+  type: Double
+referenceInformation:
+  description: "The reference entity, part of a credit basket, impacted by the credit event."
+  type: FINOS-CDM-6.0-d07/ReferenceInformation
+  schema:
+    required: true

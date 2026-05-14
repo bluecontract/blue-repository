@@ -1,0 +1,10 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-TransferInstruction.schema.json
+name: TransferInstruction
+namespace: cdm/event/common
+description: Defines the payout on which to create a Transfer along with all necessary resets.
+transferState:
+  description: Specifies the terms and state of a transfers.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/TransferState
+  schema:
+    minItems: 0

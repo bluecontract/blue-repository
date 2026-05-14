@@ -1,0 +1,31 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-Valuation.schema.json
+name: Valuation
+namespace: cdm/event/common
+description: "Defines the value of an investment, asset, or security"
+amount:
+  description: Current value of the outstanding contract
+  type: FINOS-CDM-6.0-d07/Money
+  schema:
+    required: true
+delta:
+  description: |
+    The ratio of the change in the price of a derivative transaction to the change in the price of the underlying. This field is applicable only to options and swaptions.
+  type: Double
+method:
+  description: Method used for the valuation of the transaction by the valuation party.
+  type: FINOS-CDM-6.0-d07/ValuationTypeEnum
+priceComponent:
+  description: Denotes the price used to compute the valuation.
+  type: FINOS-CDM-6.0-d07/Price
+source:
+  description: Source of the valuation of the transaction by the valuation party.
+  type: FINOS-CDM-6.0-d07/ValuationSourceEnum
+timestamp:
+  description: |
+    Date and time of the last valuation marked to market, provided by the central counterparty (CCP) or calculated using the current or last available market price of the inputs.
+  type: Text
+  schema:
+    required: true
+valuationTiming:
+  description: Denotes when the valuation was sourced during a business day.
+  type: FINOS-CDM-6.0-d07/PriceTimingEnum

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-SettledEntityMatrixSourceEnum.schema.json
+name: SettledEntityMatrixSourceEnum
+namespace: cdm/product/asset
+description: The enumerated values to specify the relevant settled entity matrix source.
+type: Text
+schema:
+  enum: [ConfirmationAnnex, NotApplicable, Publisher]

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendAmountTypeEnum.schema.json
+name: DividendAmountTypeEnum
+namespace: cdm/product/asset
+description: The enumerated values to specify whether the dividend is paid with respect to the Dividend Period.
+type: Text
+schema:
+  enum: [AsSpecifiedInMasterConfirmation, ExAmount, PaidAmount, RecordAmount]

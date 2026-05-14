@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-SettlementTypeEnum.schema.json
+name: SettlementTypeEnum
+namespace: cdm/product/common/settlement
+description: The enumeration values to specify how the option is to be settled when exercised.
+type: Text
+schema:
+  enum: [Cash, CashOrPhysical, Election, Physical]

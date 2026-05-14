@@ -1,0 +1,16 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ExecutionDetails.schema.json
+name: ExecutionDetails
+namespace: cdm/event/common
+description: Defines specific attributes that relate to trade executions.
+executionType:
+  description: "Identifies the type of execution, e.g. via voice, electronically..."
+  type: FINOS-CDM-6.0-d07/ExecutionTypeEnum
+  schema:
+    required: true
+executionVenue:
+  description: Represents the venue on which a trade was executed.
+  type: FINOS-CDM-6.0-d07/LegalEntity
+packageReference:
+  description: |
+    A reference to the package linking the trade with other trades, in case the trade was executed as part of a package (hence this attribute is optional).
+  type: FINOS-CDM-6.0-d07/IdentifiedList

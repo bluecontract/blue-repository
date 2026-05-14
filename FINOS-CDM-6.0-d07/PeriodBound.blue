@@ -1,0 +1,15 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-PeriodBound.schema.json
+name: PeriodBound
+namespace: cdm/base/datetime
+description: Indicator to specify if the period bound is defined as a period and whether the bound is inclusive.
+inclusive:
+  description: |
+    Specifies whether the period bound is inclusive, e.g. for a lower bound, false would indicate greater than, whereas true would indicate greater than or equal to.
+  type: Boolean
+  schema:
+    required: true
+period:
+  description: "Specifies the period is to be used as the bound, e.g. 5Y."
+  type: FINOS-CDM-6.0-d07/Period
+  schema:
+    required: true

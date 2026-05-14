@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-PayRelativeToEnum.schema.json
+name: PayRelativeToEnum
+namespace: cdm/product/common/schedule
+description: |
+  The enumerated values to specify whether payments occur relative to the calculation period start date or end date, each reset date, valuation date or the last pricing date.
+type: Text
+schema:
+  enum: [CalculationPeriodEndDate, CalculationPeriodStartDate, LastPricingDate, ResetDate, ValuationDate]

@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-RealisedVarianceMethodEnum.schema.json
+name: RealisedVarianceMethodEnum
+namespace: cdm/product/asset
+description: |
+  The contract specifies which price must satisfy the boundary condition.  Used for variance, volatility and correlation caps and floors.
+type: Text
+schema:
+  enum: [Both, Last, Previous]

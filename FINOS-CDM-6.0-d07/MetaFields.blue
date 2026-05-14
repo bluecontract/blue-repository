@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/com-rosetta-model-metafields-MetaFields.schema.json
+name: MetaFields
+namespace: com/rosetta/model/metafields
+externalKey:
+  type: Text
+globalKey:
+  type: Text
+key:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Key
+  schema:
+    minItems: 0
+scheme:
+  type: Text

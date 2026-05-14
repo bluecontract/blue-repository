@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-MarketDisruptionEnum.schema.json
+name: MarketDisruptionEnum
+namespace: cdm/observable/event
+description: |
+  The enumerated values to specify the handling of an averaging date market disruption for an equity derivative transaction.
+type: Text
+schema:
+  enum: [ModifiedPostponement, Omission, Postponement]

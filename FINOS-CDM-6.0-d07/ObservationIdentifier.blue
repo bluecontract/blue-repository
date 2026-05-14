@@ -1,0 +1,24 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-ObservationIdentifier.schema.json
+name: ObservationIdentifier
+namespace: cdm/observable/event
+description: |
+  Defines the parameters needed to uniquely identify a piece of data among the population of all available market data.
+determinationMethodology:
+  description: Specifies the method according to which an amount or a date is determined.
+  type: FINOS-CDM-6.0-d07/DeterminationMethodology
+informationSource:
+  description: Represents where the market data published and should be observed.
+  type: FINOS-CDM-6.0-d07/InformationSource
+observable:
+  description: Represents the asset or rate to which the observation relates.
+  type: FINOS-CDM-6.0-d07/Observable
+  schema:
+    required: true
+observationDate:
+  description: Specifies the date value to use when resolving the market data.
+  type: Text
+  schema:
+    required: true
+observationTime:
+  description: Represents the time and time-zone.
+  type: FINOS-CDM-6.0-d07/TimeZone

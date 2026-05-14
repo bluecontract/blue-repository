@@ -1,0 +1,20 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-AveragingSchedule.schema.json
+name: AveragingSchedule
+namespace: cdm/base/datetime
+description: Class to representing a method for generating a series of dates.
+averagingPeriodFrequency:
+  description: |
+    The frequency at which averaging period occurs with the regular part of the valuation schedule and their roll date convention.
+  type: FINOS-CDM-6.0-d07/CalculationPeriodFrequency
+  schema:
+    required: true
+endDate:
+  description: Date on which this period ends.
+  type: Text
+  schema:
+    required: true
+startDate:
+  description: Date on which this period begins.
+  type: Text
+  schema:
+    required: true

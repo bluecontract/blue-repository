@@ -1,0 +1,53 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-Loan.schema.json
+name: Loan
+namespace: cdm/base/staticdata/asset/common
+description: Identifies a loan by referencing an asset identifier and through an optional set of attributes.
+borrower:
+  description: |
+    Specifies the borrower. There can be more than one borrower. It is meant to be used in the event that there is no Bloomberg Id or the Secured List isn't applicable.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  schema:
+    minItems: 0
+creditAgreementDate:
+  description: |
+    Specifies the credit agreement date is the closing date (the date where the agreement has been signed) for the loans in the credit agreement. Funding of the facilities occurs on (or sometimes a little after) the Credit Agreement date. This underlier attribute is used to help identify which of the company's outstanding loans are being referenced by knowing to which credit agreement it belongs. ISDA Standards Terms Supplement term: Date of Original Credit Agreement.
+  type: Text
+exchange:
+  description: "If the Asset is listed, defines the public exchange of the listing."
+  type: FINOS-CDM-6.0-d07/LegalEntity
+facilityType:
+  description: "Specifies the type of loan facility (letter of credit, revolving, ...)."
+  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+identifier:
+  description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  schema:
+    minItems: 1
+instrumentType:
+  description: Identifies the type of an instrument using an enumerated list.
+  type: FINOS-CDM-6.0-d07/InstrumentTypeEnum
+isExchangeListed:
+  description: Defines whether the Asset is listed on a public exchange.
+  type: Boolean
+lien:
+  description: Specifies the seniority level of the lien.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+relatedExchange:
+  description: "Provides the related Exchanges, if applicable."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  schema:
+    minItems: 0
+taxonomy:
+  description: |
+    Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  schema:
+    minItems: 0
+tranche:
+  description: |
+    Denotes the loan tranche that is subject to the derivative transaction. It will typically be referenced as the Bloomberg tranche number. ISDA Standards Terms Supplement term: Bloomberg Tranche Number.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaString

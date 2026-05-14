@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-AvailableInventoryTypeEnum.schema.json
+name: AvailableInventoryTypeEnum
+namespace: cdm/event/position
+description: Enumeration to describe the type of AvailableInventory
+type: Text
+schema:
+  enum: [AvailableToLend, RequestToBorrow]

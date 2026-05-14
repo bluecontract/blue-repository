@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterAgreementTypeEnum.schema.json
+name: MasterAgreementTypeEnum
+namespace: cdm/legaldocumentation/master
+description: The enumerated values to specify the type of the master agreement governing the transaction.
+type: Text
+schema:
+  enum: [AFB, Bespoke, CMA, CMOF, EEIPower, EFETElectricity, EFETGas, EMA, FBF, GMRA, GMSLA, GTMA, GasEDI, German, ICOM, IETA-ERPA, IETA-ETMA, IETA-IETMA, IFEMA, IFEOMA, ISDAFIA-CDEA, ISDAIIFM-TMA, ISDAMaster, JSCC, LBMA, LEAP, MCPSA, NAESBGas, NBP, RussianDerivatives, RussianRepo, SCoTA, Swiss, TTF, ZBT]

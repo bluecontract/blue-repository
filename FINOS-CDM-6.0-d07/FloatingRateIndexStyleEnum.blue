@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexStyleEnum.schema.json
+name: FloatingRateIndexStyleEnum
+namespace: cdm/observable/asset/fro
+description: Second level ISDA FRO category.
+type: Text
+schema:
+  enum: [Average FRO, Compounded FRO, Compounded Index, Index, Other, Overnight Rate, Published Average Rate, Specified Formula, Swap Rate, Term Rate]

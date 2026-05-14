@@ -1,0 +1,27 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-CalculationPeriodData.schema.json
+name: CalculationPeriodData
+namespace: cdm/product/common/schedule
+daysInLeapYearPeriod:
+  type: Integer
+  schema:
+    required: true
+daysInPeriod:
+  type: Integer
+  schema:
+    required: true
+endDate:
+  type: Text
+  schema:
+    required: true
+isFirstPeriod:
+  type: Boolean
+  schema:
+    required: true
+isLastPeriod:
+  type: Boolean
+  schema:
+    required: true
+startDate:
+  type: Text
+  schema:
+    required: true

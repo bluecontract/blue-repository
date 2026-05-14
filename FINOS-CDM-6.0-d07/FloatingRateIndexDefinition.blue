@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexDefinition.schema.json
+name: FloatingRateIndexDefinition
+namespace: cdm/observable/asset/fro
+calculationDefaults:
+  description: Any calculation default values.
+  type: FINOS-CDM-6.0-d07/FloatingRateIndexCalculationDefaults
+fro:
+  description: The underlying FRO name and designated maturity.
+  type: FINOS-CDM-6.0-d07/FloatingRateIndexIdentification
+  schema:
+    required: true

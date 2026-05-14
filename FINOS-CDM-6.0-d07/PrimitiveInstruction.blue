@@ -1,0 +1,43 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-PrimitiveInstruction.schema.json
+name: PrimitiveInstruction
+namespace: cdm/event/common
+description: A Primitive Instruction describes the inputs required to pass into the corresponding PrimitiveEvent function.
+contractFormation:
+  description: Specifies instructions describing an contract formation primitive event.
+  type: FINOS-CDM-6.0-d07/ContractFormationInstruction
+execution:
+  description: Specifies instructions describing an execution primitive event.
+  type: FINOS-CDM-6.0-d07/ExecutionInstruction
+exercise:
+  description: Specifies instructions describing an exercise primitive event.
+  type: FINOS-CDM-6.0-d07/ExerciseInstruction
+indexTransition:
+  description: Specifies inputs needed to process a Index Transition business event.
+  type: FINOS-CDM-6.0-d07/IndexTransitionInstruction
+observation:
+  description: Specifies inputs needed to process an observation.
+  type: FINOS-CDM-6.0-d07/ObservationInstruction
+partyChange:
+  description: Specifies instructions describing a party change primitive event.
+  type: FINOS-CDM-6.0-d07/PartyChangeInstruction
+quantityChange:
+  description: Specifies instructions describing an quantity change primitive event.
+  type: FINOS-CDM-6.0-d07/QuantityChangeInstruction
+reset:
+  description: Specifies instructions describing a reset event.
+  type: FINOS-CDM-6.0-d07/ResetInstruction
+split:
+  description: Specifies instructions to split a trade into multiple branches.
+  type: FINOS-CDM-6.0-d07/SplitInstruction
+stockSplit:
+  description: Specifies inputs needed to process a Stock Split business event.
+  type: FINOS-CDM-6.0-d07/StockSplitInstruction
+termsChange:
+  description: Specifies instructions describing a terms change primitive event.
+  type: FINOS-CDM-6.0-d07/TermsChangeInstruction
+transfer:
+  description: Specifies instructions describing a transfer primitive event.
+  type: FINOS-CDM-6.0-d07/TransferInstruction
+valuation:
+  description: Specifies inputs needed to process an update of a valuation.
+  type: FINOS-CDM-6.0-d07/ValuationInstruction

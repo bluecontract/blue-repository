@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-AccountTypeEnum.schema.json
+name: AccountTypeEnum
+namespace: cdm/base/staticdata/party
+description: The enumeration values to qualify the type of account.
+type: Text
+schema:
+  enum: [AggregateClient, Client, House]

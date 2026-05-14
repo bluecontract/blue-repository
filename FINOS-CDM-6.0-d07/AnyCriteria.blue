@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AnyCriteria.schema.json
+name: AnyCriteria
+namespace: cdm/product/collateral
+description: Used to combine two or more Collateral Criteria using OR logic.
+anyCriteria:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/CollateralCriteria
+  schema:
+    minItems: 2

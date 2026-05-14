@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-InstructionFunctionEnum.schema.json
+name: InstructionFunctionEnum
+namespace: cdm/event/common
+description: The enumeration values indicating the BusinessEvent function associated input instructions.
+type: Text
+schema:
+  enum: [Compression, ContractFormation, Execution, QuantityChange, Renegotiation]

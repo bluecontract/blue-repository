@@ -1,0 +1,38 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-CalculationFrequency.schema.json
+name: CalculationFrequency
+namespace: cdm/base/datetime
+description: |
+  Represents the parameters for describing how often something (such as collateral interest) is to be calculated.
+businessCenter:
+  description: Specifies the business center for adjustment of calculation period.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/BusinessCenterEnum
+  schema:
+    minItems: 0
+dateLocation:
+  description: Specifies where is the time measured.
+  type: FINOS-CDM-6.0-d07/BusinessCenterTime
+  schema:
+    required: true
+dayOfMonth:
+  description: Specifies the day of the month if used.
+  type: Double
+dayOfWeek:
+  description: Specifies the day of the week if used.
+  type: FINOS-CDM-6.0-d07/DayOfWeekEnum
+monthOfYear:
+  description: Specifies the month of the year if used.
+  type: Double
+offsetDays:
+  description: Specifies how many days from the trigger event should the payment occur.
+  type: Double
+  schema:
+    required: true
+period:
+  description: "Specifies the time period at which calculation is performed, e.g. 1 month."
+  type: FINOS-CDM-6.0-d07/Period
+  schema:
+    required: true
+weekOfMonth:
+  description: Specifies the week of the month if used.
+  type: Double

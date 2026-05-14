@@ -1,0 +1,34 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-AvailableInventoryRecord.schema.json
+name: AvailableInventoryRecord
+namespace: cdm/event/position
+description: |
+  An individual piece of available inventory. This represents a single security and its associated criteria. The criteria are used to describe any restrictions on the securities.
+collateral:
+  description: |
+    The type of collateral can often be required when determining if the piece of availability being described is suitable for a party.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/CollateralProvisions
+  schema:
+    minItems: 0
+expirationDateTime:
+  description: There may be a set period/time restriction associated to the security.
+  type: Text
+identifer:
+  description: Unique identifier for this record. This can be used to uniquely identify a specific piece of inventory.
+  type: FINOS-CDM-6.0-d07/AssignedIdentifier
+interestRate:
+  description: An optional element which can be used to hold a rate associated to this piece of availability.
+  type: FINOS-CDM-6.0-d07/Price
+partyRole:
+  description: |
+    An individual security may be held by several agents. Including the party role at this level allows us to reference the party holding this specific item.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/PartyRole
+  schema:
+    minItems: 0
+quantity:
+  description: The quantity of the security
+  type: FINOS-CDM-6.0-d07/Quantity
+security:
+  description: The security details.
+  type: FINOS-CDM-6.0-d07/Security

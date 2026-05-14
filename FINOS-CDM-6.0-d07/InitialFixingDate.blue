@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-InitialFixingDate.schema.json
+name: InitialFixingDate
+namespace: cdm/product/common/schedule
+description: |
+  A CDM class which purpose is to specify the initial fixing date either alongside the FpML interest rate specification as an offset of another date, or alongside the credit derivative specification as an unadjusted date.
+initialFixingDate:
+  type: Text
+relativeDateOffset:
+  type: FINOS-CDM-6.0-d07/RelativeDateOffset

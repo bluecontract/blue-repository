@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-WeatherUnitEnum.schema.json
+name: WeatherUnitEnum
+namespace: cdm/base/math
+description: |
+  Provides enumerated values for weather units, generally used in the context of defining quantities for commodities.
+type: Text
+schema:
+  enum: [CDD, CPD, HDD]

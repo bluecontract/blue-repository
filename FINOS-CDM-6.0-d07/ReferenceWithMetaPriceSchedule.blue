@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-metafields-ReferenceWithMetaPriceSchedule.schema.json
+name: ReferenceWithMetaPriceSchedule
+namespace: cdm/observable/asset/metafields
+address:
+  type: FINOS-CDM-6.0-d07/Reference
+externalReference:
+  type: Text
+globalReference:
+  type: Text

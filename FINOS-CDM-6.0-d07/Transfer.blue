@@ -1,0 +1,38 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-Transfer.schema.json
+name: Transfer
+namespace: cdm/event/common
+description: "Defines the movement of an Asset (eg cash, securities or commodities) between two parties on a date."
+asset:
+  description: "Represents the object that is subject to the transfer, it could be an asset or a reference."
+  type: FINOS-CDM-6.0-d07/Asset
+identifier:
+  description: Represents a unique reference to the transfer.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/FieldWithMetaIdentifier
+  schema:
+    minItems: 0
+payerReceiver:
+  description: Represents the parties to the transfer and their role.
+  type: FINOS-CDM-6.0-d07/PartyReferencePayerReceiver
+  schema:
+    required: true
+quantity:
+  description: |
+    Represents the amount of the asset to be transferred. The cashflow amount is always a positive number, as the cashflow direction is implied by the payer/receiver attribute.
+  type: FINOS-CDM-6.0-d07/NonNegativeQuantity
+resetOrigin:
+  description: Represents the reset and observation values that were used to determine the transfer amount.
+  type: FINOS-CDM-6.0-d07/Reset
+settlementDate:
+  description: Represents the date on which the transfer to due.
+  type: FINOS-CDM-6.0-d07/AdjustableOrAdjustedOrRelativeDate
+settlementOrigin:
+  description: |
+    Represents the origin to the transfer as a reference for lineage purposes, whether it originated from trade level settlement terms or from payment terms on an economic payout.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaPayout
+transferExpression:
+  description: |
+    Specifies a transfer expression (cash price, performance amount, scheduled payment amount, etc.) to define the nature of the transfer amount and its source.
+  type: FINOS-CDM-6.0-d07/TransferExpression
+  schema:
+    required: true

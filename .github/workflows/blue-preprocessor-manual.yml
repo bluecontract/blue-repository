@@ -30,8 +30,8 @@ permissions:
   contents: read
 
 env:
-  REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
-  REPOSITORY_GENERATOR_VERSION: '4.0.0'
+  REPOSITORY_GENERATOR_REPO: 'https://github.com/bluecontract/blue-js.git'
+  REPOSITORY_GENERATOR_REF: 'fd96a783148da3a718d4108fc7364fd129e253ef'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
   ARTIFACT_NAME: 'blue-repository-definition'
   ARTIFACT_RETENTION_DAYS: '10'
@@ -70,9 +70,7 @@ jobs:
             EXTRA_ARGS+=(--allow-diff)
           fi
 
-          npm_config_loglevel=error \
-            npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
-            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode "${MODE}" "${EXTRA_ARGS[@]}" \
+          .github/scripts/run-repository-generator-from-blue-js.sh "${MODE}" "${BLUE_REPOSITORY_PATH}" "${EXTRA_ARGS[@]}" \
             | tee /tmp/repository-generator-output.txt
 
           if [ "${MODE}" = 'write' ]; then

@@ -1,0 +1,10 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-DistributionAndInterestPayment.schema.json
+name: DistributionAndInterestPayment
+namespace: cdm/product/collateral
+description: A class to specify the Distributions and Interest Payment provisions applicable to the collateral agreement.
+interestParameters:
+  description: "Represents the interest parameters for the various currencies, margin types, posting parties."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/CollateralInterestParameters
+  schema:
+    minItems: 0

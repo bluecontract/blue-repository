@@ -1,0 +1,10 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-AveragingObservationList.schema.json
+name: AveragingObservationList
+namespace: cdm/product/common/schedule
+description: An unordered list of weighted averaging observations.
+averagingObservation:
+  description: A single weighted averaging observation.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/WeightedAveragingObservation
+  schema:
+    minItems: 1

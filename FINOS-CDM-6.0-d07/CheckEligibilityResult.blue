@@ -1,0 +1,26 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CheckEligibilityResult.schema.json
+name: CheckEligibilityResult
+namespace: cdm/product/collateral
+description: Result for the CheckEligibilityByDetails and CheckEligibilityForProduct functions
+eligibilityQuery:
+  description: a copy of the input query that was checked against the eligible collateral specification
+  type: FINOS-CDM-6.0-d07/EligibilityQuery
+  schema:
+    required: true
+isEligible:
+  description: a simple boolean which is set to true if the asset described in the EligibilityQuery input is eligible
+  type: Boolean
+  schema:
+    required: true
+matchingEligibleCriteria:
+  description: |
+    if there was a match, this will be the one or more criteria that were supplied in the EligbilityCollateralSpecification which matched with the query input
+  type: List
+  itemType: FINOS-CDM-6.0-d07/EligibleCollateralCriteria
+  schema:
+    minItems: 0
+specification:
+  description: a copy of the input EligbilityCollateralSpecification that was checked against the query
+  type: FINOS-CDM-6.0-d07/EligibleCollateralSpecification
+  schema:
+    required: true

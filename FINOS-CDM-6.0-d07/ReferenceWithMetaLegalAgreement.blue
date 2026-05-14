@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-metafields-ReferenceWithMetaLegalAgreement.schema.json
+name: ReferenceWithMetaLegalAgreement
+namespace: cdm/legaldocumentation/common/metafields
+address:
+  type: FINOS-CDM-6.0-d07/Reference
+externalReference:
+  type: Text
+globalReference:
+  type: Text

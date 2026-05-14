@@ -1,0 +1,16 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-Period.schema.json
+name: Period
+namespace: cdm/base/datetime
+description: A class to define recurring periods or time offsets.
+period:
+  description: |
+    A time period, e.g. a day, week, month or year of the stream. If the periodMultiplier value is 0 (zero) then period must contain the value D (day).
+  type: FINOS-CDM-6.0-d07/PeriodEnum
+  schema:
+    required: true
+periodMultiplier:
+  description: |
+    A time period multiplier, e.g. 1, 2 or 3 etc. A negative value can be used when specifying an offset relative to another date, e.g. -2 days.
+  type: Integer
+  schema:
+    required: true

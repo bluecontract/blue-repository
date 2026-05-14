@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-SovereignAgencyRating.schema.json
+name: SovereignAgencyRating
+namespace: cdm/product/collateral
+sovereignAgencyRating:
+  description: Represents an agency rating based on default risk of the country of the issuer.
+  type: FINOS-CDM-6.0-d07/AgencyRatingCriteria
+  schema:
+    required: true

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CreditEventTypeEnum.schema.json
+name: CreditEventTypeEnum
+namespace: cdm/event/common
+description: Represents the enumerated values to specify a credit event type.
+type: Text
+schema:
+  enum: [Bankruptcy, DistressedRatingsDowngrade, FailureToPay, FailureToPayInterest, FailureToPayPrincipal, GovernmentalIntervention, ImpliedWritedown, MaturityExtension, ObligationAcceleration, ObligationDefault, RepudiationMoratorium, Restructuring, Writedown]

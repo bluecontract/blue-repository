@@ -1,0 +1,15 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-MarginCallResponseAction.schema.json
+name: MarginCallResponseAction
+namespace: cdm/event/common
+description: "Specifies the margin call action details, including collateral to be moved and its direction."
+collateralPositionComponent:
+  description: Specifies the collateral to be moved and its direction.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/CollateralPosition
+  schema:
+    minItems: 1
+marginCallAction:
+  description: "Specifies the margin call action details, specified as either Delivery or Return."
+  type: FINOS-CDM-6.0-d07/MarginCallActionEnum
+  schema:
+    required: true

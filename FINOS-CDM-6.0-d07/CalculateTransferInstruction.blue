@@ -1,0 +1,24 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CalculateTransferInstruction.schema.json
+name: CalculateTransferInstruction
+namespace: cdm/event/common
+description: Defines the tradeState or payout on which to create a Transfer along with all necessary resets.
+date:
+  type: Text
+payerReceiver:
+  type: FINOS-CDM-6.0-d07/PayerReceiver
+payout:
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaPayout
+  schema:
+    required: true
+quantity:
+  description: "Specifies quantity amount returned if not the full amount from the TradeState, e.g. partial return"
+  type: FINOS-CDM-6.0-d07/Quantity
+resets:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Reset
+  schema:
+    minItems: 0
+tradeState:
+  type: FINOS-CDM-6.0-d07/TradeState
+  schema:
+    required: true

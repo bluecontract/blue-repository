@@ -1,0 +1,12 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-margin-schedule-StandardizedScheduleInitialMargin.schema.json
+name: StandardizedScheduleInitialMargin
+namespace: cdm/margin/schedule
+netInitialMargin:
+  type: FINOS-CDM-6.0-d07/Money
+  schema:
+    required: true
+tradeInfo:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/StandardizedScheduleTradeInfo
+  schema:
+    minItems: 0

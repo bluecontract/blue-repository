@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 env:
-  REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
-  REPOSITORY_GENERATOR_VERSION: '4.0.0'
+  REPOSITORY_GENERATOR_REPO: 'https://github.com/bluecontract/blue-js.git'
+  REPOSITORY_GENERATOR_REF: 'fd96a783148da3a718d4108fc7364fd129e253ef'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
 
 jobs:
@@ -35,6 +35,4 @@ jobs:
         run: |
           set -euo pipefail
 
-          npm_config_loglevel=error \
-            npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
-            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode check --allow-diff
+          .github/scripts/run-repository-generator-from-blue-js.sh check "${BLUE_REPOSITORY_PATH}" --allow-diff

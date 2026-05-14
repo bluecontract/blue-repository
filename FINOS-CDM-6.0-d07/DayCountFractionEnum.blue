@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-daycount-DayCountFractionEnum.schema.json
+name: DayCountFractionEnum
+namespace: cdm/base/datetime/daycount
+description: The enumerated values to specify the day count fraction.
+type: Text
+schema:
+  enum: [ACT/360, ACT/364, ACT/365L, ACT/365.FIXED, ACT/ACT.AFB, ACT/ACT.ICMA, ACT/ACT.ISDA, ACT/ACT.ISMA, CAL/252, RBA Bond Basis, 1/1, 30E/360, 30E/360.ISDA, 30/360]

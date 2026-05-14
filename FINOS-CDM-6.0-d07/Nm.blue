@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Nm.schema.json
+name: Nm
+namespace: cdm/regulation
+refRate:
+  type: FINOS-CDM-6.0-d07/RefRate
+  schema:
+    required: true
+term:
+  type: FINOS-CDM-6.0-d07/Term
+  schema:
+    required: true

@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-RollConventionEnum.schema.json
+name: RollConventionEnum
+namespace: cdm/base/datetime
+description: |
+  The enumerated values to specify the period term as part of a periodic schedule, i.e. the calculation period end date within the regular part of the calculation period. The value could be a rule, e.g. IMM Settlement Dates, which is the 3rd Wednesday of the month, or it could be a specific day of the month, such as the first day of the applicable month.
+type: Text
+schema:
+  enum: [EOM, FRI, FRN, IMM, IMMAUD, IMMCAD, IMMNZD, MON, NONE, SAT, SFE, SUN, TBILL, THU, TUE, WED, 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 3, 30, 4, 5, 6, 7, 8, 9]

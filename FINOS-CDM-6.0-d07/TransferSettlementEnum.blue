@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-TransferSettlementEnum.schema.json
+name: TransferSettlementEnum
+namespace: cdm/product/common/settlement
+description: "The enumeration values to specify how the transfer will settle, e.g. DvP."
+type: Text
+schema:
+  enum: [DeliveryVersusDelivery, DeliveryVersusPayment, NotCentralSettlement, PaymentVersusPayment]
