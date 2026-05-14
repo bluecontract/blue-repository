@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-CustomisedWorkflow.schema.json
+name: CustomisedWorkflow
+namespace: cdm/event/workflow
+description: "In its initial iteration, this class is meant to support the DTCC TIW workflow information."
+itemName:
+  description: "In this initial iteration, this corresponds to the DTCC TIW element name."
+  type: Text
+  schema:
+    required: true
+itemValue:
+  description: "In this initial iteration, this corresponds to the DTCC value."
+  type: Text
+  schema:
+    required: true

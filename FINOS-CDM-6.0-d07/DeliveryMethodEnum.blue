@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-DeliveryMethodEnum.schema.json
+name: DeliveryMethodEnum
+namespace: cdm/product/common/settlement
+description: |
+  Specifies delivery methods for securities transactions. This coding-scheme defines the possible delivery methods for securities.
+type: Text
+schema:
+  enum: [DeliveryVersusPayment, FreeOfPayment, PreDelivery, PrePayment]

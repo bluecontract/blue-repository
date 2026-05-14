@@ -1,0 +1,35 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-OtherIndex.schema.json
+name: OtherIndex
+namespace: cdm/observable/asset
+description: Specification of a user-defined index that does not meet the criteria of other Index data types.
+assetClass:
+  description: The Asset Class of the Index.
+  type: FINOS-CDM-6.0-d07/AssetClassEnum
+exchange:
+  description: "If the Asset is listed, defines the public exchange of the listing."
+  type: FINOS-CDM-6.0-d07/LegalEntity
+identifier:
+  description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  schema:
+    minItems: 1
+isExchangeListed:
+  description: Defines whether the Asset is listed on a public exchange.
+  type: Boolean
+provider:
+  description: The organisation that creates or maintains the Index.
+  type: FINOS-CDM-6.0-d07/LegalEntity
+relatedExchange:
+  description: "Provides the related Exchanges, if applicable."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  schema:
+    minItems: 0
+taxonomy:
+  description: |
+    Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  schema:
+    minItems: 0

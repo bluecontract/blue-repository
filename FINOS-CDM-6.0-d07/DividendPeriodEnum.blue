@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendPeriodEnum.schema.json
+name: DividendPeriodEnum
+namespace: cdm/product/asset
+description: |
+  2002 ISDA Equity Derivatives Definitions: First Period, Second Period |
+type: Text
+schema:
+  enum: [FirstPeriod, SecondPeriod]

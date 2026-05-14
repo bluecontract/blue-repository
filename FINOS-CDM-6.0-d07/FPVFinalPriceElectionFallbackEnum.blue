@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-FPVFinalPriceElectionFallbackEnum.schema.json
+name: FPVFinalPriceElectionFallbackEnum
+namespace: cdm/product/asset
+description: Specifies the fallback provisions in respect to the applicable Futures Price Valuation.
+type: Text
+schema:
+  enum: [FPVClose, FPVHedgeExecution]

@@ -1,0 +1,19 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Othr.schema.json
+name: Othr
+namespace: cdm/regulation
+derivInstrmAttrbts:
+  type: FINOS-CDM-6.0-d07/DerivInstrmAttrbts
+  schema:
+    required: true
+finInstrmGnlAttrbts:
+  type: FINOS-CDM-6.0-d07/FinInstrmGnlAttrbts
+  schema:
+    required: true
+id:
+  type: Text
+  schema:
+    required: true
+schmeNm:
+  type: FINOS-CDM-6.0-d07/SchmeNm
+  schema:
+    required: true

@@ -1,0 +1,5 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterConfirmationBase.schema.json
+name: MasterConfirmationBase
+namespace: cdm/legaldocumentation/master
+description: |
+  Legal agreement specification for General Terms and Elections that are applicable across multiple confirmations and are referenced by these confirmations.

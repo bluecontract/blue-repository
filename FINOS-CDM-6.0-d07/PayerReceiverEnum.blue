@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PayerReceiverEnum.schema.json
+name: PayerReceiverEnum
+namespace: cdm/base/staticdata/party
+description: The enumerated values to specify an interest rate stream payer or receiver party.
+type: Text
+schema:
+  enum: [Payer, Receiver]

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-CounterpartyRoleEnum.schema.json
+name: CounterpartyRoleEnum
+namespace: cdm/base/staticdata/party
+description: Defines the enumerated values to specify the two counterparties to the transaction.
+type: Text
+schema:
+  enum: [Party1, Party2]

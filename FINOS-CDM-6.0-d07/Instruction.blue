@@ -1,0 +1,10 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-Instruction.schema.json
+name: Instruction
+namespace: cdm/event/common
+description: Instruction to a function that will be used to perform a business event
+before:
+  description: Specifies the trade state that will be acted on by the primitive event functions.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaTradeState
+primitiveInstruction:
+  description: Specifies the primitive instructions that will be used to call primitive event functions.
+  type: FINOS-CDM-6.0-d07/PrimitiveInstruction

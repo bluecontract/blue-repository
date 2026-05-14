@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-PeriodEnum.schema.json
+name: PeriodEnum
+namespace: cdm/base/datetime
+description: "The enumerated values to specify the period, e.g. day, week."
+type: Text
+schema:
+  enum: [D, M, W, Y]

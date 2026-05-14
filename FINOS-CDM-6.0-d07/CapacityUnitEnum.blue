@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-CapacityUnitEnum.schema.json
+name: CapacityUnitEnum
+namespace: cdm/base/math
+description: |
+  Provides enumerated values for capacity units, generally used in the context of defining quantities for commodities.
+type: Text
+schema:
+  enum: [ALW, BBL, BCF, BDFT, CBM, CER, CRT, DAG, DAY, DMTU, ENVCRD, ENVOFST, FEU, G, GBBSH, GBBTU, GBCWT, GBGAL, GBMBTU, GBMMBTU, GBT, GBTHM, GJ, GW, GWH, HL, HOGB, ISOBTU, ISOMBTU, ISOMMBTU, ISOTHM, J, KG, KL, KW, KWD, KWH, KWM, KWMIN, KWY, L, LB, MB, MBF, MJ, MMBBL, MMBF, MSF, MT, MW, MWD, MWH, MWM, MWMIN, MWY, OZT, SGB, TEU, USBSH, USBTU, USCWT, USGAL, USMBTU, USMMBTU, UST, USTHM]

@@ -1,0 +1,86 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-MatrixTermEnum.schema.json
+name: MatrixTermEnum
+namespace: cdm/legaldocumentation/common
+description: |
+  The enumerated values to specify a scheme of transaction types specified in the Equity Derivatives Settlement Matrix.
+type: Text
+schema:
+  enum:
+    - AsiaCorporate
+    - AsiaFinancialCorporate
+    - AsiaSovereign
+    - AustraliaCorporate
+    - AustraliaFinancialCorporate
+    - AustraliaSovereign
+    - EmergingEuropeanAndMiddleEasternSovereign
+    - EmergingEuropeanCorporate
+    - EmergingEuropeanCorporateLPN
+    - EmergingEuropeanFinancialCorporate
+    - EmergingEuropeanFinancialCorporateLPN
+    - EuropeanCoCoFinancialCorporate
+    - EuropeanCorporate
+    - EuropeanFinancialCorporate
+    - EuropeanSeniorNonPreferredFinancialCorporate
+    - IVS1OpenMarkets
+    - JapanCorporate
+    - JapanFinancialCorporate
+    - JapanSovereign
+    - LatinAmericaCorporate
+    - LatinAmericaCorporateBond
+    - LatinAmericaCorporateBondOrLoan
+    - LatinAmericaFinancialCorporateBond
+    - LatinAmericaFinancialCorporateBondOrLoan
+    - LatinAmericaSovereign
+    - NewZealandCorporate
+    - NewZealandFinancialCorporate
+    - NewZealandSovereign
+    - NorthAmericanCorporate
+    - NorthAmericanFinancialCorporate
+    - SingaporeCorporate
+    - SingaporeFinancialCorporate
+    - SingaporeSovereign
+    - StandardAsiaCorporate
+    - StandardAsiaFinancialCorporate
+    - StandardAsiaSovereign
+    - StandardAustraliaCorporate
+    - StandardAustraliaFinancialCorporate
+    - StandardAustraliaSovereign
+    - StandardEmergingEuropeanAndMiddleEasternSovereign
+    - StandardEmergingEuropeanCorporate
+    - StandardEmergingEuropeanCorporateLPN
+    - StandardEmergingEuropeanFinancialCorporate
+    - StandardEmergingEuropeanFinancialCorporateLPN
+    - StandardEuropeanCoCoFinancialCorporate
+    - StandardEuropeanCorporate
+    - StandardEuropeanFinancialCorporate
+    - StandardEuropeanSeniorNonPreferredFinancialCorporate
+    - StandardJapanCorporate
+    - StandardJapanFinancialCorporate
+    - StandardJapanSovereign
+    - StandardLatinAmericaCorporateBond
+    - StandardLatinAmericaCorporateBondOrLoan
+    - StandardLatinAmericaFinancialCorporateBond
+    - StandardLatinAmericaFinancialCorporateBondOrLoan
+    - StandardLatinAmericaSovereign
+    - StandardNewZealandCorporate
+    - StandardNewZealandFinancialCorporate
+    - StandardNewZealandSovereign
+    - StandardNorthAmericanCorporate
+    - StandardNorthAmericanFinancialCorporate
+    - StandardSingaporeCorporate
+    - StandardSingaporeFinancialCorporate
+    - StandardSingaporeSovereign
+    - StandardSubordinatedEuropeanInsuranceCorporate
+    - StandardSukukFinancialCorporate
+    - StandardUSMunicipalFullFaithAndCredit
+    - StandardUSMunicipalGeneralFund
+    - StandardUSMunicipalRevenue
+    - StandardWesternEuropeanSovereign
+    - SubordinatedEuropeanInsuranceCorporate
+    - SukukCorporate
+    - SukukFinancialCorporate
+    - SukukSovereign
+    - USMunicipalFullFaithAndCredit
+    - USMunicipalGeneralFund
+    - USMunicipalRevenue
+    - WesternEuropeanSovereign

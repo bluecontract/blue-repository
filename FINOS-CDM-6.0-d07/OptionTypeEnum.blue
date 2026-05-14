@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionTypeEnum.schema.json
+name: OptionTypeEnum
+namespace: cdm/product/template
+description: The enumerated values to specify the type or strategy of the option.
+type: Text
+schema:
+  enum: [Call, Payer, Put, Receiver, Straddle]

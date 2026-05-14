@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-DateTimeList.schema.json
+name: DateTimeList
+namespace: cdm/base/datetime
+description: List of dateTimes.
+dateTime:
+  description: |
+    The CDM specifies that the zoned date time is to be expressed in accordance with ISO 8601, either as UTC as an offset to UTC.
+  type: List
+  itemType: Text
+  schema:
+    minItems: 1

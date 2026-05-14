@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-PutCallEnum.schema.json
+name: PutCallEnum
+namespace: cdm/base/staticdata/asset/common
+description: The enumerated values to specify the types of listed derivative options.
+type: Text
+schema:
+  enum: [Call, Put]

@@ -1,0 +1,30 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PrincipalPayments.schema.json
+name: PrincipalPayments
+namespace: cdm/product/common/settlement
+description: A class defining which principal exchanges occur for the stream.
+finalPayment:
+  description: A true/false flag to indicate whether there is a final exchange of principal on the termination date.
+  type: Boolean
+  schema:
+    required: true
+initialPayment:
+  description: A true/false flag to indicate whether there is an initial exchange of principal on the effective date.
+  type: Boolean
+  schema:
+    required: true
+intermediatePayment:
+  description: |
+    A true/false flag to indicate whether there are intermediate or interim exchanges of principal during the term of the swap.
+  type: Boolean
+  schema:
+    required: true
+principalPaymentSchedule:
+  description: Describe dates schedules for Principal Exchanges and related role of the parties when known.
+  type: FINOS-CDM-6.0-d07/PrincipalPaymentSchedule
+varyingLegNotionalCurrency:
+  description: |
+    Indicate the Payout legs which nominal amount may vary in regards of FX Fixing dates as determined in the product terms.
+  type: List
+  itemType: Text
+  schema:
+    minItems: 0

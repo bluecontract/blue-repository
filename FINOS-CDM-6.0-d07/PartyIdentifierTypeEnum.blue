@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyIdentifierTypeEnum.schema.json
+name: PartyIdentifierTypeEnum
+namespace: cdm/base/staticdata/party
+description: The enumeration values associated with party identifier sources.
+type: Text
+schema:
+  enum: [BIC, LEI, MIC]

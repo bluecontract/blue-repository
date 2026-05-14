@@ -1,0 +1,16 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-PartyCustomisedWorkflow.schema.json
+name: PartyCustomisedWorkflow
+namespace: cdm/event/workflow
+description: "A class to specify a party-related, non-standardized data in a generic form."
+customisedWorkflow:
+  description: Non-standardized data in a generic form.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/CustomisedWorkflow
+  schema:
+    minItems: 1
+partyName:
+  description: The party name to which the workflow pertains to.
+  type: Text
+partyReference:
+  description: Reference to the party to which the workflow pertains to.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AlternativeToInterestAmountEnum.schema.json
+name: AlternativeToInterestAmountEnum
+namespace: cdm/product/collateral
+description: "If there is an alternative to interest amounts, how is it specified?"
+type: Text
+schema:
+  enum: [ActualAmountReceived, Other, Standard, TransferIfDeliveryAmountBelowMTA]

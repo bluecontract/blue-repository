@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-SchmeNm.schema.json
+name: SchmeNm
+namespace: cdm/regulation
+prtry:
+  type: Text
+  schema:
+    required: true

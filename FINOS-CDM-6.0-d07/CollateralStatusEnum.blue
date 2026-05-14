@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CollateralStatusEnum.schema.json
+name: CollateralStatusEnum
+namespace: cdm/event/common
+description: Represents the enumeration list to identify the settlement status of the collateral.
+type: Text
+schema:
+  enum: [FullAmount, InTransitAmount, SettledAmount]

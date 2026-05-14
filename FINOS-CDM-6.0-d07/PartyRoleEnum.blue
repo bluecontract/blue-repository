@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyRoleEnum.schema.json
+name: PartyRoleEnum
+namespace: cdm/base/staticdata/party
+description: |
+  The enumerated values for the party role. The enumerated values go beyond the FpML partyRoleScheme as they also include elements that are part of the FpML Trade, such as the Barrier Determination Agent and the Hedging Party.
+type: Text
+schema:
+  enum: [Accountant, AgentLender, AllocationAgent, ArrangingBroker, BarrierDeterminationAgent, BeneficialOwner, Beneficiary, BookingParty, Borrower, Buyer, BuyerDecisionMaker, Chargor, ClearingClient, ClearingExceptionParty, ClearingFirm, ClearingOrganization, Client, ClientDecisionMaker, ConfirmationPlatform, ContractualParty, CounterPartyAffiliate, CounterPartyUltimateParent, Counterparty, CreditSupportProvider, Custodian, DataSubmitter, DeterminingParty, DisputingParty, DocumentRepository, ExecutingBroker, ExecutingEntity, ExecutionAgent, ExecutionFacility, Guarantor, HedgingParty, Lender, OrderTransmitter, PTRRServiceProvider, Pledgor, PrimeBroker, PriorTradeRepository, PublicationVenue, ReportingParty, ReportingPartyAffiliate, ReportingPartyUltimateParent, SecuredParty, Seller, SellerDecisionMaker, SettlementAgent, ThirdPartyCustodian, TradeRepository, TradeSource, TradingManager, TradingPartner, TripartyAgent]

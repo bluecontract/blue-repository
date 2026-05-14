@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-TimeUnitEnum.schema.json
+name: TimeUnitEnum
+namespace: cdm/base/datetime
+description: The enumeration values to qualify the allowed units of time.
+type: Text
+schema:
+  enum: [Day, Hour, Minute, Month, Second, Week, Year]

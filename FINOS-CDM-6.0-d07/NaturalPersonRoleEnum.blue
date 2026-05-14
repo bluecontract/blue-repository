@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-NaturalPersonRoleEnum.schema.json
+name: NaturalPersonRoleEnum
+namespace: cdm/base/staticdata/party
+description: "The enumerated values for the natural person's role."
+type: Text
+schema:
+  enum: [Broker, Buyer, DecisionMaker, ExecutionWithinFirm, InvestmentDecisionMaker, Seller, Trader]

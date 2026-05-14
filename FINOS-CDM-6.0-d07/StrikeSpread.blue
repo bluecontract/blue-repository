@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-StrikeSpread.schema.json
+name: StrikeSpread
+namespace: cdm/product/template
+description: A class for defining a strike spread feature.
+upperStrike:
+  description: Upper strike in a strike spread.
+  type: FINOS-CDM-6.0-d07/OptionStrike
+  schema:
+    required: true
+upperStrikeNumberOfOptions:
+  description: Number of options at the upper strike price in a strike spread.
+  type: Double
+  schema:
+    required: true

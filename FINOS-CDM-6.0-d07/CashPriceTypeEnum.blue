@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CashPriceTypeEnum.schema.json
+name: CashPriceTypeEnum
+namespace: cdm/observable/asset
+description: "Provides a list of possible types of cash prices, applicable when PriceTypeEnum is itself of type CashPrice."
+type: Text
+schema:
+  enum: [Discount, Fee, Premium]

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendDateReferenceEnum.schema.json
+name: DividendDateReferenceEnum
+namespace: cdm/product/asset
+description: The enumerated values to specify the date by reference to which the dividend will be paid.
+type: Text
+schema:
+  enum: [AdHocDate, CashSettlePaymentDateExDiv, CashSettlePaymentDateIssuerPayment, CashSettlementPaymentDate, CumulativeEquityExDiv, CumulativeEquityExDivBeforeReset, CumulativeEquityPaid, CumulativeEquityPaidBeforeReset, CumulativeEquityPaidInclReset, CumulativeInterestExDiv, CumulativeInterestPaid, CumulativeInterestPaidBeforeReset, CumulativeInterestPaidInclReset, DividendPaymentDate, DividendValuationDate, EquityPaymentDate, ExDate, FloatingAmountPaymentDate, FollowingPaymentDate, RecordDate, SharePayment, TerminationDate, TradeDate, UnwindExDiv, UnwindOrEquityExDiv, UnwindOrEquityPaid, UnwindOrInterestExDiv, UnwindOrInterestPaid, UnwindPaid]

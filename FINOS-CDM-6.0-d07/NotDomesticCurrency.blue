@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-credit-NotDomesticCurrency.schema.json
+name: NotDomesticCurrency
+namespace: cdm/base/staticdata/asset/credit
+description: |
+  A class to specify the ISDA 2003 Term: Not Domestic Currency.
+applicable:
+  description: Indicates whether the Not Domestic Currency provision is applicable.
+  type: Boolean
+  schema:
+    required: true
+currency:
+  description: |
+    An explicit specification of the domestic currency. The list of valid currencies is not presently positioned as an enumeration as part of the CDM because that scope is limited to the values specified by ISDA and FpML. As a result, implementers have to make reference to the relevant standard, such as the ISO 4217 standard for currency codes.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaString

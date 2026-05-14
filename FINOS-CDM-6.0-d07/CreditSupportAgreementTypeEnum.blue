@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CreditSupportAgreementTypeEnum.schema.json
+name: CreditSupportAgreementTypeEnum
+namespace: cdm/product/collateral
+description: The enumerated values to specify the type of Credit Support Agreement governing the transaction.
+type: Text
+schema:
+  enum: [CollateralTransferAgreement, CreditSupportAnnex, CreditSupportDeed]

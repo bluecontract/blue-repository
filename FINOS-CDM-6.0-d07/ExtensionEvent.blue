@@ -1,0 +1,17 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExtensionEvent.schema.json
+name: ExtensionEvent
+namespace: cdm/product/template
+description: |
+  A data to:  define the adjusted dates associated with an individual extension event.
+adjustedExerciseDate:
+  description: |
+    The date on which option exercise takes place. This date should already be adjusted for any applicable business day convention.
+  type: Text
+  schema:
+    required: true
+adjustedExtendedTerminationDate:
+  description: |
+    The termination date if an extendible provision is exercised. This date should already be adjusted for any applicable business day convention.
+  type: Text
+  schema:
+    required: true

@@ -1,0 +1,10 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-RegionalGovernmentIssuerType.schema.json
+name: RegionalGovernmentIssuerType
+namespace: cdm/base/staticdata/asset/common
+description: Represents a class to allow specification of different type of Regional government collateral.
+sovereignRecourse:
+  description: |
+    Applies to regional governments, local authorities or municipals.  True if entity has recourse to sovereign (e.g. debt guaranteed by government).  False if entity does not have recourse to sovereign.
+  type: Boolean
+  schema:
+    required: true

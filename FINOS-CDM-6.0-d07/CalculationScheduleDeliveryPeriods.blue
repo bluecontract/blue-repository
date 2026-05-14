@@ -1,0 +1,22 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-CalculationScheduleDeliveryPeriods.schema.json
+name: CalculationScheduleDeliveryPeriods
+namespace: cdm/product/asset
+description: Period and time profile over which the delivery takes place.
+deliveryCapacity:
+  description: The number of units included in the transaction for each delivery interval
+  type: FINOS-CDM-6.0-d07/Quantity
+endDate:
+  description: Delivery end date
+  type: Text
+priceTimeIntervalQuantity:
+  description: Price per quantity per delivery time interval.
+  type: FINOS-CDM-6.0-d07/Price
+profile:
+  description: "Defines the delivery profile of the asset, including the load type and the delivery intervals."
+  type: List
+  itemType: FINOS-CDM-6.0-d07/AssetDeliveryProfile
+  schema:
+    minItems: 0
+startDate:
+  description: Delivery start date
+  type: Text

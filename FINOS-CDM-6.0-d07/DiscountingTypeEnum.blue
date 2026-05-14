@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DiscountingTypeEnum.schema.json
+name: DiscountingTypeEnum
+namespace: cdm/product/asset
+description: |
+  The enumerated values to specify the method of calculating discounted payment amounts. This enumerations combines the FpML DiscountingTypeEnum and FraDiscountingEnum enumerations.
+type: Text
+schema:
+  enum: [AFMA, FRA, FRAYield, Standard]

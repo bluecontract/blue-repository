@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-QuotationRateTypeEnum.schema.json
+name: QuotationRateTypeEnum
+namespace: cdm/observable/asset
+description: |
+  The enumerated values to specify the type of quotation rate to be obtained from each cash settlement reference bank.
+type: Text
+schema:
+  enum: [Ask, Bid, ExercisingPartyPays, Mid]

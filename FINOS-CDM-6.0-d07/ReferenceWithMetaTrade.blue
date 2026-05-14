@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-metafields-ReferenceWithMetaTrade.schema.json
+name: ReferenceWithMetaTrade
+namespace: cdm/event/common/metafields
+address:
+  type: FINOS-CDM-6.0-d07/Reference
+externalReference:
+  type: Text
+globalReference:
+  type: Text

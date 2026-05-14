@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-RefRate.schema.json
+name: RefRate
+namespace: cdm/regulation
+indx:
+  type: Text
+  schema:
+    required: true
+nm:
+  type: Text
+  schema:
+    required: true

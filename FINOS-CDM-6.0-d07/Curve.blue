@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-Curve.schema.json
+name: Curve
+namespace: cdm/observable/asset
+commodityCurve:
+  type: FINOS-CDM-6.0-d07/FieldWithMetaCommodityReferencePriceEnum
+interestRateCurve:
+  type: FINOS-CDM-6.0-d07/InterestRateCurve

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-FeeTypeEnum.schema.json
+name: FeeTypeEnum
+namespace: cdm/observable/asset
+description: The enumerated values to specify an event that has given rise to a fee.
+type: Text
+schema:
+  enum: [Assignment, BrokerageCommission, CorporateAction, CreditEvent, Increase, Novation, PartialTermination, Premium, Renegotiation, Termination, Upfront]

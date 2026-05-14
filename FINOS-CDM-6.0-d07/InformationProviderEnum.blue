@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-InformationProviderEnum.schema.json
+name: InformationProviderEnum
+namespace: cdm/observable/asset
+description: The enumerated values to specify the list of information providers.
+type: Text
+schema:
+  enum: [AssocBanksSingapore, BancoCentralChile, BankOfCanada, BankOfEngland, BankOfJapan, Bloomberg, EuroCentralBank, FHLBSF, FederalReserve, ICESWAP, ISDA, Refinitiv, ReserveBankAustralia, ReserveBankNewZealand, Reuters, SAFEX, TOKYOSWAP, Telerate]

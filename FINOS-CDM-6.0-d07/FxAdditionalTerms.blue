@@ -1,0 +1,4 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-FxAdditionalTerms.schema.json
+name: FxAdditionalTerms
+namespace: cdm/legaldocumentation/master
+description: TransactionAdditionalTerms which apply to the CurrencyPair asset class.

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralTypeEnum.schema.json
+name: CollateralTypeEnum
+namespace: cdm/product/collateral
+description: Specifies the types of collateral that are accepted by the Lender
+type: Text
+schema:
+  enum: [Cash, CashPool, NonCash]

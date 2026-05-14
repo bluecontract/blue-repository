@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-AveragingCalculationMethodEnum.schema.json
+name: AveragingCalculationMethodEnum
+namespace: cdm/base/math
+description: Specifies enumerations for the type of averaging calculation.
+type: Text
+schema:
+  enum: [Arithmetic, Geometric, Harmonic]

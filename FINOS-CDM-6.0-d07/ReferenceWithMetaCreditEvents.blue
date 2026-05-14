@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-metafields-ReferenceWithMetaCreditEvents.schema.json
+name: ReferenceWithMetaCreditEvents
+namespace: cdm/observable/event/metafields
+address:
+  type: FINOS-CDM-6.0-d07/Reference
+externalReference:
+  type: Text
+globalReference:
+  type: Text

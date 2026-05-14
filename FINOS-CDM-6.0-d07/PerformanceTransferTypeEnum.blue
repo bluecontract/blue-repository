@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-PerformanceTransferTypeEnum.schema.json
+name: PerformanceTransferTypeEnum
+namespace: cdm/event/common
+description: The enumerated values to specify the origin of a performance transfer
+type: Text
+schema:
+  enum: [Commodity, Correlation, Dividend, Equity, Interest, Variance, Volatility]

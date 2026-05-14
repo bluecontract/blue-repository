@@ -1,0 +1,22 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-WorkflowStepApproval.schema.json
+name: WorkflowStepApproval
+namespace: cdm/event/workflow
+description: Party approvals associated to the current WorkflowStep.
+approved:
+  description: Flag denoting whether the workflow step is approved or not
+  type: Boolean
+  schema:
+    required: true
+party:
+  description: Reference to the Party who is approving/rejecting this workflow step
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  schema:
+    required: true
+rejectedReason:
+  description: Optional reason for rejecting the workflow step
+  type: Text
+timestamp:
+  description: Timestamp of the approval
+  type: FINOS-CDM-6.0-d07/EventTimestamp
+  schema:
+    required: true

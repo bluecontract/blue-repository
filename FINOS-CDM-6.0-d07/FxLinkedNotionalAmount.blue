@@ -1,0 +1,18 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-FxLinkedNotionalAmount.schema.json
+name: FxLinkedNotionalAmount
+namespace: cdm/product/common/schedule
+description: |
+  A data to:  describe the cashflow representation for FX linked notionals.
+adjustedFxSpotFixingDate:
+  description: |
+    The date on which the FX spot rate is observed. This date should already be adjusted for any applicable business day convention.
+  type: Text
+notionalAmount:
+  description: The calculation period notional amount.
+  type: Double
+observedFxSpotRate:
+  description: The actual observed FX spot rate.
+  type: Double
+resetDate:
+  description: The reset date.
+  type: Text

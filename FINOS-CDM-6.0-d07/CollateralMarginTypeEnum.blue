@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralMarginTypeEnum.schema.json
+name: CollateralMarginTypeEnum
+namespace: cdm/product/collateral
+description: The enumerated values to specify the type of margin for which a legal agreement is named.
+type: Text
+schema:
+  enum: [InitialMargin, VariationMargin]

@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Term.schema.json
+name: Term
+namespace: cdm/regulation
+unit:
+  type: Text
+  schema:
+    required: true
+val:
+  type: Text
+  schema:
+    required: true

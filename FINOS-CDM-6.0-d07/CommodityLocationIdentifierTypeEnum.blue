@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-identifier-CommodityLocationIdentifierTypeEnum.schema.json
+name: CommodityLocationIdentifierTypeEnum
+namespace: cdm/base/staticdata/identifier
+description: Defines the enumerated values to specify the nature of a location identifier.
+type: Text
+schema:
+  enum: [BuyerHub, DeliveryPoint, DeliveryZone, EntryPoint, InterconnectionPoint, SellerHub, WithdrawalPoint]

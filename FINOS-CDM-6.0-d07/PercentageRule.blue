@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PercentageRule.schema.json
+name: PercentageRule
+namespace: cdm/product/common/settlement
+description: A class defining a content model for a calculation rule defined as percentage of the notional amount.
+notionalAmountReference:
+  description: A reference to the notional amount.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaMoney
+  schema:
+    required: true
+paymentPercent:
+  description: A percentage of the notional amount.
+  type: Double
+  schema:
+    required: true

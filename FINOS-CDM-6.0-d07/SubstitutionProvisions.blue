@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-SubstitutionProvisions.schema.json
+name: SubstitutionProvisions
+namespace: cdm/product/collateral
+description: |
+  Defines collateral substitution provisions such as how many and with how much notice are substitutions allowed.
+noticeDeadlineDateTime:
+  description: A specific date and time for the notice deadline
+  type: Text
+noticeDeadlinePeriod:
+  description: Defines the min period for notify of a substitution.
+  type: FINOS-CDM-6.0-d07/Period
+numberOfSubstitutionsAllowed:
+  description: Specifies if 1 or more substitutions are allowed.
+  type: Integer

@@ -1,0 +1,28 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-CalculatedRateObservations.schema.json
+name: CalculatedRateObservations
+namespace: cdm/observable/asset/calculatedrate
+description: Type for reporting observations that went into the final reported rate.
+observationDates:
+  description: The observation date upon which the rate is observed.
+  type: List
+  itemType: Text
+  schema:
+    minItems: 0
+observedRates:
+  description: The value observed for that date
+  type: List
+  itemType: Double
+  schema:
+    minItems: 0
+processedRates:
+  description: "The value after any processing, such as application of caps or floors."
+  type: List
+  itemType: Double
+  schema:
+    minItems: 0
+weights:
+  description: The corresponding weight for each date.
+  type: List
+  itemType: Double
+  schema:
+    minItems: 0

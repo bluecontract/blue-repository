@@ -1,0 +1,10 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-ValuationPostponement.schema.json
+name: ValuationPostponement
+namespace: cdm/observable/asset
+description: Specifies how long to wait to get a quote from a settlement rate option upon a price source disruption.
+maximumDaysOfPostponement:
+  description: |
+    The maximum number of days to wait for a quote from the disrupted settlement rate option before proceeding to the next method.
+  type: Integer
+  schema:
+    required: true

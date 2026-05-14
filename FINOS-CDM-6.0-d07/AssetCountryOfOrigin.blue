@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AssetCountryOfOrigin.schema.json
+name: AssetCountryOfOrigin
+namespace: cdm/product/collateral
+assetCountryOfOrigin:
+  description: Represents a filter on the asset country of origin based on the ISO Standard 3166.
+  type: FINOS-CDM-6.0-d07/ISOCountryCodeEnum
+  schema:
+    required: true

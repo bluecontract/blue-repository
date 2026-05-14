@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-CreditLimitTypeEnum.schema.json
+name: CreditLimitTypeEnum
+namespace: cdm/event/workflow
+description: The enumeration values to qualify the type of credit limits.
+type: Text
+schema:
+  enum: [CS01, DV01, IM, NPV, Notional, PV01]

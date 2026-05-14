@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-Rounding.schema.json
+name: Rounding
+namespace: cdm/base/math
+description: Defines rounding rules and precision to be used in the rounding of a number.
+precision:
+  description: |
+    Specifies the rounding precision in terms of a number of decimal places when the number is evaluated in decimal form (not percentage), e.g. 0.09876543 rounded to the nearest 5 decimal places is  0.0987654.
+  type: Integer
+roundingDirection:
+  description: "Specifies the rounding rounding rule as up, down, or nearest."
+  type: FINOS-CDM-6.0-d07/RoundingDirectionEnum
+  schema:
+    required: true

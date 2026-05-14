@@ -45,8 +45,8 @@ jobs:
             STATUS=$(echo "$line" | cut -f1)
             FILE=$(echo "$line" | cut -f2)
             
-            # Skip .github folder and root files
-            if [[ "$FILE" =~ ^\.github/ ]] || [[ ! "$FILE" =~ "/" ]]; then
+            # Skip non-package folders and root files
+            if [[ "$FILE" =~ ^\.github/ ]] || [[ "$FILE" =~ ^docs/ ]] || [[ ! "$FILE" =~ "/" ]]; then
               continue
             fi
             
@@ -54,9 +54,9 @@ jobs:
             ROOT_FOLDER=$(echo "$FILE" | cut -d'/' -f1)
             
             # Check if root folder name follows naming convention
-            if ! [[ "$ROOT_FOLDER" =~ ^[A-Z][A-Za-z0-9.]*$ ]]; then
+            if ! [[ "$ROOT_FOLDER" =~ ^[A-Z][A-Za-z0-9.-]*$ ]]; then
               echo "❌ Error: Invalid root folder name: $ROOT_FOLDER"
-              echo "Root folder names must start with uppercase letter and contain only alphanumeric characters and dots."
+              echo "Root folder names must start with uppercase letter and contain only alphanumeric characters, dots, and hyphens."
               exit 1
             fi
             

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ResourceTypeEnum.schema.json
+name: ResourceTypeEnum
+namespace: cdm/legaldocumentation/common
+description: "The enumerated values to specify the type of a resource (e.g. document)."
+type: Text
+schema:
+  enum: [Confirmation, SupplementalMaterialEconomicTerms, TermSheet]

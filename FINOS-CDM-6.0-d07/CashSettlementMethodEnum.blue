@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-CashSettlementMethodEnum.schema.json
+name: CashSettlementMethodEnum
+namespace: cdm/product/common/settlement
+description: Defines the different cash settlement methods for a product where cash settlement is applicable.
+type: Text
+schema:
+  enum: [CashPriceAlternateMethod, CashPriceMethod, CollateralizedCashPriceMethod, CrossCurrencyMethod, MidMarketCalculationAgentDetermination, MidMarketIndicativeQuotations, MidMarketIndicativeQuotationsAlternate, ParYieldCurveAdjustedMethod, ParYieldCurveUnadjustedMethod, ReplacementValueCalculationAgentDetermination, ReplacementValueFirmQuotations, ZeroCouponYieldAdjustedMethod]

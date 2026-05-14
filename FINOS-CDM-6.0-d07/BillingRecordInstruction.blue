@@ -1,0 +1,30 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-BillingRecordInstruction.schema.json
+name: BillingRecordInstruction
+namespace: cdm/event/common
+description: Specifies the instructions for creation of a billing record.
+observation:
+  description: The observations used to calculate the billing amount.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/Observation
+  schema:
+    minItems: 1
+recordEndDate:
+  description: The ending date of the period described by this record
+  type: Text
+  schema:
+    required: true
+recordStartDate:
+  description: The starting date of the period described by this record
+  type: Text
+  schema:
+    required: true
+settlementDate:
+  description: The date for settlement of the transfer.
+  type: Text
+  schema:
+    required: true
+tradeState:
+  description: The trade for the individual billing record.
+  type: FINOS-CDM-6.0-d07/ReferenceWithMetaTradeState
+  schema:
+    required: true

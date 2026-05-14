@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-OtherAgreementTerms.schema.json
+name: OtherAgreementTerms
+namespace: cdm/legaldocumentation/common
+description: |
+  A class to specify a related legal agreement. For example, ISDA 2016 Credit Support Annex for Initial Margin, paragraph 13, General Principles, (s): Other CSA and Japanese Law CSA (VM). | ISDA 2016 Credit Support Annex for Variation Margin, paragraph 13, (o): Other CSA.
+isSpecified:
+  description: "The qualification of whether some other related agreement is specified (True) or not (False)."
+  type: Boolean
+  schema:
+    required: true
+legalDocument:
+  description: "The specification of this other agreement, when the qualification is True."
+  type: Text

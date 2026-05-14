@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ListingSector.schema.json
+name: ListingSector
+namespace: cdm/product/collateral
+description: Specifies a filter based on an industry sector.
+sector:
+  description: |
+    Represents a filter based on an industry sector defined under a system for classifying industry types such as Global Industry Classification Standard (GICS) and North American Industry Classification System (NAICS)
+  type: List
+  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  schema:
+    minItems: 1

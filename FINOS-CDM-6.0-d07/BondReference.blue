@@ -1,0 +1,21 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-BondReference.schema.json
+name: BondReference
+namespace: cdm/product/asset
+description: Reference to a bond underlier to represent an asset swap or Condition Precedent Bond.
+bond:
+  description: Reference to a bond underlier.
+  type: FINOS-CDM-6.0-d07/Security
+  schema:
+    required: true
+conditionPrecedentBond:
+  description: |
+    To indicate whether the Condition Precedent Bond is applicable. The swap contract is only valid if the bond is issued and if there is any dispute over the terms of fixed stream then the bond terms would be used.
+  type: Boolean
+  schema:
+    required: true
+couponRate:
+  description: "Specifies the coupon rate (expressed in percentage) of a fixed income security or convertible bond."
+  type: FINOS-CDM-6.0-d07/FixedRateSpecification
+discrepancyClause:
+  description: To indicate whether the Discrepancy Clause is applicable.
+  type: Boolean

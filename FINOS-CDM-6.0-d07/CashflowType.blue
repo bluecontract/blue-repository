@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-CashflowType.schema.json
+name: CashflowType
+namespace: cdm/product/common/settlement
+description: |
+  Characterises the type of cashflow, which can result from either a scheduled or a non-scheduled lifecycle event.
+cashflowType:
+  description: Type of cashflow corresponding to a scheduled event.
+  type: FINOS-CDM-6.0-d07/ScheduledTransferEnum
+cashPrice:
+  description: "Type of cashflow corresponding to a non-scheduled event, where a price must be agreed between the parties."
+  type: FINOS-CDM-6.0-d07/CashPrice
+priceExpression:
+  type: FINOS-CDM-6.0-d07/PriceExpressionEnum

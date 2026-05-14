@@ -1,0 +1,36 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-SecurityLendingInvoice.schema.json
+name: SecurityLendingInvoice
+namespace: cdm/event/common
+description: Specifies the information required for inclusion in a securities lending billing invoice.
+billingEndDate:
+  description: The ending date of the period described by this invoice
+  type: Text
+  schema:
+    required: true
+billingRecord:
+  description: The billing records contained within the invoice
+  type: List
+  itemType: FINOS-CDM-6.0-d07/BillingRecord
+  schema:
+    minItems: 1
+billingStartDate:
+  description: The starting date of the period described by this invoice
+  type: Text
+  schema:
+    required: true
+billingSummary:
+  description: The billing summaries contained within the invoice
+  type: List
+  itemType: FINOS-CDM-6.0-d07/BillingSummary
+  schema:
+    minItems: 1
+receivingParty:
+  description: The party receiving the invoice
+  type: FINOS-CDM-6.0-d07/Party
+  schema:
+    required: true
+sendingParty:
+  description: The party issuing the invoice
+  type: FINOS-CDM-6.0-d07/Party
+  schema:
+    required: true

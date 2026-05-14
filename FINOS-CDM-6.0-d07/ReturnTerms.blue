@@ -1,0 +1,19 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ReturnTerms.schema.json
+name: ReturnTerms
+namespace: cdm/product/template
+description: Specifies the type of return of a performance payout.
+correlationReturnTerms:
+  description: Return terms based upon the observed correlation between the components of the underlying basket.
+  type: FINOS-CDM-6.0-d07/CorrelationReturnTerms
+dividendReturnTerms:
+  description: Return terms based upon dividend payments associated to the underlier.
+  type: FINOS-CDM-6.0-d07/DividendReturnTerms
+priceReturnTerms:
+  description: "Return terms based upon the underlier's observed price."
+  type: FINOS-CDM-6.0-d07/PriceReturnTerms
+varianceReturnTerms:
+  description: "Return terms based upon the observed variance of the underlier's price."
+  type: FINOS-CDM-6.0-d07/VarianceReturnTerms
+volatilityReturnTerms:
+  description: "Return terms based upon the observed volatility of the underlier's price."
+  type: FINOS-CDM-6.0-d07/VolatilityReturnTerms

@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-metafields-FieldWithMetaMarketDisruptionEnum.schema.json
+name: FieldWithMetaMarketDisruptionEnum
+namespace: cdm/observable/event
+meta:
+  type: FINOS-CDM-6.0-d07/MetaFields
+val:
+  type: FINOS-CDM-6.0-d07/MarketDisruptionEnum

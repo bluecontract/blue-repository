@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-AddtlAttrbts.schema.json
+name: AddtlAttrbts
+namespace: cdm/regulation
+rskRdcgTx:
+  type: Text
+  schema:
+    required: true
+sctiesFincgTxInd:
+  type: Text
+  schema:
+    required: true

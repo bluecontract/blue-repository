@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-SpecifiedEntityTermsEnum.schema.json
+name: SpecifiedEntityTermsEnum
+namespace: cdm/legaldocumentation/common
+description: |
+  The enumerated values to specify the specified entity terms for the Event of Default or Termination Event specified.
+type: Text
+schema:
+  enum: [AnyAffiliate, MaterialSubsidiary, NamedSpecifiedEntity, None, OtherSpecifiedEntity]

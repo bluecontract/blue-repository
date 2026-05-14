@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-EventIntentEnum.schema.json
+name: EventIntentEnum
+namespace: cdm/event/common
+description: The enumeration values to qualify the intent associated with a transaction event.
+type: Text
+schema:
+  enum: [Allocation, CashFlow, Clearing, Compression, ContractFormation, ContractTermsAmendment, CorporateActionAdjustment, CreditEvent, Decrease, EarlyTerminationProvision, Increase, IndexTransition, NotionalReset, NotionalStep, Novation, ObservationRecord, OptionExercise, OptionalCancellation, OptionalExtension, PortfolioRebalancing, PrincipalExchange, Reallocation, Repurchase]

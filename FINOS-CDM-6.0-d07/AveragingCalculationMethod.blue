@@ -1,0 +1,14 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-AveragingCalculationMethod.schema.json
+name: AveragingCalculationMethod
+namespace: cdm/base/math
+description: Defines the ways in which multiple values can be aggregated into a single value.
+calculationMethod:
+  description: Identifies which of the Pythagorean means is being used to compute an average value.
+  type: FINOS-CDM-6.0-d07/AveragingCalculationMethodEnum
+  schema:
+    required: true
+isWeighted:
+  description: Identifies whether the average values will be weighted or unweighted.
+  type: Boolean
+  schema:
+    required: true

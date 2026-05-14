@@ -1,0 +1,12 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ContractualMatrix.schema.json
+name: ContractualMatrix
+namespace: cdm/legaldocumentation/common
+matrixTerm:
+  description: |
+    Defines any applicable key into the relevant matrix. For example, the Transaction Type would be the single term required for the Credit Derivatives Physical Settlement Matrix. This element should be omitted in the case of the 2000 ISDA Definitions Settlement Matrix for Early Termination and Swaptions.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaMatrixTermEnum
+matrixType:
+  description: Identifies the form of applicable matrix.
+  type: FINOS-CDM-6.0-d07/FieldWithMetaMatrixTypeEnum
+  schema:
+    required: true

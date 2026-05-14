@@ -1,0 +1,13 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-EquityAdditionalTerms.schema.json
+name: EquityAdditionalTerms
+namespace: cdm/legaldocumentation/master
+description: Transaction AdditionalTerms that apply to Equity asset class.
+determinationTerms:
+  type: List
+  itemType: FINOS-CDM-6.0-d07/DeterminationRolesAndTerms
+  schema:
+    minItems: 1
+extraordinaryEvents:
+  type: FINOS-CDM-6.0-d07/ExtraordinaryEvents
+substitutionProvision:
+  type: FINOS-CDM-6.0-d07/UnderlierSubstitutionProvision

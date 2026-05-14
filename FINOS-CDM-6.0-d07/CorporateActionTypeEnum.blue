@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CorporateActionTypeEnum.schema.json
+name: CorporateActionTypeEnum
+namespace: cdm/event/common
+description: The enumerated values to specify the origin of a corporate action transfer.
+type: Text
+schema:
+  enum: [BonusIssue, CashDividend, ClassAction, Delisting, EarlyRedemption, Liquidation, Merger, ReverseStockSplit, RightsIssue, SpinOff, StockDividend, StockIdentifierChange, StockNameChange, StockReclassification, StockSplit, Takeover]

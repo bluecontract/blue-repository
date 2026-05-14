@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-TelephoneTypeEnum.schema.json
+name: TelephoneTypeEnum
+namespace: cdm/base/staticdata/party
+description: "The enumerated values to specify the type of telephone number, e.g. work vs. mobile."
+type: Text
+schema:
+  enum: [Fax, Mobile, Personal, Work]

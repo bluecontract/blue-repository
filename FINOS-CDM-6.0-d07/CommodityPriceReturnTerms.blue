@@ -1,0 +1,18 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-CommodityPriceReturnTerms.schema.json
+name: CommodityPriceReturnTerms
+namespace: cdm/product/common/settlement
+description: Defines parameters in which the commodity price is assessed.
+conversionFactor:
+  description: |
+    Defines the conversion applied if the quantity unit on contract is different from unit on referenced underlier.
+  type: Double
+rollFeature:
+  description: |
+    Used in conjunction with an exchange-based pricing source. Identifies a way in which the futures contracts referenced will roll between periods.
+  type: FINOS-CDM-6.0-d07/RollFeature
+rounding:
+  description: Defines rounding rules and precision to be used in the rounding of a number.
+  type: FINOS-CDM-6.0-d07/Rounding
+spread:
+  description: Defines a spread value for one or more defined dates.
+  type: FINOS-CDM-6.0-d07/SpreadSchedule

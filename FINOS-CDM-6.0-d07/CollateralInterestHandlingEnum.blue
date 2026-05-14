@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestHandlingEnum.schema.json
+name: CollateralInterestHandlingEnum
+namespace: cdm/product/collateral
+description: "How is collateral interest to be handled?"
+type: Text
+schema:
+  enum: [Adjust, Transfer, Transfer_or_Adjust]

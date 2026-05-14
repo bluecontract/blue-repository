@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-CreditSupportDocumentTermsEnum.schema.json
+name: CreditSupportDocumentTermsEnum
+namespace: cdm/legaldocumentation/common
+description: The enumerated values to specify the Credit Support Document Terms
+type: Text
+schema:
+  enum: [Any, None, Specified]

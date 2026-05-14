@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexCategoryEnum.schema.json
+name: FloatingRateIndexCategoryEnum
+namespace: cdm/observable/asset/fro
+description: Top level ISDA FRO category.
+type: Text
+schema:
+  enum: [Calculated Rate, Reference Banks Rate, Screen Rate]

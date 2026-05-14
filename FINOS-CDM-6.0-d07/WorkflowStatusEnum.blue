@@ -1,0 +1,6 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-WorkflowStatusEnum.schema.json
+name: WorkflowStatusEnum
+namespace: cdm/event/workflow
+type: Text
+schema:
+  enum: [Accepted, Affirmed, Alleged, Amended, Cancelled, Certain, Cleared, Confirmed, Pending, Rejected, Submitted, Terminated, Uncertain, Unconfirmed]

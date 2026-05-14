@@ -1,0 +1,56 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-CommodityPayout.schema.json
+name: CommodityPayout
+namespace: cdm/product/asset
+description: |
+  Payout based on the averaged price of a referenced underlier. (e.g. Commodities). Can represent both average (average of many) & bullet (average of 1) pricing
+averagingFeature:
+  description: "Indicates if the averaging calculation, when applicable, is weighted or unweighted."
+  type: FINOS-CDM-6.0-d07/AveragingCalculation
+calculationPeriodDates:
+  description: Defines the calculation period dates schedule.
+  type: FINOS-CDM-6.0-d07/CalculationPeriodDates
+commodityPriceReturnTerms:
+  description: Defines parameters in which the commodity price is assessed.
+  type: FINOS-CDM-6.0-d07/CommodityPriceReturnTerms
+delivery:
+  description: Contains the information relative to the delivery of the asset.
+  type: FINOS-CDM-6.0-d07/AssetDeliveryInformation
+fxFeature:
+  description: Defines quanto or composite FX features that are included in the swap leg.
+  type: FINOS-CDM-6.0-d07/FxFeature
+payerReceiver:
+  description: Canonical representation of the payer and receiver parties applicable to each payout leg.
+  type: FINOS-CDM-6.0-d07/PayerReceiver
+paymentDates:
+  description: |
+    Defines the payment date schedule, as defined by the parameters that are needed to specify it, either in a parametric way or by reference to another schedule of dates (e.g. the valuation dates).
+  type: FINOS-CDM-6.0-d07/PaymentDates
+  schema:
+    required: true
+priceQuantity:
+  description: |
+    Each payout leg must implement the quantity concept as a 'resolvable' type, which allows for different payout legs to be linked to each other (e.g. in the case of cross-curreny products).
+  type: FINOS-CDM-6.0-d07/ResolvablePriceQuantity
+pricingDates:
+  description: Specifies specific dates or parametric rules for the dates on which the price will be determined.
+  type: FINOS-CDM-6.0-d07/PricingDates
+  schema:
+    required: true
+principalPayment:
+  description: |
+    The specification of the principal exchange. Optional as only applicable in the case of cross-currency or zero-coupon swaps with a final payment.
+  type: FINOS-CDM-6.0-d07/PrincipalPayments
+schedule:
+  description: |
+    Allows the full representation of a payout by defining a set of schedule periods. It supports standard schedule customization by expressing all the dates, quantities, and pricing data in a non-parametric way.
+  type: FINOS-CDM-6.0-d07/CalculationSchedule
+settlementTerms:
+  description: |
+    Each payout leg must specifies its settlement terms, including the delivery type (i.e. cash vs physical, and their respective terms), the transfer type (DvP etc.) and settlement date, if any.
+  type: FINOS-CDM-6.0-d07/SettlementTerms
+underlier:
+  description: |
+    Identifies the underlying product that is referenced for pricing of the applicable leg in a swap. Referenced in the '2018 ISDA CDM Equity Confirmation for Security Equity Swap' as Security.
+  type: FINOS-CDM-6.0-d07/Underlier
+  schema:
+    required: true

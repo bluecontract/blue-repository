@@ -1,0 +1,8 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-UK_EMIR_EligibleCollateralEnum.schema.json
+name: UK_EMIR_EligibleCollateralEnum
+namespace: cdm/base/staticdata/asset/common
+description: |
+  Identifies United Kingdom Eligible Collateral Assets classification categories based on UK Onshored EMIR Uncleared Margin Rules. Eligible Collateral asset classes for both initial margin (IM) and variation margin (VM) posted and collected between specified entities. Please note: UK EMIR regulation will detail which eligible collateral assets classes apply to each type of entity pairing (counterparty) and which apply to posting of IM and VM.
+type: Text
+schema:
+  enum: [UK_EMIRTypeA, UK_EMIRTypeB, UK_EMIRTypeC, UK_EMIRTypeD, UK_EMIRTypeE, UK_EMIRTypeF, UK_EMIRTypeG, UK_EMIRTypeH, UK_EMIRTypeI, UK_EMIRTypeJ, UK_EMIRTypeK, UK_EMIRTypeL, UK_EMIRTypeM, UK_EMIRTypeN, UK_EMIRTypeO, UK_EMIRTypeP, UK_EMIRTypeQ, UK_EMIRTypeR]

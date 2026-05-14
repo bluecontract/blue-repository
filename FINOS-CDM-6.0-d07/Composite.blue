@@ -1,0 +1,19 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-Composite.schema.json
+name: Composite
+namespace: cdm/product/template
+description: |
+  Specifies the conditions to be applied for converting into a reference currency when the actual currency rate is not determined upfront.
+determinationMethod:
+  description: Specifies the method according to which an amount or a date is determined.
+  type: FINOS-CDM-6.0-d07/DeterminationMethodEnum
+fixingTime:
+  description: |
+    The time at which the spot currency exchange rate will be observed. It is specified as a time in a business day calendar location, e.g. 11:00am London time.
+  type: FINOS-CDM-6.0-d07/BusinessCenterTime
+fxSpotRateSource:
+  description: |
+    Specifies the methodology (reference source and, optionally, fixing time) to be used for determining a currency conversion rate.
+  type: FINOS-CDM-6.0-d07/FxSpotRateSource
+relativeDate:
+  description: "A date specified as some offset to another date (the anchor date)."
+  type: FINOS-CDM-6.0-d07/RelativeDateOffset

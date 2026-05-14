@@ -1,0 +1,9 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AssetAgencyRating.schema.json
+name: AssetAgencyRating
+namespace: cdm/product/collateral
+assetAgencyRating:
+  description: |
+    Represents an agency rating based on default risk and creditors claim in event of default associated with specific instrument.
+  type: FINOS-CDM-6.0-d07/AgencyRatingCriteria
+  schema:
+    required: true

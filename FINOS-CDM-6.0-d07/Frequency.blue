@@ -1,0 +1,16 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-Frequency.schema.json
+name: Frequency
+namespace: cdm/base/datetime
+description: |
+  A class for defining a date frequency, e.g. one day, three months, through the combination of an integer value and a standardized period value that is specified as part of an enumeration.
+period:
+  description: "A time period, e.g. a day, week, month, year or term of the stream."
+  type: FINOS-CDM-6.0-d07/PeriodExtendedEnum
+  schema:
+    required: true
+periodMultiplier:
+  description: |
+    A time period multiplier, e.g. 1, 2, or 3. If the period value is T (Term) then period multiplier must contain the value 1.
+  type: Integer
+  schema:
+    required: true

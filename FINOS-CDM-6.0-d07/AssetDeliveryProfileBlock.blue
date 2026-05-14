@@ -1,0 +1,24 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-AssetDeliveryProfileBlock.schema.json
+name: AssetDeliveryProfileBlock
+namespace: cdm/product/asset
+description: |
+  Defines a delivery profile block, including start and end time, days of the week, duration, delivery capacity and price time interval quantity.
+dayOfWeek:
+  description: The days of the week of the delivery.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/DayOfWeekEnum
+  schema:
+    minItems: 0
+    maxItems: 7
+deliveryCapacity:
+  description: The number of units included in the transaction for each delivery interval
+  type: FINOS-CDM-6.0-d07/Quantity
+endTime:
+  description: The end time of the delivery interval for each block or shape.
+  type: Text
+priceTimeIntervalQuantity:
+  description: Price per quantity per delivery time interval.
+  type: FINOS-CDM-6.0-d07/Price
+startTime:
+  description: The start time of the delivery interval for each block or shape.
+  type: Text

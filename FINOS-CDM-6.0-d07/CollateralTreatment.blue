@@ -1,0 +1,19 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralTreatment.schema.json
+name: CollateralTreatment
+namespace: cdm/product/collateral
+description: Specifies the treatment terms for the eligible collateral criteria specified.
+concentrationLimit:
+  description: Specification of concentration limits applicable to the collateral criteria.
+  type: List
+  itemType: FINOS-CDM-6.0-d07/ConcentrationLimit
+  schema:
+    minItems: 0
+isIncluded:
+  description: |
+    A boolean attribute to specify whether collateral critieria are inclusion (True) or exclusion (False) criteria.
+  type: Boolean
+  schema:
+    required: true
+valuationTreatment:
+  description: Specification of the valuation treatment for the specified collateral.
+  type: FINOS-CDM-6.0-d07/CollateralValuationTreatment

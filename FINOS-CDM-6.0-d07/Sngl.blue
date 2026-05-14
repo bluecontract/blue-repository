@@ -1,0 +1,11 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Sngl.schema.json
+name: Sngl
+namespace: cdm/regulation
+indx:
+  type: FINOS-CDM-6.0-d07/Indx
+  schema:
+    required: true
+isin:
+  type: Text
+  schema:
+    required: true

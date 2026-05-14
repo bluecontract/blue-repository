@@ -1,0 +1,7 @@
+# Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-metafields-FieldWithMetaSettledEntityMatrixSourceEnum.schema.json
+name: FieldWithMetaSettledEntityMatrixSourceEnum
+namespace: cdm/product/asset
+meta:
+  type: FINOS-CDM-6.0-d07/MetaFields
+val:
+  type: FINOS-CDM-6.0-d07/SettledEntityMatrixSourceEnum
