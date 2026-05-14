@@ -17,8 +17,8 @@ permissions:
   id-token: write
 
 env:
-  REPOSITORY_GENERATOR_REPO: 'https://github.com/bluecontract/blue-js.git'
-  REPOSITORY_GENERATOR_REF: 'fd96a783148da3a718d4108fc7364fd129e253ef'
+  REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
+  REPOSITORY_GENERATOR_VERSION: '4.1.0'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
   ARTIFACT_NAME: 'blue-repository-definition'
   ARTIFACT_RETENTION_DAYS: '10'
@@ -57,7 +57,9 @@ jobs:
           git fetch origin main
           git checkout -B main origin/main
 
-          .github/scripts/run-repository-generator-from-blue-js.sh write "${BLUE_REPOSITORY_PATH}" \
+          npm_config_loglevel=error \
+            npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
+            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode write \
             | tee /tmp/repository-generator-output.txt
 
           repoBlueId="$(tail -n 1 /tmp/repository-generator-output.txt | tr -d '\r')"
