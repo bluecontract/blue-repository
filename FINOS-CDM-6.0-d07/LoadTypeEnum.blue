@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-LoadTypeEnum.schema.json
-name: LoadTypeEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/LoadTypeEnum
 description: Specifies the load type of the delivery.
 type: Text
 schema:

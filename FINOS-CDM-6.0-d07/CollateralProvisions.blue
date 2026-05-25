@@ -1,18 +1,17 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralProvisions.schema.json
-name: CollateralProvisions
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralProvisions
 description: Contains collateral attributes which can also inherit information from a GMRA
 collateralType:
   description: Enumerates the collateral types which are accepted by the Seller.
-  type: FINOS-CDM-6.0-d07/CollateralTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralTypeEnum
   schema:
     required: true
 eligibleCollateral:
   description: The eligible collateral as specified in relation to the transaction.
   type: List
-  itemType: FINOS-CDM-6.0-d07/EligibleCollateralCriteria
+  itemType: FINOS-CDM-6.0-d07/cdm/product/collateral/EligibleCollateralCriteria
   schema:
     minItems: 0
 substitutionProvisions:
   description: The provisions for collateral substitutions such as how many and when they are allowed.
-  type: FINOS-CDM-6.0-d07/SubstitutionProvisions
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/SubstitutionProvisions

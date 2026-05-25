@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-Product.schema.json
-name: Product
-namespace: cdm/product/template
+name: cdm/product/template/Product
 description: Enables either a TransferableProduct or a NonTransferableProduct to be used in an underlier.
 NonTransferableProduct:
   description: |
     The non-transferable product data type represents a product that can be traded (as part of a TradableProduct) but cannot be transferred to others.
-  type: FINOS-CDM-6.0-d07/NonTransferableProduct
+  type: FINOS-CDM-6.0-d07/cdm/product/template/NonTransferableProduct
 TransferableProduct:
   description: |
     A TransferableProduct is a type of financial product which can be held or transferred, represented as an Asset with the addition of specific EconomicTerms.
-  type: FINOS-CDM-6.0-d07/TransferableProduct
+  type: FINOS-CDM-6.0-d07/cdm/product/template/TransferableProduct

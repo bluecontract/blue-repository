@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-ObservationParameters.schema.json
-name: ObservationParameters
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/ObservationParameters
 description: |
   Parameters on daily observed computed rates, specifically daily caps and floors. This type is used to represent modular computed rates in interestRatePayouts.
 observationCapRate:

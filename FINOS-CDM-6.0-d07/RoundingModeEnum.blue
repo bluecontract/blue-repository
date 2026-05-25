@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-RoundingModeEnum.schema.json
-name: RoundingModeEnum
-namespace: cdm/base/math
+name: cdm/base/math/RoundingModeEnum
 description: |
   The enumerated values to specify the rounding direction when rounding of a number to nearest.  Used by function cdm.base.math.RoundToNearest.
 type: Text

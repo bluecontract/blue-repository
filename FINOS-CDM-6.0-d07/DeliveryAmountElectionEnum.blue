@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-DeliveryAmountElectionEnum.schema.json
-name: DeliveryAmountElectionEnum
-namespace: cdm/product/collateral
+name: cdm/product/collateral/DeliveryAmountElectionEnum
 description: |
   The enumerated values to specify the application of Interest Amount with respect to the Delivery Amount through standard language.
 type: Text

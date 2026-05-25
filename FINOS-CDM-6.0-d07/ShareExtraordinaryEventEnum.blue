@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-ShareExtraordinaryEventEnum.schema.json
-name: ShareExtraordinaryEventEnum
-namespace: cdm/observable/event
+name: cdm/observable/event/ShareExtraordinaryEventEnum
 description: The enumerated values to specify the consequences of extraordinary events relating to the underlying.
 type: Text
 schema:

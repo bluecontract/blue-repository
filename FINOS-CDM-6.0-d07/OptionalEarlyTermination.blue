@@ -1,25 +1,24 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionalEarlyTermination.schema.json
-name: OptionalEarlyTermination
-namespace: cdm/product/template
+name: cdm/product/template/OptionalEarlyTermination
 description: |
   A data defining:  an early termination provision where either or both parties have the right to exercise.
 calculationAgent:
   description: The ISDA Calculation Agent responsible for performing duties associated with an optional early termination.
-  type: FINOS-CDM-6.0-d07/CalculationAgent
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CalculationAgent
 cashSettlement:
   description: |
     If specified, this means that cash settlement is applicable to the transaction and defines the parameters associated with the cash settlement procedure. If not specified, then physical settlement is applicable.
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms
 exerciseNotice:
   description: Definition of the party to whom notice of exercise should be given.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ExerciseNotice
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/ExerciseNotice
   schema:
     minItems: 0
 exerciseTerms:
   description: |
     The exercise terms associated with the optional early termination, including details such as exercise style, exercise fees, and any other relevant conditions or terms.
-  type: FINOS-CDM-6.0-d07/ExerciseTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/template/ExerciseTerms
   schema:
     required: true
 followUpConfirmation:
@@ -33,8 +32,8 @@ mutualEarlyTermination:
 optionalEarlyTerminationAdjustedDates:
   description: |
     An early termination provision to terminate the trade at fair value where one or both parties have the right to decide on termination.
-  type: FINOS-CDM-6.0-d07/OptionalEarlyTerminationAdjustedDates
+  type: FINOS-CDM-6.0-d07/cdm/product/template/OptionalEarlyTerminationAdjustedDates
 singlePartyOption:
   description: |
     If optional early termination is not available to both parties then this component specifies the buyer and seller of the option. In FpML, this attribute is of type SinglePsrtyOption, which actually consists of the BuyerSeller.model.
-  type: FINOS-CDM-6.0-d07/BuyerSeller
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/BuyerSeller

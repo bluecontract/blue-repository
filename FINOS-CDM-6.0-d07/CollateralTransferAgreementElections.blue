@@ -1,4 +1,3 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-csa-CollateralTransferAgreementElections.schema.json
-name: CollateralTransferAgreementElections
-namespace: cdm/legaldocumentation/csa
+name: cdm/legaldocumentation/csa/CollateralTransferAgreementElections
 description: The set of elections which specify a Collateral Transfer Agreement

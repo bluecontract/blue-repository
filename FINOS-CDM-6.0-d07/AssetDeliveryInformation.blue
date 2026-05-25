@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-AssetDeliveryInformation.schema.json
-name: AssetDeliveryInformation
-namespace: cdm/product/asset
+name: cdm/product/asset/AssetDeliveryInformation
 description: Contains the information relative to the delivery of the asset.
 deliveryCapacity:
   description: The number of units included in the transaction for each delivery interval
-  type: FINOS-CDM-6.0-d07/Quantity
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Quantity
 location:
   description: Defines the location of the delivery of the commodity.
   type: List
-  itemType: FINOS-CDM-6.0-d07/LocationIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/LocationIdentifier
   schema:
     minItems: 0
 periods:
   description: "Defines the periods of delivery, including the delivery profile."
-  type: FINOS-CDM-6.0-d07/AssetDeliveryPeriods
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/AssetDeliveryPeriods

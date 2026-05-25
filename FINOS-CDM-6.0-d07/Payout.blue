@@ -1,33 +1,32 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-Payout.schema.json
-name: Payout
-namespace: cdm/product/template
+name: cdm/product/template/Payout
 description: |
   Represents the set of future cashflow methodologies in the form of specific payout data type(s) which result from the financial product.  Examples: a trade in a cash asset will use only a settlement payout; for derivatives, two interest rate payouts can be combined to specify an interest rate swap; one interest rate payout can be combined with a credit default payout to specify a credit default swap.
 AssetPayout:
   description: Defines the assets and movements in a security financing transaction.
-  type: FINOS-CDM-6.0-d07/AssetPayout
+  type: FINOS-CDM-6.0-d07/cdm/product/template/AssetPayout
 CommodityPayout:
   description: Defines the payout for the floating leg of a Commodity Swap.
-  type: FINOS-CDM-6.0-d07/CommodityPayout
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/CommodityPayout
 CreditDefaultPayout:
   description: |
     The credit default payout, which provides the details necessary for determining when a credit payout will be triggered as well as the parameters for calculating the payout and the settlement terms.
-  type: FINOS-CDM-6.0-d07/CreditDefaultPayout
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/CreditDefaultPayout
 FixedPricePayout:
   description: Defines a payout in which one or more payouts are defined as a fixed price.
-  type: FINOS-CDM-6.0-d07/FixedPricePayout
+  type: FINOS-CDM-6.0-d07/cdm/product/template/FixedPricePayout
 InterestRatePayout:
   description: |
     All of the terms necessary to define and calculate a cash flow based on a fixed, a floating or an inflation index rate. The interest rate payout can be applied to interest rate swaps and FRA (which both have two associated interest rate payouts), credit default swaps (to represent the fee leg when subject to periodic payments) and equity swaps (to represent the funding leg).
-  type: FINOS-CDM-6.0-d07/InterestRatePayout
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/InterestRatePayout
 OptionPayout:
   description: The option payout.
-  type: FINOS-CDM-6.0-d07/OptionPayout
+  type: FINOS-CDM-6.0-d07/cdm/product/template/OptionPayout
 PerformancePayout:
   description: |
     The performance payout, which encompasses the equity price returns, dividend returns, volatility return, variance return and correlation provisions.
-  type: FINOS-CDM-6.0-d07/PerformancePayout
+  type: FINOS-CDM-6.0-d07/cdm/product/template/PerformancePayout
 SettlementPayout:
   description: |
     Represents a forward settling payout. The 'Underlier' attribute captures the underlying payout, which is settled according to the 'SettlementTerms' attribute. Both FX Spot and FX Forward should use this component.
-  type: FINOS-CDM-6.0-d07/SettlementPayout
+  type: FINOS-CDM-6.0-d07/cdm/product/template/SettlementPayout

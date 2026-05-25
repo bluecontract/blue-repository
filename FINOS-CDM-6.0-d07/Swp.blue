@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Swp.schema.json
-name: Swp
-namespace: cdm/regulation
+name: cdm/regulation/Swp
 swpIn:
-  type: FINOS-CDM-6.0-d07/SwpIn
+  type: FINOS-CDM-6.0-d07/cdm/regulation/SwpIn
   schema:
     required: true
 swpOut:
-  type: FINOS-CDM-6.0-d07/SwpOut
+  type: FINOS-CDM-6.0-d07/cdm/regulation/SwpOut
   schema:
     required: true

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-ISOCurrencyCodeEnum.schema.json
-name: ISOCurrencyCodeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/ISOCurrencyCodeEnum
 description: |
   The enumerated values to specify standard currency codes according to the International Standards Organization (ISO).  The set of codes in this enumerated list is sourced from ISO Standard 4217 (https://www.currency-iso.org/en/home/tables/table-a1.html), as of 29-Aug-18.
 type: Text

@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-Address.schema.json
-name: Address
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/Address
 description: A class to specify a post or street address.
 city:
   description: The city component of the postal address.
   type: Text
 country:
   description: The ISO 3166 standard code for the country within which the postal address is located.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 postalCode:
   description: |
     The code, required for computerized mail sorting systems, that is allocated to a physical address by a national postal authority.

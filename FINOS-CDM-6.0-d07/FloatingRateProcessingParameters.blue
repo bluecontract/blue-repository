@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-floatingrate-FloatingRateProcessingParameters.schema.json
-name: FloatingRateProcessingParameters
-namespace: cdm/product/asset/floatingrate
+name: cdm/product/asset/floatingrate/FloatingRateProcessingParameters
 description: |
   Type to hold the processing parameters that should be or were used to calculate a floating amount.  These parameters can vary over a schedule so this type holds the acutal values applicable to this calculation.
 capRate:
@@ -11,19 +10,19 @@ floorRate:
   type: Double
 initialRate:
   description: The rate to be applied for the initial period.
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price
 multiplier:
   description: floating rate multiplier.
   type: Double
 negativeTreatment:
   description: How to handle negative interest rates.
-  type: FINOS-CDM-6.0-d07/NegativeInterestRateTreatmentEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/NegativeInterestRateTreatmentEnum
 rounding:
   description: THe final rate rounding to be applied.
-  type: FINOS-CDM-6.0-d07/Rounding
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Rounding
 spread:
   description: spread to be added to the floating rate.
   type: Double
 treatment:
   description: "US rate treatment (Bond Equivalent Yield or Money Market Yield, if applicable."
-  type: FINOS-CDM-6.0-d07/RateTreatmentEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/RateTreatmentEnum

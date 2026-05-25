@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ExecutionTypeEnum.schema.json
-name: ExecutionTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/ExecutionTypeEnum
 description: "The enumerated values to specify how a contract has been executed, e.g. electronically, verbally, ..."
 type: Text
 schema:

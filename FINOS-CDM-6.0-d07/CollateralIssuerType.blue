@@ -1,23 +1,22 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-CollateralIssuerType.schema.json
-name: CollateralIssuerType
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/CollateralIssuerType
 description: Represents a class to allow specification of the type of entity issuing the collateral.
 issuerType:
   description: Specifies the origin of entity issuing the collateral.
-  type: FINOS-CDM-6.0-d07/IssuerTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/IssuerTypeEnum
   schema:
     required: true
 quasiGovernmentType:
   description: |
     Specifies debt issues by institutions or bodies, typically constituted by statute, with a function mandated by the government and subject to government supervision inclusive of profit- and non-profit making bodies. Includes the US Agencies and GSEs and the EU concept of public sector entities. Excluding any entities which are also Regional Government.
-  type: FINOS-CDM-6.0-d07/QuasiGovernmentIssuerType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/QuasiGovernmentIssuerType
 regionalGovernmentType:
   description: "Specifies Regional government, local authority or municipal."
-  type: FINOS-CDM-6.0-d07/RegionalGovernmentIssuerType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/RegionalGovernmentIssuerType
 specialPurposeVehicleType:
   description: |
     Specifies a subsidiary company that is formed to undertake a specific business purpose of acquisition and financing of specific assets on a potentially limited recourse basis dependent of how it is designed. E.g. asset backed securities, including securitisations.
-  type: FINOS-CDM-6.0-d07/SpecialPurposeVehicleIssuerType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/SpecialPurposeVehicleIssuerType
 supraNationalType:
   description: Specifies debt issued by international organisations and multilateral banks.
-  type: FINOS-CDM-6.0-d07/SupraNationalIssuerTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/SupraNationalIssuerTypeEnum

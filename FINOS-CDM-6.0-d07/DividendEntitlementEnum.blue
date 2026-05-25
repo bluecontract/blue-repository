@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendEntitlementEnum.schema.json
-name: DividendEntitlementEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/DividendEntitlementEnum
 description: |
   The enumerated values to specify the date on which the receiver of the equity payout is entitled to the dividend.
 type: Text

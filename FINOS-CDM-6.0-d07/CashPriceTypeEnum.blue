@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CashPriceTypeEnum.schema.json
-name: CashPriceTypeEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CashPriceTypeEnum
 description: "Provides a list of possible types of cash prices, applicable when PriceTypeEnum is itself of type CashPrice."
 type: Text
 schema:

@@ -1,42 +1,41 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-Price.schema.json
-name: Price
-namespace: cdm/observable/asset
+name: cdm/observable/asset/Price
 description: |
   Specifies a price as a single value to be associated to a financial product. This data type extends PriceSchedule and requires that only the amount value exists.
 arithmeticOperator:
   description: |
     (Optionally) When the price is to be understood as an operator to apply to an observable, i.e. a spread, multiplier or min/max.
-  type: FINOS-CDM-6.0-d07/ArithmeticOperationEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/ArithmeticOperationEnum
 cashPrice:
   description: |
     (Optionally when the price type is cash) Additional attributes that further define a cash price, e.g. what type of fee it is.
-  type: FINOS-CDM-6.0-d07/CashPrice
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CashPrice
 composite:
   description: |
     (Optionally) Specifies the underlying price components if the price can be expressed as a composite: e.g. dirty price = clean price + accrued.
-  type: FINOS-CDM-6.0-d07/PriceComposite
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceComposite
 datedValue:
   description: |
     A schedule of step date and value pairs. On each step date the associated step value becomes effective. The step dates are used to order the steps by ascending order. This attribute is optional so the data type may be used to define a schedule with a single value.
   type: List
-  itemType: FINOS-CDM-6.0-d07/DatedValue
+  itemType: FINOS-CDM-6.0-d07/cdm/base/math/DatedValue
   schema:
     minItems: 0
 perUnitOf:
   description: |
     Provides an attribute to define the unit of the thing being priced. For example, {amount, unitOfAmount, PerUnitOfAmount} = [10, EUR, Shares] = (10.00 EUR/SHARE) * (300,000 SHARES) = EUR 3,000,000.00 (Shares cancel out in the calculation).
-  type: FINOS-CDM-6.0-d07/UnitType
+  type: FINOS-CDM-6.0-d07/cdm/base/math/UnitType
 priceExpression:
   description: "(Optionally) Specifies whether the price is expressed in absolute or percentage terms."
-  type: FINOS-CDM-6.0-d07/PriceExpressionEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceExpressionEnum
 priceType:
   description: |
     Specifies the price type as an enumeration: interest rate, exchange rate, asset price etc. This attribute is mandatory so that prices can always be clasiffied according to their type. The price type implies some constraints on the price's units.
-  type: FINOS-CDM-6.0-d07/PriceTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceTypeEnum
 unit:
   description: |
     Qualifies the unit by which the amount is measured. Optional because a measure may be unit-less (e.g. when representing a ratio between amounts in the same unit).
-  type: FINOS-CDM-6.0-d07/UnitType
+  type: FINOS-CDM-6.0-d07/cdm/base/math/UnitType
 val:
   description: |
     Specifies the value of the measure as a number. Optional because in a measure vector or schedule, this single value may be omitted.

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-OffsetCalculation.schema.json
-name: OffsetCalculation
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/OffsetCalculation
 description: |
   Defines business day shifts for daily componded or averaged rates.  This type is used for lookback and lockout rates. This type is used to represent modular computed rates in interestRatePayouts.
 offsetDays:

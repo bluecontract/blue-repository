@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyContactInformation.schema.json
-name: PartyContactInformation
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/PartyContactInformation
 description: |
   A class to specify contact information within a party: address and, optionally, associated business unit and person. This class also supports the ISDA CSA representation as a single string, through the address attribute.
 additionalInformation:
@@ -10,20 +9,20 @@ businessUnit:
   description: |
     Optional organization unit information used to describe the organization units (e.g. trading desks) involved in a transaction or business process, incl. the contact information (when relevant).
   type: List
-  itemType: FINOS-CDM-6.0-d07/BusinessUnit
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/BusinessUnit
   schema:
     minItems: 0
 contactInformation:
   description: |
     The postal/street address, telephone number, email address and/or web page. If the contact information is specific to the associated business unit(s), it should be associated with those.
-  type: FINOS-CDM-6.0-d07/ContactInformation
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/ContactInformation
 partyReference:
   description: The reference to the party to which the contact information refers to.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
 person:
   description: |
     Optional information about people involved in a transaction or business process. (These are employees of the party.)
   type: List
-  itemType: FINOS-CDM-6.0-d07/NaturalPerson
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/NaturalPerson
   schema:
     minItems: 0

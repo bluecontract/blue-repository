@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-metafields-ReferenceWithMetaNonNegativeQuantitySchedule.schema.json
-name: ReferenceWithMetaNonNegativeQuantitySchedule
-namespace: cdm/base/math/metafields
+name: cdm/base/math/metafields/ReferenceWithMetaNonNegativeQuantitySchedule
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

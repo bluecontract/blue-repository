@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-IssuerName.schema.json
-name: IssuerName
-namespace: cdm/product/collateral
+name: cdm/product/collateral/IssuerName
 issuerName:
   description: Specifies the issuing entity name or LEI.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     required: true

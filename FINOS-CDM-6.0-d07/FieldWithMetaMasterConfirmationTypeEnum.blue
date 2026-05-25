@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-metafields-FieldWithMetaMasterConfirmationTypeEnum.schema.json
-name: FieldWithMetaMasterConfirmationTypeEnum
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/FieldWithMetaMasterConfirmationTypeEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/MasterConfirmationTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/MasterConfirmationTypeEnum

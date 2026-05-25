@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-floatingrate-FloatingRateSettingDetails.schema.json
-name: FloatingRateSettingDetails
-namespace: cdm/product/asset/floatingrate
+name: cdm/product/asset/floatingrate/FloatingRateSettingDetails
 description: |
   Type for reporting the raw (untreated) observed or calculated rate for a calculation period.  If this is a calculated rate, it allows details of the observations and the resulting rate to be returned.
 calculationDetails:
   description: "Calculated rate details (observation dates, values, and weights)."
-  type: FINOS-CDM-6.0-d07/CalculatedRateDetails
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/CalculatedRateDetails
 floatingRate:
   description: The resulting rate that was observed or calculated.
   type: Double

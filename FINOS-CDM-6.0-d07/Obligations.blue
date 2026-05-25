@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-credit-Obligations.schema.json
-name: Obligations
-namespace: cdm/base/staticdata/asset/credit
+name: cdm/base/staticdata/asset/credit/Obligations
 description: |
   A class to specify the underlying obligations of the reference entity on which protection is purchased or sold through the Credit Default Swap.
 cashSettlementOnly:
@@ -10,7 +9,7 @@ cashSettlementOnly:
 category:
   description: |
     Used in both obligations and deliverable obligations to represent a class or type of securities which apply. ISDA 2003 Term: Obligation Category/Deliverable Obligation Category.
-  type: FINOS-CDM-6.0-d07/ObligationCategoryEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/credit/ObligationCategoryEnum
   schema:
     required: true
 continuity:
@@ -24,7 +23,7 @@ deliveryOfCommitments:
 designatedPriority:
   description: |
     Applies to Loan CDS, to indicate what lien level is appropriate for a deliverable obligation. Applies to European Loan CDS, to indicate the Ranking of the obligation. Example: a 2nd lien Loan CDS would imply that the deliverable obligations are 1st or 2nd lien loans.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 excluded:
   description: |
     A free format string to specify any excluded obligations or deliverable obligations, as the case may be, of the reference entity or excluded types of obligations or deliverable obligations. ISDA 2003 Term: Excluded Obligations/Excluded Deliverable Obligations.
@@ -48,7 +47,7 @@ notContingent:
 notDomesticCurrency:
   description: |
     An obligation and deliverable obligation characteristic. Any obligation that is payable in any currency other than the domestic currency. Domestic currency is either the currency so specified or, if no currency is specified, the currency of (a) the reference entity, if the reference entity is a sovereign, or (b) the jurisdiction in which the relevant reference entity is organised, if the reference entity is not a sovereign. ISDA 2003 Term: Not Domestic Currency.
-  type: FINOS-CDM-6.0-d07/NotDomesticCurrency
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/credit/NotDomesticCurrency
 notDomesticIssuance:
   description: |
     An obligation and deliverable obligation characteristic. Any obligation other than an obligation that was intended to be offered for sale primarily in the domestic market of the relevant Reference Entity. This specifies that the obligation must be an internationally recognised bond. ISDA 2003 Term: Not Domestic Issuance.
@@ -76,4 +75,4 @@ revenueObligationLiability:
 specifiedCurrency:
   description: |
     An obligation and deliverable obligation characteristic. The currency or currencies in which an obligation or deliverable obligation must be payable. ISDA 2003 Term: Specified Currency.
-  type: FINOS-CDM-6.0-d07/SpecifiedCurrency
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/credit/SpecifiedCurrency

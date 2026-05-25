@@ -1,33 +1,32 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-AvailableInventory.schema.json
-name: AvailableInventory
-namespace: cdm/event/position
+name: cdm/event/position/AvailableInventory
 description: |
   A data type that can be used to describe the inventory of securities that a party holds. The securities are held in the AvailableInventoryRecord, with each item in the array being an individual security and its associated criteria. Criteria can include the quantity available, the rate at which the security is available to borrow at, as well as other details that can affect the decision as to whether a party wants to utilise the securities listed.
 availableInventoryRecord:
   description: |
     An array holding the list of inventory being described. Each element in the inventoryRecord array represents an individual piece of inventory i.e. a security.
   type: List
-  itemType: FINOS-CDM-6.0-d07/AvailableInventoryRecord
+  itemType: FINOS-CDM-6.0-d07/cdm/event/position/AvailableInventoryRecord
   schema:
     minItems: 0
 availableInventoryType:
   description: Defines the purpose of this inventory.
-  type: FINOS-CDM-6.0-d07/AvailableInventoryTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/position/AvailableInventoryTypeEnum
   schema:
     required: true
 messageInformation:
   description: Allows details related to the availability messaging use case to be defined
-  type: FINOS-CDM-6.0-d07/MessageInformation
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/MessageInformation
 party:
   description: |
     Defines all parties involved for the list of inventory records in this set of inventory. For example, when used to describe securities lending availability, this could hold the sender of the availability, the intended recipient, the beneficial owner(s), the lender (which may differ from the sender as the lender may have the same piece of availability going through multiple agents), an agent or a venue.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Party
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Party
   schema:
     minItems: 0
 partyRole:
   description: "Defines the role(s) that party(ies) may have in relation to the inventory."
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyRole
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRole
   schema:
     minItems: 0

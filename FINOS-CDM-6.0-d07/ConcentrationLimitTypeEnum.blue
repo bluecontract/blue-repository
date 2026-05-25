@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ConcentrationLimitTypeEnum.schema.json
-name: ConcentrationLimitTypeEnum
-namespace: cdm/product/collateral
+name: cdm/product/collateral/ConcentrationLimitTypeEnum
 description: Represents the enumerated values to identify where a concentration limit is applied.
 type: Text
 schema:

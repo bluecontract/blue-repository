@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-LegalAgreement.schema.json
-name: LegalAgreement
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/LegalAgreement
 description: |
   The specification of a legal agreement between two parties, being negotiated or having been executed. This includes the baseline information and the optional specialised elections
 agreementDate:
@@ -9,18 +8,18 @@ agreementDate:
   type: Text
 agreementTerms:
   description: Specification of the content of the legal agreement.
-  type: FINOS-CDM-6.0-d07/AgreementTerms
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/AgreementTerms
 attachment:
   description: "A human readable document, for example a confirmation."
   type: List
-  itemType: FINOS-CDM-6.0-d07/Resource
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/Resource
   schema:
     minItems: 0
 contractualParty:
   description: |
     The two contractual parties to the legal agreement, which reference information is positioned as part of the partyInformation attribute.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
   schema:
     minItems: 2
     maxItems: 2
@@ -31,27 +30,27 @@ effectiveDate:
 identifier:
   description: The legal agreement identifier. Several identifiers can be specified.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Identifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/Identifier
   schema:
     minItems: 0
 legalAgreementIdentification:
   description: |
     The type of legal agreement, identified via a set of composable attributes: agreementName, publisher, governing law and version, e.g. ISDA 2013 Standard Credit Support Annex English Law.
-  type: FINOS-CDM-6.0-d07/LegalAgreementIdentification
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LegalAgreementIdentification
 otherParty:
   description: |
     The role(s) that other party(ies) may have in relation to the legal agreement, further to the contractual parties.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyRole
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRole
   schema:
     minItems: 0
 relatedAgreements:
   description: |
     Specifies the agreement(s) that govern the agreement, either as a reference to such agreements when specified as part of the CDM, or through identification of some of the key terms of those agreements, such as the type of agreement, the publisher, the vintage, the agreement identifier and the agreement date.
   type: List
-  itemType: FINOS-CDM-6.0-d07/LegalAgreement
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LegalAgreement
   schema:
     minItems: 0
 umbrellaAgreement:
   description: "The determination of whether Umbrella Agreement terms are applicable (True) or Not Applicable (False)."
-  type: FINOS-CDM-6.0-d07/UmbrellaAgreement
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/UmbrellaAgreement

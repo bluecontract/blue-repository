@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-MarginCallActionEnum.schema.json
-name: MarginCallActionEnum
-namespace: cdm/event/common
+name: cdm/event/common/MarginCallActionEnum
 description: Represents the enumeration values to identify the collateral action instruction.
 type: Text
 schema:

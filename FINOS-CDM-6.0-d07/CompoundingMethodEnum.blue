@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-CompoundingMethodEnum.schema.json
-name: CompoundingMethodEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/CompoundingMethodEnum
 description: "The enumerated values to specify the type of compounding, e.g. flat, straight."
 type: Text
 schema:

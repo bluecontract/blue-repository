@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-MeasureSchedule.schema.json
-name: MeasureSchedule
-namespace: cdm/base/math
+name: cdm/base/math/MeasureSchedule
 description: |
   A set of measures, all in the same unit, where the values are defined through a schedule of steps. The initial value may be defined either as part of the steps, or using the single amount attribute.
 datedValue:
   description: |
     A schedule of step date and value pairs. On each step date the associated step value becomes effective. The step dates are used to order the steps by ascending order. This attribute is optional so the data type may be used to define a schedule with a single value.
   type: List
-  itemType: FINOS-CDM-6.0-d07/DatedValue
+  itemType: FINOS-CDM-6.0-d07/cdm/base/math/DatedValue
   schema:
     minItems: 0
 unit:
   description: |
     Qualifies the unit by which the amount is measured. Optional because a measure may be unit-less (e.g. when representing a ratio between amounts in the same unit).
-  type: FINOS-CDM-6.0-d07/UnitType
+  type: FINOS-CDM-6.0-d07/cdm/base/math/UnitType
 val:
   description: |
     Specifies the value of the measure as a number. Optional because in a measure vector or schedule, this single value may be omitted.

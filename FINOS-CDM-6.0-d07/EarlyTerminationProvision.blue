@@ -1,18 +1,17 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-EarlyTerminationProvision.schema.json
-name: EarlyTerminationProvision
-namespace: cdm/product/template
+name: cdm/product/template/EarlyTerminationProvision
 description: |
   A data defining:  an early termination provision for a swap. This early termination is at fair value, i.e. on termination the fair value of the product must be settled between the parties.
 mandatoryEarlyTermination:
   description: A mandatory early termination provision to terminate the swap at fair value.
-  type: FINOS-CDM-6.0-d07/MandatoryEarlyTermination
+  type: FINOS-CDM-6.0-d07/cdm/product/template/MandatoryEarlyTermination
 mandatoryEarlyTerminationDateTenor:
   description: Period after trade date of the mandatory early termination date.
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period
 optionalEarlyTermination:
   description: An option for either or both parties to terminate the swap at fair value.
-  type: FINOS-CDM-6.0-d07/OptionalEarlyTermination
+  type: FINOS-CDM-6.0-d07/cdm/product/template/OptionalEarlyTermination
 optionalEarlyTerminationParameters:
   description: |
     Definition of the first early termination date and the frequency of the termination dates subsequent to that. American exercise is defined by having a frequency of one day.
-  type: FINOS-CDM-6.0-d07/ExercisePeriod
+  type: FINOS-CDM-6.0-d07/cdm/product/template/ExercisePeriod

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-margin-schedule-StandardizedScheduleAssetClassEnum.schema.json
-name: StandardizedScheduleAssetClassEnum
-namespace: cdm/margin/schedule
+name: cdm/margin/schedule/StandardizedScheduleAssetClassEnum
 type: Text
 schema:
   enum: [Commodity, Credit, Equity, ForeignExchange, InterestRates]

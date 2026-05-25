@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-AdjustableDates.schema.json
-name: AdjustableDates
-namespace: cdm/base/datetime
+name: cdm/base/datetime/AdjustableDates
 description: |
   A class for defining a series of dates that shall be subject to adjustment if they would otherwise fall on a day that is not a business day in the specified business centers, together with the convention for adjusting the dates.
 adjustedDate:
   description: |
     The date(s) once the adjustment has been performed. (Note that this date may change if the business center holidays change).
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 0
 dateAdjustments:
   description: |
     The business day convention and financial business centers used for adjusting the date if it would otherwise fall on a day that is not a business date in the specified business centers.
-  type: FINOS-CDM-6.0-d07/BusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayAdjustments
 unadjustedDate:
   description: A date subject to adjustment.
   type: List

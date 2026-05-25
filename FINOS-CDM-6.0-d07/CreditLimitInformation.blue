@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-CreditLimitInformation.schema.json
-name: CreditLimitInformation
-namespace: cdm/event/workflow
+name: cdm/event/workflow/CreditLimitInformation
 description: A class to represent the credit limit utilisation information.
 limitApplicable:
   type: List
-  itemType: FINOS-CDM-6.0-d07/LimitApplicableExtended
+  itemType: FINOS-CDM-6.0-d07/cdm/event/workflow/LimitApplicableExtended
   schema:
     minItems: 1

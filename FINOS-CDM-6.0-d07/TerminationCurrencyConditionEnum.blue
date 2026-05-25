@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-TerminationCurrencyConditionEnum.schema.json
-name: TerminationCurrencyConditionEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/TerminationCurrencyConditionEnum
 type: Text
 schema:
   enum: [FreelyAvailable, PaymentsDue, PaymentsDueAndFreelyAvailable, Specified]

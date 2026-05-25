@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-MandatoryEarlyTerminationAdjustedDates.schema.json
-name: MandatoryEarlyTerminationAdjustedDates
-namespace: cdm/product/template
+name: cdm/product/template/MandatoryEarlyTerminationAdjustedDates
 description: |
   A data defining:  the adjusted dates associated with a mandatory early termination provision.
 adjustedCashSettlementPaymentDate:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ContractualSupplementTypeEnum.schema.json
-name: ContractualSupplementTypeEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ContractualSupplementTypeEnum
 description: |
   The enumerated values to define the supplements to a base set of ISDA Definitions that are applicable to the transaction.
 type: Text

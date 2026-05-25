@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendDateReferenceEnum.schema.json
-name: DividendDateReferenceEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/DividendDateReferenceEnum
 description: The enumerated values to specify the date by reference to which the dividend will be paid.
 type: Text
 schema:

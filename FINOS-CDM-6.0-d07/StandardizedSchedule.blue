@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-margin-schedule-StandardizedSchedule.schema.json
-name: StandardizedSchedule
-namespace: cdm/margin/schedule
+name: cdm/margin/schedule/StandardizedSchedule
 assetClass:
-  type: FINOS-CDM-6.0-d07/StandardizedScheduleAssetClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/margin/schedule/StandardizedScheduleAssetClassEnum
   schema:
     required: true
 durationInYears:
@@ -16,6 +15,6 @@ notionalCurrency:
   schema:
     required: true
 productClass:
-  type: FINOS-CDM-6.0-d07/StandardizedScheduleProductClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/margin/schedule/StandardizedScheduleProductClassEnum
   schema:
     required: true

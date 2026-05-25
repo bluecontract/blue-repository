@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-CallingPartyEnum.schema.json
-name: CallingPartyEnum
-namespace: cdm/product/template
+name: cdm/product/template/CallingPartyEnum
 description: |
   Identifies a party to the on-demand repo transaction that has a right to demand for termination of the Security Finance transaction.
 type: Text

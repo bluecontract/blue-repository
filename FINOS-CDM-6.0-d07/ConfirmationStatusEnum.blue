@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ConfirmationStatusEnum.schema.json
-name: ConfirmationStatusEnum
-namespace: cdm/event/common
+name: cdm/event/common/ConfirmationStatusEnum
 description: Enumeration for the different types of confirmation status.
 type: Text
 schema:

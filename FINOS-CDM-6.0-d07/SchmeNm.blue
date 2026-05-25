@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-SchmeNm.schema.json
-name: SchmeNm
-namespace: cdm/regulation
+name: cdm/regulation/SchmeNm
 prtry:
   type: Text
   schema:

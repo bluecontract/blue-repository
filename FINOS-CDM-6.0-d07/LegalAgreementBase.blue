@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-LegalAgreementBase.schema.json
-name: LegalAgreementBase
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/LegalAgreementBase
 description: |
   Specifies the legal agreement baseline information, being negotiated or having been executed. It excludes specialized elections
 agreementDate:
@@ -10,14 +9,14 @@ agreementDate:
 attachment:
   description: "A human readable document, for example a confirmation."
   type: List
-  itemType: FINOS-CDM-6.0-d07/Resource
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/Resource
   schema:
     minItems: 0
 contractualParty:
   description: |
     The two contractual parties to the legal agreement, which reference information is positioned as part of the partyInformation attribute.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
   schema:
     minItems: 2
     maxItems: 2
@@ -28,19 +27,19 @@ effectiveDate:
 identifier:
   description: The legal agreement identifier. Several identifiers can be specified.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Identifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/Identifier
   schema:
     minItems: 0
 legalAgreementIdentification:
   description: |
     The type of legal agreement, identified via a set of composable attributes: agreementName, publisher, governing law and version, e.g. ISDA 2013 Standard Credit Support Annex English Law.
-  type: FINOS-CDM-6.0-d07/LegalAgreementIdentification
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LegalAgreementIdentification
   schema:
     required: true
 otherParty:
   description: |
     The role(s) that other party(ies) may have in relation to the legal agreement, further to the contractual parties.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyRole
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRole
   schema:
     minItems: 0

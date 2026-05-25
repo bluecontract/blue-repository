@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-QuantityMultiplier.schema.json
-name: QuantityMultiplier
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/QuantityMultiplier
 description: |
   Class to specify a mechanism for a quantity to be set as a multiplier to another (reference) quantity, based on a price observation. At the moment this class only supports FX or Equity-linked notional and re-uses existing building blocks for those 2 cases, until such time when component can be made more generic. This captures the case of resetting cross-currency swaps and resetting equity swaps.
 fxLinkedNotionalSchedule:
   description: "Multiplier specified as an FX-linked schedule, e.g. for a resetting cross-currency swap.."
-  type: FINOS-CDM-6.0-d07/FxLinkedNotionalSchedule
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/FxLinkedNotionalSchedule
 multiplierValue:
   type: Double

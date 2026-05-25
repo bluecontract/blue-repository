@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionStrike.schema.json
-name: OptionStrike
-namespace: cdm/product/template
+name: cdm/product/template/OptionStrike
 description: Defines the strike price of an option.
 averagingStrikeFeature:
   description: Defines an  option strike that is calculated from an average of observed market prices.
-  type: FINOS-CDM-6.0-d07/AveragingStrikeFeature
+  type: FINOS-CDM-6.0-d07/cdm/product/template/AveragingStrikeFeature
 referenceSwapCurve:
   description: |
     Defines the strike of an option when expressed by reference to a swap curve (Typically the case for a convertible bond option).
-  type: FINOS-CDM-6.0-d07/ReferenceSwapCurve
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/ReferenceSwapCurve
 strikePrice:
   description: |
     Defines the strike of an option in the form of a price that could be a cash price, interestRate, or other types.
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price
 strikeReference:
   description: |
     Defines the strike of an option in reference to the spread of the underlying swap (typical practice in the case of an option on a credit single name swaps).
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaFixedRateSpecification
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/metafields/ReferenceWithMetaFixedRateSpecification

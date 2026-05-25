@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CashPrice.schema.json
-name: CashPrice
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CashPrice
 description: "Specifies the nature of a cash price either as a fee type, cash price type, or premium expression."
 cashPriceType:
   description: Specifies the type of Cash Price.
-  type: FINOS-CDM-6.0-d07/CashPriceTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CashPriceTypeEnum
   schema:
     required: true
 feeType:
   description: Specifies the event type associated with a fee.
-  type: FINOS-CDM-6.0-d07/FeeTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FeeTypeEnum
 premiumExpression:
   description: |
     Specifies a premium when expressed in a way other than an amount, and any required forward starting price definition.
-  type: FINOS-CDM-6.0-d07/PremiumExpression
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PremiumExpression

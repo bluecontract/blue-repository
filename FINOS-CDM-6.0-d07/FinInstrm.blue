@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-FinInstrm.schema.json
-name: FinInstrm
-namespace: cdm/regulation
+name: cdm/regulation/FinInstrm
 othr:
-  type: FINOS-CDM-6.0-d07/Othr
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Othr
   schema:
     required: true

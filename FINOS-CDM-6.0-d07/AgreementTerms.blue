@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-AgreementTerms.schema.json
-name: AgreementTerms
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/AgreementTerms
 description: Specification of the content of a legal agreement.
 agreement:
   description: Specification of the standard set of terms that define a legal agreement.
-  type: FINOS-CDM-6.0-d07/Agreement
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/contract/Agreement
   schema:
     required: true
 clauseLibrary:
@@ -13,7 +12,7 @@ clauseLibrary:
 counterparty:
   description: Specification of the roles of the counterparties to the agreement.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Counterparty
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Counterparty
   schema:
     minItems: 2
     maxItems: 2

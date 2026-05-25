@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-Rounding.schema.json
-name: Rounding
-namespace: cdm/base/math
+name: cdm/base/math/Rounding
 description: Defines rounding rules and precision to be used in the rounding of a number.
 precision:
   description: |
@@ -8,6 +7,6 @@ precision:
   type: Integer
 roundingDirection:
   description: "Specifies the rounding rounding rule as up, down, or nearest."
-  type: FINOS-CDM-6.0-d07/RoundingDirectionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/RoundingDirectionEnum
   schema:
     required: true

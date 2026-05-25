@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-New.schema.json
-name: New
-namespace: cdm/regulation
+name: cdm/regulation/New
 addtlAttrbts:
-  type: FINOS-CDM-6.0-d07/AddtlAttrbts
+  type: FINOS-CDM-6.0-d07/cdm/regulation/AddtlAttrbts
   schema:
     required: true
 buyr:
-  type: FINOS-CDM-6.0-d07/Buyr
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Buyr
   schema:
     required: true
 exctgPrsn:
-  type: FINOS-CDM-6.0-d07/ExctgPrsn
+  type: FINOS-CDM-6.0-d07/cdm/regulation/ExctgPrsn
   schema:
     required: true
 exctgPty:
@@ -18,11 +17,11 @@ exctgPty:
   schema:
     required: true
 finInstrm:
-  type: FINOS-CDM-6.0-d07/FinInstrm
+  type: FINOS-CDM-6.0-d07/cdm/regulation/FinInstrm
   schema:
     required: true
 invstmtDcsnPrsn:
-  type: FINOS-CDM-6.0-d07/InvstmtDcsnPrsn
+  type: FINOS-CDM-6.0-d07/cdm/regulation/InvstmtDcsnPrsn
   schema:
     required: true
 invstmtPtyInd:
@@ -30,11 +29,11 @@ invstmtPtyInd:
   schema:
     required: true
 ordrTrnsmssn:
-  type: FINOS-CDM-6.0-d07/OrdrTrnsmssn
+  type: FINOS-CDM-6.0-d07/cdm/regulation/OrdrTrnsmssn
   schema:
     required: true
 sellr:
-  type: FINOS-CDM-6.0-d07/Sellr
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Sellr
   schema:
     required: true
 submitgPty:
@@ -42,7 +41,7 @@ submitgPty:
   schema:
     required: true
 tx:
-  type: FINOS-CDM-6.0-d07/Tx
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Tx
   schema:
     required: true
 txId:

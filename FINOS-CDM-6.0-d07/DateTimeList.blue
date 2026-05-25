@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-DateTimeList.schema.json
-name: DateTimeList
-namespace: cdm/base/datetime
+name: cdm/base/datetime/DateTimeList
 description: List of dateTimes.
 dateTime:
   description: |

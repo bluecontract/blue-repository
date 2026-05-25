@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-VolatilityCapFloor.schema.json
-name: VolatilityCapFloor
-namespace: cdm/product/asset
+name: cdm/product/asset/VolatilityCapFloor
 description: |
   Contains volatility-based barriers. Volatility Cap needs to be specified in accordance with the ISDA 2011 Equity Derivatives Definitions.
 applicable:

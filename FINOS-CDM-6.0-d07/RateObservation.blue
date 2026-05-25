@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-RateObservation.schema.json
-name: RateObservation
-namespace: cdm/observable/asset
+name: cdm/observable/asset/RateObservation
 description: |
   A class defining parameters associated with an individual observation or fixing. This class forms part of the cashflow representation of a stream.
 adjustedFixingDate:
@@ -22,7 +21,7 @@ observedRate:
 rateReference:
   description: |
     A pointer style reference to a floating rate component defined as part of a stub calculation period amount component. It is only required when it is necessary to distinguish two rate observations for the same fixing date which could occur when linear interpolation of two different rates occurs for a stub calculation period.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaRateObservation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaRateObservation
 resetDate:
   description: The reset date.
   type: Text

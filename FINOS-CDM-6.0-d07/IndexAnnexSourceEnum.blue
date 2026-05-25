@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-IndexAnnexSourceEnum.schema.json
-name: IndexAnnexSourceEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/IndexAnnexSourceEnum
 description: The enumerated values to specify the CDX index annex source.
 type: Text
 schema:

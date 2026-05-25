@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-DeliverableObligations.schema.json
-name: DeliverableObligations
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/DeliverableObligations
 description: A class to specify all the ISDA terms relevant to defining the deliverable obligations.
 acceleratedOrMatured:
   description: |
@@ -13,19 +12,19 @@ accruedInterest:
 assignableLoan:
   description: |
     A deliverable obligation characteristic. A loan that is freely assignable to a bank or financial institution without the consent of the Reference Entity or the guarantor, if any, of the loan (or the consent of the applicable borrower if a Reference Entity is guaranteeing the loan) or any agent. ISDA 2003 Term: Assignable Loan.
-  type: FINOS-CDM-6.0-d07/PCDeliverableObligationCharac
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PCDeliverableObligationCharac
 category:
   description: |
     Used in both obligations and deliverable obligations to represent a class or type of securities which apply. ISDA 2003 Term: Obligation Category/Deliverable Obligation Category.
-  type: FINOS-CDM-6.0-d07/ObligationCategoryEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/credit/ObligationCategoryEnum
 consentRequiredLoan:
   description: |
     A deliverable obligation characteristic. A loan that is capable of being assigned with the consent of the Reference Entity or the guarantor, if any, of the loan or any agent. ISDA 2003 Term: Consent Required Loan.
-  type: FINOS-CDM-6.0-d07/PCDeliverableObligationCharac
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PCDeliverableObligationCharac
 directLoanParticipation:
   description: |
     A deliverable obligation characteristic. A loan with a participation agreement whereby the buyer is capable of creating, or procuring the creation of, a contractual right in favour of the seller that provides the seller with recourse to the participation seller for a specified share in any payments due under the relevant loan which are received by the participation seller. ISDA 2003 Term: Direct Loan Participation.
-  type: FINOS-CDM-6.0-d07/LoanParticipation
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/LoanParticipation
 excluded:
   description: |
     A free format string to specify any excluded obligations or deliverable obligations, as the case may be, of the reference entity or excluded types of obligations or deliverable obligations. ISDA 2003 Term: Excluded Obligations/Excluded Deliverable Obligations.
@@ -41,7 +40,7 @@ generalFundObligationLiability:
 indirectLoanParticipation:
   description: |
     ISDA 1999 Term: Indirect Loan Participation. NOTE: Only applicable as a deliverable obligation under ISDA Credit 1999.
-  type: FINOS-CDM-6.0-d07/LoanParticipation
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/LoanParticipation
 listed:
   description: |
     An obligation and deliverable obligation characteristic. Indicates whether or not the obligation is quoted, listed or ordinarily purchased and sold on an exchange. ISDA 2003 Term: Listed.
@@ -49,7 +48,7 @@ listed:
 maximumMaturity:
   description: |
     A deliverable obligation characteristic. An obligation that has a remaining maturity from the Physical Settlement Date of not greater than the period specified. ISDA 2003 Term: Maximum Maturity.
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period
 notBearer:
   description: |
     A deliverable obligation characteristic. Any obligation that is not a bearer instrument. This applies to Bonds only and is meant to avoid tax, fraud and security/delivery provisions that can potentially be associated with Bearer Bonds. ISDA 2003 Term: Not Bearer.
@@ -61,7 +60,7 @@ notContingent:
 notDomesticCurrency:
   description: |
     An obligation and deliverable obligation characteristic. Any obligation that is payable in any currency other than the domestic currency. Domestic currency is either the currency so specified or, if no currency is specified, the currency of (a) the reference entity, if the reference entity is a sovereign, or (b) the jurisdiction in which the relevant reference entity is organised, if the reference entity is not a sovereign. ISDA 2003 Term: Not Domestic Currency.
-  type: FINOS-CDM-6.0-d07/NotDomesticCurrency
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/credit/NotDomesticCurrency
 notDomesticIssuance:
   description: |
     An obligation and deliverable obligation characteristic. Any obligation other than an obligation that was intended to be offered for sale primarily in the domestic market of the relevant Reference Entity. This specifies that the obligation must be an internationally recognised bond. ISDA 2003 Term: Not Domestic Issuance.
@@ -89,7 +88,7 @@ revenueObligationLiability:
 specifiedCurrency:
   description: |
     An obligation and deliverable obligation characteristic. The currency or currencies in which an obligation or deliverable obligation must be payable. ISDA 2003 Term: Specified Currency.
-  type: FINOS-CDM-6.0-d07/SpecifiedCurrency
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/credit/SpecifiedCurrency
 transferable:
   description: |
     A deliverable obligation characteristic. An obligation that is transferable to institutional investors without any contractual, statutory or regulatory restrictions. ISDA 2003 Term: Transferable.

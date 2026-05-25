@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-AssetPayoutTradeTypeEnum.schema.json
-name: AssetPayoutTradeTypeEnum
-namespace: cdm/product/template
+name: cdm/product/template/AssetPayoutTradeTypeEnum
 description: |
   An enumerator to differentiate the different trade types used in securities finance and modelled on an AssetPayout.
 type: Text

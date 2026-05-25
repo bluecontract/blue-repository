@@ -1,4 +1,3 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-EquityCorporateEvents.schema.json
-name: EquityCorporateEvents
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/EquityCorporateEvents
 description: A class for defining the merger events and their treatment.

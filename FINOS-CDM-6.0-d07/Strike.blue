@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-Strike.schema.json
-name: Strike
-namespace: cdm/product/template
+name: cdm/product/template/Strike
 description: A class describing a single cap or floor rate.
 buyer:
   description: The buyer of the option.
-  type: FINOS-CDM-6.0-d07/PayerReceiverEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiverEnum
 seller:
   description: The party that has sold.
-  type: FINOS-CDM-6.0-d07/PayerReceiverEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiverEnum
 strikeRate:
   description: The rate for a cap or floor.
   type: Double

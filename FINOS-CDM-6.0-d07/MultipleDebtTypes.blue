@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-MultipleDebtTypes.schema.json
-name: MultipleDebtTypes
-namespace: cdm/observable/asset
+name: cdm/observable/asset/MultipleDebtTypes
 description: "Represents a class to specify multiple credit debt types alongside a conditional 'any' or 'all' qualifier."
 condition:
   description: "An enumerated attribute, to qualify whether All or Any debt type applies."
-  type: FINOS-CDM-6.0-d07/QuantifierEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/QuantifierEnum
   schema:
     required: true
 debtType:
   description: |
     The type of debt, e.g. long term debt, deposit, ... FpML doesn't specific a scheme value, hence no enumeration is specified as part of the CDM. At least two debt types much be specified.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 2

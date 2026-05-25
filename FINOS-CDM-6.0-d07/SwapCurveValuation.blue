@@ -1,18 +1,17 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-SwapCurveValuation.schema.json
-name: SwapCurveValuation
-namespace: cdm/observable/asset
+name: cdm/observable/asset/SwapCurveValuation
 description: |
   A class to specify a valuation swap curve, which is used as part of the strike construct for the bond and convertible bond options.
 floatingRateIndex:
-  type: FINOS-CDM-6.0-d07/FloatingRateIndexEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/rates/FloatingRateIndexEnum
   schema:
     required: true
 indexTenor:
   description: "The ISDA Designated Maturity, i.e. the tenor of the floating rate."
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period
 side:
   description: "The side (bid/mid/ask) of the measure."
-  type: FINOS-CDM-6.0-d07/QuotationSideEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/QuotationSideEnum
 spread:
   description: Spread in basis points over the floating rate index.
   type: Double

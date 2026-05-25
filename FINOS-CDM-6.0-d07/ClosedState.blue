@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ClosedState.schema.json
-name: ClosedState
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ClosedState
 description: |
   A class to qualify the closed state of an execution or a contract through the combination or a state (e.g. terminated, novated) and a set of dates: activity date, effective date and, when relevant, last payment date.
 activityDate:
@@ -19,6 +18,6 @@ lastPaymentDate:
   type: Text
 state:
   description: "The qualification of what gave way to the contract or execution closure, e.g. allocation, termination, ..."
-  type: FINOS-CDM-6.0-d07/ClosedStateEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/ClosedStateEnum
   schema:
     required: true

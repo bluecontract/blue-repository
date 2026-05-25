@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-ValuationMethodEnum.schema.json
-name: ValuationMethodEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/ValuationMethodEnum
 description: |
   The enumerated values to specify the ISDA defined methodology for determining the final price of the reference obligation for purposes of cash settlement.
 type: Text

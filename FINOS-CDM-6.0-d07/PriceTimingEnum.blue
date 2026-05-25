@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-PriceTimingEnum.schema.json
-name: PriceTimingEnum
-namespace: cdm/event/common
+name: cdm/event/common/PriceTimingEnum
 type: Text
 schema:
   enum: [ClosingPrice, OpeningPrice]

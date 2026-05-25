@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-SpecifiedEntityClauseEnum.schema.json
-name: SpecifiedEntityClauseEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/SpecifiedEntityClauseEnum
 description: |
   The enumerated values to specify the Event of Default or Termination event for which Specified Entities terms are being defined.
 type: Text

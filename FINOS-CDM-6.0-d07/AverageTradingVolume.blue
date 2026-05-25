@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AverageTradingVolume.schema.json
-name: AverageTradingVolume
-namespace: cdm/product/collateral
+name: cdm/product/collateral/AverageTradingVolume
 description: Represents the average trading volume of an Equity product upon an exchange or set of exchanges.
 methodology:
   description: |
     Indicates the type of equity average trading volume being stated (single) the highest amount on one exchange, or (consolidated) volumes across multiple exchanges.
-  type: FINOS-CDM-6.0-d07/AverageTradingVolumeMethodologyEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/AverageTradingVolumeMethodologyEnum
   schema:
     required: true
 period:
   description: Represents the period of the equities average trading volume on the exchange/s.
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period
   schema:
     required: true

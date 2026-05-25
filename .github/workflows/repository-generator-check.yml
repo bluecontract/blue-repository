@@ -14,7 +14,7 @@ permissions:
 
 env:
   REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
-  REPOSITORY_GENERATOR_VERSION: '4.1.0'
+  REPOSITORY_GENERATOR_VERSION: '4.1.2'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
 
 jobs:

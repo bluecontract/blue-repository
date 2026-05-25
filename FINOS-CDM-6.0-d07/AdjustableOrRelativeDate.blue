@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-AdjustableOrRelativeDate.schema.json
-name: AdjustableOrRelativeDate
-namespace: cdm/base/datetime
+name: cdm/base/datetime/AdjustableOrRelativeDate
 description: |
   A class giving the choice between defining a date as an explicit date together with applicable adjustments or as relative to some other (anchor) date.
 adjustableDate:
   description: |
     A date that shall be subject to adjustment if it would otherwise fall on a day that is not a business day in the specified business centers, together with the convention for adjusting the date.
-  type: FINOS-CDM-6.0-d07/AdjustableDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableDate
 relativeDate:
   description: "A date specified as some offset to another date (the anchor date)."
-  type: FINOS-CDM-6.0-d07/AdjustedRelativeDateOffset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustedRelativeDateOffset

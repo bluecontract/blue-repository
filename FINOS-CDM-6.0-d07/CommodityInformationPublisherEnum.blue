@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-CommodityInformationPublisherEnum.schema.json
-name: CommodityInformationPublisherEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/CommodityInformationPublisherEnum
 description: "Defines a publication in which the price can be found. (e.g Gas Daily, Platts Bloomberg."
 type: Text
 schema:

@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-metafields-FieldWithMetaCreditSupportAgreementTypeEnum.schema.json
-name: FieldWithMetaCreditSupportAgreementTypeEnum
-namespace: cdm/product/collateral
+name: cdm/product/collateral/FieldWithMetaCreditSupportAgreementTypeEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/CreditSupportAgreementTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CreditSupportAgreementTypeEnum

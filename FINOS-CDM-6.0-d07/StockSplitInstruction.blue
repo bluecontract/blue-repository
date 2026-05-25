@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-StockSplitInstruction.schema.json
-name: StockSplitInstruction
-namespace: cdm/event/common
+name: cdm/event/common/StockSplitInstruction
 description: Data required to perform a stock split business event.
 adjustmentRatio:
   description: |

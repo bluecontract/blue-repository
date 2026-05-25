@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-IssuerTypeEnum.schema.json
-name: IssuerTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/IssuerTypeEnum
 description: Represents an enumeration list to identify the type of entity issuing the asset.
 type: Text
 schema:

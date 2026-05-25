@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-DerivInstrmAttrbts.schema.json
-name: DerivInstrmAttrbts
-namespace: cdm/regulation
+name: cdm/regulation/DerivInstrmAttrbts
 dlvryTp:
   type: Text
   schema:
@@ -10,7 +9,7 @@ pricMltplr:
   schema:
     required: true
 undrlygInstrm:
-  type: FINOS-CDM-6.0-d07/UndrlygInstrm
+  type: FINOS-CDM-6.0-d07/cdm/regulation/UndrlygInstrm
   schema:
     required: true
 xpryDt:

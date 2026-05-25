@@ -1,35 +1,34 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-FixedPricePayout.schema.json
-name: FixedPricePayout
-namespace: cdm/product/template
+name: cdm/product/template/FixedPricePayout
 description: |
   Represents a fixed price payout. There is no underlier associated with this payout type and is based on fixed pricing per a given unit (e.g. in commodities price per barrel)
 fixedPrice:
   description: Specifies the fixed price on which fixed forward payments are based.
-  type: FINOS-CDM-6.0-d07/FixedPrice
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/FixedPrice
   schema:
     required: true
 payerReceiver:
   description: Canonical representation of the payer and receiver parties applicable to each payout leg.
-  type: FINOS-CDM-6.0-d07/PayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiver
 paymentDates:
   description: |
     Specifies the parameters to generate the payment date schedule, either through a parametric representation or by reference to specified dates.
-  type: FINOS-CDM-6.0-d07/PaymentDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/PaymentDates
   schema:
     required: true
 priceQuantity:
   description: |
     Each payout leg must implement the quantity concept as a 'resolvable' type, which allows for different payout legs to be linked to each other (e.g. in the case of cross-curreny products).
-  type: FINOS-CDM-6.0-d07/ResolvablePriceQuantity
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/ResolvablePriceQuantity
 principalPayment:
   description: |
     The specification of the principal exchange. Optional as only applicable in the case of cross-currency or zero-coupon swaps with a final payment.
-  type: FINOS-CDM-6.0-d07/PrincipalPayments
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PrincipalPayments
 schedule:
   description: |
     Allows the full representation of a payout by defining a set of schedule periods. It supports standard schedule customization by expressing all the dates, quantities, and pricing data in a non-parametric way.
-  type: FINOS-CDM-6.0-d07/CalculationSchedule
+  type: FINOS-CDM-6.0-d07/cdm/product/template/CalculationSchedule
 settlementTerms:
   description: |
     Each payout leg must specifies its settlement terms, including the delivery type (i.e. cash vs physical, and their respective terms), the transfer type (DvP etc.) and settlement date, if any.
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms

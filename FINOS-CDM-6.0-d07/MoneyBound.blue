@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-MoneyBound.schema.json
-name: MoneyBound
-namespace: cdm/base/math
+name: cdm/base/math/MoneyBound
 description: The money bound is defined as a money amount and whether the bound is inclusive.
 inclusive:
   description: |
@@ -10,6 +9,6 @@ inclusive:
     required: true
 money:
   description: "The money amount to be used as the bound, e.g. 1,000 USD."
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
   schema:
     required: true

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-ReturnTypeEnum.schema.json
-name: ReturnTypeEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/ReturnTypeEnum
 description: The enumerated values to specify the type of return associated the equity payout.
 type: Text
 schema:

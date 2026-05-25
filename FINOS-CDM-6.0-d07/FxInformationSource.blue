@@ -1,17 +1,16 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-FxInformationSource.schema.json
-name: FxInformationSource
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FxInformationSource
 description: Information source specific to Foreign Exchange products.
 fixingTime:
   description: The time that the fixing will be taken along with a business center to define the time zone.
-  type: FINOS-CDM-6.0-d07/BusinessCenterTime
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenterTime
 sourcePage:
   description: |
     A specific page for the source for obtaining a market data point. In FpML, this is specified as a scheme, rateSourcePageScheme, for which no coding Scheme or URI is specified.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 sourcePageHeading:
   description: The heading for the source on a given source page.
   type: Text
 sourceProvider:
   description: "An information source for obtaining a market data point. For example Bloomberg, Reuters, Telerate, etc."
-  type: FINOS-CDM-6.0-d07/FieldWithMetaInformationProviderEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FieldWithMetaInformationProviderEnum

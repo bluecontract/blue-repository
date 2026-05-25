@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PremiumExpression.schema.json
-name: PremiumExpression
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PremiumExpression
 description: |
   This class corresponds to the FpML Premium.model group for representing the option premium when expressed in a way other than an amount.
 percentageOfNotional:
@@ -9,7 +8,7 @@ percentageOfNotional:
   type: Double
 premiumType:
   description: Forward start premium type
-  type: FINOS-CDM-6.0-d07/PremiumTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PremiumTypeEnum
 pricePerOption:
   description: The amount of premium to be paid expressed as a function of the number of options.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money

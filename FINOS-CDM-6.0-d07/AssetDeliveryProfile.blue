@@ -1,17 +1,16 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-AssetDeliveryProfile.schema.json
-name: AssetDeliveryProfile
-namespace: cdm/product/asset
+name: cdm/product/asset/AssetDeliveryProfile
 description: "Defines the delivery profile of the asset, including the load type and the delivery intervals."
 bankHolidaysTreatment:
   description: Specifies whether the dates defined include holidays or not.
-  type: FINOS-CDM-6.0-d07/BankHolidayTreatmentEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/BankHolidayTreatmentEnum
 block:
   description: |
     Defines a delivery profile block, including start and end time, days of the week, duration, delivery capacity and price time interval quantity.
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssetDeliveryProfileBlock
+  itemType: FINOS-CDM-6.0-d07/cdm/product/asset/AssetDeliveryProfileBlock
   schema:
     minItems: 0
 loadType:
   description: Identification of the delivery profile.
-  type: FINOS-CDM-6.0-d07/LoadTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/LoadTypeEnum

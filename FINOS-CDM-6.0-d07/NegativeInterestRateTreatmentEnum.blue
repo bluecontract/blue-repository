@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-NegativeInterestRateTreatmentEnum.schema.json
-name: NegativeInterestRateTreatmentEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/NegativeInterestRateTreatmentEnum
 description: |
   The enumerated values to specify the method of calculating payment obligations when a floating rate is negative (either due to a quoted negative floating rate or by operation of a spread that is subtracted from the floating rate).
 type: Text

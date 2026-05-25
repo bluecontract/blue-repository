@@ -1,29 +1,28 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ConcentrationLimitCriteria.schema.json
-name: ConcentrationLimitCriteria
-namespace: cdm/product/collateral
+name: cdm/product/collateral/ConcentrationLimitCriteria
 description: |
   Respresents a class to describe a set of criteria to describe specific assets that the concentration limits apply to.
 appliesTo:
   description: |
     Specifies which of the two counterparties the criteria applies to (either one or both counterparties). This attribute is optional, in case the applicable party is already specified elsewhere within a party election.
   type: List
-  itemType: FINOS-CDM-6.0-d07/CounterpartyRoleEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/CounterpartyRoleEnum
   schema:
     minItems: 0
     maxItems: 2
 averageTradingVolume:
   description: Specifies an average trading volume on an exchange in relation to Equity products.
-  type: FINOS-CDM-6.0-d07/AverageTradingVolume
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/AverageTradingVolume
 collateralCriteria:
   description: |
     The specific criteria that applies. It can be created using AND, OR and NOT logic, and both asset and issuer characteristics.
-  type: FINOS-CDM-6.0-d07/CollateralCriteria
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralCriteria
 concentrationLimitType:
   description: Specifies the type of concentration limit to be applied.
-  type: FINOS-CDM-6.0-d07/ConcentrationLimitTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/ConcentrationLimitTypeEnum
 ratingPriorityResolution:
   description: Denotes which Criteria has priority if more than one agency rating applies.
-  type: FINOS-CDM-6.0-d07/RatingPriorityResolutionEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/RatingPriorityResolutionEnum
 restrictTo:
   description: "Restrict the criteria to only apply to a specific type of margin, ie IM or VM."
-  type: FINOS-CDM-6.0-d07/CollateralMarginTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralMarginTypeEnum

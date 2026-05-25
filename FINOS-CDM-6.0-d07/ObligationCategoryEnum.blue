@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-credit-ObligationCategoryEnum.schema.json
-name: ObligationCategoryEnum
-namespace: cdm/base/staticdata/asset/credit
+name: cdm/base/staticdata/asset/credit/ObligationCategoryEnum
 description: |
   The enumerated values used in both the obligations and deliverable obligations of the credit default swap to represent a class or type of securities which apply.
 type: Text

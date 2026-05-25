@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-AveragingWeightingMethodEnum.schema.json
-name: AveragingWeightingMethodEnum
-namespace: cdm/base/math
+name: cdm/base/math/AveragingWeightingMethodEnum
 description: |
   The enumerated values to specify the method of calculation to be used when averaging rates. Per ISDA 2000 Definitions, Section 6.2. Certain Definitions Relating to Floating Amounts.
 type: Text

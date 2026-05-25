@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ValuationTypeEnum.schema.json
-name: ValuationTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/ValuationTypeEnum
 description: Method used for the valuation of the transaction by the valuation party.
 type: Text
 schema:

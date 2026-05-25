@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-DividendApplicability.schema.json
-name: DividendApplicability
-namespace: cdm/observable/asset
+name: cdm/observable/asset/DividendApplicability
 description: The parameters which define whether dividends are applicable
 additionalDividends:
   description: "If present and true, then additional dividends are applicable."

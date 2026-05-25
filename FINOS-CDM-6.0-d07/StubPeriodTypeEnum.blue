@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-StubPeriodTypeEnum.schema.json
-name: StubPeriodTypeEnum
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/StubPeriodTypeEnum
 description: The enumerated values to specify how to deal with a non standard calculation period within a swap stream.
 type: Text
 schema:

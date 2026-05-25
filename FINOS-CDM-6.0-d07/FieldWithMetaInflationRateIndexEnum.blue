@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-rates-metafields-FieldWithMetaInflationRateIndexEnum.schema.json
-name: FieldWithMetaInflationRateIndexEnum
-namespace: cdm/base/staticdata/asset/rates
+name: cdm/base/staticdata/asset/rates/FieldWithMetaInflationRateIndexEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/InflationRateIndexEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/rates/InflationRateIndexEnum

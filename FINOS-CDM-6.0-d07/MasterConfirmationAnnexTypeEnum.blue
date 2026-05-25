@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterConfirmationAnnexTypeEnum.schema.json
-name: MasterConfirmationAnnexTypeEnum
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/MasterConfirmationAnnexTypeEnum
 description: |
   The enumerated values to specify the type of annex to be used with master confirmation agreement governing the transaction.
 type: Text

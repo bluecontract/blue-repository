@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-ReferencePair.schema.json
-name: ReferencePair
-namespace: cdm/product/asset
+name: cdm/product/asset/ReferencePair
 entityType:
   description: |
     Defines the reference entity types corresponding to a list of types in the ISDA First to Default documentation.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaEntityTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/FieldWithMetaEntityTypeEnum
   schema:
     required: true
 noReferenceObligation:
@@ -14,10 +13,10 @@ noReferenceObligation:
 referenceEntity:
   description: |
     The corporate or sovereign entity on which you are buying or selling protection and any successor that assumes all or substantially all of its contractual and other obligations. It is vital to use the correct legal name of the entity and to be careful not to choose a subsidiary if you really want to trade protection on a parent company. Please note, Reference Entities cannot be senior or subordinated. It is the obligations of the Reference Entities that can be senior or subordinated. ISDA 2003 Term: Reference Entity.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     required: true
 referenceObligation:
   description: |
     The Reference Obligation is a financial instrument that is either issued or guaranteed by the reference entity. It serves to clarify the precise reference entity protection is being offered upon, and its legal position with regard to other related firms (parents/subsidiaries). Furthermore the Reference Obligation is ALWAYS deliverable and establishes the Pari Passu ranking (as the deliverable bonds must rank equal to the reference obligation). ISDA 2003 Term: Reference Obligation.
-  type: FINOS-CDM-6.0-d07/ReferenceObligation
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/ReferenceObligation

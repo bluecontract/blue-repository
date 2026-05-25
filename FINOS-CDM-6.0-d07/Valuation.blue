@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-Valuation.schema.json
-name: Valuation
-namespace: cdm/event/common
+name: cdm/event/common/Valuation
 description: "Defines the value of an investment, asset, or security"
 amount:
   description: Current value of the outstanding contract
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
   schema:
     required: true
 delta:
@@ -13,13 +12,13 @@ delta:
   type: Double
 method:
   description: Method used for the valuation of the transaction by the valuation party.
-  type: FINOS-CDM-6.0-d07/ValuationTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/ValuationTypeEnum
 priceComponent:
   description: Denotes the price used to compute the valuation.
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price
 source:
   description: Source of the valuation of the transaction by the valuation party.
-  type: FINOS-CDM-6.0-d07/ValuationSourceEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/ValuationSourceEnum
 timestamp:
   description: |
     Date and time of the last valuation marked to market, provided by the central counterparty (CCP) or calculated using the current or last available market price of the inputs.
@@ -28,4 +27,4 @@ timestamp:
     required: true
 valuationTiming:
   description: Denotes when the valuation was sourced during a business day.
-  type: FINOS-CDM-6.0-d07/PriceTimingEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/PriceTimingEnum

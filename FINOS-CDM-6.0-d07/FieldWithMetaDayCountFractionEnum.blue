@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-daycount-metafields-FieldWithMetaDayCountFractionEnum.schema.json
-name: FieldWithMetaDayCountFractionEnum
-namespace: cdm/base/datetime/daycount
+name: cdm/base/datetime/daycount/FieldWithMetaDayCountFractionEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/DayCountFractionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/daycount/DayCountFractionEnum

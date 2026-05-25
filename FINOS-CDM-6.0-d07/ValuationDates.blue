@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-ValuationDates.schema.json
-name: ValuationDates
-namespace: cdm/observable/asset
+name: cdm/observable/asset/ValuationDates
 description: |
   Defines how and when a performance type option or performance type swap is to be valued, including initial, interim and final valuation dates.
 finalValuationDate:
   description: Specifies the final valuation dates of the underlyer.
-  type: FINOS-CDM-6.0-d07/PerformanceValuationDates
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PerformanceValuationDates
   schema:
     required: true
 initialValuationDate:
   description: Specifies the initial valuation dates of the underlyer.
-  type: FINOS-CDM-6.0-d07/PerformanceValuationDates
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PerformanceValuationDates
 interimValuationDate:
   description: Specifies the interim valuation dates of the underlyer.
-  type: FINOS-CDM-6.0-d07/PerformanceValuationDates
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PerformanceValuationDates

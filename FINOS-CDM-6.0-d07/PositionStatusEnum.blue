@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-PositionStatusEnum.schema.json
-name: PositionStatusEnum
-namespace: cdm/event/position
+name: cdm/event/position/PositionStatusEnum
 description: "Enumeration to describe the different (risk) states of a Position, whether executed, settled, matured...etc"
 type: Text
 schema:

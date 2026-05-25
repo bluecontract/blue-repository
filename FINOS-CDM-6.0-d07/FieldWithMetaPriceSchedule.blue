@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-metafields-FieldWithMetaPriceSchedule.schema.json
-name: FieldWithMetaPriceSchedule
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FieldWithMetaPriceSchedule
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/PriceSchedule
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceSchedule

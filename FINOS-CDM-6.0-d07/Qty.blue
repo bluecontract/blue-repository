@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Qty.schema.json
-name: Qty
-namespace: cdm/regulation
+name: cdm/regulation/Qty
 unit:
   type: Text
   schema:

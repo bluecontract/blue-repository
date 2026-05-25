@@ -1,65 +1,64 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-MarginCallBase.schema.json
-name: MarginCallBase
-namespace: cdm/event/common
+name: cdm/event/common/MarginCallBase
 description: |
   Represents common attributes required for Issuance and Response to a Margin Call action as a result of a demand for delivery or return of collateral determined under a legal agreement such as a credit support document or equivalent.
 agreementMinimumTransferAmount:
   description: Specifies the collateral legal agreement minimum transfer amount in base currency.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 agreementRounding:
   description: Specifies the collateral legal agreement rounding in base currency.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 agreementThreshold:
   description: Specifies the collateral legal agreement threshold amount in base currency.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 baseCurrencyExposure:
   description: |
     Represents the current mark to market value or IM calculation value of the trade portfolio as recorded by the principle (in base currency), to be referenced in a margin call.
-  type: FINOS-CDM-6.0-d07/MarginCallExposure
+  type: FINOS-CDM-6.0-d07/cdm/event/common/MarginCallExposure
 callAgreementType:
   description: Specifies the legal agreement type the margin call is generated from and governed by.
-  type: FINOS-CDM-6.0-d07/AgreementName
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/AgreementName
   schema:
     required: true
 callIdentifier:
   description: |
     Represents a unique Identifier for a margin call message, that can be referenced throughout all points of the process.
-  type: FINOS-CDM-6.0-d07/Identifier
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/Identifier
 clearingBroker:
   description: Indicates the name of the Clearing Broker FCM/DCM.
-  type: FINOS-CDM-6.0-d07/Party
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Party
 collateralPortfolio:
   description: |
     Represents attributes to define the details of collateral assets within a collateral portfolio to be used in margin call messaging and contribute to collateral balances e.g securities in a collateral account recorded by the principal as held or posted.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaCollateralPortfolio
+  type: FINOS-CDM-6.0-d07/cdm/event/common/metafields/ReferenceWithMetaCollateralPortfolio
 independentAmountBalance:
   description: Represents additional credit support amount over and above mark to market value.
-  type: FINOS-CDM-6.0-d07/CollateralBalance
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CollateralBalance
 instructionType:
   description: "Identifies the enumeration values to specify the call notification type, direction, specific action type."
-  type: FINOS-CDM-6.0-d07/MarginCallInstructionType
+  type: FINOS-CDM-6.0-d07/cdm/event/common/MarginCallInstructionType
   schema:
     required: true
 party:
   description: |
     Represents the parties to the margin call. The cardinality is optional to address the case where both parties of the event are specified and a third party if applicable.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Party
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Party
   schema:
     minItems: 0
 partyRole:
   description: |
     Represents the role each specified party takes in the margin call. further to the principal roles, payer and receiver.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyRole
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRole
   schema:
     minItems: 0
 regIMRole:
   description: |
     Indicates the role of the party in an regulatory initial margin call instruction (i.e Pledgor party or Secured party).
-  type: FINOS-CDM-6.0-d07/RegIMRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/RegIMRoleEnum
 regMarginType:
   description: Identifies margin type and if related regulatory mandate
-  type: FINOS-CDM-6.0-d07/RegMarginTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/RegMarginTypeEnum
   schema:
     required: true

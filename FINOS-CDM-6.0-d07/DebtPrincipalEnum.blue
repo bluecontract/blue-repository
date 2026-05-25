@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DebtPrincipalEnum.schema.json
-name: DebtPrincipalEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/DebtPrincipalEnum
 description: Represents an enumeration list that specifies the general rule for repayment of principal.
 type: Text
 schema:

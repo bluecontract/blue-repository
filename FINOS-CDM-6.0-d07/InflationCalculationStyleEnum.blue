@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-InflationCalculationStyleEnum.schema.json
-name: InflationCalculationStyleEnum
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/InflationCalculationStyleEnum
 description: "Indicates the style of how the inflation index calculates the payment (e.g. YearOnYear, ZeroCoupon)."
 type: Text
 schema:

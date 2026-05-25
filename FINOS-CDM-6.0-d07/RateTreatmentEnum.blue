@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-RateTreatmentEnum.schema.json
-name: RateTreatmentEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/RateTreatmentEnum
 description: The enumerated values to specify the methods for converting rates from one basis to another.
 type: Text
 schema:

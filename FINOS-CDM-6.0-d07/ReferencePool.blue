@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-ReferencePool.schema.json
-name: ReferencePool
-namespace: cdm/product/asset
+name: cdm/product/asset/ReferencePool
 description: |
   This type contains all the reference pool items to define the reference entity and reference obligation(s) in the basket.
 referencePoolItem:
   description: This type contains all the constituent weight and reference information.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferencePoolItem
+  itemType: FINOS-CDM-6.0-d07/cdm/product/asset/ReferencePoolItem
   schema:
     minItems: 1

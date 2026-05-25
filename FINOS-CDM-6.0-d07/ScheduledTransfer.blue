@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ScheduledTransfer.schema.json
-name: ScheduledTransfer
-namespace: cdm/event/common
+name: cdm/event/common/ScheduledTransfer
 corporateActionTransferType:
-  type: FINOS-CDM-6.0-d07/CorporateActionTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CorporateActionTypeEnum
 transferType:
   description: |
     Specifies a transfer created from a scheduled or contingent event on a contract, e.g. Exercise, Performance, Credit Event
-  type: FINOS-CDM-6.0-d07/ScheduledTransferEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/ScheduledTransferEnum
   schema:
     required: true

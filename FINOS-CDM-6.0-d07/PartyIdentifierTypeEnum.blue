@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyIdentifierTypeEnum.schema.json
-name: PartyIdentifierTypeEnum
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/PartyIdentifierTypeEnum
 description: The enumeration values associated with party identifier sources.
 type: Text
 schema:

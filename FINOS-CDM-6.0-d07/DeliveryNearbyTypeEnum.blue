@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DeliveryNearbyTypeEnum.schema.json
-name: DeliveryNearbyTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/DeliveryNearbyTypeEnum
 type: Text
 schema:
   enum: [CalculationPeriod, NearbyMonth, NearbyWeek]

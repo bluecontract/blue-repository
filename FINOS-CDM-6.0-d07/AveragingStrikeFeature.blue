@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-AveragingStrikeFeature.schema.json
-name: AveragingStrikeFeature
-namespace: cdm/product/template
+name: cdm/product/template/AveragingStrikeFeature
 description: Defines the terms required to calculate the average observations associated with an averaging strike.
 averagingCalculation:
   description: |
     Defines parameters for use in cases when a valuation or other term is based on an average of market observations.
-  type: FINOS-CDM-6.0-d07/AveragingCalculation
+  type: FINOS-CDM-6.0-d07/cdm/product/template/AveragingCalculation
   schema:
     required: true
 observationTerms:
   description: |
     Class containing terms that are associated with observing a price/benchmark/index across either single or multple observations.
-  type: FINOS-CDM-6.0-d07/ObservationTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/ObservationTerms
   schema:
     required: true

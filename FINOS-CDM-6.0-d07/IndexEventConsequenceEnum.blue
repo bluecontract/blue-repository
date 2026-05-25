@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-IndexEventConsequenceEnum.schema.json
-name: IndexEventConsequenceEnum
-namespace: cdm/observable/event
+name: cdm/observable/event/IndexEventConsequenceEnum
 description: The enumerated values to specify the consequences of Index Events.
 type: Text
 schema:

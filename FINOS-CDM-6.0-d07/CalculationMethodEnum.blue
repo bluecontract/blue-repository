@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-CalculationMethodEnum.schema.json
-name: CalculationMethodEnum
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/CalculationMethodEnum
 description: |
   What calculation type is required, averaging or compounding. This enumeration is used to represent the definitions of modular calculated rates as described in the 2021 ISDA Definitions, section 7.
 type: Text

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-CreditEvents.schema.json
-name: CreditEvents
-namespace: cdm/observable/event
+name: cdm/observable/event/CreditEvents
 description: |
   A class to specify the applicable Credit Events that would trigger a settlement, as specified in the related Confirmation and defined in the ISDA 2014 Credit Definition article IV section 4.1.
 bankruptcy:
@@ -10,11 +9,11 @@ bankruptcy:
 creditEventNotice:
   description: |
     A specified condition to settlement. An irrevocable written or verbal notice that describes a credit event that has occurred. The notice is sent from the notifying party (either the buyer or the seller) to the counterparty. It provides information relevant to determining that a credit event has occurred. This is typically accompanied by Publicly Available Information. ISDA 2003 Term: Credit Event Notice.
-  type: FINOS-CDM-6.0-d07/CreditEventNotice
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/CreditEventNotice
 defaultRequirement:
   description: |
     In relation to certain credit events, serves as a threshold for Obligation Acceleration, Obligation Default, Repudiation/Moratorium and Restructuring. Market standard is USD 10,000,000 (JPY 1,000,000,000 for all Japanese Yen trades). This is applied on an aggregate or total basis across all Obligations of the Reference Entity. Used to prevent technical/operational errors from triggering credit events. ISDA 2003 Term: Default Requirement.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 distressedRatingsDowngrade:
   description: |
     A credit event. Results from the fact that the rating of the reference obligation is down-graded to a distressed rating level. From a usage standpoint, this credit event is typically not applicable in case of RMBS trades.
@@ -22,7 +21,7 @@ distressedRatingsDowngrade:
 failureToPay:
   description: |
     A credit event. This credit event triggers, after the expiration of any applicable grace period, if the reference entity fails to make due payments in an aggregate amount of not less than the payment requirement on one or more obligations (e.g. a missed coupon payment). ISDA 2003 Term: Failure to Pay.
-  type: FINOS-CDM-6.0-d07/FailureToPay
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/FailureToPay
 failureToPayInterest:
   description: |
     A credit event. Corresponds to the failure by the Reference Entity to pay an expected interest amount or the payment of an actual interest amount that is less than the expected interest amount. ISDA 2003 Term: Failure to Pay Interest.
@@ -57,7 +56,7 @@ repudiationMoratorium:
 restructuring:
   description: |
     A credit event. A restructuring is an event that materially impacts the reference entity's obligations, such as an interest rate reduction, principal reduction, deferral of interest or principal, change in priority ranking, or change in currency or composition of payment. ISDA 2003 Term: Restructuring.
-  type: FINOS-CDM-6.0-d07/Restructuring
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/Restructuring
 writedown:
   description: A credit event. Results from the fact that the underlier writes down its outstanding principal amount.
   type: Boolean

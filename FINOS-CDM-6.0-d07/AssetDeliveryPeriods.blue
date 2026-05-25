@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-AssetDeliveryPeriods.schema.json
-name: AssetDeliveryPeriods
-namespace: cdm/product/asset
+name: cdm/product/asset/AssetDeliveryPeriods
 description: "Defines the periods of delivery, including the delivery profile."
 endDate:
   description: Delivery end date
@@ -8,7 +7,7 @@ endDate:
 profile:
   description: "Defines the delivery profile of the asset, including the load type and the delivery intervals."
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssetDeliveryProfile
+  itemType: FINOS-CDM-6.0-d07/cdm/product/asset/AssetDeliveryProfile
   schema:
     minItems: 0
 startDate:

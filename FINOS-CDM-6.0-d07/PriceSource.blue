@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-PriceSource.schema.json
-name: PriceSource
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/PriceSource
 description: |
   Specifies a publication that provides the commodity price, including, where applicable, the details of where in the publication the price is published.
 pricePublisher:
   description: |
     Defines a publication in which the price can be found. (e.g Gas Daily, Platts Bloomberg. Commodity publishers can be found at this URL:  http://www.fpml.org/coding-scheme/commodity-information-provider>
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 priceSourceHeading:

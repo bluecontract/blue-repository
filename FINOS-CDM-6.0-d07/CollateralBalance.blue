@@ -1,23 +1,22 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CollateralBalance.schema.json
-name: CollateralBalance
-namespace: cdm/event/common
+name: cdm/event/common/CollateralBalance
 description: Represents common attributes to define a collateral balance recorded by the principal as held or posted.
 amountBaseCurrency:
   description: |
     Specifies the collateral balance amount in base currency determined within a collateral legal agreement, or defined for reporting purposes.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
   schema:
     required: true
 collateralBalanceStatus:
   description: Defines the collateral balance breakdown of settlement status.
-  type: FINOS-CDM-6.0-d07/CollateralStatusEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CollateralStatusEnum
 haircutIndicator:
   description: |
     Indicates if the collateral balance amount is based on pre or post haircut, if a haircut is associated with the collateral asset
-  type: FINOS-CDM-6.0-d07/HaircutIndicatorEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/HaircutIndicatorEnum
 payerReceiver:
   description: |
     Specifies each of the parties in the collateral balance and its perspective with regards to the direction of the collateral balance, posted or received.
-  type: FINOS-CDM-6.0-d07/PartyReferencePayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyReferencePayerReceiver
   schema:
     required: true

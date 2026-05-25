@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-UndrlygInstrm.schema.json
-name: UndrlygInstrm
-namespace: cdm/regulation
+name: cdm/regulation/UndrlygInstrm
 swp:
-  type: FINOS-CDM-6.0-d07/Swp
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Swp
   schema:
     required: true

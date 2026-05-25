@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-AssetIdentifier.schema.json
-name: AssetIdentifier
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/AssetIdentifier
 description: "The unique identifier for an Asset, specified using an Asset Identifier Type enumerator."
 identifier:
   description: The identifier value.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 identifierType:
   description: "Defines the symbology source of the Asset Identifier, eg CUSIP, ISIN, etc."
-  type: FINOS-CDM-6.0-d07/AssetIdTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetIdTypeEnum
   schema:
     required: true

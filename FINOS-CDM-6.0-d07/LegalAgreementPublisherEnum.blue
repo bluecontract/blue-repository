@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-LegalAgreementPublisherEnum.schema.json
-name: LegalAgreementPublisherEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/LegalAgreementPublisherEnum
 description: The enumerated values to specify the legal agreement publisher.
 type: Text
 schema:

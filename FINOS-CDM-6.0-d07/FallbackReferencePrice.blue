@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-FallbackReferencePrice.schema.json
-name: FallbackReferencePrice
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FallbackReferencePrice
 description: |
   The method, prioritised by the order it is listed in this element, to get a replacement rate for the disrupted settlement rate option.
 calculationAgentDetermination:
   description: The calculation agent will decide the rate.
-  type: FINOS-CDM-6.0-d07/CalculationAgent
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CalculationAgent
 fallBackSettlementRateOption:
   description: This settlement rate option will be used in its place.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaSettlementRateOptionEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/FieldWithMetaSettlementRateOptionEnum
   schema:
     minItems: 0
 fallbackSurveyValuationPostponement:
@@ -18,4 +17,4 @@ fallbackSurveyValuationPostponement:
   type: Boolean
 valuationPostponement:
   description: Specifies how long to wait to get a quote from a settlement rate option upon a price source disruption.
-  type: FINOS-CDM-6.0-d07/ValuationPostponement
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/ValuationPostponement

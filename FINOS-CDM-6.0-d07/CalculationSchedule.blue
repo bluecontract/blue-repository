@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-CalculationSchedule.schema.json
-name: CalculationSchedule
-namespace: cdm/product/template
+name: cdm/product/template/CalculationSchedule
 description: |
   A class that allows the full representation of a payout by defining a set of schedule periods. It supports standard schedule customization by expressing all the dates, quantities, and pricing data in a non-parametric way.
 schedulePeriod:
   description: Defines a period of a calculation schedule structure.
   type: List
-  itemType: FINOS-CDM-6.0-d07/SchedulePeriod
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/SchedulePeriod
   schema:
     minItems: 1

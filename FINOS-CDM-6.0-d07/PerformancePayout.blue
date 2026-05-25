@@ -1,76 +1,75 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-PerformancePayout.schema.json
-name: PerformancePayout
-namespace: cdm/product/template
+name: cdm/product/template/PerformancePayout
 description: |
   Contains the necessary specifications for all performance payouts, encompassing equity return, dividend, variance, volatility and correlation products.
 finalValuationPrice:
   description: |
     Specifies the net final valuation price(s) of the underlier at Performance Payout level. This price can be expressed either as an actual amount/currency, as a determination method, or by reference to another value specified in the swap document.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
   schema:
     minItems: 0
 fxFeature:
   description: Defines quanto or composite FX features that are included in the swap leg.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FxFeature
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/FxFeature
   schema:
     minItems: 0
 initialValuationPrice:
   description: |
     Specifies the net initial valuation price(s) of the underlier at Performance Payout level. This price can be expressed either as an actual amount/currency, as a determination method, or by reference to another value specified in the swap document.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
   schema:
     minItems: 0
 interimValuationPrice:
   description: |
     Specifies the net initial valuation price(s) of the underlier at Performance Payout level. This price can be expressed either as an actual amount/currency, as a determination method, or by reference to another value specified in the swap document.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
   schema:
     minItems: 0
 observationTerms:
   description: Defines how and when a performance type option or performance type swap is to be observed.
-  type: FINOS-CDM-6.0-d07/ObservationTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/ObservationTerms
 payerReceiver:
   description: Canonical representation of the payer and receiver parties applicable to each payout leg.
-  type: FINOS-CDM-6.0-d07/PayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiver
 paymentDates:
   description: |
     Defines the payment date schedule, as defined by the parameters that are needed to specify it, either in a parametric way or by reference to another schedule of dates (e.g. the valuation dates).
-  type: FINOS-CDM-6.0-d07/PaymentDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/PaymentDates
   schema:
     required: true
 portfolioReturnTerms:
   description: |
     Specifies an individual type of return of a Performance Payout, when such individual return is part of an aggregation of multiple similar returns, at Performance Payout level
   type: List
-  itemType: FINOS-CDM-6.0-d07/PortfolioReturnTerms
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/PortfolioReturnTerms
   schema:
     minItems: 0
 priceQuantity:
   description: |
     Each payout leg must implement the quantity concept as a 'resolvable' type, which allows for different payout legs to be linked to each other (e.g. in the case of cross-curreny products).
-  type: FINOS-CDM-6.0-d07/ResolvablePriceQuantity
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/ResolvablePriceQuantity
 principalPayment:
   description: |
     The specification of the principal exchange. Optional as only applicable in the case of cross-currency or zero-coupon swaps with a final payment.
-  type: FINOS-CDM-6.0-d07/PrincipalPayments
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PrincipalPayments
 returnTerms:
   description: Specifies the type of return of a performance payout.
-  type: FINOS-CDM-6.0-d07/ReturnTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/template/ReturnTerms
 settlementTerms:
   description: |
     Each payout leg must specifies its settlement terms, including the delivery type (i.e. cash vs physical, and their respective terms), the transfer type (DvP etc.) and settlement date, if any.
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms
 underlier:
   description: |
     Identifies the underlying product that is referenced for pricing of the applicable leg in a swap.  Referenced in the '2018 ISDA CDM Equity Confirmation for Security Equity Swap' as Security.
-  type: FINOS-CDM-6.0-d07/Underlier
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Underlier
 valuationDates:
   description: |
     Defines how and when a performance type option or performance type swap is to be valued, including both interim and final valuation.
-  type: FINOS-CDM-6.0-d07/ValuationDates
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/ValuationDates
   schema:
     required: true

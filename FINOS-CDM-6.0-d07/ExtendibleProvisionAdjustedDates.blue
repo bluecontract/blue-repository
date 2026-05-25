@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExtendibleProvisionAdjustedDates.schema.json
-name: ExtendibleProvisionAdjustedDates
-namespace: cdm/product/template
+name: cdm/product/template/ExtendibleProvisionAdjustedDates
 description: |
   A data defining:  the adjusted dates associated with a provision to extend a swap.
 extensionEvent:
   description: The adjusted dates associated with a single extendible exercise date.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ExtensionEvent
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/ExtensionEvent
   schema:
     minItems: 1

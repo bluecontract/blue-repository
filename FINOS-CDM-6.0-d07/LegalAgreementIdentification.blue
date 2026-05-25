@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-LegalAgreementIdentification.schema.json
-name: LegalAgreementIdentification
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/LegalAgreementIdentification
 description: |
   Specifies the type of legal agreement, identified via a set of composable attributes: agreementName, publisher, governing law and version, e.g. ISDA 2013 Standard Credit Support Annex English Law.
 agreementName:
   description: "The legal agreement name, e.g. Credit Support Annex for Variation Margin."
-  type: FINOS-CDM-6.0-d07/AgreementName
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/AgreementName
   schema:
     required: true
 governingLaw:
   description: "The law governing the legal agreement, e.g. English Law, New York Law or Japanese Law."
-  type: FINOS-CDM-6.0-d07/GoverningLawEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/GoverningLawEnum
 publisher:
   description: "The legal agreement publisher, e.g. ISDA."
-  type: FINOS-CDM-6.0-d07/LegalAgreementPublisherEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LegalAgreementPublisherEnum
 vintage:
   description: |
     In the case where successive definitions of the legal agreement have been developed, the vintage identification. This is typically (but not necessarily) done by referencing the year, e.g. 2013 in the case of the ISDA 2013 Standard Credit Support Annex.

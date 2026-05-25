@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-CalendarSpread.schema.json
-name: CalendarSpread
-namespace: cdm/product/template
+name: cdm/product/template/CalendarSpread
 description: A type for defining a calendar spread feature.
 expirationDateTwo:
-  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrRelativeDate
   schema:
     required: true

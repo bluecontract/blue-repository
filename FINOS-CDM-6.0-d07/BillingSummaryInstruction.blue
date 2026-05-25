@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-BillingSummaryInstruction.schema.json
-name: BillingSummaryInstruction
-namespace: cdm/event/common
+name: cdm/event/common/BillingSummaryInstruction
 description: Specifies the instructions for creation of a billing summary.
 summaryAmountType:
   description: The account level for the billing summary.
-  type: FINOS-CDM-6.0-d07/RecordAmountTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/RecordAmountTypeEnum
   schema:
     required: true

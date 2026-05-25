@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CreditNotations.schema.json
-name: CreditNotations
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CreditNotations
 description: |
   Represents the credit rating notation higher level construct, which provides the ability to specify multiple rating notations.
 creditNotation:
   description: Specifies only one credit notation is determined.
-  type: FINOS-CDM-6.0-d07/CreditNotation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditNotation
 creditNotations:
   description: "Specifies if several credit notations exist, alongside an 'any' or 'all' or all condition."
-  type: FINOS-CDM-6.0-d07/MultipleCreditNotations
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/MultipleCreditNotations

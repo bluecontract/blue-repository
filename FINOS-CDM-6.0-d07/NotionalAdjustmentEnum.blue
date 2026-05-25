@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-NotionalAdjustmentEnum.schema.json
-name: NotionalAdjustmentEnum
-namespace: cdm/product/common
+name: cdm/product/common/NotionalAdjustmentEnum
 description: |
   The enumerated values to specify the conditions that govern the adjustment to the number of units of the return swap.
 type: Text

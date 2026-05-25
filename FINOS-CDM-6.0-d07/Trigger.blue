@@ -1,21 +1,20 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-Trigger.schema.json
-name: Trigger
-namespace: cdm/observable/event
+name: cdm/observable/event/Trigger
 description: Trigger point at which feature is effective.
 creditEvents:
-  type: FINOS-CDM-6.0-d07/CreditEvents
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/CreditEvents
 creditEventsReference:
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaCreditEvents
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/metafields/ReferenceWithMetaCreditEvents
 level:
   description: The trigger level.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceSchedule
   schema:
     minItems: 0
     maxItems: 2
 triggerTimeType:
   description: The valuation time type of knock condition.
-  type: FINOS-CDM-6.0-d07/TriggerTimeTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/TriggerTimeTypeEnum
 triggerType:
   description: The Triggering condition.
-  type: FINOS-CDM-6.0-d07/TriggerTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/TriggerTypeEnum

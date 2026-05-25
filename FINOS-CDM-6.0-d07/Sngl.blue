@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Sngl.schema.json
-name: Sngl
-namespace: cdm/regulation
+name: cdm/regulation/Sngl
 indx:
-  type: FINOS-CDM-6.0-d07/Indx
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Indx
   schema:
     required: true
 isin:

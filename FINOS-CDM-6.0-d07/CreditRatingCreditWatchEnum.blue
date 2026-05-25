@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CreditRatingCreditWatchEnum.schema.json
-name: CreditRatingCreditWatchEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CreditRatingCreditWatchEnum
 description: Represents the enumerated values to specify the credit watch rating.
 type: Text
 schema:

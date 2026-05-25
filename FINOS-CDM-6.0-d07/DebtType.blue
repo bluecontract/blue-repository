@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DebtType.schema.json
-name: DebtType
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/DebtType
 description: Specifies the type of debt instrument.
 debtClass:
   description: Specifies the characteristics of a debt instrument.
-  type: FINOS-CDM-6.0-d07/DebtClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtClassEnum
 debtEconomics:
   description: Specifies selected financial terms of a debt instrument.
   type: List
-  itemType: FINOS-CDM-6.0-d07/DebtEconomics
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtEconomics
   schema:
     minItems: 0

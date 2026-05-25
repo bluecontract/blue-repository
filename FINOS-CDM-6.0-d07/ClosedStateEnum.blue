@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ClosedStateEnum.schema.json
-name: ClosedStateEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ClosedStateEnum
 description: The enumerated values to specify what led to the contract or execution closure.
 type: Text
 schema:

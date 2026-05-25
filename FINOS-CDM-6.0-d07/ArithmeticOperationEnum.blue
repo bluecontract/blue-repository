@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-ArithmeticOperationEnum.schema.json
-name: ArithmeticOperationEnum
-namespace: cdm/base/math
+name: cdm/base/math/ArithmeticOperationEnum
 description: An arithmetic operator that can be passed to a function
 type: Text
 schema:

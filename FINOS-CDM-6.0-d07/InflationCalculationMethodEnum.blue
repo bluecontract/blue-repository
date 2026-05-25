@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-InflationCalculationMethodEnum.schema.json
-name: InflationCalculationMethodEnum
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/InflationCalculationMethodEnum
 description: |
   Indicates how to use the inflation index to calculate the payment (e.g. Ratio, Return, Spread). Added for Inflation Asset Swap
 type: Text

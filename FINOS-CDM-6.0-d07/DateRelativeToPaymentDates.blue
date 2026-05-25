@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-DateRelativeToPaymentDates.schema.json
-name: DateRelativeToPaymentDates
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/DateRelativeToPaymentDates
 description: |
   A data to:  provide the ability to point to multiple payment nodes in the document through the unbounded paymentDatesReference.
 paymentDatesReference:
   description: A set of href pointers to payment dates defined somewhere else in the document.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPaymentDates
+  itemType: FINOS-CDM-6.0-d07/cdm/product/common/schedule/metafields/ReferenceWithMetaPaymentDates
   schema:
     minItems: 1

@@ -1,46 +1,45 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-AgreementName.schema.json
-name: AgreementName
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/AgreementName
 description: Specifies the agreement name through an agreement type and optional detailed sub agreement type.
 agreementType:
   description: Specification of the legal agreement type.
-  type: FINOS-CDM-6.0-d07/LegalAgreementTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LegalAgreementTypeEnum
   schema:
     required: true
 contractualDefinitionsType:
   description: The definitions such as those published by ISDA that will define the terms of the trade.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaContractualDefinitionsEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/FieldWithMetaContractualDefinitionsEnum
   schema:
     minItems: 0
 contractualMatrix:
   description: |
     A reference to a contractual matrix of elected terms/values (such as those published by ISDA) that shall be deemed to apply to the trade. The applicable matrix is identified by reference to a name and optionally a publication date. Depending on the structure of the matrix, an additional term (specified in the matrixTerm element) may be required to further identify a subset of applicable terms/values within the matrix.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ContractualMatrix
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/ContractualMatrix
   schema:
     minItems: 0
 contractualTermsSupplement:
   description: "A contractual supplement (such as those published by ISDA) that will apply to the trade."
   type: List
-  itemType: FINOS-CDM-6.0-d07/ContractualTermsSupplement
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/ContractualTermsSupplement
   schema:
     minItems: 0
 creditSupportAgreementMarginType:
   description: specifies the type of margin for which a legal agreement is named.
-  type: FINOS-CDM-6.0-d07/CollateralMarginTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralMarginTypeEnum
 creditSupportAgreementType:
   description: Specification of the credit support agreement type.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaCreditSupportAgreementTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/FieldWithMetaCreditSupportAgreementTypeEnum
 masterAgreementType:
   description: Specification of the master agreement type.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaMasterAgreementTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/FieldWithMetaMasterAgreementTypeEnum
 masterConfirmationAnnexType:
   description: The type of master confirmation annex executed between the parties.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaMasterConfirmationAnnexTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/FieldWithMetaMasterConfirmationAnnexTypeEnum
 masterConfirmationType:
   description: The type of master confirmation executed between the parties.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaMasterConfirmationTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/FieldWithMetaMasterConfirmationTypeEnum
 otherAgreement:
   description: Definition of an agreement that is not enumerated in the CDM.
   type: Text

@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-metafields-FieldWithMetaCreditLimitTypeEnum.schema.json
-name: FieldWithMetaCreditLimitTypeEnum
-namespace: cdm/event/workflow
+name: cdm/event/workflow/FieldWithMetaCreditLimitTypeEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/CreditLimitTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/CreditLimitTypeEnum

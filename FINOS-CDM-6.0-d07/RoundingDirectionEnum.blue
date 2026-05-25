@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-RoundingDirectionEnum.schema.json
-name: RoundingDirectionEnum
-namespace: cdm/base/math
+name: cdm/base/math/RoundingDirectionEnum
 description: |
   The enumerated values to specify the rounding direction and precision to be used in the rounding of a number.  Used by function cdm.base.math.RoundToPrecision.
 type: Text

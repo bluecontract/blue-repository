@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-MarginCallInstructionType.schema.json
-name: MarginCallInstructionType
-namespace: cdm/event/common
+name: cdm/event/common/MarginCallInstructionType
 description: "Represents enumeration values to specify the call notification type, direction, specific action type."
 callType:
   description: |
     Indicates the status of the call message type, such as expected call, notification of a call or an actionable margin call.
-  type: FINOS-CDM-6.0-d07/CallTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CallTypeEnum
   schema:
     required: true
 visibilityIndicator:

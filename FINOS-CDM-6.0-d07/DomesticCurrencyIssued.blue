@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-DomesticCurrencyIssued.schema.json
-name: DomesticCurrencyIssued
-namespace: cdm/product/collateral
+name: cdm/product/collateral/DomesticCurrencyIssued
 domesticCurrencyIssued:
   description: Identifies that the Security must be denominated in the domestic currency of the issuer.
   type: Boolean

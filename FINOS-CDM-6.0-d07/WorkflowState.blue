@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-WorkflowState.schema.json
-name: WorkflowState
-namespace: cdm/event/workflow
+name: cdm/event/workflow/WorkflowState
 description: "A class to specify workflow information, which is conceptually applicable to all lifecycle events."
 comment:
   description: |
@@ -10,14 +9,14 @@ partyCustomisedWorkflow:
   description: |
     Workflow data that is specific to certain market participants and is expressed as part of the CDM in a very generic manner, which can be party-specific. The initial use cases have been derived from the CME clearing and the DTCC TIW submissions.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyCustomisedWorkflow
+  itemType: FINOS-CDM-6.0-d07/cdm/event/workflow/PartyCustomisedWorkflow
   schema:
     minItems: 0
 warehouseIdentity:
   description: "The identity of the warehouse, if any, that is executing that workflow step."
-  type: FINOS-CDM-6.0-d07/WarehouseIdentityEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/WarehouseIdentityEnum
 workflowStatus:
   description: "The workflow status indicator, e.g. Accepted, Rejected, ..."
-  type: FINOS-CDM-6.0-d07/WorkflowStatusEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/WorkflowStatusEnum
   schema:
     required: true

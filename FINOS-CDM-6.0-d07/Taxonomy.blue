@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-Taxonomy.schema.json
-name: Taxonomy
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/Taxonomy
 description: |
   Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object).
 source:
   description: |
     The source of the taxonomy that defines the rules for classifying the object. The taxonomy source is taken from a enumerated list of taxonomy names. Optional as the taxonomy source may not be provided.
-  type: FINOS-CDM-6.0-d07/TaxonomySourceEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/TaxonomySourceEnum
 val:
   description: |
     The value according to that taxonomy. Optional as it may not be possible to classify the object in that taxonomy.
-  type: FINOS-CDM-6.0-d07/TaxonomyValue
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/TaxonomyValue

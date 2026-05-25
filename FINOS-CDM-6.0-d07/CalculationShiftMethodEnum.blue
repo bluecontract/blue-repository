@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-CalculationShiftMethodEnum.schema.json
-name: CalculationShiftMethodEnum
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/CalculationShiftMethodEnum
 description: |
   the specific calculation method, e.g. lookback. This enumeration is used to represent the definitions of modular calculated rates as described in the 2021 ISDA Definitions, section 7.
 type: Text

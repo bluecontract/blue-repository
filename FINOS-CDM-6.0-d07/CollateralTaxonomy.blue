@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-CollateralTaxonomy.schema.json
-name: CollateralTaxonomy
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/CollateralTaxonomy
 description: "Specifies the collateral taxonomy, which is composed of a taxonomy value and a taxonomy source."
 taxonomySource:
   description: Specifies the taxonomy source.
-  type: FINOS-CDM-6.0-d07/TaxonomySourceEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/TaxonomySourceEnum
   schema:
     required: true
 taxonomyValue:
   description: Specifies the taxonomy value.
-  type: FINOS-CDM-6.0-d07/CollateralTaxonomyValue
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/CollateralTaxonomyValue
   schema:
     required: true

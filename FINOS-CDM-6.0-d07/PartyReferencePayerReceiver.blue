@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyReferencePayerReceiver.schema.json
-name: PartyReferencePayerReceiver
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/PartyReferencePayerReceiver
 description: Specifies the parties responsible for making and receiving payments defined by this structure.
 payerAccountReference:
   description: A reference to the account responsible for making the payments defined by this structure.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaAccount
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaAccount
 payerPartyReference:
   description: The party responsible for making the payments defined by this structure.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
   schema:
     required: true
 receiverAccountReference:
   description: A reference to the account that receives the payments corresponding to this structure.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaAccount
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaAccount
 receiverPartyReference:
   description: The party that receives the payments corresponding to this structure.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
   schema:
     required: true

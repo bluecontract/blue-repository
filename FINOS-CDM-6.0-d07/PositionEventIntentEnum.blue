@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-PositionEventIntentEnum.schema.json
-name: PositionEventIntentEnum
-namespace: cdm/event/common
+name: cdm/event/common/PositionEventIntentEnum
 type: Text
 schema:
   enum: [CorporateActionAdjustment, Decrease, Increase, OptionExercise, PositionCreation, Transfer, Valuation]

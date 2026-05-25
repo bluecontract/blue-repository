@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ConstituentWeight.schema.json
-name: ConstituentWeight
-namespace: cdm/product/template
+name: cdm/product/template/ConstituentWeight
 description: |
   A class describing the weight of each of the underlier constituent within the basket, either in absolute or relative terms.
 basketPercentage:

@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-AdjustableDate.schema.json
-name: AdjustableDate
-namespace: cdm/base/datetime
+name: cdm/base/datetime/AdjustableDate
 description: |
   A class for defining a date that shall be subject to adjustment if it would otherwise fall on a day that is not a business day in the specified business centers, together with the convention for adjusting the date.
 adjustedDate:
   description: |
     The date once the adjustment has been performed. (Note that this date may change if the business center holidays change).
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 dateAdjustments:
   description: |
     The business day convention and financial business centers used for adjusting the date if it would otherwise fall on a day that is not a business date in the specified business centers.
-  type: FINOS-CDM-6.0-d07/BusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayAdjustments
 dateAdjustmentsReference:
   description: A pointer style reference to date adjustments defined elsewhere in the document.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaBusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/metafields/ReferenceWithMetaBusinessDayAdjustments
 unadjustedDate:
   description: |
     A date subject to adjustment. While in FpML this date is required, this cardinality constraint has been relaxed as part of the CDM in order to support the FRA representation, which effective and termination dates are specified in FpML as adjusted dates.

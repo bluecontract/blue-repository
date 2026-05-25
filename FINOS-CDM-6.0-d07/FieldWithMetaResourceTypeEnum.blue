@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-metafields-FieldWithMetaResourceTypeEnum.schema.json
-name: FieldWithMetaResourceTypeEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/FieldWithMetaResourceTypeEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/ResourceTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/ResourceTypeEnum

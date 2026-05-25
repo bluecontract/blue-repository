@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-StrategyFeature.schema.json
-name: StrategyFeature
-namespace: cdm/product/template
+name: cdm/product/template/StrategyFeature
 description: A class for defining option strategy features.
 calendarSpread:
   description: Definition of the later expiration date in a calendar spread.
-  type: FINOS-CDM-6.0-d07/CalendarSpread
+  type: FINOS-CDM-6.0-d07/cdm/product/template/CalendarSpread
 strikeSpread:
   description: Definition of the upper strike in a strike spread.
-  type: FINOS-CDM-6.0-d07/StrikeSpread
+  type: FINOS-CDM-6.0-d07/cdm/product/template/StrikeSpread

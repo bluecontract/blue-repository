@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-CommodityReferenceFramework.schema.json
-name: CommodityReferenceFramework
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/CommodityReferenceFramework
 description: Specifies the type of commodity.
 capacityUnit:
   description: |
     Provides an enumerated value for a capacity unit, generally used in the context of defining quantities for commodities.
-  type: FINOS-CDM-6.0-d07/CapacityUnitEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/CapacityUnitEnum
 commodityName:
   description: |
     Identifies the commodity more specifically. Where possible, this should follow the naming convention used in the 2005 ISDA Commodity Definitions SubAnnex A, including the subCommodity and additional qualifiers, but should be limited to 256 characters or less.
@@ -14,10 +13,10 @@ commodityName:
     required: true
 currency:
   description: Defines the currency in which the commodity is priced.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 weatherUnit:
   description: |
     Provides an enumerated values for a weather unit, generally used in the context of defining quantities for commodities.
-  type: FINOS-CDM-6.0-d07/WeatherUnitEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/WeatherUnitEnum

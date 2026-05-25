@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-RegIMRoleEnum.schema.json
-name: RegIMRoleEnum
-namespace: cdm/event/common
+name: cdm/event/common/RegIMRoleEnum
 description: |
   Represents the enumeration values to specify the role of the party in relation to a regulatory initial margin call.
 type: Text

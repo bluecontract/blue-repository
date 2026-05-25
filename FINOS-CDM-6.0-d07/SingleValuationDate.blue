@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-SingleValuationDate.schema.json
-name: SingleValuationDate
-namespace: cdm/observable/asset
+name: cdm/observable/asset/SingleValuationDate
 description: A class to specify the number of business days after satisfaction of all conditions to settlement.
 businessDays:
   description: |

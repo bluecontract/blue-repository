@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-US_CFTC_PR_EligibleCollateralEnum.schema.json
-name: US_CFTC_PR_EligibleCollateralEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/US_CFTC_PR_EligibleCollateralEnum
 description: |
   Identifies US Eligible Collateral Assets classification categories based on Uncleared Margin Rules published by the CFTC and the US Prudential Regulator. Note: While the same basic categories exist in the CFTC and US Prudential Regulators margin rules, the precise definitions or application of those rules could differ between the two rules.
 type: Text

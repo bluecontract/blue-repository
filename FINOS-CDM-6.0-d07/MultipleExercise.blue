@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-MultipleExercise.schema.json
-name: MultipleExercise
-namespace: cdm/product/template
+name: cdm/product/template/MultipleExercise
 description: |
   A class defining multiple exercises. As defined in the 2000 ISDA Definitions, Section 12.4. Multiple Exercise, the buyer of the option has the right to exercise all or less than all the unexercised notional amount of the underlying swap on one or more days in the exercise period, but on any such day may not exercise less than the minimum notional amount or more than the maximum notional amount, and if an integral multiple amount is specified, the notional exercised must be equal to or, be an integral multiple of, the integral multiple amount. In FpML, MultipleExercise is built upon the PartialExercise.model.
 integralMultipleAmount:
@@ -23,4 +22,4 @@ minimumNumberOfOptions:
 notionaReference:
   description: |
     A pointer style reference to the associated notional schedule defined elsewhere in the document. This element has been made optional as part of its integration in the OptionBaseExtended, because not required for the options on securities.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaMoney
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaMoney

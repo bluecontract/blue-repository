@@ -1,38 +1,37 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-Party.schema.json
-name: Party
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/Party
 description: |
   A class to specify a party, without a qualification as to whether this party is a legal entity or a natural person, although the model provides the ability to associate a person (or set of persons) to a party, which use case would imply that such party would be a legal entity (even if not formally specified as such).
 account:
   description: |
     The account that might be associated with the party. At most one account can be specified, as it is expected that this information is used in the context of a contract or legal document where only one account per party can be associated with such object.
-  type: FINOS-CDM-6.0-d07/Account
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Account
 businessUnit:
   description: |
     Optional organization unit information used to describe the organization units (e.g. trading desks) involved in a transaction or business process, incl. the contact information (when relevant).
   type: List
-  itemType: FINOS-CDM-6.0-d07/BusinessUnit
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/BusinessUnit
   schema:
     minItems: 0
 contactInformation:
   description: |
     The postal/street address, telephone number, email address and/or web page. If the contact information is specific to the associated business unit(s) or person (s), it should be associated with those.
-  type: FINOS-CDM-6.0-d07/ContactInformation
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/ContactInformation
 partyId:
   description: "The identifier associated with a party, e.g. the 20 digits LEI code."
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyIdentifier
   schema:
     minItems: 1
 person:
   description: "The person(s) who might be associated with the party as part of the execution, contract or legal document."
   type: List
-  itemType: FINOS-CDM-6.0-d07/NaturalPerson
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/NaturalPerson
   schema:
     minItems: 0
 personRole:
   description: "The role of the person(s)"
   type: List
-  itemType: FINOS-CDM-6.0-d07/NaturalPersonRole
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/NaturalPersonRole
   schema:
     minItems: 0

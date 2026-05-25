@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-ObservationPeriodDatesEnum.schema.json
-name: ObservationPeriodDatesEnum
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/ObservationPeriodDatesEnum
 description: |
   The enumerated values to specify whether rate calculations occur relative to the first or last day of a calculation period. Done in uppercase due to a bug in code generation. This enumeration is used to represent the definitions of modular calculated rates as described in the 2021 ISDA Definitions, section 7.
 type: Text

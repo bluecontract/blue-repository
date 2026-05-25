@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExtensionEvent.schema.json
-name: ExtensionEvent
-namespace: cdm/product/template
+name: cdm/product/template/ExtensionEvent
 description: |
   A data to:  define the adjusted dates associated with an individual extension event.
 adjustedExerciseDate:

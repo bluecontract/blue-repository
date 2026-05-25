@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CreditRatingAgencyEnum.schema.json
-name: CreditRatingAgencyEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CreditRatingAgencyEnum
 description: Represents the enumerated values to specify the rating agencies.
 type: Text
 schema:

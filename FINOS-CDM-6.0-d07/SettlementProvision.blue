@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-SettlementProvision.schema.json
-name: SettlementProvision
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/SettlementProvision
 description: |
   Defines parameters that regulate a settlement, for instance whether this settlement should be netted with other ones or broken-down into smaller amounts.
 shapingProvisions:
   description: "Defines the parameters that are necessary to 'shape' a settlement, i.e. break it down into smaller amounts."
-  type: FINOS-CDM-6.0-d07/ShapingProvision
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/ShapingProvision

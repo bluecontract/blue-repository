@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterAgreementSchedule.schema.json
-name: MasterAgreementSchedule
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/MasterAgreementSchedule
 description: The set of elections which specify a Master Agreement.
 clause:
   description: |
     Clauses that have had elections made against them in this Master Agreement. There must be at least one clause defined in the agreement.
   type: List
-  itemType: FINOS-CDM-6.0-d07/MasterAgreementClause
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/MasterAgreementClause
   schema:
     minItems: 1

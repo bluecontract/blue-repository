@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ContractualDefinitionsEnum.schema.json
-name: ContractualDefinitionsEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ContractualDefinitionsEnum
 description: The enumerated values to specify a set of standard contract definitions relevant to the transaction.
 type: Text
 schema:

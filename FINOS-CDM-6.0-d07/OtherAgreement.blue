@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-OtherAgreement.schema.json
-name: OtherAgreement
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/OtherAgreement
 description: A class for defining an agreement executed between parties.
 date:
   description: The date on which the agreement was signed.
   type: Text
 identifier:
   description: An identifier that has been created to identify the agreement.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 otherAgreementType:
   description: |
     The agreement executed between the parties and intended to govern product-specific derivatives transactions between those parties.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 version:
   description: The version of the agreement.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString

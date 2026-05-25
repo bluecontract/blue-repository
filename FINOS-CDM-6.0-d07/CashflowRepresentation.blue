@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-CashflowRepresentation.schema.json
-name: CashflowRepresentation
-namespace: cdm/product/asset
+name: cdm/product/asset/CashflowRepresentation
 description: |
   A data defining:  the cashflow representation of a swap trade.
 cashflowsMatchParameters:
@@ -13,6 +12,6 @@ paymentCalculationPeriod:
   description: |
     The adjusted payment date and associated calculation period parameters required to calculate the actual or projected payment amount. A list of payment calculation period elements may be ordered in the document by ascending adjusted payment date. An FpML document containing an unordered list of payment calculation periods is still regarded as a conformant document.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PaymentCalculationPeriod
+  itemType: FINOS-CDM-6.0-d07/cdm/product/common/schedule/PaymentCalculationPeriod
   schema:
     minItems: 0

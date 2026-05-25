@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-CustomisableOffset.schema.json
-name: CustomisableOffset
-namespace: cdm/base/datetime
+name: cdm/base/datetime/CustomisableOffset
 description: |
   A class to specify an offset either as a normalized [multiplier, period, dayType] or as a custom provision of type string.
 customProvision:
   type: Text
 offset:
-  type: FINOS-CDM-6.0-d07/Offset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Offset

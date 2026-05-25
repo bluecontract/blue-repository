@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterAgreementTypeEnum.schema.json
-name: MasterAgreementTypeEnum
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/MasterAgreementTypeEnum
 description: The enumerated values to specify the type of the master agreement governing the transaction.
 type: Text
 schema:

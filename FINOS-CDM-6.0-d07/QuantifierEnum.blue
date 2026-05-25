@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-QuantifierEnum.schema.json
-name: QuantifierEnum
-namespace: cdm/base/math
+name: cdm/base/math/QuantifierEnum
 description: "Represents the enumerated values to specify a logical quantification, i.e. either All or Any."
 type: Text
 schema:

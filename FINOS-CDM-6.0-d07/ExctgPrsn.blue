@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-ExctgPrsn.schema.json
-name: ExctgPrsn
-namespace: cdm/regulation
+name: cdm/regulation/ExctgPrsn
 prsn:
-  type: FINOS-CDM-6.0-d07/Prsn
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Prsn
   schema:
     required: true

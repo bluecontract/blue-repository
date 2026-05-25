@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-NonNegativeStep.schema.json
-name: NonNegativeStep
-namespace: cdm/base/math
+name: cdm/base/math/NonNegativeStep
 description: |
   A class defining a step date and non-negative step value pair. This step definitions are used to define varying rate or amount schedules, e.g. a notional amortisation or a step-up coupon schedule.
 stepDate:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-AveragingInOutEnum.schema.json
-name: AveragingInOutEnum
-namespace: cdm/product/template
+name: cdm/product/template/AveragingInOutEnum
 description: The enumerated values to specify the type of averaging used in an Asian option.
 type: Text
 schema:

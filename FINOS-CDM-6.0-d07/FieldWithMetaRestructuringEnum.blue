@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-metafields-FieldWithMetaRestructuringEnum.schema.json
-name: FieldWithMetaRestructuringEnum
-namespace: cdm/observable/event
+name: cdm/observable/event/FieldWithMetaRestructuringEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/RestructuringEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/RestructuringEnum

@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-TransferState.schema.json
-name: TransferState
-namespace: cdm/event/common
+name: cdm/event/common/TransferState
 description: |
   Defines the fundamental financial information associated with a Transfer event. Each TransferState specifies where a Transfer is in its life-cycle. TransferState is a root type and as such, can be created independently to any other CDM data type, but can also be used as part of the CDM Event Model.
 transfer:
   description: Represents the Transfer that has been effected by a business or life-cycle event.
-  type: FINOS-CDM-6.0-d07/Transfer
+  type: FINOS-CDM-6.0-d07/cdm/event/common/Transfer
   schema:
     required: true
 transferStatus:
   description: Represents the State of the Transfer through its life-cycle.
-  type: FINOS-CDM-6.0-d07/TransferStatusEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/TransferStatusEnum

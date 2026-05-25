@@ -1,38 +1,37 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-TradeState.schema.json
-name: TradeState
-namespace: cdm/event/common
+name: cdm/event/common/TradeState
 description: |
   Defines the fundamental financial information that can be changed by a Primitive Event and by extension any business or life-cycle event. Each TradeState specifies where a Trade is in its life-cycle. TradeState is a root type and as such, can be created independently to any other CDM data type, but can also be used as part of the CDM Event Model.
 observationHistory:
   description: |
     Represents the observed events related to a particular product or process, such as credit events or corporate actions.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ObservationEvent
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/ObservationEvent
   schema:
     minItems: 0
 resetHistory:
   description: |
     Represents the updated Trade attributes which can change as the result of a reset event. Only the changed values are captured, leaving the remaining data attributes empty. See Create_Reset function for further details on how TradeState is used in the Reset event. The TradeState data type is used to maintain backwards compatibility with the current Reset mechanism.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Reset
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/Reset
   schema:
     minItems: 0
 state:
   description: Represents the State of the Trade through its life-cycle.
-  type: FINOS-CDM-6.0-d07/State
+  type: FINOS-CDM-6.0-d07/cdm/event/common/State
 trade:
   description: Represents the Trade that has been effected by a business or life-cycle event.
-  type: FINOS-CDM-6.0-d07/Trade
+  type: FINOS-CDM-6.0-d07/cdm/event/common/Trade
   schema:
     required: true
 transferHistory:
   description: Represents the updated Trade attributes which can change as the result of a transfer event.
   type: List
-  itemType: FINOS-CDM-6.0-d07/TransferState
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/TransferState
   schema:
     minItems: 0
 valuationHistory:
   type: List
-  itemType: FINOS-CDM-6.0-d07/Valuation
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/Valuation
   schema:
     minItems: 0

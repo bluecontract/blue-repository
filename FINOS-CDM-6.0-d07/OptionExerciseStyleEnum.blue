@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionExerciseStyleEnum.schema.json
-name: OptionExerciseStyleEnum
-namespace: cdm/product/template
+name: cdm/product/template/OptionExerciseStyleEnum
 description: "The enumerated values to specify the option exercise style. i.e., European, Bermuda or American."
 type: Text
 schema:

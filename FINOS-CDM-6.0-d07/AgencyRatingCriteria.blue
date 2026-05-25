@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AgencyRatingCriteria.schema.json
-name: AgencyRatingCriteria
-namespace: cdm/product/collateral
+name: cdm/product/collateral/AgencyRatingCriteria
 description: Represents a class to specify a credit notation.
 boundary:
   description: Indicates the boundary of a credit agency rating i.e minimum or maximum.
-  type: FINOS-CDM-6.0-d07/CreditNotationBoundaryEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditNotationBoundaryEnum
 creditNotation:
   description: Indicates the agency rating criteria specified for the asset or issuer.
-  type: FINOS-CDM-6.0-d07/CreditNotation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditNotation
   schema:
     required: true
 mismatchResolution:
   description: |
     Indicator for options to be used if several agency ratings (>1) are specified and its necessary to identify specific charateristics. i.e (lowest or highest).
-  type: FINOS-CDM-6.0-d07/CreditNotationMismatchResolutionEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditNotationMismatchResolutionEnum
 referenceAgency:
   description: identifies the dominant reference agency if there is a missmatch and several reference agencies exsist.
-  type: FINOS-CDM-6.0-d07/CreditRatingAgencyEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditRatingAgencyEnum

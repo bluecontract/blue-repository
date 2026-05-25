@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-SettledEntityMatrix.schema.json
-name: SettledEntityMatrix
-namespace: cdm/product/asset
+name: cdm/product/asset/SettledEntityMatrix
 description: A class to specify the Relevant Settled Entity Matrix.
 matrixSource:
   description: Relevant settled entity matrix source.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaSettledEntityMatrixSourceEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/FieldWithMetaSettledEntityMatrixSourceEnum
   schema:
     required: true
 publicationDate:

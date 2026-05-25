@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-QuoteBasisEnum.schema.json
-name: QuoteBasisEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/QuoteBasisEnum
 description: The enumerated values to specify how an exchange rate is quoted.
 type: Text
 schema:

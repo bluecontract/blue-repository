@@ -1,27 +1,26 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-Quantity.schema.json
-name: Quantity
-namespace: cdm/base/math
+name: cdm/base/math/Quantity
 description: |
   Specifies a quantity as a single value to be associated to a financial product, for example a transfer amount resulting from a trade. This data type extends QuantitySchedule and requires that only the single amount value exists.
 datedValue:
   description: |
     A schedule of step date and value pairs. On each step date the associated step value becomes effective. The step dates are used to order the steps by ascending order. This attribute is optional so the data type may be used to define a schedule with a single value.
   type: List
-  itemType: FINOS-CDM-6.0-d07/DatedValue
+  itemType: FINOS-CDM-6.0-d07/cdm/base/math/DatedValue
   schema:
     minItems: 0
 frequency:
   description: |
     Defines the frequency to be used when defining a quantity. For example a quantity may be specified as a number of barrels of oil per day, which needs multiplying by the number of days in the relevant period to get the total quantity as a number of barrels.
-  type: FINOS-CDM-6.0-d07/Frequency
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Frequency
 multiplier:
   description: |
     Defines an optional number that the quantity should be multiplied by to derive a total quantity. This number is associated to a unit. For example in the case of the Coal (API2) CIF ARA (ARGUS-McCloskey) Futures Contract on the CME, where the unit would be contracts, the multiplier value would 1,000 and the mulitiplier unit would be 1,000 MT (Metric Tons).
-  type: FINOS-CDM-6.0-d07/Measure
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Measure
 unit:
   description: |
     Qualifies the unit by which the amount is measured. Optional because a measure may be unit-less (e.g. when representing a ratio between amounts in the same unit).
-  type: FINOS-CDM-6.0-d07/UnitType
+  type: FINOS-CDM-6.0-d07/cdm/base/math/UnitType
 val:
   description: |
     Specifies the value of the measure as a number. Optional because in a measure vector or schedule, this single value may be omitted.

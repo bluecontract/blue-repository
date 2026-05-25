@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-ShapingProvision.schema.json
-name: ShapingProvision
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/ShapingProvision
 description: |
   Defines the applicable settlement limits that may require a settlement to be 'shaped', i.e. broken-down into smaller amounts.
 shapeSchedule:
   description: Defines applicable settlement limits in each currency.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Money
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
   schema:
     minItems: 1

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-QuantityChangeDirectionEnum.schema.json
-name: QuantityChangeDirectionEnum
-namespace: cdm/base/math
+name: cdm/base/math/QuantityChangeDirectionEnum
 description: |
   Specifies whether a quantity change is an increase, a decrease or a replacement, whereby the quantity is always specified as a positive number.
 type: Text

@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyRole.schema.json
-name: PartyRole
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/PartyRole
 description: |
   A class to specify the role(s) that party(ies) may have in relation to the execution, contract or other legal agreement.
 ownershipPartyReference:
   description: |
     A reference to the party that has ownership of this party role information. FpML specifies that For shared trade information, this attribute will reference the originator of the data (for example, an execution facility or clearing house).
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
 partyReference:
   description: A reference to the party to which the role refers to.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
   schema:
     required: true
 role:
   description: The party role.
-  type: FINOS-CDM-6.0-d07/PartyRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRoleEnum
   schema:
     required: true

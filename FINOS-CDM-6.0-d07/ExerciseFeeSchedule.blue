@@ -1,31 +1,30 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExerciseFeeSchedule.schema.json
-name: ExerciseFeeSchedule
-namespace: cdm/product/template
+name: cdm/product/template/ExerciseFeeSchedule
 description: |
   A class to define a fee or schedule of fees to be payable on the exercise of an option. This fee may be defined as an amount or a percentage of the notional exercised. As a difference with FpML, it extends the BuyerSeller class.
 feeAmountSchedule:
   description: |
     The exercise fee amount schedule. The fees are expressed as currency amounts. The currency of the fee is assumed to be that of the notional schedule referenced.
-  type: FINOS-CDM-6.0-d07/AmountSchedule
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/AmountSchedule
 feePaymentDate:
   description: "The date on which exercise fee(s) will be paid. It is specified as a relative date."
-  type: FINOS-CDM-6.0-d07/RelativeDateOffset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/RelativeDateOffset
   schema:
     required: true
 feeRateSchedule:
   description: |
     The exercise free rate schedule. The fees are expressed as percentage rates of the notional being exercised. The currency of the fee is assumed to be that of the notional schedule referenced.
-  type: FINOS-CDM-6.0-d07/Schedule
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Schedule
 notionalReference:
   description: A pointer style reference to the associated notional schedule defined elsewhere in the document.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaMoney
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaMoney
   schema:
     required: true
 payer:
   description: |
     Specifies the counterparty responsible for making the payments defined by this structure.  The party is one of the two principal parties to the transaction.
-  type: FINOS-CDM-6.0-d07/CounterpartyRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/CounterpartyRoleEnum
 receiver:
   description: |
     Specifies the party that receives the payments corresponding to this structure.  The party is one of the two counterparties to the transaction.
-  type: FINOS-CDM-6.0-d07/CounterpartyRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/CounterpartyRoleEnum

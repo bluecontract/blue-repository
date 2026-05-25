@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ConcentrationLimit.schema.json
-name: ConcentrationLimit
-namespace: cdm/product/collateral
+name: cdm/product/collateral/ConcentrationLimit
 description: Represents a class to describe concentration limits that may be applicable to eligible collateral criteria.
 concentrationLimitCriteria:
   description: Specifies a set of criteria to describe the assets that the concentration limits apply to.
-  type: FINOS-CDM-6.0-d07/ConcentrationLimitCriteria
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/ConcentrationLimitCriteria
 percentageLimit:
   description: "Specifies the perecentage of collateral limit represented as a decimal number - example 25% is 0.25."
-  type: FINOS-CDM-6.0-d07/NumberRange
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NumberRange
 valueLimit:
   description: Specifies the value of collateral limit represented as a range.
-  type: FINOS-CDM-6.0-d07/MoneyRange
+  type: FINOS-CDM-6.0-d07/cdm/base/math/MoneyRange

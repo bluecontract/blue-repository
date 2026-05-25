@@ -1,4 +1,3 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-csa-CreditSupportAgreementElections.schema.json
-name: CreditSupportAgreementElections
-namespace: cdm/legaldocumentation/csa
+name: cdm/legaldocumentation/csa/CreditSupportAgreementElections
 description: The set of elections which specify a Credit Support Annex or Deed.

@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-FixedRateSpecification.schema.json
-name: FixedRateSpecification
-namespace: cdm/product/asset
+name: cdm/product/asset/FixedRateSpecification
 description: Type defining the specification for a fixed rate.
 rateSchedule:
   description: |
     The fixed rate or fixed rate schedule expressed as explicit fixed rates and dates. In the case of a schedule, the step dates may be subject to adjustment in accordance with any adjustments specified in calculationPeriodDatesAdjustments.
-  type: FINOS-CDM-6.0-d07/RateSchedule
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/RateSchedule

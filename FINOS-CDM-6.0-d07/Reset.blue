@@ -1,17 +1,16 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-Reset.schema.json
-name: Reset
-namespace: cdm/event/common
+name: cdm/event/common/Reset
 description: |
   Defines the reset value or fixing value produced in cashflow calculations, during the life-cycle of a financial instrument. The reset process defined in Create_Reset function joins product definition details with observations to compute the reset value.
 averagingMethodology:
   description: |
     Identifies the aggregation method to use in the case where multiple observations are used to compute the reset value and the method is not defined in a payout.
-  type: FINOS-CDM-6.0-d07/AveragingCalculation
+  type: FINOS-CDM-6.0-d07/cdm/product/template/AveragingCalculation
 observations:
   description: |
     Represents an audit of the observations used to produce the reset value. If multiple observations were necessary to produce the reset value, the aggregation method should be defined on the payout.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaObservation
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/event/metafields/ReferenceWithMetaObservation
   schema:
     minItems: 1
 rateRecordDate:
@@ -25,6 +24,6 @@ resetDate:
     required: true
 resetValue:
   description: "Specifies the reset or fixing value. The fixing value could be a cash price, interest rate, or other value."
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price
   schema:
     required: true

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexStyleEnum.schema.json
-name: FloatingRateIndexStyleEnum
-namespace: cdm/observable/asset/fro
+name: cdm/observable/asset/fro/FloatingRateIndexStyleEnum
 description: Second level ISDA FRO category.
 type: Text
 schema:

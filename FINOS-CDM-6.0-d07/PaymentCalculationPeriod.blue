@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-PaymentCalculationPeriod.schema.json
-name: PaymentCalculationPeriod
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/PaymentCalculationPeriod
 description: |
   A data defining:  the adjusted payment date and associated calculation period parameters required to calculate the actual or projected payment amount. This data forms:  part of the cashflow representation of a swap stream.
 adjustedPaymentDate:
@@ -11,7 +10,7 @@ calculationPeriod:
   description: |
     The parameters used in the calculation of a fixed or floating rate calculation period amount. A list of calculation period elements may be ordered in the document by ascending start date. An FpML document which contains an unordered list of calculation periods is still regarded as a conformant document.
   type: List
-  itemType: FINOS-CDM-6.0-d07/CalculationPeriod
+  itemType: FINOS-CDM-6.0-d07/cdm/product/common/schedule/CalculationPeriod
   schema:
     minItems: 1
 discountFactor:
@@ -19,13 +18,13 @@ discountFactor:
   type: Double
 fixedPaymentAmount:
   description: A known fixed payment amount.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 forecastPaymentAmount:
   description: A monetary amount representing the forecast of the future value of the payment.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 presentValueAmount:
   description: A monetary amount representing the present value of the forecast payment.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 unadjustedPaymentDate:
   description: The unadjusted payment date.
   type: Text

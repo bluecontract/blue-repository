@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-metafields-FieldWithMetaCommodityReferencePriceEnum.schema.json
-name: FieldWithMetaCommodityReferencePriceEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FieldWithMetaCommodityReferencePriceEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/CommodityReferencePriceEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CommodityReferencePriceEnum

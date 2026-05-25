@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DebtInterestEnum.schema.json
-name: DebtInterestEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/DebtInterestEnum
 description: Represents an enumeration list that specifies the general rule for periodic interest rate payment.
 type: Text
 schema:

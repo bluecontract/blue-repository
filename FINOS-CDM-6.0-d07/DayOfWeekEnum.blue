@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-DayOfWeekEnum.schema.json
-name: DayOfWeekEnum
-namespace: cdm/base/datetime
+name: cdm/base/datetime/DayOfWeekEnum
 description: The enumerated values to specify a day of the seven-day week.
 type: Text
 schema:

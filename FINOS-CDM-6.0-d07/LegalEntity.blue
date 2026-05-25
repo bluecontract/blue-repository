@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-LegalEntity.schema.json
-name: LegalEntity
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/LegalEntity
 description: "A class to specify a legal entity, with a required name and an optional entity identifier (such as the LEI)."
 entityId:
   description: "A legal entity identifier (e.g. RED entity code)."
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 0

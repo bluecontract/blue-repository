@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-Tranche.schema.json
-name: Tranche
-namespace: cdm/product/asset
+name: cdm/product/asset/Tranche
 description: The class to represent a CDS Tranche.
 attachmentPoint:
   description: |

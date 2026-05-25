@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-metafields-FieldWithMetaTimeZone.schema.json
-name: FieldWithMetaTimeZone
-namespace: cdm/base/datetime
+name: cdm/base/datetime/FieldWithMetaTimeZone
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/TimeZone
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/TimeZone

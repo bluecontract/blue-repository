@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-metafields-ReferenceWithMetaObservation.schema.json
-name: ReferenceWithMetaObservation
-namespace: cdm/observable/event/metafields
+name: cdm/observable/event/metafields/ReferenceWithMetaObservation
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

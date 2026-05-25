@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-AveragingPeriod.schema.json
-name: AveragingPeriod
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/AveragingPeriod
 description: Period over which an average value is taken.
 averagingDateTimes:
   description: An unweighted list of averaging observation date and times.
-  type: FINOS-CDM-6.0-d07/DateTimeList
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DateTimeList
 averagingObservations:
   description: A weighted list of averaging observation date and times.
-  type: FINOS-CDM-6.0-d07/AveragingObservationList
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/AveragingObservationList
 marketDisruption:
   description: The market disruption event as defined by ISDA 2002 Definitions.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaMarketDisruptionEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/FieldWithMetaMarketDisruptionEnum
 schedule:
   description: A schedule for generating averaging observation dates.
   type: List
-  itemType: FINOS-CDM-6.0-d07/AveragingSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/base/datetime/AveragingSchedule
   schema:
     minItems: 0

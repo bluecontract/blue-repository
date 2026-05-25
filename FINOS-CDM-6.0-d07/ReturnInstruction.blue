@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ReturnInstruction.schema.json
-name: ReturnInstruction
-namespace: cdm/event/common
+name: cdm/event/common/ReturnInstruction
 description: Specifies the information required to create the return of a Security Finance Transaction.
 quantity:
   description: Specifies the quantity of shares and cash to be returned in a partial return event.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Quantity
+  itemType: FINOS-CDM-6.0-d07/cdm/base/math/Quantity
   schema:
     minItems: 1

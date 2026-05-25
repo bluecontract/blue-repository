@@ -1,27 +1,26 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ExerciseInstruction.schema.json
-name: ExerciseInstruction
-namespace: cdm/event/common
+name: cdm/event/common/ExerciseInstruction
 description: |
   Specifies the information required to communicate the choices made by the exercising party, in a financial product endowing the party with at least one option.
 exerciseDate:
   description: |
     Specifies the date on which an option contained within the financial product would be exercised. The date may be omitted if the contractual product allows for only a single date of exercise (European exercise).
-  type: FINOS-CDM-6.0-d07/AdjustableOrAdjustedDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrAdjustedDate
 exerciseOption:
   description: Specifies the Option Payout being exercised on the trade.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaOptionPayout
+  type: FINOS-CDM-6.0-d07/cdm/product/template/metafields/ReferenceWithMetaOptionPayout
 exerciseQuantity:
   description: "Contains instructions for exercising the option including a quantity change, and optionally a transfer."
-  type: FINOS-CDM-6.0-d07/PrimitiveInstruction
+  type: FINOS-CDM-6.0-d07/cdm/event/common/PrimitiveInstruction
   schema:
     required: true
 exerciseTime:
   description: |
     Specifies the time at which an option contained within the financial product woulld be exercised. The time may be omitted if the contractual product allows for only a single time of exercise (European exercise).
-  type: FINOS-CDM-6.0-d07/BusinessCenterTime
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenterTime
 replacementTradeIdentifier:
   description: Specifies the trade identifier to apply to the replacement trade for physical exercise.
   type: List
-  itemType: FINOS-CDM-6.0-d07/TradeIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/TradeIdentifier
   schema:
     minItems: 0

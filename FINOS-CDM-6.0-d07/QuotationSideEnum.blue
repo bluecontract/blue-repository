@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-QuotationSideEnum.schema.json
-name: QuotationSideEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/QuotationSideEnum
 description: The enumerated values to specify the side from which perspective a value is quoted.
 type: Text
 schema:

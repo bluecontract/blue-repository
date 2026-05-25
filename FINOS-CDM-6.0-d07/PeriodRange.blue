@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-PeriodRange.schema.json
-name: PeriodRange
-namespace: cdm/base/datetime
+name: cdm/base/datetime/PeriodRange
 description: "Indicates The period range defined as either a lower and upper period bound, or both."
 lowerBound:
   description: "Specifies the lower bound of a period range, e.g. greater than or equal to 5Y."
-  type: FINOS-CDM-6.0-d07/PeriodBound
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/PeriodBound
 upperBound:
   description: "Specifies the upper bound of a period range, e.g. less than to 10Y."
-  type: FINOS-CDM-6.0-d07/PeriodBound
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/PeriodBound

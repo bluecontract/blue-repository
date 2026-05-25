@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-BillingInstruction.schema.json
-name: BillingInstruction
-namespace: cdm/event/common
+name: cdm/event/common/BillingInstruction
 description: Specifies the instructions for creation of a Security Lending billing invoice.
 billingEndDate:
   description: The ending date of the period described by this invoice
@@ -10,7 +9,7 @@ billingEndDate:
 billingRecordInstruction:
   description: Instructions for creating the billing records contained within the invoice
   type: List
-  itemType: FINOS-CDM-6.0-d07/BillingRecordInstruction
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/BillingRecordInstruction
   schema:
     minItems: 1
 billingStartDate:
@@ -21,16 +20,16 @@ billingStartDate:
 billingSummary:
   description: The billing summaries contained within the invoice
   type: List
-  itemType: FINOS-CDM-6.0-d07/BillingSummaryInstruction
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/BillingSummaryInstruction
   schema:
     minItems: 0
 receivingParty:
   description: The party receiving the invoice
-  type: FINOS-CDM-6.0-d07/Party
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Party
   schema:
     required: true
 sendingParty:
   description: The party issuing the invoice
-  type: FINOS-CDM-6.0-d07/Party
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Party
   schema:
     required: true

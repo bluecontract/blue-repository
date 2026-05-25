@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-AddressForNotices.schema.json
-name: AddressForNotices
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/AddressForNotices
 description: Specification of the address and other details for notices.
 additionalNotices:
   description: |
     The optional specification of additional information when a party requires notices to be delivered to more than one address.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyContactInformation
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyContactInformation
   schema:
     minItems: 0
 primaryNotices:
   description: Specification of primary notice details
-  type: FINOS-CDM-6.0-d07/ContactElection
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/ContactElection
   schema:
     required: true

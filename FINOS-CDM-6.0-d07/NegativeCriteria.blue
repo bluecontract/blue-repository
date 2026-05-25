@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-NegativeCriteria.schema.json
-name: NegativeCriteria
-namespace: cdm/product/collateral
+name: cdm/product/collateral/NegativeCriteria
 description: Used to apply a NOT logic condition to a single Collateral Criteria.
 negativeCriteria:
-  type: FINOS-CDM-6.0-d07/CollateralCriteria
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralCriteria
   schema:
     required: true

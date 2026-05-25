@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PartyIdentifier.schema.json
-name: PartyIdentifier
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/PartyIdentifier
 description: |
   Comprises an identifier and a source. The associated metadata key denotes the ability to associate a hash value to the PartyIdentifier instantiations for the purpose of model cross-referencing, in support of functionality such as the event effect and the lineage.
 identifier:
   description: |
     Provides an identifier associated with a party. The identifier is unique within the public source specified in the source attribute.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 identifierType:
   description: Defines the source of the identifier.
-  type: FINOS-CDM-6.0-d07/PartyIdentifierTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyIdentifierTypeEnum

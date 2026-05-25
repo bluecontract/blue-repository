@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CsaTypeEnum.schema.json
-name: CsaTypeEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CsaTypeEnum
 description: |
   How is the Creadit Support Annex defined for this transaction as defined in the 2021 ISDA Definitions, section 18.2.1
 type: Text

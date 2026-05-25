@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-Workflow.schema.json
-name: Workflow
-namespace: cdm/event/workflow
+name: cdm/event/workflow/Workflow
 description: A collection of workflow steps which together makeup an entire workflow sequence.
 steps:
   type: List
-  itemType: FINOS-CDM-6.0-d07/WorkflowStep
+  itemType: FINOS-CDM-6.0-d07/cdm/event/workflow/WorkflowStep
   schema:
     minItems: 1

@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-Instrument.schema.json
-name: Instrument
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/Instrument
 description: A type of Asset that is issued by one party to one or more others.
 ListedDerivative:
   description: A securitized derivative on another asset that is created by an exchange.
-  type: FINOS-CDM-6.0-d07/ListedDerivative
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/ListedDerivative
 Loan:
   description: An Asset that represents a loan or borrow obligation.
-  type: FINOS-CDM-6.0-d07/Loan
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Loan
 Security:
   description: An Asset that is issued by a party to be held by or transferred to others.
-  type: FINOS-CDM-6.0-d07/Security
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Security

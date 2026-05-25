@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-metafields-ReferenceWithMetaParty.schema.json
-name: ReferenceWithMetaParty
-namespace: cdm/base/staticdata/party/metafields
+name: cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

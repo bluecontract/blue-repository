@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DebtEconomics.schema.json
-name: DebtEconomics
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/DebtEconomics
 description: Specifies selected economics of a debt instrument.
 debtInterest:
   description: Specifies the general rule for periodic interest rate payment.
-  type: FINOS-CDM-6.0-d07/DebtInterestEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtInterestEnum
 debtPrincipal:
   description: Specifies the general rule for repayment of principal.
-  type: FINOS-CDM-6.0-d07/DebtPrincipalEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtPrincipalEnum
 debtSeniority:
   description: |
     Specifies the order of repayment in the event of a sale or bankruptcy of the issuer or a related party (eg guarantor).
-  type: FINOS-CDM-6.0-d07/DebtSeniorityEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtSeniorityEnum

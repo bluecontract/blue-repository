@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-WarehouseIdentityEnum.schema.json
-name: WarehouseIdentityEnum
-namespace: cdm/event/workflow
+name: cdm/event/workflow/WarehouseIdentityEnum
 type: Text
 schema:
   enum: [DTCC_TIW_Gold]

@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-identifier-metafields-FieldWithMetaIdentifier.schema.json
-name: FieldWithMetaIdentifier
-namespace: cdm/base/staticdata/identifier
+name: cdm/base/staticdata/identifier/FieldWithMetaIdentifier
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/Identifier
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/Identifier

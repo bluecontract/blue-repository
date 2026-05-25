@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-PassThrough.schema.json
-name: PassThrough
-namespace: cdm/product/template
+name: cdm/product/template/PassThrough
 description: Type which contains pass through payments.
 passThroughItem:
   description: One to many pass through payment items.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PassThroughItem
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/PassThroughItem
   schema:
     minItems: 1

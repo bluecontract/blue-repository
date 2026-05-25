@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-ContractBase.schema.json
-name: ContractBase
-namespace: cdm/event/position
+name: cdm/event/position/ContractBase
 description: Encapsulates data features common to trade and position.
 collateral:
   description: Represents the collateral obligations of a party.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaCollateral
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/metafields/ReferenceWithMetaCollateral
 contractDetails:
   description: Represents information specific to trades or positions involving contractual products.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaContractDetails
+  type: FINOS-CDM-6.0-d07/cdm/event/common/metafields/ReferenceWithMetaContractDetails
 executionDetails:
   description: Defines specific attributes that relate to trade or position executions.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaExecutionDetails
+  type: FINOS-CDM-6.0-d07/cdm/event/common/metafields/ReferenceWithMetaExecutionDetails

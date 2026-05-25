@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-RepoDurationEnum.schema.json
-name: RepoDurationEnum
-namespace: cdm/product/template
+name: cdm/product/template/RepoDurationEnum
 description: |
   A duration code for a Repo (or Securities Lending) transaction. There are many business and market rules that are derived from the duration of the transaction.
 type: Text

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-ReturnTermsBase.schema.json
-name: ReturnTermsBase
-namespace: cdm/product/asset
+name: cdm/product/asset/ReturnTermsBase
 description: "Contains all common elements in variance, volatility and correlation return Terms."
 annualizationFactor:
   description: |
@@ -8,10 +7,10 @@ annualizationFactor:
   type: Integer
 dividendApplicability:
   description: The parameters which define whether dividends are applicable
-  type: FINOS-CDM-6.0-d07/DividendApplicability
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/DividendApplicability
 equityUnderlierProvisions:
   description: Contains Equity Underlyer provisions regarding jurisdiction and fallbacks.
-  type: FINOS-CDM-6.0-d07/EquityUnderlierProvisions
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/EquityUnderlierProvisions
 expectedN:
   description: Expected number of trading days.
   type: Integer
@@ -23,7 +22,7 @@ initialLevel:
   type: Double
 initialLevelSource:
   description: "In this context, this is AgreedInitialPrice - a specified Initial Index Level."
-  type: FINOS-CDM-6.0-d07/DeterminationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/common/DeterminationMethodEnum
 meanAdjustment:
   description: |
     Specifies whether Mean Adjustment is applicable or not in the calculation of the Realized Volatility, Variance or Correlation
@@ -37,6 +36,6 @@ sharePriceDividendAdjustment:
   type: Boolean
 valuationTerms:
   description: Contains all non-date valuation information.
-  type: FINOS-CDM-6.0-d07/ValuationTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/ValuationTerms
   schema:
     required: true

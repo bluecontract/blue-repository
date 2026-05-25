@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-metafields-FieldWithMetaPersonIdentifier.schema.json
-name: FieldWithMetaPersonIdentifier
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/FieldWithMetaPersonIdentifier
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/PersonIdentifier
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PersonIdentifier

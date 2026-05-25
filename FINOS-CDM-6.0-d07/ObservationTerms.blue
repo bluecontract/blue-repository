@@ -1,29 +1,28 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-ObservationTerms.schema.json
-name: ObservationTerms
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/ObservationTerms
 description: |
   Class containing terms that are associated with observing a price/benchmark/index across either single or multiple observations.
 calculationPeriodDates:
   description: |
     Defines parameters used to generate the calculation period dates schedule, including the specification of any initial or final stub calculation periods. A calculation period schedule consists of an optional initial stub calculation period, one or more regular calculation periods and an optional final stub calculation period. In the absence of any initial or final stub calculation periods, the regular part of the calculation period schedule is assumed to be between the effective date and the termination date. No implicit stubs are allowed, i.e. stubs must be explicitly specified using an appropriate combination of firstPeriodStartDate, firstRegularPeriodStartDate and lastRegularPeriodEndDate.
-  type: FINOS-CDM-6.0-d07/CalculationPeriodDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/CalculationPeriodDates
 informationSource:
   description: "The information source where a published or displayed market rate will be obtained, e.g. Telerate Page 3750."
-  type: FINOS-CDM-6.0-d07/FxSpotRateSource
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FxSpotRateSource
 numberOfObservationDates:
   description: The number of observation dates between observation start date and observation end date.
   type: Integer
 observationDates:
   description: Describes date details for a set of observation dates in parametric or non-parametric form.
-  type: FINOS-CDM-6.0-d07/ObservationDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/ObservationDates
   schema:
     required: true
 observationTime:
   description: Defines time in respect to a business calendar location that the price/benchmark/index is observed
-  type: FINOS-CDM-6.0-d07/BusinessCenterTime
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenterTime
 observationTimeType:
   description: The enumerated values to specify points in the day when option exercise and valuation can occur.
-  type: FINOS-CDM-6.0-d07/TimeTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/common/TimeTypeEnum
 precision:
   description: Defines rounding rules and precision to be used in the rounding of observations.
-  type: FINOS-CDM-6.0-d07/Rounding
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Rounding

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-ComputedAmount.schema.json
-name: ComputedAmount
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/ComputedAmount
 description: "A class to specify the outcome of a computed amount, for testing purposes."
 amount:
   type: Double
@@ -13,4 +12,4 @@ callFunction:
 currency:
   description: |
     The currency in which the computed amount is denominated. The list of valid currencies is not presently positioned as an enumeration as part of the CDM because that scope is limited to the values specified by ISDA and FpML. As a result, implementers have to make reference to the relevant standard, such as the ISO 4217 standard for currency codes.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString

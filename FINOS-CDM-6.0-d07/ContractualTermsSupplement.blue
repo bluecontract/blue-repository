@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ContractualTermsSupplement.schema.json
-name: ContractualTermsSupplement
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ContractualTermsSupplement
 description: |
   A contractual supplement (such as those published by ISDA) and its publication date that will apply to the trade.
 contractualTermsSupplementType:
   description: Identifies the form of applicable contractual supplement.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaContractualSupplementTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/FieldWithMetaContractualSupplementTypeEnum
   schema:
     required: true
 publicationDate:

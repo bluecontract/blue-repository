@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-metafields-FieldWithMetaQuotedCurrencyPair.schema.json
-name: FieldWithMetaQuotedCurrencyPair
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FieldWithMetaQuotedCurrencyPair
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/QuotedCurrencyPair
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/QuotedCurrencyPair

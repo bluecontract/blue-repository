@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-FinInstrmGnlAttrbts.schema.json
-name: FinInstrmGnlAttrbts
-namespace: cdm/regulation
+name: cdm/regulation/FinInstrmGnlAttrbts
 clssfctnTp:
   type: Text
   schema:

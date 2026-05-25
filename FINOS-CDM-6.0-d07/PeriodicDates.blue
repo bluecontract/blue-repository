@@ -1,24 +1,23 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-PeriodicDates.schema.json
-name: PeriodicDates
-namespace: cdm/base/datetime
+name: cdm/base/datetime/PeriodicDates
 description: A class for specifying a calculation period schedule.
 dayType:
   description: |
     Denotes the enumerated values to specify the day type classification used in counting the number of days between two dates.
-  type: FINOS-CDM-6.0-d07/DayTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DayTypeEnum
 endDate:
   description: |
     The end date of the calculation period. FpML specifies that for interest rate swaps this date must only be specified if it is not equal to the termination date. It is always specified in the case of equity swaps with periodic payments. This date may be subject to adjustment in accordance with a business day convention.
-  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrRelativeDate
 periodDatesAdjustments:
   description: |
     The specification of the business day convention and financial business centers used for adjusting any calculation period date if it would otherwise fall on a day that is not a business day in the specified business center.
-  type: FINOS-CDM-6.0-d07/BusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayAdjustments
 periodFrequency:
   description: |
     The frequency at which calculation period end dates occur with the regular part of the calculation period schedule and their roll date convention.
-  type: FINOS-CDM-6.0-d07/CalculationPeriodFrequency
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/CalculationPeriodFrequency
 startDate:
   description: |
     The start date of the calculation period. FpML specifies that for interest rate swaps this date must only be specified if it is not equal to the effective date. It is always specified in the case of equity swaps and credit default swaps with periodic payments. This date may be subject to adjustment in accordance with a business day convention.
-  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrRelativeDate

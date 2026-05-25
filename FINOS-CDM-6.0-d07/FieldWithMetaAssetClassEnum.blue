@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-metafields-FieldWithMetaAssetClassEnum.schema.json
-name: FieldWithMetaAssetClassEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/FieldWithMetaAssetClassEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/AssetClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetClassEnum

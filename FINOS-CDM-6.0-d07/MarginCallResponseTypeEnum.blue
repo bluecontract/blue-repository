@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-MarginCallResponseTypeEnum.schema.json
-name: MarginCallResponseTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/MarginCallResponseTypeEnum
 description: Represents the enumeration values to define the response type to a margin call.
 type: Text
 schema:

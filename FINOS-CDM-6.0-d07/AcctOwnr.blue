@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-AcctOwnr.schema.json
-name: AcctOwnr
-namespace: cdm/regulation
+name: cdm/regulation/AcctOwnr
 id:
-  type: FINOS-CDM-6.0-d07/Id
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Id
   schema:
     required: true

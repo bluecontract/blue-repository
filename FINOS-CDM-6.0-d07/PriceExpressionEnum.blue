@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PriceExpressionEnum.schema.json
-name: PriceExpressionEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PriceExpressionEnum
 description: Enumerated values to specify whether the price is expressed in absolute or relative terms.
 type: Text
 schema:

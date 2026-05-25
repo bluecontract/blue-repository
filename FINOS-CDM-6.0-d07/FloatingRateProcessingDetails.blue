@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-floatingrate-FloatingRateProcessingDetails.schema.json
-name: FloatingRateProcessingDetails
-namespace: cdm/product/asset/floatingrate
+name: cdm/product/asset/floatingrate/FloatingRateProcessingDetails
 description: |
   Type for reporting the details of the rate treatment.  This could potentially be replaced by the existing FloatingRateDefinition type , but this is slightly more detailed.
 processedRate:
@@ -9,7 +8,7 @@ processedRate:
   schema:
     required: true
 processingParameters:
-  type: FINOS-CDM-6.0-d07/FloatingRateProcessingParameters
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/floatingrate/FloatingRateProcessingParameters
 rawRate:
   description: "The raw or untreated rate, prior to any of the rate treatments."
   type: Double

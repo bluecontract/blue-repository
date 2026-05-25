@@ -1,17 +1,16 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-InformationSource.schema.json
-name: InformationSource
-namespace: cdm/observable/asset
+name: cdm/observable/asset/InformationSource
 description: |
   A class defining the source for a piece of information (e.g. a rate fix or an FX fixing). The attribute names have been adjusted from FpML to address the fact that the information is not limited to rates.
 sourcePage:
   description: |
     A specific page for the source for obtaining a market data point. In FpML, this is specified as a scheme, rateSourcePageScheme, for which no coding Scheme or URI is specified.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 sourcePageHeading:
   description: The heading for the source on a given source page.
   type: Text
 sourceProvider:
   description: "An information source for obtaining a market data point. For example Bloomberg, Reuters, Telerate, etc."
-  type: FINOS-CDM-6.0-d07/FieldWithMetaInformationProviderEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FieldWithMetaInformationProviderEnum
   schema:
     required: true

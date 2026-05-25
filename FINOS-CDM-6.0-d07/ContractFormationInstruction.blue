@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ContractFormationInstruction.schema.json
-name: ContractFormationInstruction
-namespace: cdm/event/common
+name: cdm/event/common/ContractFormationInstruction
 description: "Specifies instructions to create a fully formed contract, with optional legal agreements."
 legalAgreement:
   description: "Optional legal agreements associated to the contract being formed, for instance a master agreement."
   type: List
-  itemType: FINOS-CDM-6.0-d07/LegalAgreement
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LegalAgreement
   schema:
     minItems: 0

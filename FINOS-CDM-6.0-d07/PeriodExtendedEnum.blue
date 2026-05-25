@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-PeriodExtendedEnum.schema.json
-name: PeriodExtendedEnum
-namespace: cdm/base/datetime
+name: cdm/base/datetime/PeriodExtendedEnum
 description: The enumerated values to specify a time period containing the additional value of Term.
 type: Text
 schema:

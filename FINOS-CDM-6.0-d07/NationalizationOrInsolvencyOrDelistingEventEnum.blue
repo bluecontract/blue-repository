@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-NationalizationOrInsolvencyOrDelistingEventEnum.schema.json
-name: NationalizationOrInsolvencyOrDelistingEventEnum
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/NationalizationOrInsolvencyOrDelistingEventEnum
 description: "Defines the consequences of nationalization, insolvency and delisting events relating to the underlying."
 type: Text
 schema:

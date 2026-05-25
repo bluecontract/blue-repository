@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-AdditionalDisruptionEvents.schema.json
-name: AdditionalDisruptionEvents
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/AdditionalDisruptionEvents
 description: A type for defining the Additional Disruption Events.
 additionalBespokeTerms:
   description: |
     Where parties may optionnaly describe any extra bespoke agreements, in regards of the standardized Extraordinary Events.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Clause
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/Clause
   schema:
     minItems: 0
 changeInLaw:
@@ -14,7 +13,7 @@ changeInLaw:
   type: Boolean
 determiningParty:
   description: Specifies the party which determines additional disruption events.
-  type: FINOS-CDM-6.0-d07/AncillaryRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/AncillaryRoleEnum
 failureToDeliver:
   description: Per 2002 ISDA Equity Derivatives Definitions
   type: Boolean

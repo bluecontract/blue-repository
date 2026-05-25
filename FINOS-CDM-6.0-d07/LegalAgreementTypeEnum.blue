@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-LegalAgreementTypeEnum.schema.json
-name: LegalAgreementTypeEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/LegalAgreementTypeEnum
 description: The enumerated values to specify the legal agreement type.
 type: Text
 schema:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PrincipalPayment.schema.json
-name: PrincipalPayment
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/PrincipalPayment
 description: Any kind of principal payments when the amount is known and thus fixed.
 discountFactor:
   description: |
@@ -8,13 +7,13 @@ discountFactor:
   type: Double
 payerReceiver:
   description: Specifies the parties responsible for making and receiving payments defined by this structure.
-  type: FINOS-CDM-6.0-d07/PayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiver
 presentValuePrincipalAmount:
   description: The amount representing the present value of the principal payment.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 principalAmount:
   description: "When known at the time the transaction is made, the cash amount to be paid."
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 principalPaymentDate:
   description: The date where the PrincipalPayment shall be settled.
-  type: FINOS-CDM-6.0-d07/AdjustableDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableDate

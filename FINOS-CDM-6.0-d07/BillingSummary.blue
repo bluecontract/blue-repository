@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-BillingSummary.schema.json
-name: BillingSummary
-namespace: cdm/event/common
+name: cdm/event/common/BillingSummary
 description: Specifies individual summaries within a billing invoice.
 summaryAmountType:
   description: The account level for the billing summary.
-  type: FINOS-CDM-6.0-d07/RecordAmountTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/RecordAmountTypeEnum
   schema:
     required: true
 summaryTransfer:
   description: The settlement terms for the billing summary
-  type: FINOS-CDM-6.0-d07/Transfer
+  type: FINOS-CDM-6.0-d07/cdm/event/common/Transfer

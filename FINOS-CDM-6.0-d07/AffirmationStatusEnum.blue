@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-AffirmationStatusEnum.schema.json
-name: AffirmationStatusEnum
-namespace: cdm/event/common
+name: cdm/event/common/AffirmationStatusEnum
 description: Enumeration for the different types of affirmation status.
 type: Text
 schema:

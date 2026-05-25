@@ -1,36 +1,35 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-EligibilityQuery.schema.json
-name: EligibilityQuery
-namespace: cdm/product/collateral
+name: cdm/product/collateral/EligibilityQuery
 description: Query to check against an EligibleCollateralSpecification
 agencyRating:
   description: |
     The agency rating based on default risk and creditors claim in event of default associated with specific instrument.
-  type: FINOS-CDM-6.0-d07/AgencyRatingCriteria
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/AgencyRatingCriteria
   schema:
     required: true
 assetCountryOfOrigin:
   description: The asset country of origin.
-  type: FINOS-CDM-6.0-d07/ISOCountryCodeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/ISOCountryCodeEnum
   schema:
     required: true
 collateralAssetType:
   description: The asset product type.
-  type: FINOS-CDM-6.0-d07/AssetType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetType
   schema:
     required: true
 denominatedCurrency:
   description: The underlying asset denominated currency.
-  type: FINOS-CDM-6.0-d07/CurrencyCodeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/CurrencyCodeEnum
   schema:
     required: true
 issuerName:
   description: Specifies the issuing entity name or LEI.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     required: true
 issuerType:
   description: Represents a filter based on the type of entity issuing the asset.
-  type: FINOS-CDM-6.0-d07/CollateralIssuerType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/CollateralIssuerType
   schema:
     required: true
 maturity:

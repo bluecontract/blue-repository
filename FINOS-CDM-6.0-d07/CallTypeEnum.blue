@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CallTypeEnum.schema.json
-name: CallTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/CallTypeEnum
 description: |
   Represents the enumeration values that indicate the intended status of message type, such as expected call, notification of a call or a margin call.
 type: Text

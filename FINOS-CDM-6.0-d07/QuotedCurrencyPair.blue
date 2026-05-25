@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-QuotedCurrencyPair.schema.json
-name: QuotedCurrencyPair
-namespace: cdm/observable/asset
+name: cdm/observable/asset/QuotedCurrencyPair
 description: |
   A class that describes the composition of a rate that has been quoted or is to be quoted. This includes the two currencies and the quotation relationship between the two currencies and is used as a building block throughout the FX specification.
 currency1:
   description: The first currency specified when a pair of currencies is to be evaluated.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 currency2:
   description: The second currency specified when a pair of currencies is to be evaluated.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 quoteBasis:
   description: The method by which the exchange rate is quoted.
-  type: FINOS-CDM-6.0-d07/QuoteBasisEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/QuoteBasisEnum
   schema:
     required: true

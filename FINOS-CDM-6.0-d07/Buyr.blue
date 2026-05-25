@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Buyr.schema.json
-name: Buyr
-namespace: cdm/regulation
+name: cdm/regulation/Buyr
 acctOwnr:
-  type: FINOS-CDM-6.0-d07/AcctOwnr
+  type: FINOS-CDM-6.0-d07/cdm/regulation/AcctOwnr
   schema:
     required: true

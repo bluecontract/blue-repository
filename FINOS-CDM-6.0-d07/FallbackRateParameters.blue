@@ -1,17 +1,16 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-FallbackRateParameters.schema.json
-name: FallbackRateParameters
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/FallbackRateParameters
 description: |
   Defines the structure needed to represent fallback rate parameters. This type is used to represent modular computed rates in interestRatePayouts.
 calculationParameters:
   description: "Support for modular calculated rates, such such as lockout compound calculations."
-  type: FINOS-CDM-6.0-d07/FloatingRateCalculationParameters
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/FloatingRateCalculationParameters
 effectiveDate:
   description: The date the fallback rate takes effect.
   type: Text
 floatingRateIndex:
   description: The floating rate index that is used as the basis of the fallback rate.
-  type: FINOS-CDM-6.0-d07/FloatingRateIndexEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/rates/FloatingRateIndexEnum
   schema:
     required: true
 spreadAdjustment:

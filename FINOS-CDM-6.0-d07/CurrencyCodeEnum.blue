@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-CurrencyCodeEnum.schema.json
-name: CurrencyCodeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/CurrencyCodeEnum
 description: |
   Union of the enumerated values defined by the International Standards Organization (ISO) and the FpML nonISOCurrencyScheme which consists of offshore and historical currencies (https://www.fpml.org/coding-scheme/non-iso-currency), as of 28-Oct-2016.
 type: Text

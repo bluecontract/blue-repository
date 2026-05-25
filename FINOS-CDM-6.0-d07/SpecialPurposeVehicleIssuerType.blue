@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-SpecialPurposeVehicleIssuerType.schema.json
-name: SpecialPurposeVehicleIssuerType
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/SpecialPurposeVehicleIssuerType
 description: "Represents a class to allow specification of different types of special purpose vehicle (SPV) collateral."
 creditRisk:
   description: Indicates tranched or untranched credit risk.
-  type: FINOS-CDM-6.0-d07/CreditRiskEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/CreditRiskEnum

@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-FxRate.schema.json
-name: FxRate
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FxRate
 description: |
   A class describing the rate of a currency conversion: pair of currency, quotation mode and exchange rate.
 quotedCurrencyPair:
   description: Defines the two currencies for an FX trade and the quotation relationship between the two currencies.
-  type: FINOS-CDM-6.0-d07/QuotedCurrencyPair
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/QuotedCurrencyPair
   schema:
     required: true
 rate:

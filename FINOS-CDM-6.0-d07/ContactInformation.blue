@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-ContactInformation.schema.json
-name: ContactInformation
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/ContactInformation
 description: |
   A class to specify contact information associated with a party: telephone, postal/street address, email and web page.
 address:
   description: The street/postal address.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Address
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Address
   schema:
     minItems: 0
 email:
@@ -18,7 +17,7 @@ email:
 telephone:
   description: The telephone number.
   type: List
-  itemType: FINOS-CDM-6.0-d07/TelephoneNumber
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/TelephoneNumber
   schema:
     minItems: 0
 webPage:

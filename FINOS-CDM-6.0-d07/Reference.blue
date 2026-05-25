@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/com-rosetta-model-lib-meta-Reference.schema.json
-name: Reference
-namespace: com/rosetta/model/lib/meta
+name: com/rosetta/model/lib/meta/Reference
 scope:
   type: Text
 val:

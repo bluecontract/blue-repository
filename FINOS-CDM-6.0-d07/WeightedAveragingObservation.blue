@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-WeightedAveragingObservation.schema.json
-name: WeightedAveragingObservation
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/WeightedAveragingObservation
 description: A single weighted averaging observation.
 dateTime:
   description: |

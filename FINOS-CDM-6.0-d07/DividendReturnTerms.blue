@@ -1,32 +1,31 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendReturnTerms.schema.json
-name: DividendReturnTerms
-namespace: cdm/product/asset
+name: cdm/product/asset/DividendReturnTerms
 description: |
   A class describing the conditions governing the payment of dividends to the receiver of the equity return, with the exception of the dividend payout ratio, which is defined for each of the underlying components.
 dividendAmountType:
   description: Specifies whether the dividend is paid with respect to the Dividend Period.
-  type: FINOS-CDM-6.0-d07/DividendAmountTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendAmountTypeEnum
 dividendComposition:
   description: Specifies how the composition of Dividends is to be determined.
-  type: FINOS-CDM-6.0-d07/DividendCompositionEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendCompositionEnum
 dividendCurrency:
   description: |
     Specifies the currency in which the dividend will be denominated, e.g. the dividend currency, or a specified currency. This class is not specified as such in FpML, which makes use of the CurrencyAndDeterminationMethod.model to specify such terms.
-  type: FINOS-CDM-6.0-d07/DividendCurrency
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendCurrency
 dividendEntitlement:
   description: Defines the date on which the receiver of the equity return is entitled to the dividend.
-  type: FINOS-CDM-6.0-d07/DividendEntitlementEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendEntitlementEnum
 dividendPayoutRatio:
   description: |
     Specifies the dividend payout ratio associated with each underlier. In FpML 5.10 the payout is positioned at the underlier level, although there is an intent to reconsider this approach and position it at the leg level. This is approach adopted by the CDM.
   type: List
-  itemType: FINOS-CDM-6.0-d07/DividendPayoutRatio
+  itemType: FINOS-CDM-6.0-d07/cdm/product/asset/DividendPayoutRatio
   schema:
     minItems: 0
 dividendPeriod:
   description: "One to many time bounded dividend payment periods, each with a dividend payment date per period."
   type: List
-  itemType: FINOS-CDM-6.0-d07/DividendPeriod
+  itemType: FINOS-CDM-6.0-d07/cdm/product/asset/DividendPeriod
   schema:
     minItems: 0
 dividendReinvestment:
@@ -34,20 +33,20 @@ dividendReinvestment:
   type: Boolean
 excessDividendAmount:
   description: Determination of Gross Cash Dividend per Share.
-  type: FINOS-CDM-6.0-d07/DividendAmountTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendAmountTypeEnum
 extraordinaryDividendsParty:
   description: Specifies the party which determines if dividends are extraordinary in relation to normal levels.
-  type: FINOS-CDM-6.0-d07/AncillaryRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/AncillaryRoleEnum
 firstOrSecondPeriod:
   description: |
     2002 ISDA Equity Derivatives Definitions: Dividend Period as either the First Period or the Second Period. |
-  type: FINOS-CDM-6.0-d07/DividendPeriodEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendPeriodEnum
 materialDividend:
   description: "If present and true, then material non cash dividends are applicable."
   type: Boolean
 nonCashDividendTreatment:
   description: Specifies the treatment of Non-Cash Dividends.
-  type: FINOS-CDM-6.0-d07/NonCashDividendTreatmentEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/NonCashDividendTreatmentEnum
 performance:
   description: |
     Performance calculation, in accordance with Part 1 Section 12 of the 2018 ISDA CDM Equity Confirmation for Security Equity Swap, Para 75. 'Equity Performance'. Cumulative performance is used as a notional multiplier factor on both legs of an Equity Swap.

@@ -1,27 +1,26 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-EligibleCollateralCriteria.schema.json
-name: EligibleCollateralCriteria
-namespace: cdm/product/collateral
+name: cdm/product/collateral/EligibleCollateralCriteria
 description: Represents a set of criteria used to specify eligible collateral.
 appliesTo:
   description: |
     Specifies which of the two counterparties the criteria applies to (either one or both counterparties). This attribute is optional, in case the applicable party is already specified elsewhere within a party election.
   type: List
-  itemType: FINOS-CDM-6.0-d07/CounterpartyRoleEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/CounterpartyRoleEnum
   schema:
     minItems: 0
     maxItems: 2
 collateralCriteria:
   description: |
     The specific criteria that applies. It can be created using AND, OR and NOT logic, and both asset and issuer characteristics.
-  type: FINOS-CDM-6.0-d07/CollateralCriteria
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralCriteria
 ratingPriorityResolution:
   description: Denotes which Criteria has priority if more than one agency rating applies.
-  type: FINOS-CDM-6.0-d07/RatingPriorityResolutionEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/RatingPriorityResolutionEnum
 restrictTo:
   description: "Restrict the criteria to only apply to a specific type of margin, ie IM or VM."
-  type: FINOS-CDM-6.0-d07/CollateralMarginTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralMarginTypeEnum
 treatment:
   description: "Identifies the treatment of specified collateral, e.g., haircuts,holding limits or exclusions."
-  type: FINOS-CDM-6.0-d07/CollateralTreatment
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralTreatment
   schema:
     required: true
