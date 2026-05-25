@@ -1,0 +1,67 @@
+name: Compute
+description: >
+  Conversation workflow step that evaluates Blue Expression Objects (BEX)
+  and returns a result.
+
+  Compute reads the current processing context and computes data. It does not
+  mutate the document directly. If the result contains a changeset, that
+  changeset is still only data; a separate Conversation/Update Document step
+  must apply it.
+
+type: Conversation/Sequential Workflow Step
+
+expr:
+  description: >
+    Optional BEX expression. If present and no `do` body is used, the step
+    result is the evaluated expression.
+
+do:
+  type: List
+  description: >
+    Ordered list of BEX statements. Items are intentionally not strongly typed
+    in this repository version.
+
+definition:
+  description: >
+    Optional reference to reusable compute logic. In a Conversation workflow,
+    this is commonly a contract key in the current scope pointing to a
+    Conversation/Compute Definition.
+
+entry:
+  type: Text
+  description: >
+    Entry function name to execute when `definition` or local `functions` are
+    used.
+
+constants:
+  type: Dictionary
+  description: >
+    Named constants available to BEX through `$const`. Keys are constant names;
+    values are arbitrary Blue values.
+
+functions:
+  type: Dictionary
+  description: >
+    Named reusable BEX functions. Keys are function names; values are function
+    definitions. Function objects are intentionally not strongly typed in this
+    repository version.
+
+emitEvents:
+  type: Boolean
+  value: true
+  description: >
+    If true, and the computed result contains an `events` list, the Conversation
+    workflow processor emits those events.
+
+returnResult:
+  type: Boolean
+  value: true
+  description: >
+    If true, the computed result is stored under the workflow step name and can
+    be referenced by later steps.
+
+gasLimit:
+  type: Integer
+  description: >
+    Optional maximum gas allowed for this Compute step. If omitted, the host
+    processor chooses the applicable default.
