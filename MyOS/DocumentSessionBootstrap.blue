@@ -72,18 +72,6 @@ contracts:
       - name: Update Participant State
         type: Coordination/Compute
         do:
-          - $if:
-              cond:
-                $not:
-                  $is:
-                    node:
-                      $event: /
-                    pattern:
-                      type: MyOS/Participant Resolved
-              then:
-                - $return:
-                    changeset: []
-                    events: []
           - $let:
               order:
                 - channelName
@@ -118,18 +106,6 @@ contracts:
       - name: Update Initiator Session And Emit Completion
         type: Coordination/Compute
         do:
-          - $if:
-              cond:
-                $not:
-                  $is:
-                    node:
-                      $event: /
-                    pattern:
-                      type: MyOS/Target Document Session Started
-              then:
-                - $return:
-                    changeset: []
-                    events: []
           - $appendChange:
               op: replace
               path: /initiatorSessionIds
@@ -155,18 +131,6 @@ contracts:
       - name: Update Error And Emit Failure
         type: Coordination/Compute
         do:
-          - $if:
-              cond:
-                $not:
-                  $is:
-                    node:
-                      $event: /
-                    pattern:
-                      type: MyOS/Bootstrap Failed
-              then:
-                - $return:
-                    changeset: []
-                    events: []
           - $appendChange:
               op: replace
               path: /bootstrapError
@@ -192,18 +156,6 @@ contracts:
       - name: Update Bootstrap Status
         type: Coordination/Compute
         do:
-          - $if:
-              cond:
-                $not:
-                  $is:
-                    node:
-                      $event: /
-                    pattern:
-                      type: Coordination/Status Change
-              then:
-                - $return:
-                    changeset: []
-                    events: []
           - $appendChange:
               op: replace
               path: /bootstrapStatus
