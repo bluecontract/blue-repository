@@ -18,7 +18,7 @@ description: |
   otherwise workflows could observe a state that the processor could not legally produce.
 changeset:
   type: List
-  itemType: Json Patch Entry
+  itemType: Coordination/Json Patch Entry
   description: |
     Ordered list of patch entries to apply through the Blue Contracts processor. Each entry must be valid under the
     processor patch rules. The order is significant: each patch is applied, type-checked/generalized, and cascaded before

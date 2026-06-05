@@ -1,5 +1,5 @@
 name: Document Section
-type: Marker
+type: Coordination/Marker
 description: |
   Marker contract that identifies a logical section of a document and links that section to the fields and contracts
   responsible for it. A section gives humans, agents, and change-management workflows a coherent unit of meaning such as

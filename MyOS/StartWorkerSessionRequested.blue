@@ -10,7 +10,7 @@ document:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Channel
+  valueType: Coordination/Channel
   description: Maps channel names to participant identifiers
 initialMessages:
   description: Messages sent to participants when inviting them to the bootstrapped document

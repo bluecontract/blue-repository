@@ -14,7 +14,7 @@ document:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Channel
+  valueType: Coordination/Channel
   description: |
     Mapping from channel names to binding descriptors used to connect the new document to timelines or other event sources.
 initialMessages:

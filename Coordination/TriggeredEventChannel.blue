@@ -1,0 +1,4 @@
+name: Triggered Event Channel
+type: Coordination/Channel
+description: |
+  Channel that delivers events previously enqueued by handlers into the scope's triggered-event queue.

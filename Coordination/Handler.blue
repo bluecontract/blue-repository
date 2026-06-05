@@ -1,0 +1,5 @@
+name: Handler
+type: Coordination/Contract
+description: |
+  Base type for contracts that react to channel-delivered events. Concrete handlers define the runtime work performed
+  when their channel accepts an event.

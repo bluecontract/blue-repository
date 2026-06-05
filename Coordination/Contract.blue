@@ -1,0 +1,7 @@
+name: Contract
+description: |
+  Base type for Blue document contracts. Contracts live under a scope's contracts map and define runtime-visible
+  channels, handlers, markers, operations, and policies.
+order:
+  type: Integer
+  description: Deterministic sort key within a scope; missing is treated as 0 by supporting processors.

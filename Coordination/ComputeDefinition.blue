@@ -1,5 +1,5 @@
 name: Compute Definition
-type: Marker
+type: Coordination/Marker
 description: |
   Reusable BEX definition containing constants and functions that can be referenced by Compute steps. A Compute
   Definition lets a document keep shared deterministic logic in one place while still representing that logic as Blue

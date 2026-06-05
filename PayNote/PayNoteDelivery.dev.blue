@@ -51,9 +51,9 @@ contracts:
     description: Participant delivering and reporting status (e.g., bank).
 
   initLifecycleChannel:
-    type: Lifecycle Event Channel
+    type: Coordination/Lifecycle Event Channel
     event:
-      type: Document Processing Initiated
+      type: Coordination/Document Processing Initiated
 
   initialize:
     type: Coordination/Sequential Workflow

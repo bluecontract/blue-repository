@@ -1,0 +1,4 @@
+name: Lifecycle Event Channel
+type: Coordination/Channel
+description: |
+  Channel that delivers processor lifecycle notifications at this scope.

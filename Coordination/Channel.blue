@@ -1,0 +1,5 @@
+name: Channel
+type: Coordination/Contract
+description: |
+  Base type for contracts that expose events to handlers. Concrete channel types define how events are selected,
+  authorized, ordered, and delivered to a document scope.

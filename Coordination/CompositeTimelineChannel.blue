@@ -1,5 +1,5 @@
 name: Composite Timeline Channel
-type: Channel
+type: Coordination/Channel
 description: |
   Channel contract that groups several same-scope Timeline Channels into one union channel. A Composite Timeline
   Channel matches when any referenced child channel would accept the delivered event. It is useful when a workflow

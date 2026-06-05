@@ -1,0 +1,6 @@
+name: Document Processing Initiated
+description: |
+  Event published once at a scope when document processing starts for that scope.
+documentId:
+  type: Text
+  description: Stable document identifier.

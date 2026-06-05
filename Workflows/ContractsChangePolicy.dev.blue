@@ -1,5 +1,5 @@
 name: Contracts Change Policy
-type: Marker
+type: Coordination/Marker
 description: |
   Marker contract that controls how the document's `contracts` map may be changed by coordination workflows. When
   `requireSectionChanges` is present and not false, workflows such as Change Workflow and Accept Change Workflow must

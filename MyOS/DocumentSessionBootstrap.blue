@@ -9,7 +9,7 @@ avatarUrl:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Channel
+  valueType: Coordination/Channel
   description: Maps channel names to participant identifiers
 initialMessages:
   description: Messages sent to participants when inviting them to the bootstrapped document
@@ -44,12 +44,12 @@ participantsState:
 
 contracts:
   triggeredEventsChannel:
-    type: Triggered Event Channel
+    type: Coordination/Triggered Event Channel
 
   lifecycle:
-    type: Lifecycle Event Channel
+    type: Coordination/Lifecycle Event Channel
     event:
-      type: Document Processing Initiated
+      type: Coordination/Document Processing Initiated
 
   initHandler:
     type: Coordination/Sequential Workflow

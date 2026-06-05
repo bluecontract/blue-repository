@@ -27,6 +27,6 @@ paynote:
   channelBindings:
     type: Dictionary
     keyType: Text
-    valueType: Channel
+    valueType: Coordination/Channel
     description: |
       Optional channel bindings keyed by the channel names declared in the PayNote document.

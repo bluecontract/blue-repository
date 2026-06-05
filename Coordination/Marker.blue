@@ -1,0 +1,5 @@
+name: Marker
+type: Coordination/Contract
+description: |
+  Contract metadata marker. Markers annotate a scope for supported processors and do not consume channel events by
+  themselves.

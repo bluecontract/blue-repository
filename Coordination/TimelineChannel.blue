@@ -1,5 +1,5 @@
 name: Timeline Channel
-type: Channel
+type: Coordination/Channel
 description: |
   Channel contract that accepts Timeline Entry events for a configured timeline. Timeline Channel is the scope-local
   runtime entry point that lets a Blue document react to messages stored in append-only timeline infrastructure.

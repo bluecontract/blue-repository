@@ -180,9 +180,9 @@ contracts:
     description: Bank/admin channel executing mandate checks and settlement updates.
 
   initLifecycleChannel:
-    type: Lifecycle Event Channel
+    type: Coordination/Lifecycle Event Channel
     event:
-      type: Document Processing Initiated
+      type: Coordination/Document Processing Initiated
 
   initialize:
     type: Coordination/Sequential Workflow

@@ -1,5 +1,5 @@
 name: Actor Policy
-type: Marker
+type: Coordination/Marker
 description: |
   Processor-visible policy marker that constrains which actor and source categories may invoke named operations. Actor
   Policy turns actor/source attribution into enforceable workflow rules. It lets a document require direct principal

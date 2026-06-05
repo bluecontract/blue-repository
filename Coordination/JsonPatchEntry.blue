@@ -1,0 +1,11 @@
+name: Json Patch Entry
+description: |
+  Deterministic JSON Patch entry used by handlers to request document changes.
+op:
+  type: Text
+  description: One of add, replace, remove.
+path:
+  type: Text
+  description: Absolute JSON Pointer within the document.
+val:
+  description: Payload for add and replace. Omitted for remove.

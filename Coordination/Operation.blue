@@ -1,5 +1,5 @@
 name: Operation
-type: Marker
+type: Coordination/Marker
 description: |
   Base contract type describing a named operation supported by a document or scope. An Operation gives a stable name to
   a business action, specifies the channel through which requests for that action arrive, and describes the expected
