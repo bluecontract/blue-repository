@@ -31,7 +31,7 @@ permissions:
 
 env:
   REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
-  REPOSITORY_GENERATOR_VERSION: '4.1.0'
+  REPOSITORY_GENERATOR_VERSION: '5.0.0-rc.1'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
   ARTIFACT_NAME: 'blue-repository-definition'
   ARTIFACT_RETENTION_DAYS: '10'
