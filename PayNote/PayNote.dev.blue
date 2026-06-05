@@ -392,10 +392,15 @@ contracts:
             val: Failed
 
       - name: Emit Transaction Initiation Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Transaction Initiation Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Transaction Initiation Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   confirmPayeeAssignment:
     type: Coordination/Operation
@@ -495,10 +500,15 @@ contracts:
     operation: rejectPayeeAssignment
     steps:
       - name: Emit Payee Assignment Rejected
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payee Assignment Rejected
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payee Assignment Rejected
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   confirmTransactionDetailsUpdated:
     type: Coordination/Operation
@@ -601,10 +611,15 @@ contracts:
     operation: rejectTransactionDetailsUpdate
     steps:
       - name: Emit Transaction Details Update Rejected
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Transaction Details Update Rejected
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Transaction Details Update Rejected
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   failTransactionDetailsUpdate:
     type: Coordination/Operation
@@ -617,10 +632,15 @@ contracts:
     operation: failTransactionDetailsUpdate
     steps:
       - name: Emit Transaction Details Update Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Transaction Details Update Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Transaction Details Update Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   secureFunds:
     type: Coordination/Operation
@@ -672,10 +692,15 @@ contracts:
             val: Rejected
 
       - name: Emit Funds Securing Declined
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Funds Securing Declined
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Funds Securing Declined
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   failSecureFunds:
     type: Coordination/Operation
@@ -695,10 +720,15 @@ contracts:
             val: Failed
 
       - name: Emit Funds Securing Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Funds Securing Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Funds Securing Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   completePayment:
     type: Coordination/Operation
@@ -750,10 +780,15 @@ contracts:
             val: Rejected
 
       - name: Emit Payment Completion Declined
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Completion Declined
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Completion Declined
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   failCompletePayment:
     type: Coordination/Operation
@@ -773,10 +808,15 @@ contracts:
             val: Failed
 
       - name: Emit Payment Completion Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Completion Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Completion Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   cancelBeforeCompletion:
     type: Coordination/Operation
@@ -818,10 +858,15 @@ contracts:
             val: Rejected
 
       - name: Emit Payment Cancellation Declined
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Cancellation Declined
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Cancellation Declined
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   failCancelBeforeCompletion:
     type: Coordination/Operation
@@ -841,10 +886,15 @@ contracts:
             val: Failed
 
       - name: Emit Payment Cancellation Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Cancellation Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Cancellation Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   reverseAfterCompletion:
     type: Coordination/Operation
@@ -896,10 +946,15 @@ contracts:
             val: Rejected
 
       - name: Emit Payment Reversal Declined
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Reversal Declined
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Reversal Declined
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   failReverseAfterCompletion:
     type: Coordination/Operation
@@ -919,10 +974,15 @@ contracts:
             val: Failed
 
       - name: Emit Payment Reversal Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Reversal Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Reversal Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   resolveFinalAmount:
     type: Coordination/Operation
@@ -963,10 +1023,15 @@ contracts:
     operation: rejectFinalAmountResolution
     steps:
       - name: Emit Final Amount Resolution Rejected
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Final Amount Resolution Rejected
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Final Amount Resolution Rejected
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   lockPaymentCompletion:
     type: Coordination/Operation
@@ -1033,10 +1098,15 @@ contracts:
     operation: failPaymentCompletionLockChange
     steps:
       - name: Emit Payment Completion Lock Change Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Completion Lock Change Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Completion Lock Change Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   lockPaymentReversal:
     type: Coordination/Operation
@@ -1103,10 +1173,15 @@ contracts:
     operation: failPaymentReversalLockChange
     steps:
       - name: Emit Payment Reversal Lock Change Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Payment Reversal Lock Change Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Payment Reversal Lock Change Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
 
   lockTransactionDetailsUpdate:
     type: Coordination/Operation
@@ -1173,7 +1248,12 @@ contracts:
     operation: failTransactionDetailsUpdateLockChange
     steps:
       - name: Emit Transaction Details Update Lock Change Failed
-        type: Coordination/Trigger Event
-        event:
-          type: PayNote/Transaction Details Update Lock Change Failed
-          reason: "${event.message.request.reason}"
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: PayNote/Transaction Details Update Lock Change Failed
+              reason:
+                $event: /message/request/reason
+          - $return:
+              events:
+                $events: true
