@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-NonCashDividendTreatmentEnum.schema.json
-name: NonCashDividendTreatmentEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/NonCashDividendTreatmentEnum
 description: The enumerated values to specify the treatment of Non-Cash Dividends.
 type: Text
 schema:

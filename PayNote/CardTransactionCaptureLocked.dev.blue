@@ -1,5 +1,5 @@
 name: Card Transaction Capture Locked
-type: Conversation/Response
+type: Coordination/Response
 description: Card transaction capture was locked. Any following card transaction capture requests will be rejected.
 lockedAt:
   type: Common/Timestamp

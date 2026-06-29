@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-CreditSupportProviderTermsEnum.schema.json
-name: CreditSupportProviderTermsEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/CreditSupportProviderTermsEnum
 description: The enumerated values to specify the Credit Support Provider Terms
 type: Text
 schema:

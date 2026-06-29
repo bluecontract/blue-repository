@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-CompoundingTypeEnum.schema.json
-name: CompoundingTypeEnum
-namespace: cdm/base/datetime
+name: cdm/base/datetime/CompoundingTypeEnum
 description: The enumerated values to specify how the compounding calculation is done
 type: Text
 schema:

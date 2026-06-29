@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ExecutionLocationEnum.schema.json
-name: ExecutionLocationEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ExecutionLocationEnum
 description: The enumerated values to specify the Execution Location of a Security Agreement
 type: Text
 schema:

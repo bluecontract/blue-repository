@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ResetInstruction.schema.json
-name: ResetInstruction
-namespace: cdm/event/common
+name: cdm/event/common/ResetInstruction
 description: Defines the information needed to create a Reset Business Event.
 payout:
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPayout
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/metafields/ReferenceWithMetaPayout
   schema:
     minItems: 1
 rateRecordDate:

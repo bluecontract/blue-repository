@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-DebtClassEnum.schema.json
-name: DebtClassEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/DebtClassEnum
 description: Represents an enumeration list that identifies the type of debt.
 type: Text
 schema:

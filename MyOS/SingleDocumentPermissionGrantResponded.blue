@@ -1,5 +1,5 @@
 name: Single Document Permission Grant Responded
-type: Conversation/Response
+type: Coordination/Response
 description: Whatever granter confirmed or rejected the request.
 status:
   type: Text # confirmed or rejected

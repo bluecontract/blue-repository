@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PCDeliverableObligationCharac.schema.json
-name: PCDeliverableObligationCharac
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/PCDeliverableObligationCharac
 description: A class to specify the Partial Cash Deliverable Obligation Characteristic.
 applicable:
   description: Indicates whether the provision is applicable.

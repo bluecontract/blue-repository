@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-CalculatedRateObservations.schema.json
-name: CalculatedRateObservations
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/CalculatedRateObservations
 description: Type for reporting observations that went into the final reported rate.
 observationDates:
   description: The observation date upon which the rate is observed.

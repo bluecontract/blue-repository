@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-BusinessCenterTime.schema.json
-name: BusinessCenterTime
-namespace: cdm/base/datetime
+name: cdm/base/datetime/BusinessCenterTime
 description: "A class for defining a time with respect to a business day calendar location. For example, 11:00:00 GBLO."
 businessCenter:
   description: |
     A code identifying a business day calendar location. A business day calendar location is drawn from the list identified by the business day calendar location enumeration.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaBusinessCenterEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/FieldWithMetaBusinessCenterEnum
   schema:
     required: true
 hourMinuteTime:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-daycount-DayCountFractionEnum.schema.json
-name: DayCountFractionEnum
-namespace: cdm/base/datetime/daycount
+name: cdm/base/datetime/daycount/DayCountFractionEnum
 description: The enumerated values to specify the day count fraction.
 type: Text
 schema:

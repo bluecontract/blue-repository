@@ -1,5 +1,5 @@
 name: Payment Reversal Unlocked
-type: Conversation/Response
+type: Coordination/Response
 description: >
   Payment reversal was unlocked. Subsequent reversal attempts
   may now be processed again.

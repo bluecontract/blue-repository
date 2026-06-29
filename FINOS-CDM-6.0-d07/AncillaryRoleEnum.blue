@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-AncillaryRoleEnum.schema.json
-name: AncillaryRoleEnum
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/AncillaryRoleEnum
 description: |
   Defines the enumerated values to specify the ancillary roles to the transaction. The product is agnostic to the actual parties involved in the transaction, with the party references abstracted away from the product definition and replaced by the AncillaryRoleEnum. The AncillaryRoleEnum can then be positioned in the product and the AncillaryParty type, which is positioned outside of the product definition, allows the AncillaryRoleEnum to be associated with an actual party reference.
 type: Text

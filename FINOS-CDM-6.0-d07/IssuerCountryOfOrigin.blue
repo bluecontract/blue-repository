@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-IssuerCountryOfOrigin.schema.json
-name: IssuerCountryOfOrigin
-namespace: cdm/product/collateral
+name: cdm/product/collateral/IssuerCountryOfOrigin
 issuerCountryOfOrigin:
   description: |
     Represents a filter on the issuing entity country of origin based on the ISO Standard 3166, which is the same as filtering by eligible Sovereigns.
-  type: FINOS-CDM-6.0-d07/ISOCountryCodeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/ISOCountryCodeEnum
   schema:
     required: true

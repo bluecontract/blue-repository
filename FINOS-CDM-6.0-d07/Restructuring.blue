@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-Restructuring.schema.json
-name: Restructuring
-namespace: cdm/observable/event
+name: cdm/observable/event/Restructuring
 applicable:
   description: Indicates whether the restructuring provision is applicable.
   type: Boolean
@@ -16,4 +15,4 @@ multipleHolderObligation:
   type: Boolean
 restructuringType:
   description: Specifies the type of restructuring that is applicable.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaRestructuringEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/FieldWithMetaRestructuringEnum

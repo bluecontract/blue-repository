@@ -1,5 +1,5 @@
 name: Payment Mandate Attachment Failed
-type: Conversation/Event
+type: Coordination/Event
 description: Payment Mandate attachment to PayNote failed.
 reason:
   type: Text

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-CreditSeniorityEnum.schema.json
-name: CreditSeniorityEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/CreditSeniorityEnum
 description: Seniority of debt instruments comprising the index.
 type: Text
 schema:

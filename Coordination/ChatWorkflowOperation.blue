@@ -1,0 +1,28 @@
+name: Chat Workflow Operation
+type: Coordination/Sequential Workflow Operation
+description: |
+  Standard operation for chat at a document table. A document that wants all participants to chat can define an
+  All Timelines Channel and one Chat Workflow Operation on that channel. The workflow emits the Chat Message request
+  payload as a normal coordination event so it appears in document event projections and audit views.
+
+  Sequential Workflow Operation defines steps as append-only. Chat Workflow Operation seeds that list with a standard
+  first step that emits the chat event that arrived in the operation request; document-specific chat behavior can append
+  validation, moderation, indexing, notification, or projection steps after that standard emission step without changing
+  the inherited prefix.
+
+  This type is intentionally simple: chat is not authority, payment truth, permission truth, or workflow approval. Use
+  domain-specific operations and strong response types for machine-actionable commitments.
+request:
+  type: Coordination/Chat Message
+  description: Chat message payload.
+steps:
+  description: |
+    Workflow steps for chat processing. The first inherited step emits the arriving Chat Message request payload as a
+    coordination event.
+  items:
+    - name: Emit Arrived Chat Event
+      type: Coordination/Compute
+      description: Emits the Chat Message payload from the arriving Operation Request.
+      do:
+        - $appendEvent:
+            $event: /message/request

@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-MultipleCreditNotations.schema.json
-name: MultipleCreditNotations
-namespace: cdm/observable/asset
+name: cdm/observable/asset/MultipleCreditNotations
 description: "Represetns a class to specify multiple credit notations alongside a conditional 'any' or 'all' qualifier."
 condition:
   description: "An enumerated element, to qualify whether All or Any credit notation applies."
-  type: FINOS-CDM-6.0-d07/QuantifierEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/QuantifierEnum
   schema:
     required: true
 creditNotation:
   description: At least two credit notations much be specified.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaCreditNotation
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/FieldWithMetaCreditNotation
   schema:
     minItems: 2
 mismatchResolution:
-  type: FINOS-CDM-6.0-d07/CreditNotationMismatchResolutionEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditNotationMismatchResolutionEnum
 referenceAgency:
-  type: FINOS-CDM-6.0-d07/CreditRatingAgencyEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CreditRatingAgencyEnum

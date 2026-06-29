@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ObservationEvent.schema.json
-name: ObservationEvent
-namespace: cdm/event/common
+name: cdm/event/common/ObservationEvent
 description: Specifies the necessary information to create any observation event.
 corporateAction:
   description: Specifies the necessary information to create a corporate action.
-  type: FINOS-CDM-6.0-d07/CorporateAction
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CorporateAction
 creditEvent:
   description: Specifies the necessary information to create a credit event.
-  type: FINOS-CDM-6.0-d07/CreditEvent
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CreditEvent

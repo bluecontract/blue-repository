@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CheckEligibilityResult.schema.json
-name: CheckEligibilityResult
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CheckEligibilityResult
 description: Result for the CheckEligibilityByDetails and CheckEligibilityForProduct functions
 eligibilityQuery:
   description: a copy of the input query that was checked against the eligible collateral specification
-  type: FINOS-CDM-6.0-d07/EligibilityQuery
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/EligibilityQuery
   schema:
     required: true
 isEligible:
@@ -16,11 +15,11 @@ matchingEligibleCriteria:
   description: |
     if there was a match, this will be the one or more criteria that were supplied in the EligbilityCollateralSpecification which matched with the query input
   type: List
-  itemType: FINOS-CDM-6.0-d07/EligibleCollateralCriteria
+  itemType: FINOS-CDM-6.0-d07/cdm/product/collateral/EligibleCollateralCriteria
   schema:
     minItems: 0
 specification:
   description: a copy of the input EligbilityCollateralSpecification that was checked against the query
-  type: FINOS-CDM-6.0-d07/EligibleCollateralSpecification
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/EligibleCollateralSpecification
   schema:
     required: true

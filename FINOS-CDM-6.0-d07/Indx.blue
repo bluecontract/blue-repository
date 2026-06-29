@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Indx.schema.json
-name: Indx
-namespace: cdm/regulation
+name: cdm/regulation/Indx
 nm:
-  type: FINOS-CDM-6.0-d07/Nm
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Nm
   schema:
     required: true

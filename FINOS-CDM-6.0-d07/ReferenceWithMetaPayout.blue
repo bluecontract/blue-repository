@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-metafields-ReferenceWithMetaPayout.schema.json
-name: ReferenceWithMetaPayout
-namespace: cdm/product/template/metafields
+name: cdm/product/template/metafields/ReferenceWithMetaPayout
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

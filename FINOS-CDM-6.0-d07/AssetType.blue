@@ -1,21 +1,20 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-AssetType.schema.json
-name: AssetType
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/AssetType
 description: Represents a class to allow specification of the asset product type.
 assetType:
   description: Represents a filter based on the type of collateral asset.
-  type: FINOS-CDM-6.0-d07/AssetTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetTypeEnum
   schema:
     required: true
 debtType:
   description: Represents a filter based on the type of bond.
-  type: FINOS-CDM-6.0-d07/DebtType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtType
 equityType:
   description: Represents a filter based on the type of equity.
-  type: FINOS-CDM-6.0-d07/EquityTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/EquityTypeEnum
 fundType:
   description: Represents a filter based on the type of fund.
-  type: FINOS-CDM-6.0-d07/FundProductTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/FundProductTypeEnum
 otherAssetType:
   description: Specifies the eligible asset type when not enumerated.
   type: List
@@ -24,4 +23,4 @@ otherAssetType:
     minItems: 0
 securityType:
   description: Represents a filter based on the type of security.
-  type: FINOS-CDM-6.0-d07/InstrumentTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/InstrumentTypeEnum

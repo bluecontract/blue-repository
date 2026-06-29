@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-common-DeterminationMethodEnum.schema.json
-name: DeterminationMethodEnum
-namespace: cdm/observable/common
+name: cdm/observable/common/DeterminationMethodEnum
 description: The enumerated values to specify the method according to which an amount or a date is determined.
 type: Text
 schema:

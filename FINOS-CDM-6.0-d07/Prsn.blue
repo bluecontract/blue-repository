@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Prsn.schema.json
-name: Prsn
-namespace: cdm/regulation
+name: cdm/regulation/Prsn
 ctryOfBrnch:
   type: Text
   schema:
     required: true
 othr:
-  type: FINOS-CDM-6.0-d07/Othr
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Othr
   schema:
     required: true

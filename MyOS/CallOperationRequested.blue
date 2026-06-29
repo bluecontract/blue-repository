@@ -1,5 +1,5 @@
 name: Call Operation Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Document asks MyOS Admin to invoke an operation on a target session.
 onBehalfOf:
   type: Text

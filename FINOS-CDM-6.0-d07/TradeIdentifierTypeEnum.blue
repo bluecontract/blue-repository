@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-identifier-TradeIdentifierTypeEnum.schema.json
-name: TradeIdentifierTypeEnum
-namespace: cdm/base/staticdata/identifier
+name: cdm/base/staticdata/identifier/TradeIdentifierTypeEnum
 description: Defines the enumerated values to specify the nature of a trade identifier.
 type: Text
 schema:

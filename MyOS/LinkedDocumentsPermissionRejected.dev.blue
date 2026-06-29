@@ -1,5 +1,5 @@
 name: Linked Documents Permission Rejected
-type: Conversation/Response
+type: Coordination/Response
 description: Grant could not be applied.
 targetSessionId:
   type: Text

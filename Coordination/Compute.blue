@@ -1,0 +1,101 @@
+name: Compute
+description: |
+  Workflow step that evaluates Blue Expression Objects (BEX): deterministic programs written as Blue data. Compute is
+  for logic that should live inside the document instead of host code. A Compute step can read a Blue document view,
+  host-provided bindings, constants, variables, prior workflow results, the triggering event, and the current contract;
+  then it can compute structured Blue-compatible data such as booleans, numbers, strings, objects, lists, patch
+  changesets, event payloads, validation results, and policy decisions.
+
+  BEX is not JavaScript, WASM, a network runtime, an LLM extension point, or a contract processor. It has no ambient
+  time, randomness, filesystem, network, database, asynchronous execution, or hidden mutable state in the core language.
+  Host capabilities are available only through explicitly registered `$intrinsic` processors identified by BlueId. A
+  BEX program does not mutate the document or perform external actions. It computes a deterministic result; the host
+  decides how to use that result, and document mutation still requires Update Document or processor patch semantics.
+
+  A BEX program is a Blue object tree. An object with exactly one key beginning with `$` is an operator. Objects with
+  ordinary keys are literal Blue-compatible objects whose children are evaluated recursively. Lists and scalar values
+  are literals unless nested inside an operator body. Because BEX programs are Blue data, they participate in the same
+  content identity and BlueId model as the documents that carry them.
+
+  BEX supports data access operators (`$document`, `$binding`, `$event`, `$steps`, `$currentContract`, `$var`, `$const`,
+  `$get`), type helpers (`$unwrap`, `$is`, `$kind`, `$isKind`, `$text`, `$integer`, `$number`, `$boolean`, `$object`,
+  `$list`), string and pointer operators (`$concat`, `$join`, `$split`, `$startsWith`, `$sliceAfter`, `$pointerJoin`),
+  logic and comparison (`$eq`, `$ne`, `$gt`, `$gte`, `$lt`, `$lte`, `$and`, `$or`, `$not`, `$truthy`, `$empty`,
+  `$isEmpty`, `$exists`, `$coalesce`, `$default`), numeric operators (`$add`, `$subtract`, `$multiply`, `$divide`),
+  object/list operators (`$keys`, `$entries`, `$size`, `$listGet`, `$listConcat`, `$merge`, `$objectSet`,
+  `$pointerGet`, `$pointerSet`, `$map`, `$filter`, `$flatMap`, `$reduce`, `$some`, `$find`, `$findEntry`, `$includes`,
+  `$hasKey`, `$objectFromEntries`), conditionals (`$choose`), functions (`$call`), host extensions (`$intrinsic`),
+  literal/null/empty constructors (`$literal`, `$null`, `$emptyObject`, `$emptyList`), result helpers (`$changeset`,
+  `$events`, `$resultValue`), and deterministic failure/early-return helpers (`$returnIf`, `$fail`, `$failIf`).
+
+  BEX statements include `$let`, `$set`, `$if`, `$forEach`, `$appendChange`, `$appendChanges`, `$appendEvent`,
+  `$appendEvents`, `$call`, `$return`, `$returnIf`, `$fail`, and `$failIf`. `$let` may bind one variable or a `vars`
+  block. Without `order`, multi-bind variables are parallel and read the old frame. With `order`, bindings are
+  sequential and later bindings may read earlier ones. `$forEach` iterates lists in item order and objects in sorted key
+  order; it may bind item, key, and index variables.
+
+  `$document` reads the canonical document view by default and may explicitly read the resolved view when the host
+  exposes one. In a Blue Contracts workflow, BEX should read from the frozen processing snapshot or frozen working
+  document. If a prior Update Document step has previewed patches in the same sequential workflow, later Compute steps
+  should observe those previewed changes through the working document while the actual processor commit remains
+  buffered. This preserves read-your-writes behavior without materializing the whole document.
+
+  BEX function arguments can declare Blue patterns. Patterns are static Blue data, not BEX expressions. Runtime values
+  are checked with Blue's node/type matcher. BEX does not have a separate nominal type enum; it uses Blue patterns,
+  BlueIds, and Blue language matching. Name containers such as `functions`, `constants`, `args`, and `$call.args` must
+  not use Blue reserved keys or invalid reserved names as user-defined identifiers.
+
+  Evaluation is deterministic and gas-metered. BEX gas charges expression/value construction work: compilation,
+  operator evaluation, reads, conversions, loops, collection operations, patch construction, event construction,
+  intrinsic calls, and output conversion. Blue Contracts separately charges actual patch application, Document Update
+  cascades, emitted-event routing, checkpoints, lifecycle, termination, and processor state changes. BEX gas therefore
+  accounts for computing result data, not for committing that data to the document.
+type: Coordination/Sequential Workflow Step
+expr:
+  description: |
+    Optional single BEX expression. When present without `do`, the expression result is the step result. Use this for
+    simple projections, predicates, one-value calculations, and compact policy checks.
+do:
+  type: List
+  description: |
+    Ordered BEX statement body. Statements execute sequentially, may define variables, branch, iterate bounded
+    collections, append changes/events to result accumulators, call functions, return early, or fail deterministically.
+    They do not directly mutate the selected document.
+definition:
+  description: |
+    Optional reference to a reusable Compute Definition containing functions and constants. A concrete workflow runtime
+    defines whether this is a contract-map key, BlueId reference, or another deterministic lookup. The lookup must be
+    stable for content identity and deterministic execution.
+entry:
+  type: Text
+  description: |
+    Entry function name to invoke when a definition or local functions are used. If omitted, the runtime uses the step's
+    inline `expr` or `do` body according to Compute semantics.
+constants:
+  type: Dictionary
+  description: |
+    Literal constants available through `$const`. Unknown constants fail at compile time. Constant names are user-defined
+    identifiers and must not collide with Blue reserved keys or invalid names.
+functions:
+  type: Dictionary
+  description: |
+    Local BEX function definitions keyed by function name. Functions may declare required arguments using static Blue
+    patterns and may contain `expr` or `do` bodies. Unknown functions, missing arguments, and extra arguments fail
+    deterministically.
+emitEvents:
+  type: Boolean
+  value: true
+  description: |
+    When true, a result object containing an `events` list requests those events to be emitted by the workflow/processor.
+    Compute itself still does not route events; the processor validates, charges, enqueues, bridges, and exposes them.
+returnResult:
+  type: Boolean
+  value: true
+  description: |
+    When true, the computed result is stored under the step name for later workflow steps. When false, the step may still
+    contribute events or changes according to the host workflow semantics but does not export a step result.
+gasLimit:
+  type: Integer
+  description: |
+    Optional maximum BEX gas for this step. If omitted, the host or workflow runtime chooses the applicable default. Gas
+    exhaustion causes deterministic compute failure.

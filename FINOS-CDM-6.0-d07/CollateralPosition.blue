@@ -1,26 +1,25 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CollateralPosition.schema.json
-name: CollateralPosition
-namespace: cdm/event/common
+name: cdm/event/common/CollateralPosition
 description: Specifies the individual components of collateral positions.
 cashBalance:
   description: The aggregate cost of proceeds
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 collateralPositionStatus:
   description: Indicates the collateral positions settlement status.
-  type: FINOS-CDM-6.0-d07/CollateralStatusEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/common/CollateralStatusEnum
 priceQuantity:
   description: Position with many price quantities.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PriceQuantity
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceQuantity
   schema:
     minItems: 1
 product:
   description: The product underlying the position.
-  type: FINOS-CDM-6.0-d07/Product
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Product
 tradeReference:
   description: "Reference to the Contract, in case product is contractual and the contract has been formed"
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaTradeState
+  type: FINOS-CDM-6.0-d07/cdm/event/common/metafields/ReferenceWithMetaTradeState
 treatment:
   description: |
     Specifies if there is any treatment to be applied to collateral, such as percentage discount which will impact collateral value.
-  type: FINOS-CDM-6.0-d07/CollateralTreatment
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralTreatment

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-DateRange.schema.json
-name: DateRange
-namespace: cdm/base/datetime
+name: cdm/base/datetime/DateRange
 description: |
   A class defining a contiguous series of calendar dates. The date range is defined as all the dates between and including the start and the end date. The start date must fall on or before the end date.
 endDate:

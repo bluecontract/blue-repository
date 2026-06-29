@@ -1,6 +1,6 @@
 name: Session Epoch Advanced
 description: Snapshot captured from a target session epoch emission.
-type: Conversation/Event
+type: Coordination/Event
 sessionId:
   type: Text
   description: Session whose state advanced.

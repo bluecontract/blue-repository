@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-SpreadCalculationMethodEnum.schema.json
-name: SpreadCalculationMethodEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/SpreadCalculationMethodEnum
 description: |
   Method by which spread is calculated. For example on an asset swap: 'ParPar' or 'Proceeds' may be the method indicated.
 type: Text

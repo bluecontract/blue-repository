@@ -1,5 +1,5 @@
 name: Subscription Update
-type: Conversation/Event
+type: Coordination/Event
 description: Update to a subscription.
 subscriptionId:
   type: Text

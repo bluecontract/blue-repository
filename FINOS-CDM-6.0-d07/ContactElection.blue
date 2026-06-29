@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ContactElection.schema.json
-name: ContactElection
-namespace: cdm/product/collateral
+name: cdm/product/collateral/ContactElection
 description: |
   A class to specify the parties' election to specify contact information, in relation to elections such as the Addresses for Transfer or the Demand and Notices as specified in the ISDA Credit Support Annex agreement.
 partyElection:
   description: "The parties' contact information election."
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyContactInformation
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyContactInformation
   schema:
     minItems: 2
     maxItems: 2

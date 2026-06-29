@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-LoanParticipation.schema.json
-name: LoanParticipation
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/LoanParticipation
 description: |
   A class to specify loan with a participation agreement whereby the buyer is capable of creating, or procuring the creation of, a contractual right in favour of the seller that provides the seller with recourse to the participation seller for a specified share in any payments due under the relevant loan which are received by the participation seller. ISDA 2003 Term: Direct Loan Participation.
 applicable:

@@ -1,0 +1,23 @@
+name: Compute Definition
+type: Marker
+description: |
+  Reusable BEX definition containing constants and functions that can be referenced by Compute steps. A Compute
+  Definition lets a document keep shared deterministic logic in one place while still representing that logic as Blue
+  data that affects document identity.
+
+  Constants are literal values accessed with `$const`. Functions are named BEX programs with optional static Blue
+  argument patterns. Definitions do not execute by themselves; a Compute step selects an entry function or imports the
+  definition's functions/constants into its compilation context.
+
+  Because this node is part of identity, changing a function body, argument pattern, constant, or description changes
+  the definition's BlueId and therefore changes the semantic identity of documents that reference it.
+constants:
+  type: Dictionary
+  description: |
+    Literal named constants available to functions or referencing Compute steps through `$const`. Constant names are
+    static identifiers and must not use reserved Blue language keys.
+functions:
+  type: Dictionary
+  description: |
+    Named BEX functions. Each function may declare argument patterns and either an `expr` or `do` body. Functions are
+    deterministic and have no ambient side effects.

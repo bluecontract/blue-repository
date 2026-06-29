@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestHandlingEnum.schema.json
-name: CollateralInterestHandlingEnum
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralInterestHandlingEnum
 description: "How is collateral interest to be handled?"
 type: Text
 schema:

@@ -1,21 +1,20 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-Commodity.schema.json
-name: Commodity
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/Commodity
 description: Identifies a specific commodity by referencing a product identifier or by a product definition.
 commodityProductDefinition:
   description: Specifies the commodity underlier in the event that no ISDA Commodity Reference Benchmark exists.
-  type: FINOS-CDM-6.0-d07/CommodityProductDefinition
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/CommodityProductDefinition
 deliveryDateReference:
   description: |
     Specifies the parameters for identifying the relevant contract date when the commodity reference price is a futures contract.
-  type: FINOS-CDM-6.0-d07/DeliveryDateParameters
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DeliveryDateParameters
 exchange:
   description: "If the Asset is listed, defines the public exchange of the listing."
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 identifier:
   description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetIdentifier
   schema:
     minItems: 1
 isExchangeListed:
@@ -24,19 +23,19 @@ isExchangeListed:
 priceQuoteType:
   description: |
     Describes the required quote type of the underlying price that will be observed. Example values include 'Bid, 'Ask', 'Settlement' (for a futures contract) and 'WeightedAverage' (for some published prices and indices).
-  type: FINOS-CDM-6.0-d07/QuotationSideEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/QuotationSideEnum
   schema:
     required: true
 relatedExchange:
   description: "Provides the related Exchanges, if applicable."
   type: List
-  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     minItems: 0
 taxonomy:
   description: |
     Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Taxonomy
   schema:
     minItems: 0

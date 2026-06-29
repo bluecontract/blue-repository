@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-fro-FloatingRateIndexIdentification.schema.json
-name: FloatingRateIndexIdentification
-namespace: cdm/observable/asset/fro
+name: cdm/observable/asset/fro/FloatingRateIndexIdentification
 currency:
   description: FRO currency - 3 character ISO currrency code
-  type: FINOS-CDM-6.0-d07/ISOCurrencyCodeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/ISOCurrencyCodeEnum
 floatingRateIndex:
   description: |
     The reference index that is used to specify the floating interest rate. The FpML standard maintains the list of such indices, which are positioned as enumeration values as part of the CDM.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaFloatingRateIndexEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/rates/FieldWithMetaFloatingRateIndexEnum
 froType:
   description: "FRO type (e.g. OIS)"
   type: Text

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PriceOperandEnum.schema.json
-name: PriceOperandEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PriceOperandEnum
 type: Text
 schema:
   enum: [AccruedInterest, Commission, ForwardPoint]

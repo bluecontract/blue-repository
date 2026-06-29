@@ -1,10 +1,9 @@
-name: UmbrellaAgreementEntity
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/UmbrellaAgreementEntity
 description: A class to specify the legal entities that are part of the umbrella agreement.
 entityId:
   description: "A legal entity identifier (e.g. RED entity code)."
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 0
 terms:

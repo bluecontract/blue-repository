@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-FixedPrice.schema.json
-name: FixedPrice
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/FixedPrice
 description: A predefined price accorded by the counterparties.
 price:
   description: "Fixed price step schedule, including an initial price specified as an absolute number."
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule

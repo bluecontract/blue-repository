@@ -1,41 +1,40 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-Security.schema.json
-name: Security
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/Security
 description: Identifies a security by referencing an identifier and by specifying the sector.
 debtType:
   description: Identifies the type of debt and selected debt economics.
-  type: FINOS-CDM-6.0-d07/DebtType
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DebtType
 equityType:
   description: Identifies the type of equity.
-  type: FINOS-CDM-6.0-d07/EquityTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/EquityTypeEnum
 exchange:
   description: "If the Asset is listed, defines the public exchange of the listing."
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 fundType:
   description: Identifies the type of fund.
-  type: FINOS-CDM-6.0-d07/FundProductTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/FundProductTypeEnum
 identifier:
   description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetIdentifier
   schema:
     minItems: 1
 instrumentType:
   description: Identifies the type of an instrument using an enumerated list.
-  type: FINOS-CDM-6.0-d07/InstrumentTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/InstrumentTypeEnum
 isExchangeListed:
   description: Defines whether the Asset is listed on a public exchange.
   type: Boolean
 relatedExchange:
   description: "Provides the related Exchanges, if applicable."
   type: List
-  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     minItems: 0
 taxonomy:
   description: |
     Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Taxonomy
   schema:
     minItems: 0

@@ -1,5 +1,5 @@
 name: Linked PayNote Start Responded
-type: Conversation/Response
+type: Coordination/Response
 description: Decision response for starting a linked PayNote after successful charge.
 status:
   type: Text

@@ -11,7 +11,7 @@ agentStoreDescription:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Core/Channel
+  valueType: Channel
   description: Maps channel names to participant identifiers
 installerChannel:
   type: Text

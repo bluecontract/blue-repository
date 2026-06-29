@@ -1,0 +1,38 @@
+name: Document Bootstrap Requested
+type: Coordination/Request
+description: |
+  Event requesting creation or initialization of a Blue document or document-processing session. Bootstrap requests are
+  used when a participant, service, or parent document wants another component to instantiate a document, bind initial
+  channels, seed initial messages, or assign responsibility for the new document.
+
+  The request may carry the document to bootstrap, channel binding information, initial messages, an assignee, and an
+  actor on whose behalf the bootstrap is requested. The bootstrap processor should validate the document under Blue
+  Language and Blue Contracts rules before returning a completion response.
+document:
+  description: |
+    Document content, template, reference, or descriptor to bootstrap. The concrete bootstrap runtime defines the accepted shape.
+channelBindings:
+  type: Dictionary
+  keyType: Text
+  valueType: Channel
+  description: |
+    Mapping from channel names to binding descriptors used to connect the new document to timelines or other event sources.
+initialMessages:
+  description: |
+    Optional initial messages to place on channels or timelines during bootstrap. Shape is runtime-specific.
+  defaultMessage:
+    type: Text
+    description: Default invitation message sent to all participants.
+  perChannel:
+    type: Dictionary
+    keyType: Text
+    valueType: Text
+    description: Per-channel custom invitation messages.
+bootstrapAssignee:
+  type: Text
+  description: |
+    Actor, account, or service responsible for completing the bootstrap.
+onBehalfOf:
+  type: Text
+  description: |
+    Actor or principal for whom the bootstrap is being requested.

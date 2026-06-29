@@ -1,21 +1,20 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-TriggerEvent.schema.json
-name: TriggerEvent
-namespace: cdm/observable/event
+name: cdm/observable/event/TriggerEvent
 description: Observation point for trigger.
 featurePayment:
   description: "The feature payment, i.e. the payment made following trigger occurrence."
-  type: FINOS-CDM-6.0-d07/FeaturePayment
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/FeaturePayment
 schedule:
   description: A derivative schedule.
   type: List
-  itemType: FINOS-CDM-6.0-d07/AveragingSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/base/datetime/AveragingSchedule
   schema:
     minItems: 0
 trigger:
   description: The trigger level
-  type: FINOS-CDM-6.0-d07/Trigger
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/Trigger
   schema:
     required: true
 triggerDates:
   description: The trigger Dates.
-  type: FINOS-CDM-6.0-d07/DateList
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DateList

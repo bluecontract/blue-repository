@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-metafields-FieldWithMetaSpreadScheduleTypeEnum.schema.json
-name: FieldWithMetaSpreadScheduleTypeEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/FieldWithMetaSpreadScheduleTypeEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/SpreadScheduleTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/SpreadScheduleTypeEnum

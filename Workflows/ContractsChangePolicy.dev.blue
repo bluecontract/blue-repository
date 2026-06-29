@@ -1,0 +1,18 @@
+name: Contracts Change Policy
+type: Marker
+description: |
+  Marker contract that controls how the document's `contracts` map may be changed by coordination workflows. When
+  `requireSectionChanges` is present and not false, workflows such as Change Workflow and Accept Change Workflow must
+  reject raw changeset entries that directly target `/contracts`; callers must instead use structured `sectionChanges`.
+
+  The purpose is reviewability and safety. Contract entries define runtime behavior, channels, handlers, policies,
+  sections, and operations. Arbitrary low-level patches to `/contracts` are hard for humans and agents to audit. By
+  requiring Document Section Changes, this marker forces contract edits to be grouped by section with explicit related
+  contracts and section metadata.
+
+  This marker is interpreted by the coordination change workflows, not by the Blue Language. A processor or workflow that
+  does not support this policy should treat it according to its must-understand and contract capability rules.
+requireSectionChanges:
+  type: Boolean
+  description: |-
+    Policy flag; when present and not false, /contracts changes must use sectionChanges. Set false to allow direct changeset edits.

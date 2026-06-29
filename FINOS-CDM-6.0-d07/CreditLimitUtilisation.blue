@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-CreditLimitUtilisation.schema.json
-name: CreditLimitUtilisation
-namespace: cdm/event/workflow
+name: cdm/event/workflow/CreditLimitUtilisation
 description: Credit limit utilisation breakdown by executed trades and pending orders.
 executed:
   description: Credit limit utilisation attributable to executed trades.
-  type: FINOS-CDM-6.0-d07/CreditLimitUtilisationPosition
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/CreditLimitUtilisationPosition
 pending:
   description: Credit limit utilisation attributable to pending unexecuted orders.
-  type: FINOS-CDM-6.0-d07/CreditLimitUtilisationPosition
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/CreditLimitUtilisationPosition

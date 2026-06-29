@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-MultipleValuationDates.schema.json
-name: MultipleValuationDates
-namespace: cdm/observable/asset
+name: cdm/observable/asset/MultipleValuationDates
 businessDays:
   description: |
     A number of business days. Its precise meaning is dependant on the context in which this element is used. ISDA 2003 Term: Business Day.

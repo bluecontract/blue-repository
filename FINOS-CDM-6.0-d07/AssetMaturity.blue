@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AssetMaturity.schema.json
-name: AssetMaturity
-namespace: cdm/product/collateral
+name: cdm/product/collateral/AssetMaturity
 maturityRange:
   description: Represents a filter based on the underlying asset maturity.
-  type: FINOS-CDM-6.0-d07/PeriodRange
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/PeriodRange
   schema:
     required: true
 maturityType:
   description: Specifies whether the maturity range is the remaining or original maturity.
-  type: FINOS-CDM-6.0-d07/MaturityTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/MaturityTypeEnum
   schema:
     required: true

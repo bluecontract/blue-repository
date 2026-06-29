@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-Clause.schema.json
-name: Clause
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/Clause
 description: |
   A type for documenting additional clause that cannot yet be represented with the model and yet needed for a digital representation of the agreement
 identifier:
@@ -9,7 +8,7 @@ identifier:
 subcomponents:
   description: Additional hierarchichal components of the clause if relevant
   type: List
-  itemType: FINOS-CDM-6.0-d07/Clause
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/Clause
   schema:
     minItems: 0
 terms:

@@ -1,31 +1,30 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-EligibleCollateralSpecification.schema.json
-name: EligibleCollateralSpecification
-namespace: cdm/product/collateral
+name: cdm/product/collateral/EligibleCollateralSpecification
 description: Represents a set of criteria used to specify eligible collateral.
 counterparty:
   description: Specification of the roles of the counterparties to the specification.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Counterparty
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Counterparty
   schema:
     minItems: 0
     maxItems: 2
 criteria:
   description: Represents a set of criteria used to specify eligible collateral.
   type: List
-  itemType: FINOS-CDM-6.0-d07/EligibleCollateralCriteria
+  itemType: FINOS-CDM-6.0-d07/cdm/product/collateral/EligibleCollateralCriteria
   schema:
     minItems: 1
 identifier:
   description: |
     Specifies the identifier(s) to uniquely identify eligible collateral or a set of eligible collateral, such as a schedule or equivalant for an identity issuer.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Identifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/Identifier
   schema:
     minItems: 0
 party:
   description: The parties associated with the specification.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Party
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/Party
   schema:
     minItems: 0
     maxItems: 2
@@ -33,6 +32,6 @@ partyRole:
   description: |
     Specifies the role(s) that each of the party(s) is playing in the context of the specification, eg Payor or Receiver.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyRole
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRole
   schema:
     minItems: 0

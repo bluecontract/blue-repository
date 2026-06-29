@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Document.schema.json
-name: Document
-namespace: cdm/regulation
+name: cdm/regulation/Document
 finInstrmRptgTxRpt:
-  type: FINOS-CDM-6.0-d07/FinInstrmRptgTxRpt
+  type: FINOS-CDM-6.0-d07/cdm/regulation/FinInstrmRptgTxRpt
   schema:
     required: true

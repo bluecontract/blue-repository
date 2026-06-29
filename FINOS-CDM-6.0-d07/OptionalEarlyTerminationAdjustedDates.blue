@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionalEarlyTerminationAdjustedDates.schema.json
-name: OptionalEarlyTerminationAdjustedDates
-namespace: cdm/product/template
+name: cdm/product/template/OptionalEarlyTerminationAdjustedDates
 description: |
   A data defining:  the adjusted dates associated with an optional early termination provision.
 earlyTerminationEvent:
   description: The adjusted dates associated with an individual early termination date.
   type: List
-  itemType: FINOS-CDM-6.0-d07/EarlyTerminationEvent
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/EarlyTerminationEvent
   schema:
     minItems: 1

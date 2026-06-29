@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-RegionalGovernmentIssuerType.schema.json
-name: RegionalGovernmentIssuerType
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/RegionalGovernmentIssuerType
 description: Represents a class to allow specification of different type of Regional government collateral.
 sovereignRecourse:
   description: |

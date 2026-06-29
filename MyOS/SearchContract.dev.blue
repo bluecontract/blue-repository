@@ -1,5 +1,5 @@
 name: Search Contract
-type: Core/Marker
+type: Marker
 description: |
   Marker contract that describes how a document should project search fields
   for indexing (`q`, `kv`, `geo`). Paths must follow BlueNode.get(path)

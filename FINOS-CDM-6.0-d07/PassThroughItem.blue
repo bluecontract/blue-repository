@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-PassThroughItem.schema.json
-name: PassThroughItem
-namespace: cdm/product/template
+name: cdm/product/template/PassThroughItem
 description: Class to represent a single pass through payment.
 passThroughPercentage:
   description: Percentage of payments from the underlier which are passed through.
@@ -9,6 +8,6 @@ passThroughPercentage:
     required: true
 payerReceiver:
   description: "This attribute doesn't exists in the FpML construct, which makes use of the PayerReceiver.model group."
-  type: FINOS-CDM-6.0-d07/PayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiver
   schema:
     required: true

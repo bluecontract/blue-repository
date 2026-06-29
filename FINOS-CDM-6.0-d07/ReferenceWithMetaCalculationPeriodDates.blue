@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-metafields-ReferenceWithMetaCalculationPeriodDates.schema.json
-name: ReferenceWithMetaCalculationPeriodDates
-namespace: cdm/product/common/schedule/metafields
+name: cdm/product/common/schedule/metafields/ReferenceWithMetaCalculationPeriodDates
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

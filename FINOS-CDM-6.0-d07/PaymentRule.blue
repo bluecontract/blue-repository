@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PaymentRule.schema.json
-name: PaymentRule
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/PaymentRule
 description: |
   A class defining the payment calculation rule. As of FpML 5.10, percentage rule is the only calculation rule that has been specified as part of the standard.
 percentageRule:
   description: |
     This attribute is not present as part of the FpML construct, as the payment rule is specialised by means of runtime type extension through the xsi:type.
-  type: FINOS-CDM-6.0-d07/PercentageRule
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PercentageRule

@@ -1,0 +1,19 @@
+name: Customer Action Responded
+type: Coordination/Response
+description: |
+  Event recording a customer's response to a previously requested action. It captures which action label was selected,
+  optional input supplied by the customer, and the response time when available.
+
+  This event is not proof of authorization by itself. Actor and source attribution should come from the enclosing
+  Timeline Entry or event source. Workflows should check Actor Policy when the response authorizes sensitive behavior.
+actionLabel:
+  type: Text
+  description: |
+    Label of the selected action from the corresponding Customer Action Requested event.
+input:
+  description: |
+    Optional structured input supplied by the customer. Shape depends on the requested action.
+respondedAt:
+  type: Common/Timestamp
+  description: |
+    Optional response timestamp in the provider/application time model.

@@ -1,5 +1,5 @@
 name: Call Operation Accepted
-type: Conversation/Response
+type: Coordination/Response
 description: MyOS Admin accepted the call and submitted the operation request.
 targetSessionId:
   type: Text

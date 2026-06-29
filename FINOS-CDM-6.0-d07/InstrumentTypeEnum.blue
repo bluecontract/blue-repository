@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-InstrumentTypeEnum.schema.json
-name: InstrumentTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/InstrumentTypeEnum
 description: Represents an enumeration list to indentify the type of an instrument.
 type: Text
 schema:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-CalculationPeriod.schema.json
-name: CalculationPeriod
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/CalculationPeriod
 description: |
   A data defining:  the parameters used in the calculation of a fixed or floating rate calculation period amount. This data forms:  part of cashflows representation of a swap stream.
 adjustedEndDate:
@@ -23,11 +22,11 @@ fixedRate:
   type: Double
 floatingRateDefinition:
   description: The floating rate reset information for the calculation period.
-  type: FINOS-CDM-6.0-d07/FloatingRateDefinition
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/FloatingRateDefinition
 forecastAmount:
   description: |
     The amount representing the forecast of the accrued value of the calculation period. An intermediate value used to generate the forecastPaymentAmount in the PaymentCalculationPeriod.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 forecastRate:
   description: |
     A value representing the forecast rate used to calculate the forecast future value of the accrual period. This is a calculated rate determined based on averaging the rates in the rateObservation elements, and incorporates all of the rate treatment and averaging rules. A value of 1% should be represented as 0.01.
@@ -35,7 +34,7 @@ forecastRate:
 fxLinkedNotionalAmount:
   description: |
     The amount that a cashflow will accrue interest on. This is the calculated amount of the FX linked - i.e. the other currency notional amount multiplied by the appropriate FX spot rate.
-  type: FINOS-CDM-6.0-d07/FxLinkedNotionalAmount
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/FxLinkedNotionalAmount
 notionalAmount:
   description: The amount that a cashflow will accrue interest on.
   type: Double

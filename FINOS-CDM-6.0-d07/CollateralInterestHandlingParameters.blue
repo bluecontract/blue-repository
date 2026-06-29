@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestHandlingParameters.schema.json
-name: CollateralInterestHandlingParameters
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralInterestHandlingParameters
 description: |
   Represents parameters that describe how calculated interest amounts are handled, i.e. are they transferred/distributed, or is the collateral balance adjusted, is netting done, and any other special handling.
 accrueInterestOnUnsettledInterest:
@@ -12,7 +11,7 @@ alternativeProvision:
   type: Text
 alternativeToInterestAmount:
   description: Specifies the alternative to interest amounts.
-  type: FINOS-CDM-6.0-d07/AlternativeToInterestAmountEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/AlternativeToInterestAmountEnum
 cutoffTime:
   description: Specifies the time of day that interest needs to be confirmed by.
   type: Text
@@ -23,15 +22,15 @@ includeAccrualInMarginCalc:
     required: true
 interestAmountApplication:
   description: The application of Interest Amount with respect to the Delivery Amount and the Return Amount.
-  type: FINOS-CDM-6.0-d07/InterestAmountApplication
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/InterestAmountApplication
 interestPaymentHandling:
   description: Specifies how the collateral interest is to be handled.
-  type: FINOS-CDM-6.0-d07/CollateralInterestHandlingEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralInterestHandlingEnum
   schema:
     required: true
 interestRolloverLimit:
   description: Specifies the level below which the interest will be rolled over.
-  type: FINOS-CDM-6.0-d07/NumberBound
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NumberBound
 netInterestWithMarginCalls:
   description: |
     Indicates whether the interest amount may be offset against any margin call deliver or return amounts?   (aka 'net payments' indicator).
@@ -46,7 +45,7 @@ netPostedAndHeldInterest:
     required: true
 notification:
   description: Specifies the terms describing notification requirements.
-  type: FINOS-CDM-6.0-d07/CollateralInterestNotification
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralInterestNotification
 onFullReturn:
   description: |
     Indicates the option that accrued interest should be calculated and distributed when a full return of collateral occurs.
@@ -62,9 +61,9 @@ onPartialReturn:
 paymentBusinessCenter:
   description: Specifies applicable business centers for payments.
   type: List
-  itemType: FINOS-CDM-6.0-d07/BusinessCenterEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenterEnum
   schema:
     minItems: 0
 writeoffLimit:
   description: "Specifies the level below which the interest will be written off; if omitted write-off is not applicable."
-  type: FINOS-CDM-6.0-d07/NumberBound
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NumberBound

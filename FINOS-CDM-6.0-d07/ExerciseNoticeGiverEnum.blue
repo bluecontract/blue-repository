@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExerciseNoticeGiverEnum.schema.json
-name: ExerciseNoticeGiverEnum
-namespace: cdm/product/template
+name: cdm/product/template/ExerciseNoticeGiverEnum
 description: Defines the principal party to the trade that has the right to exercise.
 type: Text
 schema:

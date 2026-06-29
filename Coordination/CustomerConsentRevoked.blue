@@ -1,0 +1,17 @@
+name: Customer Consent Revoked
+type: Coordination/Event
+reason:
+  type: Text
+  description: |
+    Optional human-readable or structured reason for revocation.
+revokedAt:
+  type: Common/Timestamp
+  description: |
+    Timestamp when revocation was recorded by the source or provider.
+description: |
+  Event indicating that a customer or participant revoked a previously granted consent, authorization, or permission.
+  Workflows should treat this as a high-priority signal and re-check any operation that depends on the revoked consent.
+
+  The event records an optional reason and timestamp. Actor/source attribution should be supplied by the enclosing
+  Timeline Entry or event source so that processors can determine whether the revocation came from an authorized
+  principal or an allowed delegate.

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-ObservationDate.schema.json
-name: ObservationDate
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/ObservationDate
 description: Specifies a single date on which market observations take place and specifies optional associated weighting.
 adjustedDate:
   description: |

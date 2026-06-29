@@ -1,30 +1,29 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-ReferenceObligation.schema.json
-name: ReferenceObligation
-namespace: cdm/product/asset
+name: cdm/product/asset/ReferenceObligation
 description: A class to specify the reference obligation that is associated with a credit derivative instrument.
 guarantor:
   description: |
     The party that guarantees by way of a contractual arrangement to pay the debts of an obligor if the obligor is unable to make the required payments itself. ISDA 2003 Term: Guarantor.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 guarantorReference:
   description: |
     A pointer style reference to a reference entity defined elsewhere in the document. Used when the reference entity is the guarantor.
   type: Text
 loan:
   description: Identifies the underlying asset when it is a loan.
-  type: FINOS-CDM-6.0-d07/Loan
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Loan
 primaryObligor:
   description: |
     The entity primarily responsible for repaying debt to a creditor as a result of borrowing or issuing bonds. ISDA 2003 Term: Primary Obligor.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 primaryObligorReference:
   description: |
     A pointer style reference to a reference entity defined elsewhere in the document. Used when the reference entity is the primary obligor.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaLegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaLegalEntity
 security:
   description: |
     Identifies the underlying asset when it is a security, such as a bond or convertible bond. The security data type requires one or more productIdentifiers, specificaiton of the security type (e.g. debt), and includes optional attributes to specify a debt class, such as asset-backed, as well as seniority.
-  type: FINOS-CDM-6.0-d07/Security
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Security
 standardReferenceObligation:
   description: |
     Indicates if the reference obligation is a Standard Reference Obligation. ISDA 2014 Term: Standard Reference Obligation.

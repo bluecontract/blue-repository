@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CounterpartyOwnIssuePermitted.schema.json
-name: CounterpartyOwnIssuePermitted
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CounterpartyOwnIssuePermitted
 counterpartyOwnIssuePermitted:
   description: |
     Represents a filter based on whether it is permitted for the underlying asset to be issued by the posting entity or part of their corporate family.

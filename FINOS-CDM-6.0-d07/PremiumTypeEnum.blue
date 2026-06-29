@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PremiumTypeEnum.schema.json
-name: PremiumTypeEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PremiumTypeEnum
 description: The enumerated values to specify the premium type for forward start options.
 type: Text
 schema:

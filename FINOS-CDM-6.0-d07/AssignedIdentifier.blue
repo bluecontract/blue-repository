@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-identifier-AssignedIdentifier.schema.json
-name: AssignedIdentifier
-namespace: cdm/base/staticdata/identifier
+name: cdm/base/staticdata/identifier/AssignedIdentifier
 description: A class to specify the identifier value and its associated version.
 identifier:
   description: The identifier value.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 version:

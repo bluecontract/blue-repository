@@ -1,5 +1,5 @@
 name: Card Charge Responded
-type: Conversation/Response
+type: Coordination/Response
 description: Decision response for a card charge request.
 status:
   type: Text

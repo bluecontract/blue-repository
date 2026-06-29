@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-HaircutIndicatorEnum.schema.json
-name: HaircutIndicatorEnum
-namespace: cdm/event/common
+name: cdm/event/common/HaircutIndicatorEnum
 description: |
   Represents the enumeration indicators to specify if an asset or group of assets valuation is based on any valuation treatment haircut.
 type: Text

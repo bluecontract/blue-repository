@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-PersonIdentifierTypeEnum.schema.json
-name: PersonIdentifierTypeEnum
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/PersonIdentifierTypeEnum
 description: The enumeration values associated with person identifier sources.
 type: Text
 schema:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-LimitApplicableExtended.schema.json
-name: LimitApplicableExtended
-namespace: cdm/event/workflow
+name: cdm/event/workflow/LimitApplicableExtended
 description: |
   A class to represent the CDM attributes that are not part of the FpML standard. Once broader usage is confirmed, it is expected that those two classes can be collapsed.
 amountRemaining:
@@ -18,7 +17,7 @@ clipSize:
 currency:
   description: |
     The currency in which the applicable limit is denominated. The list of valid currencies is not presently positioned as an enumeration as part of the CDM because that scope is limited to the values specified by ISDA and FpML. As a result, implementers have to make reference to the relevant standard, such as the ISO 4217 standard for currency codes.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 limitAmount:
   description: |
     The total limit available for the limit level and limit type. While the attribute is of type integer in the CME schema, it has been specified to be of type number in the CDM to take into consideration java size limits as well as for consistency purposes with the way most monetary amounts are expressed.
@@ -30,12 +29,12 @@ limitImpactDueToTrade:
 limitLevel:
   description: |
     The level at which the limit is set: customer business, proprietary business or account level. This attribute is specified as a string as part of the CME clearing confirmation specification.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaLimitLevelEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/FieldWithMetaLimitLevelEnum
 limitType:
   description: |
     Standard code to indicate which type of credit line is being referred to - i.e. IM, DV01, PV01, CS01, Notional, Clip Size, Notional, maximumOrderQuantity.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaCreditLimitTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/FieldWithMetaCreditLimitTypeEnum
 utilization:
-  type: FINOS-CDM-6.0-d07/CreditLimitUtilisation
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/CreditLimitUtilisation
 velocity:
-  type: FINOS-CDM-6.0-d07/Velocity
+  type: FINOS-CDM-6.0-d07/cdm/event/workflow/Velocity

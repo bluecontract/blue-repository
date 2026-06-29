@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendCurrency.schema.json
-name: DividendCurrency
-namespace: cdm/product/asset
+name: cdm/product/asset/DividendCurrency
 description: |
   A class to specify the currency in which the dividends will be denominated, i.e. either in the dividend currency or in a currency specified as part of the contract.
 currency:
   description: |
     The currency in which the dividend is denominated. The list of valid currencies is not presently positioned as an enumeration as part of the CDM because that scope is limited to the values specified by ISDA and FpML. As a result, implementers have to make reference to the relevant standard, such as the ISO 4217 standard for currency codes.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 currencyReference:
   description: Reference to a currency specified elsewhere in the document
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/ReferenceWithMetaString
 determinationMethod:
   description: "Specifies the method according to which the dividend is determined, e.g. the dividend currency."
-  type: FINOS-CDM-6.0-d07/DeterminationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/common/DeterminationMethodEnum

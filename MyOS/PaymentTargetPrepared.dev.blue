@@ -1,5 +1,5 @@
 name: Payment Target Prepared
-type: Conversation/Response
+type: Coordination/Response
 description: Result emitted after MyOS Admin successfully prepares an opaque recipient payment target.
 recipient:
   type: MyOS/MyOS Balance Account

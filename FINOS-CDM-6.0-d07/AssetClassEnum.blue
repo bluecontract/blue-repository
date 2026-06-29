@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-AssetClassEnum.schema.json
-name: AssetClassEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/AssetClassEnum
 description: The enumerated values to specify the FpML asset class categorization.
 type: Text
 schema:

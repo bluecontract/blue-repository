@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-SchedulePeriod.schema.json
-name: SchedulePeriod
-namespace: cdm/product/template
+name: cdm/product/template/SchedulePeriod
 description: |
   A class that defines the period of a schedule. The period contains a set of start and end dates, quantities, fixing, and pricing data.
 calculationPeriod:
   description: Period for which the payment is generated.
-  type: FINOS-CDM-6.0-d07/DateRange
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DateRange
   schema:
     required: true
 deliveryPeriod:
   description: Period and time profile over which the delivery takes place.
-  type: FINOS-CDM-6.0-d07/CalculationScheduleDeliveryPeriods
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/CalculationScheduleDeliveryPeriods
 fixingPeriod:
   description: Period over which the underlying price is observed.
-  type: FINOS-CDM-6.0-d07/DateRange
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DateRange
   schema:
     required: true
 paymentDate:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-QuotationStyleEnum.schema.json
-name: QuotationStyleEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/QuotationStyleEnum
 description: |
   The enumerated values to specify the actual quotation style (e.g. PointsUpFront, TradedSpread) used to quote a credit default swap fee leg.
 type: Text

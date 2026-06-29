@@ -1,0 +1,12 @@
+name: All Timelines Channel
+type: Channel
+description: |
+  Dynamic union channel that matches entries from all Timeline-derived channels in the same contracts scope. It is the
+  compact form for operations that should be callable by every current participant, such as chat or purpose/role
+  confirmation. When participant channels are added or removed through normal document updates, this channel follows the
+  current document structure automatically.
+
+  All Timelines Channel does not create a new timeline, does not merge provider proofs, and does not change ordering.
+  The feeder/runtime must still obtain completeness for every timeline that participates in the current document scope
+  and must deliver entries in the canonical deterministic order. The channel only simplifies authoring by avoiding a
+  manually maintained Composite Timeline Channel for "everyone at the table".

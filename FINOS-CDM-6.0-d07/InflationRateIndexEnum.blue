@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-rates-InflationRateIndexEnum.schema.json
-name: InflationRateIndexEnum
-namespace: cdm/base/staticdata/asset/rates
+name: cdm/base/staticdata/asset/rates/InflationRateIndexEnum
 description: The enumerated values to specify the list of inflation rate indices.
 type: Text
 schema:

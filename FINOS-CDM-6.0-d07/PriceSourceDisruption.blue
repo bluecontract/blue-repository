@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PriceSourceDisruption.schema.json
-name: PriceSourceDisruption
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PriceSourceDisruption
 description: |
   A data defining:  the parameters used to get a price quote to replace the settlement rate option that is disrupted.
 fallbackReferencePrice:
   description: |
     The method, prioritised by the order it is listed in this element, to get a replacement rate for the disrupted settlement rate option.
-  type: FINOS-CDM-6.0-d07/FallbackReferencePrice
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FallbackReferencePrice
   schema:
     required: true

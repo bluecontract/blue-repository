@@ -1,5 +1,5 @@
 name: Payment Cancellation Failed
-type: Conversation/Response
+type: Coordination/Response
 description: The Guarantor attempted to cancel before completion, but it failed.
 reason:
   type: Text

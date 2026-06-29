@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-RegMarginTypeEnum.schema.json
-name: RegMarginTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/RegMarginTypeEnum
 description: |
   Represents the enumeration values to specify the margin type in relation to bilateral or regulatory obligation.
 type: Text

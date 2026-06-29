@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-ObservationShiftCalculation.schema.json
-name: ObservationShiftCalculation
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/ObservationShiftCalculation
 description: |
   Parameters to describe the observation shift for a daily compounded or averaged floating rate. This type is used to represent modular computed rates in interestRatePayouts.
 additionalBusinessDays:
   description: Any additional business days that be applicable.
-  type: FINOS-CDM-6.0-d07/BusinessCenters
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenters
 calculationBase:
   description: "Whether the rate is calculated in advance, in arrears, or relative to a reset date."
-  type: FINOS-CDM-6.0-d07/ObservationPeriodDatesEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/ObservationPeriodDatesEnum
 offsetDays:
   description: The number of days of observation shift.
   type: Integer

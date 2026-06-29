@@ -1,0 +1,11 @@
+name: Propose Change Operation
+type: Coordination/Operation
+description: |
+  Operation marker for proposing a Change Request without applying it immediately. The operation records a proposed
+  change under proposal state so another participant or policy-controlled workflow can later accept or reject it.
+
+  Propose Change is used when a document requires review, approval, negotiation, or human consent before applying a
+  mutation. The request shape is Workflows/Change Request, including a summary and optional structured sectionChanges.
+  The operation itself only declares the action; the paired Propose Change Workflow implements storage and validation.
+request:
+  type: Workflows/Change Request

@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-Barrier.schema.json
-name: Barrier
-namespace: cdm/product/template
+name: cdm/product/template/Barrier
 description: As per ISDA 2002 Definitions.
 barrierCap:
   description: A trigger level approached from beneath.
-  type: FINOS-CDM-6.0-d07/TriggerEvent
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/TriggerEvent
 barrierFloor:
   description: A trigger level approached from above.
-  type: FINOS-CDM-6.0-d07/TriggerEvent
+  type: FINOS-CDM-6.0-d07/cdm/observable/event/TriggerEvent

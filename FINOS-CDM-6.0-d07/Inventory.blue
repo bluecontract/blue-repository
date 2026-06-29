@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-Inventory.schema.json
-name: Inventory
-namespace: cdm/event/position
+name: cdm/event/position/Inventory
 description: A data type that can be used to describe an inventory of securities.
 inventoryRecord:
   description: |
     An array holding the list of inventory being described. Each element in the inventoryRecord array represents an individual piece of inventory i.e. a security.
   type: List
-  itemType: FINOS-CDM-6.0-d07/InventoryRecord
+  itemType: FINOS-CDM-6.0-d07/cdm/event/position/InventoryRecord
   schema:
     minItems: 0

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CorporateActionTypeEnum.schema.json
-name: CorporateActionTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/CorporateActionTypeEnum
 description: The enumerated values to specify the origin of a corporate action transfer.
 type: Text
 schema:

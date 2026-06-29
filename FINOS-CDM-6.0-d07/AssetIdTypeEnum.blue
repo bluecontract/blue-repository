@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-AssetIdTypeEnum.schema.json
-name: AssetIdTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/AssetIdTypeEnum
 description: Extends product identifiers with additional identifier sources for Assets.
 type: Text
 schema:

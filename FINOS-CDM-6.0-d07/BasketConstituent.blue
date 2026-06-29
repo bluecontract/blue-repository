@@ -1,44 +1,43 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-BasketConstituent.schema.json
-name: BasketConstituent
-namespace: cdm/observable/asset
+name: cdm/observable/asset/BasketConstituent
 description: Identifies the constituents of the basket
 Asset:
   description: |
     The object to be observed is an Asset, ie something that can be owned and transferred in the financial markets.
-  type: FINOS-CDM-6.0-d07/Asset
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Asset
 Basket:
   description: |
     The object to be observed is a Basket, ie a collection of Observables with an identifier and optional weightings.
-  type: FINOS-CDM-6.0-d07/Basket
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Basket
 finalValuationPrice:
   description: |
     Specifies a final price schedule to be associated to an individual underlier that is a basket constituent. The multiple cardinality is aligned to the one of the PriceQuantity->price that this price is referencing.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
   schema:
     minItems: 0
 Index:
   description: |
     The object to be observed is an Index, ie an observable computed on the prices, rates or valuations of a number of assets.
-  type: FINOS-CDM-6.0-d07/Index
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Index
 initialValuationPrice:
   description: |
     Specifies an initial price schedule to be associated to an individual underlier that is a basket constituent. The multiple cardinality is aligned to the one of the PriceQuantity->price that this price is referencing.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
   schema:
     minItems: 0
 interimValuationPrice:
   description: |
     Specifies an interim price schedule to be associated to an individual underlier that is a basket constituent. The multiple cardinality is aligned to the one of the PriceQuantity->price that this price is referencing.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
   schema:
     minItems: 0
 quantity:
   description: |
     Specifies a quantity schedule to be associated to an individual underlier that is a basket constituent. The multiple cardinality is aligned to the one of the PriceQuantity->quantity that this quantity is referencing.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceWithMetaNonNegativeQuantitySchedule
+  itemType: FINOS-CDM-6.0-d07/cdm/base/math/metafields/ReferenceWithMetaNonNegativeQuantitySchedule
   schema:
     minItems: 0

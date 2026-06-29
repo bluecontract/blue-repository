@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-AncillaryEntity.schema.json
-name: AncillaryEntity
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/AncillaryEntity
 description: |
   Holds an identifier for an ancillary entity, either identified directly via its ancillary role or directly as a legal entity.
 ancillaryParty:
   description: |
     Identifies a party via its ancillary role on a transaction (e.g. CCP or DCO through which the trade should be cleared.)
-  type: FINOS-CDM-6.0-d07/AncillaryRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/AncillaryRoleEnum
 legalEntity:
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity

@@ -1,5 +1,5 @@
 name: Adding Participant Responded
-type: Conversation/Response
+type: Coordination/Response
 request:
   type: MyOS/Adding Participant Requested
 status:

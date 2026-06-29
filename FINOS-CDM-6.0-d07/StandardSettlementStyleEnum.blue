@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-StandardSettlementStyleEnum.schema.json
-name: StandardSettlementStyleEnum
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/StandardSettlementStyleEnum
 description: |
   The enumerated values to specify whether a trade is settling using standard settlement instructions as well as whether it is a candidate for settlement netting.
 type: Text

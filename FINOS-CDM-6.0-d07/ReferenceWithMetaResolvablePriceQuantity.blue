@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-metafields-ReferenceWithMetaResolvablePriceQuantity.schema.json
-name: ReferenceWithMetaResolvablePriceQuantity
-namespace: cdm/product/common/settlement/metafields
+name: cdm/product/common/settlement/metafields/ReferenceWithMetaResolvablePriceQuantity
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

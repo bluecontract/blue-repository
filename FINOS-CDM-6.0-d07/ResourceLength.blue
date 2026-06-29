@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-ResourceLength.schema.json
-name: ResourceLength
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/ResourceLength
 description: A class to indicate the length of the resource.
 lengthUnit:
   description: "The length unit of the resource. For example, pages (pdf, text documents) or time (audio, video files)."
-  type: FINOS-CDM-6.0-d07/LengthUnitEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/LengthUnitEnum
   schema:
     required: true
 lengthValue:

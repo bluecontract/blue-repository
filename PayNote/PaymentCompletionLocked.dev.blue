@@ -1,5 +1,5 @@
 name: Payment Completion Locked
-type: Conversation/Response
+type: Coordination/Response
 description: >
   Payment completion was locked. Subsequent completion attempts
   must be rejected until explicitly unlocked.

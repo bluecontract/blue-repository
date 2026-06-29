@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-AveragingCalculation.schema.json
-name: AveragingCalculation
-namespace: cdm/product/template
+name: cdm/product/template/AveragingCalculation
 description: |
   Defines parameters for use in cases when a valuation or other term is based on an average of market observations.
 averagingMethod:
   description: Specifies enumerations for the type of averaging calculation.
-  type: FINOS-CDM-6.0-d07/AveragingCalculationMethod
+  type: FINOS-CDM-6.0-d07/cdm/base/math/AveragingCalculationMethod
   schema:
     required: true
 precision:
   description: Rounding applied to the average calculation.
-  type: FINOS-CDM-6.0-d07/Rounding
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Rounding
   schema:
     required: true

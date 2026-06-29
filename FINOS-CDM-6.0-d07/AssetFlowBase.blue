@@ -1,21 +1,20 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-AssetFlowBase.schema.json
-name: AssetFlowBase
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/AssetFlowBase
 description: |
   Defines the basic parameters of an asset transfer, e.g. a cashflow: what (the asset), how much (the quantity) and when (the settlement date).
 asset:
   description: "Represents the object that is subject to the transfer, it could be an asset or a reference."
-  type: FINOS-CDM-6.0-d07/Asset
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Asset
   schema:
     required: true
 quantity:
   description: |
     Represents the amount of the asset to be transferred. The cashflow amount is always a positive number, as the cashflow direction is implied by the payer/receiver attribute.
-  type: FINOS-CDM-6.0-d07/NonNegativeQuantity
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NonNegativeQuantity
   schema:
     required: true
 settlementDate:
   description: Represents the date on which the transfer to due.
-  type: FINOS-CDM-6.0-d07/AdjustableOrAdjustedOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrAdjustedOrRelativeDate
   schema:
     required: true

@@ -1,25 +1,24 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-MakeWholeAmount.schema.json
-name: MakeWholeAmount
-namespace: cdm/observable/asset
+name: cdm/observable/asset/MakeWholeAmount
 description: |
   A class to specify the amount to be paid by the buyer of the option if the option is exercised prior to the Early Call Date (typically applicable to the convertible bond options).
 earlyCallDate:
   description: |
     Date prior to which the option buyer will have to pay a Make Whole Amount to the option seller if he/she exercises the option.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 floatingRateIndex:
-  type: FINOS-CDM-6.0-d07/FloatingRateIndexEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/rates/FloatingRateIndexEnum
 indexTenor:
   description: "The ISDA Designated Maturity, i.e. the tenor of the floating rate."
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period
 interpolationMethod:
   description: The type of interpolation method that the calculation agent reserves the right to use.
-  type: FINOS-CDM-6.0-d07/InterpolationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/InterpolationMethodEnum
 side:
   description: "The side (bid/mid/ask) of the measure."
-  type: FINOS-CDM-6.0-d07/QuotationSideEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/QuotationSideEnum
 spread:
   description: Spread in basis points over the floating rate index.
   type: Double

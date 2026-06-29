@@ -1,0 +1,9 @@
+name: Document Bootstrap Completed
+type: Coordination/Response
+description: |
+  Lifecycle/coordination event indicating that a requested document bootstrap completed successfully. It records the
+  resulting document identifier so the requester can continue interacting with the new document or session.
+documentId:
+  type: Text
+  description: |
+    Identifier, reference, or BlueId of the bootstrapped document/session, according to the bootstrap runtime.

@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PriceComposite.schema.json
-name: PriceComposite
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PriceComposite
 description: |
   Defines the inputs required to calculate a price as a simple composite of 2 other values. The inputs consist of 2 numbers and a simple arithmetic operator. This generic data type applies to a variety of use cases where a price is obtained by simple composition, e.g. dirty = clean + accrued (Bond), forward rate = spot rate + forward point (FX) etc.
 arithmeticOperator:
   description: Specifies the arithmetic operator via an enumeration.
-  type: FINOS-CDM-6.0-d07/ArithmeticOperationEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/math/ArithmeticOperationEnum
   schema:
     required: true
 baseValue:
@@ -23,4 +22,4 @@ operand:
 operandType:
   description: |
     Optionally qualifies the type of operand: e.g. accrued or forward point.
-  type: FINOS-CDM-6.0-d07/PriceOperandEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceOperandEnum

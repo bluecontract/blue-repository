@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-SpreadSchedule.schema.json
-name: SpreadSchedule
-namespace: cdm/product/asset
+name: cdm/product/asset/SpreadSchedule
 description: Adds an optional spread type element to the Schedule to identify a long or short spread value.
 price:
   description: "The initial rate. An initial rate of 5% would be represented as 0.05."
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
 spreadScheduleType:
   description: An element which purpose is to identify a long or short spread value.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaSpreadScheduleTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/FieldWithMetaSpreadScheduleTypeEnum

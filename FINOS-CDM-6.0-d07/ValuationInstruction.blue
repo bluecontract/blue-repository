@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ValuationInstruction.schema.json
-name: ValuationInstruction
-namespace: cdm/event/common
+name: cdm/event/common/ValuationInstruction
 description: Specifies inputs needed to process a valuation.
 replace:
   description: "Specifies whether the previous valuation tracks in the valuation history are removed (True) or kept (False)."
@@ -10,6 +9,6 @@ replace:
 valuation:
   description: Contains all information related to a valuation.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Valuation
+  itemType: FINOS-CDM-6.0-d07/cdm/event/common/Valuation
   schema:
     minItems: 1

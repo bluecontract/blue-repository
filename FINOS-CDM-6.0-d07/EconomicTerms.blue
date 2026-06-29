@@ -1,22 +1,21 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-EconomicTerms.schema.json
-name: EconomicTerms
-namespace: cdm/product/template
+name: cdm/product/template/EconomicTerms
 description: |
   This class represents the full set of price-forming features associated with a contractual product: the payout component, the notional/quantity, the effective and termination date and the date adjustment provisions when applying uniformily across the payout components. This class also includes the legal provisions which have valuation implications: cancelable provision, extendible provision, early termination provision and extraordinary events specification.
 calculationAgent:
   description: The ISDA calculation agent responsible for performing duties as defined in the applicable product definitions.
-  type: FINOS-CDM-6.0-d07/CalculationAgent
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CalculationAgent
 collateral:
   description: Represents the collateral obligations of a party.
-  type: FINOS-CDM-6.0-d07/Collateral
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/Collateral
 dateAdjustments:
   description: |
     The business day adjustment convention when it applies across all the payout components. This specification of the business day convention and financial business centers is used for adjusting any calculation period date if it would otherwise fall on a day that is not a business day in the specified business center.
-  type: FINOS-CDM-6.0-d07/BusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayAdjustments
 effectiveDate:
   description: |
     The first day of the terms of the trade. This day may be subject to adjustment in accordance with a business day convention.
-  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrRelativeDate
 nonStandardisedTerms:
   description: |
     Specifies, when boolean value is True, that additional economic terms exist that have not been included in the product representation.
@@ -24,13 +23,13 @@ nonStandardisedTerms:
 payout:
   description: The payout specifies the future cashflow computation methodology which characterizes a financial product.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Payout
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/Payout
   schema:
     minItems: 1
 terminationDate:
   description: |
     The last day of the terms of the trade. This date may be subject to adjustments in accordance with the business day convention. It can also be specified in relation to another scheduled date (e.g. the last payment date).
-  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrRelativeDate
 terminationProvision:
   description: Contains optional provisions pertaining to the termination characteristics of a contract.
-  type: FINOS-CDM-6.0-d07/TerminationProvision
+  type: FINOS-CDM-6.0-d07/cdm/product/template/TerminationProvision

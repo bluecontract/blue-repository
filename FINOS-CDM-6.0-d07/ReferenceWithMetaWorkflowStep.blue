@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-metafields-ReferenceWithMetaWorkflowStep.schema.json
-name: ReferenceWithMetaWorkflowStep
-namespace: cdm/event/workflow/metafields
+name: cdm/event/workflow/metafields/ReferenceWithMetaWorkflowStep
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

@@ -1,25 +1,24 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-FloatingRateCalculationParameters.schema.json
-name: FloatingRateCalculationParameters
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/FloatingRateCalculationParameters
 description: |
   Defines the structures needed to represent the calculation parameters for daily averaged and compounded modular rates as defined in the 2021 ISDA Definitions in Section 7. This type is used to represent modular computed rates in interestRatePayouts.
 applicableBusinessDays:
   description: the business days that are applicable for the calculation.
-  type: FINOS-CDM-6.0-d07/BusinessCenters
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenters
 calculationMethod:
   description: "calculation type (averaging or compounding)."
-  type: FINOS-CDM-6.0-d07/CalculationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/CalculationMethodEnum
   schema:
     required: true
 lockoutCalculation:
   description: any lockout  parameters if applicable.
-  type: FINOS-CDM-6.0-d07/OffsetCalculation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/OffsetCalculation
 lookbackCalculation:
   description: any lookback  parameters if applicable.
-  type: FINOS-CDM-6.0-d07/OffsetCalculation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/OffsetCalculation
 observationParameters:
   description: "any applicable observation parameters, such as daily caps or floors."
-  type: FINOS-CDM-6.0-d07/ObservationParameters
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/ObservationParameters
 observationShiftCalculation:
   description: any obervation shift parameters if applicable.
-  type: FINOS-CDM-6.0-d07/ObservationShiftCalculation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/ObservationShiftCalculation

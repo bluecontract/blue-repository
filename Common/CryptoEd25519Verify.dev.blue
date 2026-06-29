@@ -1,0 +1,11 @@
+name: Crypto Ed25519 Verify
+description: Verifies an Ed25519 signature over the exact UTF-8 bytes of message.
+publicKey:
+  type: Text
+  description: base64url raw 32-byte Ed25519 public key
+message:
+  type: Text
+  description: canonical UTF-8 message text
+signature:
+  type: Text
+  description: base64url raw 64-byte Ed25519 signature

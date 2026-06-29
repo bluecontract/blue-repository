@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestCalculationParameters.schema.json
-name: CollateralInterestCalculationParameters
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralInterestCalculationParameters
 description: |
   Represents parameters for calculating the amount the floating interest calculation, e.g.  for a single currency or defaults for all currencies.
 compoundingBusinessCenter:
   description: Specifies the applicable business centers for compounding.
   type: List
-  itemType: FINOS-CDM-6.0-d07/BusinessCenterEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenterEnum
   schema:
     minItems: 0
 compoundingType:
   description: "Specifies the type of compounding to be applied (None, Business, Calendar)."
-  type: FINOS-CDM-6.0-d07/CompoundingTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/CompoundingTypeEnum
 dayCountFraction:
   description: Specifies the day count fraction to use for that currency.
-  type: FINOS-CDM-6.0-d07/DayCountFractionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/daycount/DayCountFractionEnum
   schema:
     required: true
 fixedRate:
@@ -22,7 +21,7 @@ fixedRate:
   type: Double
 floatingRate:
   description: Specifies the floating interest rate to be used.
-  type: FINOS-CDM-6.0-d07/CollateralAgreementFloatingRate
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralAgreementFloatingRate
 inBaseCurrency:
   description: |
     If True, specifies that the interest transfers should be converted to base currency equivalent, or if False specifies that the transfer should be in the currency of the collateral.
@@ -31,10 +30,10 @@ inBaseCurrency:
     required: true
 rounding:
   description: Specifies the rounding rules for settling in that currency.
-  type: FINOS-CDM-6.0-d07/Rounding
+  type: FINOS-CDM-6.0-d07/cdm/base/math/Rounding
 roundingFrequency:
   description: "Specifies when/how often is rounding applied?"
-  type: FINOS-CDM-6.0-d07/RoundingFrequencyEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/RoundingFrequencyEnum
 withholdingTaxRate:
   description: Specifies the withholding tax rate if a withholding tax is applicable.
   type: Double

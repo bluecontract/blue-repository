@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-PeriodBound.schema.json
-name: PeriodBound
-namespace: cdm/base/datetime
+name: cdm/base/datetime/PeriodBound
 description: Indicator to specify if the period bound is defined as a period and whether the bound is inclusive.
 inclusive:
   description: |
@@ -10,6 +9,6 @@ inclusive:
     required: true
 period:
   description: "Specifies the period is to be used as the bound, e.g. 5Y."
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period
   schema:
     required: true

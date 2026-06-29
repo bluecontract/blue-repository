@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/com-rosetta-model-lib-meta-Key.schema.json
-name: Key
-namespace: com/rosetta/model/lib/meta
+name: com/rosetta/model/lib/meta/Key
 scope:
   type: Text
 val:

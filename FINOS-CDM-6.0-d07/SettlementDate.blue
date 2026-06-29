@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-SettlementDate.schema.json
-name: SettlementDate
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/SettlementDate
 description: |
   A data defining the settlement date(s) for cash or physical settlement as either a set of explicit dates, together with applicable adjustments, or as a date relative to some other (anchor) date, or as any date in a range of contiguous business days. This data type provides a level of abstraction on top of the different legacy methods used to specify a settlement / payment date, which vary across product types, asset classes and delivery types.
 adjustableDates:
   description: |
     A series of dates that shall be subject to adjustment if they would otherwise fall on a day that is not a business day in the specified business centers, together with the convention for adjusting the date. This attributes was formerly part of 'CashSettlementPaymentDate' as included into 'OptionCashSettlement' (which is now merged into a unique 'CashSettlementTerms' data type.
-  type: FINOS-CDM-6.0-d07/AdjustableDates
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableDates
 adjustableOrRelativeDate:
   description: |
     A single settlement date subject to adjustment or specified as relative to another date (e.g. the trade date). This attribute was formerly part of 'SettlementTerms', which is now being harmonised to include a common 'SettlementDate', as inherited from 'SettlementBase'.
-  type: FINOS-CDM-6.0-d07/AdjustableOrAdjustedOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrAdjustedOrRelativeDate
 businessDateRange:
   description: |
     A range of contiguous business days. This attribute is meant to be merged with the 'settlementDate' at some future point once we refactor 'Date' to use a single complex type across the model. This attributes was formerly part of 'CashSettlementPaymentDate', as included into 'OptionCashSettlement' (which is now merged into a unique 'CashSettlementTerms' data type.
-  type: FINOS-CDM-6.0-d07/BusinessDateRange
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDateRange
 cashSettlementBusinessDays:
   description: |
     The number of business days used in the determination of the cash settlement payment date. If a cash settlement amount is specified, the cash settlement payment date will be this number of business days following the calculation of the final price. If a cash settlement amount is not specified, the cash settlement payment date will be this number of business days after all conditions to settlement are satisfied. ISDA 2003 Term: Cash Settlement Date. This attribute was formerly part of 'CashSettlementTerms' as used for credit event settlement, which now includes a common 'SettlementDate' attribute.

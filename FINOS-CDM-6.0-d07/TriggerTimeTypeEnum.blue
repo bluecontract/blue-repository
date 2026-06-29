@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-TriggerTimeTypeEnum.schema.json
-name: TriggerTimeTypeEnum
-namespace: cdm/observable/event
+name: cdm/observable/event/TriggerTimeTypeEnum
 description: The enumerated values to specify the time of day which would be considered for valuing the knock event.
 type: Text
 schema:

@@ -1,30 +1,29 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-EvergreenProvision.schema.json
-name: EvergreenProvision
-namespace: cdm/product/template
+name: cdm/product/template/EvergreenProvision
 description: |
   Specifies a transaction which automatically extends for a specified timeframe until the exercise of an embedded option.
 extensionFrequency:
   description: The frequency with which the evergreen contract will be extended if notice is not given.
-  type: FINOS-CDM-6.0-d07/AdjustableRelativeOrPeriodicDates
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableRelativeOrPeriodicDates
   schema:
     required: true
 finalPeriodFeeAdjustment:
   description: |
     An optional adjustment to the rate for the last period of the evergreen i.e. the period from when notice is given to stop rolling the contract through to the termination date.
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price
 noticeDeadlineDateTime:
   description: A specific date and time for the notice deadline
   type: Text
 noticeDeadlinePeriod:
   description: |
     Defines the minimum period before an evergreen is scheduled to terminate that notice can be given that it will terminate beyond the scheduled termination date.
-  type: FINOS-CDM-6.0-d07/RelativeDateOffset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/RelativeDateOffset
 noticePeriod:
   description: The length of each evergreen extension period relative to the effective date of the preceding contract.
-  type: FINOS-CDM-6.0-d07/RelativeDateOffset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/RelativeDateOffset
   schema:
     required: true
 singlePartyOption:
   description: |
     If evergreen termination is not available to both parties then this component specifies the buyer and seller of the option.
-  type: FINOS-CDM-6.0-d07/PartyRole
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRole

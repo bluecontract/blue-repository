@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-ScheduledTransferEnum.schema.json
-name: ScheduledTransferEnum
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/ScheduledTransferEnum
 description: |
   The qualification of the type of cash flows associated with OTC derivatives contracts and their lifecycle events.
 type: Text

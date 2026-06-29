@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-SwpOut.schema.json
-name: SwpOut
-namespace: cdm/regulation
+name: cdm/regulation/SwpOut
 sngl:
-  type: FINOS-CDM-6.0-d07/Sngl
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Sngl
   schema:
     required: true

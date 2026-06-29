@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-TaxonomyClassification.schema.json
-name: TaxonomyClassification
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/TaxonomyClassification
 className:
   description: The name defined by the classification system for a specific attribute in the taxonomy
   type: Text

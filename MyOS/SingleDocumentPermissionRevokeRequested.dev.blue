@@ -1,5 +1,5 @@
 name: Single Document Permission Revoke Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Emitted either by revoke operation on the grant document or by grantee-document self-revoke flow when grantDocumentId is provided.
 
 reason:

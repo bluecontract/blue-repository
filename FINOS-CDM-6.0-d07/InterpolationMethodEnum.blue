@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-InterpolationMethodEnum.schema.json
-name: InterpolationMethodEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/InterpolationMethodEnum
 description: "The enumerated values to specify the interpolation method, e.g. linear."
 type: Text
 schema:

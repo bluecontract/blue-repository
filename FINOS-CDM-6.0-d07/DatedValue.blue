@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-DatedValue.schema.json
-name: DatedValue
-namespace: cdm/base/math
+name: cdm/base/math/DatedValue
 description: |
   Defines a date and value pair. This definition is used for varying rate or amount schedules, e.g. a notional amortisation or a step-up coupon schedule.
 date:

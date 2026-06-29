@@ -1,5 +1,5 @@
 name: Payment Reversal Failed
-type: Conversation/Response
+type: Coordination/Response
 description: The Guarantor attempted to reverse after completion, but it failed.
 reason:
   type: Text

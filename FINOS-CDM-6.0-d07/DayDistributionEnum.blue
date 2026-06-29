@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DayDistributionEnum.schema.json
-name: DayDistributionEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/DayDistributionEnum
 description: Denotes the method by which the pricing days are distributed across the pricing period.
 type: Text
 schema:

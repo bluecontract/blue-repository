@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ValuationSourceEnum.schema.json
-name: ValuationSourceEnum
-namespace: cdm/event/common
+name: cdm/event/common/ValuationSourceEnum
 description: Source for the valuation of the transaction by the valuation party.
 type: Text
 schema:

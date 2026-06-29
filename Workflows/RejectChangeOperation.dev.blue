@@ -1,0 +1,10 @@
+name: Reject Change Operation
+type: Coordination/Operation
+description: |
+  Operation marker for rejecting a previously proposed change. Rejection removes proposal state without applying the
+  requested changes. It is used when a reviewer, participant, or policy decides that the proposed mutation should not
+  become part of the document.
+
+  Reject Change complements Propose Change and Accept Change. The operation itself declares the action; the paired Reject
+  Change Workflow checks that proposal state exists and removes it through an Update Document step. If no proposal exists
+  at the expected path, the workflow emits Proposed Change Invalid.

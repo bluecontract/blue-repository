@@ -1,5 +1,5 @@
 name: Payment Completion Unlock Requested
-type: Conversation/Request
+type: Coordination/Request
 description: >
   Request that the Guarantor allow subsequent completion attempts
   for the governed transaction.

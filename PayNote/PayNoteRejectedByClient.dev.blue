@@ -1,5 +1,5 @@
 name: PayNote Rejected By Client
-type: Conversation/Event
+type: Coordination/Event
 description: The client rejected the PayNote.
 reason:
   type: Text

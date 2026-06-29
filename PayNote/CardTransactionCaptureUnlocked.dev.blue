@@ -1,5 +1,5 @@
 name: Card Transaction Capture Unlocked
-type: Conversation/Response
+type: Coordination/Response
 description: Card transaction capture was unlocked. Any following card transaction capture requests will be processed.
 unlockedAt:
   type: Common/Timestamp

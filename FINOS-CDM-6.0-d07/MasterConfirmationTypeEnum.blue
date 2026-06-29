@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterConfirmationTypeEnum.schema.json
-name: MasterConfirmationTypeEnum
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/MasterConfirmationTypeEnum
 description: |
   The enumerated values to specify the type of master confirmation agreement governing the transaction. While FpML positions the date a prefix, the CDM positions it as the suffix to handle grammar type constraints.
 type: Text

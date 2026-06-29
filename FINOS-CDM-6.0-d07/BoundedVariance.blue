@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-BoundedVariance.schema.json
-name: BoundedVariance
-namespace: cdm/product/asset
+name: cdm/product/asset/BoundedVariance
 daysInRangeAdjustment:
   description: |
     The contract specifies whether the notional should be scaled by the Number of Days in Range divided by the Expected N. The number of Days in Ranges refers to the number of returns that contribute to the realized volatility.
@@ -12,7 +11,7 @@ lowerBarrier:
   type: Double
 realisedVarianceMethod:
   description: The contract specifies which price must satisfy the boundary condition.
-  type: FINOS-CDM-6.0-d07/RealisedVarianceMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/RealisedVarianceMethodEnum
   schema:
     required: true
 upperBarrier:

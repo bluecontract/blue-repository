@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-PartialExercise.schema.json
-name: PartialExercise
-namespace: cdm/product/template
+name: cdm/product/template/PartialExercise
 description: |
   A class defining partial exercise. As defined in the 2000 ISDA Definitions, Section 12.3 Partial Exercise, the buyer of the option may exercise all or less than all the notional amount of the underlying swap but may not be less than the minimum notional amount (if specified) and must be an integral multiple of the integral multiple amount if specified.
 integralMultipleAmount:
@@ -16,6 +15,6 @@ minimumNumberOfOptions:
 notionaReference:
   description: |
     A pointer style reference to the associated notional schedule defined elsewhere in the document. This element has been made optional as part of its integration in the OptionBaseExtended, because not required for the options on securities.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaMoney
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaMoney
   schema:
     required: true

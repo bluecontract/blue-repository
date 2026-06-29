@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-TransferExpression.schema.json
-name: TransferExpression
-namespace: cdm/event/common
+name: cdm/event/common/TransferExpression
 description: |
   Specifies a transfer expression (cash price, performance amount, scheduled payment amount, etc.) to define the nature of the transfer amount and its source.
 priceTransfer:
   description: |
     Specifies a transfer amount exchanged as a price or fee for entering into a Business Event, e.g. Premium, Termination fee, Novation fee.
-  type: FINOS-CDM-6.0-d07/FeeTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FeeTypeEnum
 scheduledTransfer:
   description: |
     Specifies a transfer created from a scheduled or contingent event on a contract, e.g. Exercise, Performance, Credit Event
-  type: FINOS-CDM-6.0-d07/ScheduledTransfer
+  type: FINOS-CDM-6.0-d07/cdm/event/common/ScheduledTransfer

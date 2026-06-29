@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-FixedAmountCalculationDetails.schema.json
-name: FixedAmountCalculationDetails
-namespace: cdm/product/asset
+name: cdm/product/asset/FixedAmountCalculationDetails
 description: |
   Type for reporting the detailed results of calculating a cash flow for a calculation period.  This is enhanced relative to the FpML-based cashflows structure to allow more information to be returned about daily compounded rates.
 calculatedAmount:
@@ -10,12 +9,12 @@ calculatedAmount:
     required: true
 calculationPeriod:
   description: The calculation period for which the floating calculation was performed.
-  type: FINOS-CDM-6.0-d07/CalculationPeriodBase
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/CalculationPeriodBase
   schema:
     required: true
 calculationPeriodNotionalAmount:
   description: The notional in effect during the calculation period.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
   schema:
     required: true
 fixedRate:

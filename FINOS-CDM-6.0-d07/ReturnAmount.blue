@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ReturnAmount.schema.json
-name: ReturnAmount
-namespace: cdm/product/collateral
+name: cdm/product/collateral/ReturnAmount
 description: A class to specify the application of Interest Amount with respect the Return Amount.
 customElection:
   description: Custom election that might be specified by the parties to the agreement.

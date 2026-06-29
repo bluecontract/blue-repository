@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-TaxonomySourceEnum.schema.json
-name: TaxonomySourceEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/TaxonomySourceEnum
 description: Represents the enumerated values to specify taxonomy sources.
 type: Text
 schema:

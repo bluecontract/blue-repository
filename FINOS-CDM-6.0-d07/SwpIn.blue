@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-SwpIn.schema.json
-name: SwpIn
-namespace: cdm/regulation
+name: cdm/regulation/SwpIn
 sngl:
-  type: FINOS-CDM-6.0-d07/Sngl
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Sngl
   schema:
     required: true

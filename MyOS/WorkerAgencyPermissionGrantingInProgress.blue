@@ -1,5 +1,5 @@
 name: Worker Agency Permission Granting in Progress
-type: Conversation/Response
+type: Coordination/Response
 description: Admin has started applying the grant for this WAG.
 granteeDocumentId:
   type: Text

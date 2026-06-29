@@ -180,536 +180,1021 @@ contracts:
     description: Bank/admin channel executing mandate checks and settlement updates.
 
   initLifecycleChannel:
-    type: Core/Lifecycle Event Channel
+    type: Lifecycle Event Channel
     event:
-      type: Core/Document Processing Initiated
+      type: Document Processing Initiated
 
   initialize:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: initLifecycleChannel
     steps:
       - name: Initialize mandate runtime state
-        type: Conversation/Update Document
+        type: Coordination/Update Document
         changeset:
           - op: replace
             path: /chargeAttempts
             val: {}
 
   authorizeSpend:
-    type: Conversation/Operation
+    type: Coordination/Operation
     description: Validate a charge attempt against mandate policy and reserve capacity.
     channel: guarantorChannel
     request:
       type: PayNote/Payment Mandate Spend Authorization Requested
 
   authorizeSpendImpl:
-    type: Conversation/Sequential Workflow Operation
+    type: Coordination/Sequential Workflow Operation
     operation: authorizeSpend
     steps:
-      - name: Decide Spend Authorization
-        type: Conversation/JavaScript Code
-        code: |
-          const documentCanonical = document.canonical('/');
-          const requestCanonical = eventCanonical
-            ? canon.at(eventCanonical, '/message/request')
-            : undefined;
-
-          const requestedAtNode = requestCanonical
-            ? canon.at(requestCanonical, '/requestedAt')
-            : undefined;
-          const requestedAtRaw = requestedAtNode ? canon.unwrap(requestedAtNode) : '';
-          const requestedAt = typeof requestedAtRaw === 'string' ? requestedAtRaw : '';
-          const nowIso =
-            requestedAt ||
-            (typeof event.timestamp === 'string' ? event.timestamp : '');
-
-          const normalizeTimestamp = function (value) {
-            if (typeof value !== 'string' || !value) {
-              return '';
-            }
-            let digits = '';
-            let index = 0;
-            while (index < value.length) {
-              const code = value.charCodeAt(index);
-              if (code >= 48 && code <= 57) {
-                digits += value.charAt(index);
-              }
-              index += 1;
-            }
-            if (digits.length < 14) {
-              return '';
-            }
-            return digits.slice(0, 14);
-          };
-
-          const authorizationIdNode = requestCanonical
-            ? canon.at(requestCanonical, '/authorizationId')
-            : undefined;
-          const authorizationIdRaw = authorizationIdNode
-            ? canon.unwrap(authorizationIdNode)
-            : '';
-          const authorizationId =
-            typeof authorizationIdRaw === 'string' ? authorizationIdRaw : '';
-
-          const amountMinorNode = requestCanonical
-            ? canon.at(requestCanonical, '/amountMinor')
-            : undefined;
-          const amountMinorRaw = amountMinorNode ? canon.unwrap(amountMinorNode) : 0;
-          const amountMinor = typeof amountMinorRaw === 'number' ? amountMinorRaw : 0;
-
-          const counterpartyTypeNode = requestCanonical
-            ? canon.at(requestCanonical, '/counterpartyType')
-            : undefined;
-          const counterpartyTypeRaw = counterpartyTypeNode
-            ? canon.unwrap(counterpartyTypeNode)
-            : '';
-          const counterpartyType =
-            typeof counterpartyTypeRaw === 'string' ? counterpartyTypeRaw : '';
-
-          const counterpartyIdNode = requestCanonical
-            ? canon.at(requestCanonical, '/counterpartyId')
-            : undefined;
-          const counterpartyIdRaw = counterpartyIdNode
-            ? canon.unwrap(counterpartyIdNode)
-            : '';
-          const counterpartyId =
-            typeof counterpartyIdRaw === 'string' ? counterpartyIdRaw : '';
-
-          const requestedCurrencyNode = requestCanonical
-            ? canon.at(requestCanonical, '/currency')
-            : undefined;
-          const requestedCurrencyRaw = requestedCurrencyNode
-            ? canon.unwrap(requestedCurrencyNode)
-            : '';
-          const requestedCurrency =
-            typeof requestedCurrencyRaw === 'string' ? requestedCurrencyRaw : '';
-
-          const chargeAttemptsNode = canon.at(documentCanonical, '/chargeAttempts');
-          const chargeAttemptsRaw = chargeAttemptsNode
-            ? canon.unwrap(chargeAttemptsNode)
-            : {};
-          const chargeAttempts =
-            chargeAttemptsRaw &&
-            typeof chargeAttemptsRaw === 'object' &&
-            !Array.isArray(chargeAttemptsRaw)
-              ? chargeAttemptsRaw
-              : {};
-          const nextChargeAttempts = { ...chargeAttempts };
-
-          const existingAttemptRaw = authorizationId
-            ? chargeAttempts[authorizationId]
-            : undefined;
-          const existingAttempt =
-            existingAttemptRaw &&
-            typeof existingAttemptRaw === 'object' &&
-            !Array.isArray(existingAttemptRaw)
-              ? existingAttemptRaw
-              : null;
-          const existingDecision =
-            existingAttempt &&
-            typeof existingAttempt.authorizationStatus === 'string'
-              ? existingAttempt.authorizationStatus
-              : '';
-          const existingReason =
-            existingAttempt && typeof existingAttempt.authorizationReason === 'string'
-              ? existingAttempt.authorizationReason
-              : '';
-
-          const amountLimitNode = canon.at(documentCanonical, '/amountLimit');
-          const amountLimitRaw = amountLimitNode ? canon.unwrap(amountLimitNode) : 0;
-          const amountLimit = typeof amountLimitRaw === 'number' ? amountLimitRaw : 0;
-
-          const amountReservedNode = canon.at(documentCanonical, '/amountReserved');
-          const amountReservedRaw = amountReservedNode
-            ? canon.unwrap(amountReservedNode)
-            : 0;
-          const amountReserved =
-            typeof amountReservedRaw === 'number' ? amountReservedRaw : 0;
-
-          const amountCapturedNode = canon.at(documentCanonical, '/amountCaptured');
-          const amountCapturedRaw = amountCapturedNode
-            ? canon.unwrap(amountCapturedNode)
-            : 0;
-          const amountCaptured =
-            typeof amountCapturedRaw === 'number' ? amountCapturedRaw : 0;
-
-          const mandateCurrencyNode = canon.at(documentCanonical, '/currency');
-          const mandateCurrencyRaw = mandateCurrencyNode
-            ? canon.unwrap(mandateCurrencyNode)
-            : '';
-          const mandateCurrency =
-            typeof mandateCurrencyRaw === 'string' ? mandateCurrencyRaw : '';
-
-          const expiresAtNode = canon.at(documentCanonical, '/expiresAt');
-          const expiresAtRaw = expiresAtNode ? canon.unwrap(expiresAtNode) : '';
-          const expiresAt = typeof expiresAtRaw === 'string' ? expiresAtRaw : '';
-
-          const revokedAtNode = canon.at(documentCanonical, '/revokedAt');
-          const revokedAtRaw = revokedAtNode ? canon.unwrap(revokedAtNode) : '';
-          const revokedAt = typeof revokedAtRaw === 'string' ? revokedAtRaw : '';
-
-          const nowComparable = normalizeTimestamp(nowIso);
-
-          const allowedCounterpartiesNode = canon.at(
-            documentCanonical,
-            '/allowedPaymentCounterparties'
-          );
-          const allowedCounterpartiesRaw = allowedCounterpartiesNode
-            ? canon.unwrap(allowedCounterpartiesNode)
-            : [];
-          const allowedCounterparties = Array.isArray(allowedCounterpartiesRaw)
-            ? allowedCounterpartiesRaw
-            : [];
-          const isCounterpartyAllowed =
-            allowedCounterparties.length === 0 ||
-            allowedCounterparties.some(function (item) {
-              const itemType =
-                item && typeof item.counterpartyType === 'string'
-                  ? item.counterpartyType
-                  : '';
-              const itemId =
-                item && typeof item.counterpartyId === 'string'
-                  ? item.counterpartyId
-                  : '';
-              return (
-                item &&
-                itemType === counterpartyType &&
-                itemId === counterpartyId
-              );
-            });
-
-          let status = 'rejected';
-          let reason = '';
-          let nextAmountReserved = amountReserved;
-
-          if (existingDecision === 'approved' || existingDecision === 'rejected') {
-            status = existingDecision;
-            reason = existingDecision === 'rejected' ? existingReason : '';
-          } else if (!authorizationId) {
-            reason = 'Missing authorizationId.';
-          } else if (amountMinor <= 0) {
-            reason = 'Amount must be greater than zero.';
-          } else if (!requestedCurrency || requestedCurrency !== mandateCurrency) {
-            reason = 'Currency does not match mandate currency.';
-          } else if (revokedAt) {
-            reason = 'Mandate is revoked.';
-          } else if (
-            expiresAt &&
-            normalizeTimestamp(expiresAt) &&
-            nowComparable &&
-            normalizeTimestamp(expiresAt) < nowComparable
-          ) {
-            reason = 'Mandate is expired.';
-          } else if (!isCounterpartyAllowed) {
-            reason = 'Counterparty is not allowed by mandate.';
-          } else if (amountReserved + amountCaptured + amountMinor > amountLimit) {
-            reason = 'Mandate amount limit exceeded.';
-          } else {
-            status = 'approved';
-            nextAmountReserved = amountReserved + amountMinor;
-          }
-
-          if (authorizationId && !existingDecision) {
-            const chargeModeNode = requestCanonical
-              ? canon.at(requestCanonical, '/chargeMode')
-              : undefined;
-            const chargeModeRaw = chargeModeNode ? canon.unwrap(chargeModeNode) : '';
-            const chargeMode = typeof chargeModeRaw === 'string' ? chargeModeRaw : '';
-
-            nextChargeAttempts[authorizationId] = {
-              amountMinor,
-              currency: requestedCurrency,
-              counterpartyType,
-              counterpartyId,
-              chargeMode,
-              authorizationStatus: status,
-              authorizationReason: reason,
-              authorizationRespondedAt: nowIso,
-              authorizedAmountMinor: status === 'approved' ? amountMinor : 0,
-              settled: false,
-              lastSettlementRequestStatus: '',
-              lastSettlementProcessingStatus: '',
-              settlementReason: '',
-              settlementRespondedAt: '',
-              reservedDeltaMinor: 0,
-              capturedDeltaMinor: 0,
-              holdId: '',
-              transactionId: ''
-            };
-          }
-
-          const remainingAmountMinor = Math.max(
-            0,
-            amountLimit - (nextAmountReserved + amountCaptured)
-          );
-
-          const responseEvent = {
-            type: 'PayNote/Payment Mandate Spend Authorization Responded',
-            authorizationId,
-            status,
-            remainingAmountMinor,
-            respondedAt: nowIso
-          };
-
-          if (reason) {
-            responseEvent.reason = reason;
-          }
-
-          return {
-            nextChargeAttempts: nextChargeAttempts,
-            nextAmountReserved: nextAmountReserved,
-            events: [responseEvent]
-          };
-
-      - name: Persist Authorization Decision
-        type: Conversation/Update Document
-        changeset:
-          - op: replace
-            path: /chargeAttempts
-            val: "${steps['Decide Spend Authorization'].nextChargeAttempts}"
-          - op: replace
-            path: /amountReserved
-            val: "${steps['Decide Spend Authorization'].nextAmountReserved}"
+      - name: DecideSpendAuthorization
+        type: Coordination/Compute
+        functions:
+          isLanguageKey:
+            args:
+              key:
+                description: BEX helper argument.
+            expr:
+              $or:
+                - $eq:
+                    - $var: key
+                    - blueId
+                - $eq:
+                    - $var: key
+                    - type
+                - $eq:
+                    - $var: key
+                    - name
+                - $eq:
+                    - $var: key
+                    - description
+                - $eq:
+                    - $var: key
+                    - schema
+                - $eq:
+                    - $var: key
+                    - contracts
+          cleanMap:
+            args:
+              object:
+                description: BEX helper argument.
+            expr:
+              $objectFromEntries:
+                $filter:
+                  in:
+                    $entries:
+                      $var: object
+                  item: entry
+                  where:
+                    $not:
+                      $call:
+                        function: isLanguageKey
+                        args:
+                          key:
+                            $var:
+                              name: entry
+                              path: /key
+        do:
+          - $let:
+              order:
+                - authorizationId
+                - amountMinor
+                - requestedCurrency
+                - counterpartyType
+                - counterpartyId
+                - chargeMode
+                - nowIso
+                - amountLimit
+                - amountReserved
+                - amountCaptured
+                - mandateCurrency
+                - revokedAt
+                - chargeAttempts
+                - existingAttempt
+                - existingDecision
+                - existingReason
+                - allowedCounterparties
+                - counterpartyAllowed
+                - status
+                - reason
+                - nextAmountReserved
+                - nextChargeAttempts
+              vars:
+                authorizationId:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/authorizationId
+                        kind: text
+                    then:
+                      $event: /message/request/authorizationId
+                    else: ''
+                amountMinor:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/amountMinor
+                        kind: integer
+                    then:
+                      $event: /message/request/amountMinor
+                    else: 0
+                requestedCurrency:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/currency
+                        kind: text
+                    then:
+                      $event: /message/request/currency
+                    else: ''
+                counterpartyType:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/counterpartyType
+                        kind: text
+                    then:
+                      $event: /message/request/counterpartyType
+                    else: ''
+                counterpartyId:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/counterpartyId
+                        kind: text
+                    then:
+                      $event: /message/request/counterpartyId
+                    else: ''
+                chargeMode:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/chargeMode
+                        kind: text
+                    then:
+                      $event: /message/request/chargeMode
+                    else: ''
+                nowIso:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/requestedAt
+                        kind: text
+                    then:
+                      $event: /message/request/requestedAt
+                    else: ''
+                amountLimit:
+                  $document: /amountLimit
+                amountReserved:
+                  $document: /amountReserved
+                amountCaptured:
+                  $document: /amountCaptured
+                mandateCurrency:
+                  $document: /currency
+                revokedAt:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $document: /revokedAt
+                        kind: text
+                    then:
+                      $document: /revokedAt
+                    else: ''
+                chargeAttempts:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $document: /chargeAttempts
+                existingAttempt:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $get:
+                            object:
+                              $object:
+                                $document: /chargeAttempts
+                            key:
+                              $choose:
+                                cond:
+                                  $isKind:
+                                    val:
+                                      $event: /message/request/authorizationId
+                                    kind: text
+                                then:
+                                  $event: /message/request/authorizationId
+                                else: ''
+                existingDecision:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $var:
+                            name: existingAttempt
+                            path: /authorizationStatus
+                        kind: text
+                    then:
+                      $var:
+                        name: existingAttempt
+                        path: /authorizationStatus
+                    else: ''
+                existingReason:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $var:
+                            name: existingAttempt
+                            path: /authorizationReason
+                        kind: text
+                    then:
+                      $var:
+                        name: existingAttempt
+                        path: /authorizationReason
+                    else: ''
+                allowedCounterparties:
+                  $list:
+                    $document: /allowedPaymentCounterparties
+                counterpartyAllowed:
+                  $or:
+                    - $eq:
+                        - $size:
+                            $list:
+                              $document: /allowedPaymentCounterparties
+                        - 0
+                    - $some:
+                        in:
+                          $list:
+                            $document: /allowedPaymentCounterparties
+                        item: item
+                        where:
+                          $and:
+                            - $eq:
+                                - $var:
+                                    name: item
+                                    path: /counterpartyType
+                                - $var: counterpartyType
+                            - $eq:
+                                - $var:
+                                    name: item
+                                    path: /counterpartyId
+                                - $var: counterpartyId
+                status: rejected
+                reason: ''
+                nextAmountReserved:
+                  $document: /amountReserved
+                nextChargeAttempts:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $document: /chargeAttempts
+          - $if:
+              cond:
+                $or:
+                  - $eq:
+                      - $var: existingDecision
+                      - approved
+                  - $eq:
+                      - $var: existingDecision
+                      - rejected
+              then:
+                - $set:
+                    name: status
+                    expr:
+                      $var: existingDecision
+                - $if:
+                    cond:
+                      $eq:
+                        - $var: existingDecision
+                        - rejected
+                    then:
+                      - $set:
+                          name: reason
+                          expr:
+                            $var: existingReason
+              else:
+                - $if:
+                    cond:
+                      $not:
+                        $truthy:
+                          $var: authorizationId
+                    then:
+                      - $set:
+                          name: reason
+                          expr: Missing authorizationId.
+                    else:
+                      - $if:
+                          cond:
+                            $lte:
+                              - $var: amountMinor
+                              - 0
+                          then:
+                            - $set:
+                                name: reason
+                                expr: Amount must be greater than zero.
+                          else:
+                            - $if:
+                                cond:
+                                  $or:
+                                    - $not:
+                                        $truthy:
+                                          $var: requestedCurrency
+                                    - $ne:
+                                        - $var: requestedCurrency
+                                        - $var: mandateCurrency
+                                then:
+                                  - $set:
+                                      name: reason
+                                      expr: Currency does not match mandate currency.
+                                else:
+                                  - $if:
+                                      cond:
+                                        $truthy:
+                                          $var: revokedAt
+                                      then:
+                                        - $set:
+                                            name: reason
+                                            expr: Mandate is revoked.
+                                      else:
+                                        - $if:
+                                            cond:
+                                              $not:
+                                                $var: counterpartyAllowed
+                                            then:
+                                              - $set:
+                                                  name: reason
+                                                  expr: Counterparty is not allowed by mandate.
+                                            else:
+                                              - $if:
+                                                  cond:
+                                                    $gt:
+                                                      - $add:
+                                                          - $var: amountReserved
+                                                          - $var: amountCaptured
+                                                          - $var: amountMinor
+                                                      - $var: amountLimit
+                                                  then:
+                                                    - $set:
+                                                        name: reason
+                                                        expr: Mandate amount limit exceeded.
+                                                  else:
+                                                    - $set:
+                                                        name: status
+                                                        expr: approved
+                                                    - $set:
+                                                        name: nextAmountReserved
+                                                        expr:
+                                                          $add:
+                                                            - $var: amountReserved
+                                                            - $var: amountMinor
+          - $if:
+              cond:
+                $and:
+                  - $truthy:
+                      $var: authorizationId
+                  - $not:
+                      $truthy:
+                        $var: existingDecision
+              then:
+                - $set:
+                    name: nextChargeAttempts
+                    expr:
+                      $objectSet:
+                        object:
+                          $var: nextChargeAttempts
+                        key:
+                          $var: authorizationId
+                        val:
+                          amountMinor:
+                            $var: amountMinor
+                          currency:
+                            $var: requestedCurrency
+                          counterpartyType:
+                            $var: counterpartyType
+                          counterpartyId:
+                            $var: counterpartyId
+                          chargeMode:
+                            $var: chargeMode
+                          authorizationStatus:
+                            $var: status
+                          authorizationReason:
+                            $var: reason
+                          authorizationRespondedAt:
+                            $var: nowIso
+                          authorizedAmountMinor:
+                            $choose:
+                              cond:
+                                $eq:
+                                  - $var: status
+                                  - approved
+                              then:
+                                $var: amountMinor
+                              else: 0
+                          settled: false
+                          lastSettlementRequestStatus: ''
+                          lastSettlementProcessingStatus: ''
+                          settlementReason: ''
+                          settlementRespondedAt: ''
+                          reservedDeltaMinor: 0
+                          capturedDeltaMinor: 0
+                          holdId: ''
+                          transactionId: ''
+          - $let:
+              order:
+                - remainingAmountMinor
+              vars:
+                remainingAmountMinor:
+                  $choose:
+                    cond:
+                      $gt:
+                        - $subtract:
+                            - $var: amountLimit
+                            - $add:
+                                - $var: nextAmountReserved
+                                - $var: amountCaptured
+                        - 0
+                    then:
+                      $subtract:
+                        - $var: amountLimit
+                        - $add:
+                            - $var: nextAmountReserved
+                            - $var: amountCaptured
+                    else: 0
+          - $appendChange:
+              op: replace
+              path: /chargeAttempts
+              val:
+                $var: nextChargeAttempts
+          - $appendChange:
+              op: replace
+              path: /amountReserved
+              val:
+                $var: nextAmountReserved
+          - $appendEvent:
+              type: PayNote/Payment Mandate Spend Authorization Responded
+              authorizationId:
+                $var: authorizationId
+              status:
+                $var: status
+              remainingAmountMinor:
+                $var: remainingAmountMinor
+              respondedAt:
+                $var: nowIso
+              reason:
+                $choose:
+                  cond:
+                    $truthy:
+                      $var: reason
+                  then:
+                    $var: reason
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
 
   settleSpend:
-    type: Conversation/Operation
+    type: Coordination/Operation
     description: Apply final reserve/capture deltas for a previously authorized charge attempt.
     channel: guarantorChannel
     request:
       type: PayNote/Payment Mandate Spend Settled
 
   settleSpendImpl:
-    type: Conversation/Sequential Workflow Operation
+    type: Coordination/Sequential Workflow Operation
     operation: settleSpend
     steps:
-      - name: Validate and Apply Settlement
-        type: Conversation/JavaScript Code
-        code: |
-          const documentCanonical = document.canonical('/');
-          const requestCanonical = eventCanonical
-            ? canon.at(eventCanonical, '/message/request')
-            : undefined;
-
-          const settledAtNode = requestCanonical
-            ? canon.at(requestCanonical, '/settledAt')
-            : undefined;
-          const settledAtRaw = settledAtNode ? canon.unwrap(settledAtNode) : '';
-          const settledAt = typeof settledAtRaw === 'string' ? settledAtRaw : '';
-          const nowIso =
-            settledAt || (typeof event.timestamp === 'string' ? event.timestamp : '');
-
-          const authorizationIdNode = requestCanonical
-            ? canon.at(requestCanonical, '/authorizationId')
-            : undefined;
-          const authorizationIdRaw = authorizationIdNode
-            ? canon.unwrap(authorizationIdNode)
-            : '';
-          const authorizationId =
-            typeof authorizationIdRaw === 'string' ? authorizationIdRaw : '';
-
-          const settlementStatusNode = requestCanonical
-            ? canon.at(requestCanonical, '/status')
-            : undefined;
-          const settlementStatusRaw = settlementStatusNode
-            ? canon.unwrap(settlementStatusNode)
-            : '';
-          const settlementStatus =
-            typeof settlementStatusRaw === 'string' ? settlementStatusRaw : '';
-
-          const reservedDeltaNode = requestCanonical
-            ? canon.at(requestCanonical, '/reservedDeltaMinor')
-            : undefined;
-          const reservedDeltaRaw = reservedDeltaNode ? canon.unwrap(reservedDeltaNode) : 0;
-          const reservedDeltaMinor =
-            typeof reservedDeltaRaw === 'number' ? reservedDeltaRaw : 0;
-
-          const capturedDeltaNode = requestCanonical
-            ? canon.at(requestCanonical, '/capturedDeltaMinor')
-            : undefined;
-          const capturedDeltaRaw = capturedDeltaNode ? canon.unwrap(capturedDeltaNode) : 0;
-          const capturedDeltaMinor =
-            typeof capturedDeltaRaw === 'number' ? capturedDeltaRaw : 0;
-
-          const amountLimitNode = canon.at(documentCanonical, '/amountLimit');
-          const amountLimitRaw = amountLimitNode ? canon.unwrap(amountLimitNode) : 0;
-          const amountLimit = typeof amountLimitRaw === 'number' ? amountLimitRaw : 0;
-
-          const amountReservedNode = canon.at(documentCanonical, '/amountReserved');
-          const amountReservedRaw = amountReservedNode
-            ? canon.unwrap(amountReservedNode)
-            : 0;
-          const amountReserved =
-            typeof amountReservedRaw === 'number' ? amountReservedRaw : 0;
-
-          const amountCapturedNode = canon.at(documentCanonical, '/amountCaptured');
-          const amountCapturedRaw = amountCapturedNode
-            ? canon.unwrap(amountCapturedNode)
-            : 0;
-          const amountCaptured =
-            typeof amountCapturedRaw === 'number' ? amountCapturedRaw : 0;
-
-          const chargeAttemptsNode = canon.at(documentCanonical, '/chargeAttempts');
-          const chargeAttemptsRaw = chargeAttemptsNode
-            ? canon.unwrap(chargeAttemptsNode)
-            : {};
-          const chargeAttempts =
-            chargeAttemptsRaw &&
-            typeof chargeAttemptsRaw === 'object' &&
-            !Array.isArray(chargeAttemptsRaw)
-              ? chargeAttemptsRaw
-              : {};
-          const nextChargeAttempts = { ...chargeAttempts };
-
-          const existingAttemptRaw = authorizationId
-            ? chargeAttempts[authorizationId]
-            : undefined;
-          const existingAttempt =
-            existingAttemptRaw &&
-            typeof existingAttemptRaw === 'object' &&
-            !Array.isArray(existingAttemptRaw)
-              ? existingAttemptRaw
-              : null;
-
-          const alreadySettled = !!existingAttempt && existingAttempt.settled === true;
-          const approved =
-            !!existingAttempt &&
-            typeof existingAttempt.authorizationStatus === 'string' &&
-            existingAttempt.authorizationStatus === 'approved';
-          const authorizedAmount =
-            existingAttempt && typeof existingAttempt.authorizedAmountMinor === 'number'
-              ? existingAttempt.authorizedAmountMinor
-              : 0;
-
-          const holdIdNode = requestCanonical
-            ? canon.at(requestCanonical, '/holdId')
-            : undefined;
-          const holdIdRaw = holdIdNode ? canon.unwrap(holdIdNode) : '';
-          const holdId = typeof holdIdRaw === 'string' ? holdIdRaw : '';
-
-          const transactionIdNode = requestCanonical
-            ? canon.at(requestCanonical, '/transactionId')
-            : undefined;
-          const transactionIdRaw = transactionIdNode
-            ? canon.unwrap(transactionIdNode)
-            : '';
-          const transactionId =
-            typeof transactionIdRaw === 'string' ? transactionIdRaw : '';
-
-          const settlementIdNode = requestCanonical
-            ? canon.at(requestCanonical, '/settlementId')
-            : undefined;
-          const settlementIdRaw = settlementIdNode
-            ? canon.unwrap(settlementIdNode)
-            : '';
-          const settlementId =
-            typeof settlementIdRaw === 'string' ? settlementIdRaw : '';
-
-          const requestReasonNode = requestCanonical
-            ? canon.at(requestCanonical, '/reason')
-            : undefined;
-          const requestReasonRaw = requestReasonNode
-            ? canon.unwrap(requestReasonNode)
-            : '';
-          const requestReason =
-            typeof requestReasonRaw === 'string' ? requestReasonRaw : '';
-
-          let status = 'rejected';
-          let reason = '';
-          let nextAmountReserved = amountReserved;
-          let nextAmountCaptured = amountCaptured;
-          let nextAttempt = existingAttempt ? { ...existingAttempt } : null;
-
-          if (!authorizationId) {
-            reason = 'Missing authorizationId.';
-          } else if (alreadySettled) {
-            status = 'accepted';
-            reason = 'Authorization already settled.';
-          } else if (!approved) {
-            reason = 'Authorization is not approved.';
-          } else if (
-            settlementStatus !== 'succeeded' &&
-            settlementStatus !== 'failed'
-          ) {
-            reason = 'Unsupported settlement status.';
-          } else if (capturedDeltaMinor < 0) {
-            reason = 'capturedDeltaMinor cannot be negative.';
-          } else if (
-            settlementStatus === 'failed' &&
-            capturedDeltaMinor !== 0
-          ) {
-            reason = 'capturedDeltaMinor must be 0 for failed settlement.';
-          } else if (capturedDeltaMinor > authorizedAmount) {
-            reason = 'capturedDeltaMinor exceeds authorized amount.';
-          } else {
-            const candidateAmountReserved = amountReserved + reservedDeltaMinor;
-            const candidateAmountCaptured = amountCaptured + capturedDeltaMinor;
-            const candidateUsed = candidateAmountReserved + candidateAmountCaptured;
-
-            if (candidateAmountReserved < 0) {
-              reason = 'Settlement would make amountReserved negative.';
-            } else if (candidateAmountCaptured < 0) {
-              reason = 'Settlement would make amountCaptured negative.';
-            } else if (candidateUsed > amountLimit) {
-              reason = 'Settlement would exceed amountLimit.';
-            } else {
-              status = 'accepted';
-              nextAmountReserved = candidateAmountReserved;
-              nextAmountCaptured = candidateAmountCaptured;
-              nextAttempt = { ...existingAttempt };
-              nextAttempt.settled = true;
-              nextAttempt.lastSettlementRequestStatus = settlementStatus;
-              nextAttempt.lastSettlementProcessingStatus = 'accepted';
-              nextAttempt.settlementReason = requestReason;
-              nextAttempt.settlementRespondedAt = nowIso;
-              nextAttempt.reservedDeltaMinor = reservedDeltaMinor;
-              nextAttempt.capturedDeltaMinor = capturedDeltaMinor;
-              nextAttempt.holdId = holdId;
-              nextAttempt.transactionId = transactionId;
-              nextAttempt.lastSettlementId = settlementId;
-              nextChargeAttempts[authorizationId] = nextAttempt;
-            }
-          }
-
-          if (nextAttempt && status === 'rejected') {
-            nextAttempt = { ...nextAttempt };
-            nextAttempt.lastSettlementRequestStatus = settlementStatus;
-            nextAttempt.lastSettlementProcessingStatus = 'rejected';
-            nextAttempt.settlementReason = reason;
-            nextAttempt.settlementRespondedAt = nowIso;
-            nextAttempt.lastSettlementId = settlementId;
-            nextChargeAttempts[authorizationId] = nextAttempt;
-          }
-
-          const responseEvent = {
-            type: 'PayNote/Payment Mandate Spend Settlement Responded',
-            authorizationId,
-            settlementId,
-            status,
-            amountReserved: nextAmountReserved,
-            amountCaptured: nextAmountCaptured,
-            respondedAt: nowIso
-          };
-
-          if (reason) {
-            responseEvent.reason = reason;
-          }
-
-          return {
-            nextChargeAttempts: nextChargeAttempts,
-            nextAmountReserved: nextAmountReserved,
-            nextAmountCaptured: nextAmountCaptured,
-            events: [responseEvent]
-          };
-
-      - name: Persist Settlement
-        type: Conversation/Update Document
-        changeset:
-          - op: replace
-            path: /chargeAttempts
-            val: "${steps['Validate and Apply Settlement'].nextChargeAttempts}"
-          - op: replace
-            path: /amountReserved
-            val: "${steps['Validate and Apply Settlement'].nextAmountReserved}"
-          - op: replace
-            path: /amountCaptured
-            val: "${steps['Validate and Apply Settlement'].nextAmountCaptured}"
+      - name: ValidateAndApplySettlement
+        type: Coordination/Compute
+        functions:
+          isLanguageKey:
+            args:
+              key:
+                description: BEX helper argument.
+            expr:
+              $or:
+                - $eq:
+                    - $var: key
+                    - blueId
+                - $eq:
+                    - $var: key
+                    - type
+                - $eq:
+                    - $var: key
+                    - name
+                - $eq:
+                    - $var: key
+                    - description
+                - $eq:
+                    - $var: key
+                    - schema
+                - $eq:
+                    - $var: key
+                    - contracts
+          cleanMap:
+            args:
+              object:
+                description: BEX helper argument.
+            expr:
+              $objectFromEntries:
+                $filter:
+                  in:
+                    $entries:
+                      $var: object
+                  item: entry
+                  where:
+                    $not:
+                      $call:
+                        function: isLanguageKey
+                        args:
+                          key:
+                            $var:
+                              name: entry
+                              path: /key
+        do:
+          - $let:
+              order:
+                - authorizationId
+                - settlementId
+                - settlementStatus
+                - reservedDeltaMinor
+                - capturedDeltaMinor
+                - holdId
+                - transactionId
+                - requestReason
+                - nowIso
+                - amountLimit
+                - amountReserved
+                - amountCaptured
+                - chargeAttempts
+                - existingAttempt
+                - hasExistingAttempt
+                - alreadySettled
+                - approved
+                - authorizedAmount
+                - status
+                - reason
+                - nextAmountReserved
+                - nextAmountCaptured
+                - nextAttempt
+                - nextChargeAttempts
+              vars:
+                authorizationId:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/authorizationId
+                        kind: text
+                    then:
+                      $event: /message/request/authorizationId
+                    else: ''
+                settlementId:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/settlementId
+                        kind: text
+                    then:
+                      $event: /message/request/settlementId
+                    else: ''
+                settlementStatus:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/status
+                        kind: text
+                    then:
+                      $event: /message/request/status
+                    else: ''
+                reservedDeltaMinor:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/reservedDeltaMinor
+                        kind: integer
+                    then:
+                      $event: /message/request/reservedDeltaMinor
+                    else: 0
+                capturedDeltaMinor:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/capturedDeltaMinor
+                        kind: integer
+                    then:
+                      $event: /message/request/capturedDeltaMinor
+                    else: 0
+                holdId:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/holdId
+                        kind: text
+                    then:
+                      $event: /message/request/holdId
+                    else: ''
+                transactionId:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/transactionId
+                        kind: text
+                    then:
+                      $event: /message/request/transactionId
+                    else: ''
+                requestReason:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/reason
+                        kind: text
+                    then:
+                      $event: /message/request/reason
+                    else: ''
+                nowIso:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $event: /message/request/settledAt
+                        kind: text
+                    then:
+                      $event: /message/request/settledAt
+                    else: ''
+                amountLimit:
+                  $document: /amountLimit
+                amountReserved:
+                  $document: /amountReserved
+                amountCaptured:
+                  $document: /amountCaptured
+                chargeAttempts:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $document: /chargeAttempts
+                existingAttempt:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $get:
+                            object:
+                              $object:
+                                $document: /chargeAttempts
+                            key:
+                              $choose:
+                                cond:
+                                  $isKind:
+                                    val:
+                                      $event: /message/request/authorizationId
+                                    kind: text
+                                then:
+                                  $event: /message/request/authorizationId
+                                else: ''
+                hasExistingAttempt:
+                  $isKind:
+                    val:
+                      $get:
+                        object:
+                          $object:
+                            $document: /chargeAttempts
+                        key:
+                          $choose:
+                            cond:
+                              $isKind:
+                                val:
+                                  $event: /message/request/authorizationId
+                                kind: text
+                            then:
+                              $event: /message/request/authorizationId
+                            else: ''
+                    kind: object
+                alreadySettled:
+                  $eq:
+                    - $var:
+                        name: existingAttempt
+                        path: /settled
+                    - true
+                approved:
+                  $eq:
+                    - $var:
+                        name: existingAttempt
+                        path: /authorizationStatus
+                    - approved
+                authorizedAmount:
+                  $choose:
+                    cond:
+                      $isKind:
+                        val:
+                          $var:
+                            name: existingAttempt
+                            path: /authorizedAmountMinor
+                        kind: integer
+                    then:
+                      $var:
+                        name: existingAttempt
+                        path: /authorizedAmountMinor
+                    else: 0
+                status: rejected
+                reason: ''
+                nextAmountReserved:
+                  $document: /amountReserved
+                nextAmountCaptured:
+                  $document: /amountCaptured
+                nextAttempt:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $get:
+                            object:
+                              $object:
+                                $document: /chargeAttempts
+                            key:
+                              $choose:
+                                cond:
+                                  $isKind:
+                                    val:
+                                      $event: /message/request/authorizationId
+                                    kind: text
+                                then:
+                                  $event: /message/request/authorizationId
+                                else: ''
+                nextChargeAttempts:
+                  $call:
+                    function: cleanMap
+                    args:
+                      object:
+                        $object:
+                          $document: /chargeAttempts
+          - $if:
+              cond:
+                $not:
+                  $truthy:
+                    $var: authorizationId
+              then:
+                - $set:
+                    name: reason
+                    expr: Missing authorizationId.
+              else:
+                - $if:
+                    cond:
+                      $var: alreadySettled
+                    then:
+                      - $set:
+                          name: status
+                          expr: accepted
+                      - $set:
+                          name: reason
+                          expr: Authorization already settled.
+                    else:
+                      - $if:
+                          cond:
+                            $not:
+                              $var: approved
+                          then:
+                            - $set:
+                                name: reason
+                                expr: Authorization is not approved.
+                          else:
+                            - $if:
+                                cond:
+                                  $and:
+                                    - $ne:
+                                        - $var: settlementStatus
+                                        - succeeded
+                                    - $ne:
+                                        - $var: settlementStatus
+                                        - failed
+                                then:
+                                  - $set:
+                                      name: reason
+                                      expr: Unsupported settlement status.
+                                else:
+                                  - $if:
+                                      cond:
+                                        $lt:
+                                          - $var: capturedDeltaMinor
+                                          - 0
+                                      then:
+                                        - $set:
+                                            name: reason
+                                            expr: capturedDeltaMinor cannot be negative.
+                                      else:
+                                        - $if:
+                                            cond:
+                                              $and:
+                                                - $eq:
+                                                    - $var: settlementStatus
+                                                    - failed
+                                                - $ne:
+                                                    - $var: capturedDeltaMinor
+                                                    - 0
+                                            then:
+                                              - $set:
+                                                  name: reason
+                                                  expr: capturedDeltaMinor must be 0 for failed settlement.
+                                            else:
+                                              - $if:
+                                                  cond:
+                                                    $gt:
+                                                      - $var: capturedDeltaMinor
+                                                      - $var: authorizedAmount
+                                                  then:
+                                                    - $set:
+                                                        name: reason
+                                                        expr: capturedDeltaMinor exceeds authorized amount.
+                                                  else:
+                                                    - $let:
+                                                        order:
+                                                          - candidateAmountReserved
+                                                          - candidateAmountCaptured
+                                                          - candidateUsed
+                                                        vars:
+                                                          candidateAmountReserved:
+                                                            $add:
+                                                              - $var: amountReserved
+                                                              - $var: reservedDeltaMinor
+                                                          candidateAmountCaptured:
+                                                            $add:
+                                                              - $var: amountCaptured
+                                                              - $var: capturedDeltaMinor
+                                                          candidateUsed:
+                                                            $add:
+                                                              - $add:
+                                                                  - $var: amountReserved
+                                                                  - $var: reservedDeltaMinor
+                                                              - $add:
+                                                                  - $var: amountCaptured
+                                                                  - $var: capturedDeltaMinor
+                                                    - $if:
+                                                        cond:
+                                                          $lt:
+                                                            - $var: candidateAmountReserved
+                                                            - 0
+                                                        then:
+                                                          - $set:
+                                                              name: reason
+                                                              expr: Settlement would make amountReserved negative.
+                                                        else:
+                                                          - $if:
+                                                              cond:
+                                                                $lt:
+                                                                  - $var: candidateAmountCaptured
+                                                                  - 0
+                                                              then:
+                                                                - $set:
+                                                                    name: reason
+                                                                    expr: Settlement would make amountCaptured negative.
+                                                              else:
+                                                                - $if:
+                                                                    cond:
+                                                                      $gt:
+                                                                        - $var: candidateUsed
+                                                                        - $var: amountLimit
+                                                                    then:
+                                                                      - $set:
+                                                                          name: reason
+                                                                          expr: Settlement would exceed amountLimit.
+                                                                    else:
+                                                                      - $set:
+                                                                          name: status
+                                                                          expr: accepted
+                                                                      - $set:
+                                                                          name: nextAmountReserved
+                                                                          expr:
+                                                                            $var: candidateAmountReserved
+                                                                      - $set:
+                                                                          name: nextAmountCaptured
+                                                                          expr:
+                                                                            $var: candidateAmountCaptured
+                                                                      - $set:
+                                                                          name: nextAttempt
+                                                                          expr:
+                                                                            $merge:
+                                                                              - $var: existingAttempt
+                                                                              - settled: true
+                                                                                lastSettlementRequestStatus:
+                                                                                  $var: settlementStatus
+                                                                                lastSettlementProcessingStatus: accepted
+                                                                                settlementReason:
+                                                                                  $var: requestReason
+                                                                                settlementRespondedAt:
+                                                                                  $var: nowIso
+                                                                                reservedDeltaMinor:
+                                                                                  $var: reservedDeltaMinor
+                                                                                capturedDeltaMinor:
+                                                                                  $var: capturedDeltaMinor
+                                                                                holdId:
+                                                                                  $var: holdId
+                                                                                transactionId:
+                                                                                  $var: transactionId
+                                                                                lastSettlementId:
+                                                                                  $var: settlementId
+                                                                      - $set:
+                                                                          name: nextChargeAttempts
+                                                                          expr:
+                                                                            $objectSet:
+                                                                              object:
+                                                                                $var: nextChargeAttempts
+                                                                              key:
+                                                                                $var: authorizationId
+                                                                              val:
+                                                                                $var: nextAttempt
+          - $if:
+              cond:
+                $and:
+                  - $var: hasExistingAttempt
+                  - $eq:
+                      - $var: status
+                      - rejected
+              then:
+                - $set:
+                    name: nextAttempt
+                    expr:
+                      $merge:
+                        - $var: existingAttempt
+                        - lastSettlementRequestStatus:
+                            $var: settlementStatus
+                          lastSettlementProcessingStatus: rejected
+                          settlementReason:
+                            $var: reason
+                          settlementRespondedAt:
+                            $var: nowIso
+                          lastSettlementId:
+                            $var: settlementId
+                - $set:
+                    name: nextChargeAttempts
+                    expr:
+                      $objectSet:
+                        object:
+                          $var: nextChargeAttempts
+                        key:
+                          $var: authorizationId
+                        val:
+                          $var: nextAttempt
+          - $appendChange:
+              op: replace
+              path: /chargeAttempts
+              val:
+                $var: nextChargeAttempts
+          - $appendChange:
+              op: replace
+              path: /amountReserved
+              val:
+                $var: nextAmountReserved
+          - $appendChange:
+              op: replace
+              path: /amountCaptured
+              val:
+                $var: nextAmountCaptured
+          - $appendEvent:
+              type: PayNote/Payment Mandate Spend Settlement Responded
+              authorizationId:
+                $var: authorizationId
+              settlementId:
+                $var: settlementId
+              status:
+                $var: status
+              amountReserved:
+                $var: nextAmountReserved
+              amountCaptured:
+                $var: nextAmountCaptured
+              respondedAt:
+                $var: nowIso
+              reason:
+                $choose:
+                  cond:
+                    $truthy:
+                      $var: reason
+                  then:
+                    $var: reason
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true

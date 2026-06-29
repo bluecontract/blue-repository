@@ -1,5 +1,5 @@
 name: Payment Initiation Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Request emitted from a payment source document when a payment initiation is requested.
 idempotencyKey:
   type: Text
@@ -27,6 +27,6 @@ paynote:
   channelBindings:
     type: Dictionary
     keyType: Text
-    valueType: Core/Channel
+    valueType: Channel
     description: |
       Optional channel bindings keyed by the channel names declared in the PayNote document.

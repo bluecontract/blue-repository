@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-NaturalPersonRoleEnum.schema.json
-name: NaturalPersonRoleEnum
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/NaturalPersonRoleEnum
 description: "The enumerated values for the natural person's role."
 type: Text
 schema:

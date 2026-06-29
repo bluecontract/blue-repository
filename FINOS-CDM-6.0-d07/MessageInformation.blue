@@ -1,25 +1,24 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-MessageInformation.schema.json
-name: MessageInformation
-namespace: cdm/event/workflow
+name: cdm/event/workflow/MessageInformation
 description: This class corresponds to the components of the FpML MessageHeader.model.
 copyTo:
   description: |
     A unique identifier (within the specified coding scheme) giving the details of some party to whom a copy of this message will be sent for reference.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 0
 messageId:
   description: A unique identifier assigned to the message.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 sentBy:
   description: The identifier for the originator of a message instance.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 sentTo:
   description: "The identifier(s) for the recipient(s) of a message instance."
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 0

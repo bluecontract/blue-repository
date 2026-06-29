@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-ListingExchange.schema.json
-name: ListingExchange
-namespace: cdm/product/collateral
+name: cdm/product/collateral/ListingExchange
 description: Specifies a filter based on a stock exchange.
 exchange:
   description: |
     Represents a filter based on the Primary Stock Exchange facilitating the listing of companies, exchange of Stocks, Exchange traded Derivatives, Bonds, and other Securities expressed in ISO standard 10383.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 1

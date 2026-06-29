@@ -1,5 +1,5 @@
 name: Card Transaction Monitoring Request Rejected
-type: Conversation/Response
+type: Coordination/Response
 description: Notification that card transaction monitoring was rejected.
 targetMerchantId:
   type: Text

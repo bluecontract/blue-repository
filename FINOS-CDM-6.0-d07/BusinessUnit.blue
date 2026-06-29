@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-BusinessUnit.schema.json
-name: BusinessUnit
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/BusinessUnit
 description: A class to specify an organizational unit.
 contactInformation:
   description: |
     The contact information for such business unit, when different from the contact information associated with the party.
-  type: FINOS-CDM-6.0-d07/ContactInformation
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/ContactInformation
 identifier:
   description: An identifier used to uniquely identify the organizational unit
-  type: FINOS-CDM-6.0-d07/Identifier
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/Identifier

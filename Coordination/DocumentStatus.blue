@@ -1,0 +1,13 @@
+name: Document Status
+description: |
+  Base type for document status markers. A Document Status summarizes the current lifecycle or business state of a
+  coordination document in a compact, machine-readable form.
+
+  Concrete statuses such as pending, in progress, completed, and failed specialize this type by fixing the `mode` field.
+  Status values are Blue content: changing status changes document identity and may trigger Document Update channels or
+  workflows.
+mode:
+  type: Text
+  description: |
+    Canonical status mode text. Concrete status types fix this value, for example `pending`, `inProgress`, `completed`,
+    or `failed`.

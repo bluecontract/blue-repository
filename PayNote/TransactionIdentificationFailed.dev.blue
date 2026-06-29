@@ -1,5 +1,5 @@
 name: Transaction Identification Failed
-type: Conversation/Event
+type: Coordination/Event
 description: The deliverer could not identify the card transaction.
 reason:
   type: Text

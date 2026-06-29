@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-metafields-ReferenceWithMetaInterestRatePayout.schema.json
-name: ReferenceWithMetaInterestRatePayout
-namespace: cdm/product/asset/metafields
+name: cdm/product/asset/metafields/ReferenceWithMetaInterestRatePayout
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

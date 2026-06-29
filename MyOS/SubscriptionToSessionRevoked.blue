@@ -1,5 +1,5 @@
 name: Subscription to Session Revoked
-type: Conversation/Response
+type: Coordination/Response
 description: Indicates MyOS Admin stopped forwarding updates for the subscription.
 subscriptionId:
   type: Text

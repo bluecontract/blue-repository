@@ -1,5 +1,5 @@
 name: PayNote Delivery Failed
-type: Conversation/Event
+type: Coordination/Event
 description: Delivery failed for a non-identification reason.
 reason:
   type: Text

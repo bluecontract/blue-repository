@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralTypeEnum.schema.json
-name: CollateralTypeEnum
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralTypeEnum
 description: Specifies the types of collateral that are accepted by the Lender
 type: Text
 schema:

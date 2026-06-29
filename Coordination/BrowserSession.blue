@@ -1,0 +1,21 @@
+name: Browser Session
+type: Coordination/Source
+description: |
+  Source specialization for an authenticated interactive browser, mobile, or user-interface session. Browser Session
+  records that the event source observed the request through an interactive session rather than a background API
+  credential. It is often combined with Principal Actor when a document wants evidence of direct human involvement.
+
+  Browser Session does not, by itself, guarantee a particular authentication strength. A concrete subtype may define
+  password login, two-factor authentication, biometric verification, hardware key challenge, regulated strong customer
+  authentication, or other assurance details. Documents that require those stronger conditions should check the
+  concrete subtype or additional fields, not merely the base Browser Session type.
+
+  A Timeline Provider or event source authenticates the session and records the source. Blue documents later use that
+  source attribution to decide whether a requested operation meets their policy. The provider is infrastructure: it
+  validates the session and appends the entry; it does not need to understand the business meaning of the message.
+uiSessionNonce:
+  type: Text
+  description: |
+    Provider-generated identifier for the UI session or interaction context. It may be opaque outside the provider, but
+    it should be sufficient for provider-side audit, incident review, revocation, and correlation with authentication
+    records. It MUST NOT contain secret session credentials.

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-RefRate.schema.json
-name: RefRate
-namespace: cdm/regulation
+name: cdm/regulation/RefRate
 indx:
   type: Text
   schema:

@@ -1,5 +1,5 @@
 name: Transaction Details Update Unlocked
-type: Conversation/Response
+type: Coordination/Response
 description: >
   Transaction-details updates were unlocked. Subsequent details changes
   may now be processed again.

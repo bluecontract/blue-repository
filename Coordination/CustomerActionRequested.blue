@@ -1,0 +1,38 @@
+name: Customer Action Requested
+type: Coordination/Request
+description: |
+  Event requesting that a customer, user, or participant take an explicit action. This is typically emitted when an
+  automated workflow reaches a point that needs human review, consent, selection, confirmation, or additional input.
+
+  The event should describe the requested action in human-readable form and provide a deterministic list of allowed
+  actions. The response should be represented by Customer Action Responded or a domain-specific response event.
+title:
+  type: Text
+  description: |
+    Title shown to the user or participant for the pending action.
+message:
+  type: Text
+  description: |
+    Detailed human-readable explanation of what is being requested and why.
+actions:
+  type: List
+  itemType:
+    label:
+      type: Text
+      description: User-facing action label shown in the pending action card.
+    variant:
+      type: Text
+      description: 'Optional button style variant. Supported values: primary | secondary | reject.'
+    inputSchema:
+      description: Optional input schema. If present, the selected action may collect user input.
+    inputRequired:
+      type: Boolean
+      description: Optional flag indicating whether input is required for this action.
+    inputTitle:
+      type: Text
+      description: Optional title displayed above the action input control.
+    inputPlaceholder:
+      type: Text
+      description: Optional placeholder/help text shown in the action input control.
+  description: |
+    Allowed action labels or structured options. Their order is the display/order preference.

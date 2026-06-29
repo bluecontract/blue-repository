@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CreditNotationBoundaryEnum.schema.json
-name: CreditNotationBoundaryEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CreditNotationBoundaryEnum
 description: Identifies an agency rating as a simple scale boundary of minimum or maximum.
 type: Text
 schema:

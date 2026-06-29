@@ -1,5 +1,5 @@
 name: Card Transaction Monitoring Stopped
-type: Conversation/Event
+type: Coordination/Event
 
 targetMerchantId:
   type: Text

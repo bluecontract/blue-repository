@@ -1,5 +1,5 @@
 name: Settlement Amount Rejected
-type: Conversation/Response
+type: Coordination/Response
 description: The Guarantor rejects the proposed settlement amount.
 reason:
   type: Text

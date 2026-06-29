@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralInterestNotification.schema.json
-name: CollateralInterestNotification
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralInterestNotification
 description: |
   Represents the parameters describing when notifications should be made for required collateral interest transfers.
 notificationDayType:
   description: The type of days on which notification should occur.
-  type: FINOS-CDM-6.0-d07/DayTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DayTypeEnum
   schema:
     required: true
 notificationTime:

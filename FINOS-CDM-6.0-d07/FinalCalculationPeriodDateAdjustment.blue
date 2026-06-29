@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-FinalCalculationPeriodDateAdjustment.schema.json
-name: FinalCalculationPeriodDateAdjustment
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/FinalCalculationPeriodDateAdjustment
 description: |
   A data to:  define business date convention adjustment to final payment period per leg.
 businessDayConvention:
   description: Override business date convention. This takes precedence over leg level information.
-  type: FINOS-CDM-6.0-d07/BusinessDayConventionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayConventionEnum
   schema:
     required: true
 relevantUnderlyingDateReference:
   description: Reference to the unadjusted cancellation effective dates.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaAdjustableOrRelativeDates
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/metafields/ReferenceWithMetaAdjustableOrRelativeDates
   schema:
     required: true
 swapStreamReference:
   description: "Reference to the leg, where date adjustments may apply."
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaInterestRatePayout
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/metafields/ReferenceWithMetaInterestRatePayout
   schema:
     required: true

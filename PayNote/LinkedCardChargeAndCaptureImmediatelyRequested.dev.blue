@@ -1,5 +1,5 @@
 name: Linked Card Charge and Capture Immediately Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Request to create a linked card charge and capture it immediately.
 amount:
   type: Integer

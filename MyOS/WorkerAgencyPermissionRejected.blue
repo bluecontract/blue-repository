@@ -1,5 +1,5 @@
 name: Worker Agency Permission Rejected
-type: Conversation/Response
+type: Coordination/Response
 description: Grant could not be applied.
 granteeDocumentId:
   type: Text

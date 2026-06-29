@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-AdditionalFixedPayments.schema.json
-name: AdditionalFixedPayments
-namespace: cdm/product/asset
+name: cdm/product/asset/AdditionalFixedPayments
 description: A class to specify the events that will give rise to the payment additional fixed payments.
 interestShortfallReimbursement:
   description: |

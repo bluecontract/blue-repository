@@ -1,5 +1,5 @@
 name: Worker Agency Permission Grant Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Parent worker requests authority to start specific sub-worker types and receive per-instance SDPGs.
 # Principals
 onBehalfOf: # account (channe name) owning the worker / granter

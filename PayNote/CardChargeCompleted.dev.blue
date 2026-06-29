@@ -1,5 +1,5 @@
 name: Card Charge Completed
-type: Conversation/Response
+type: Coordination/Response
 description: Final outcome for a card charge request.
 status:
   type: Text

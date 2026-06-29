@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-BoundedCorrelation.schema.json
-name: BoundedCorrelation
-namespace: cdm/product/asset
+name: cdm/product/asset/BoundedCorrelation
 description: "Describes correlation bounds, which form a cap and a floor on the realized correlation."
 maximumBoundaryPercent:
   description: Maximum Boundary as a percentage of the Strike Price.

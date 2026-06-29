@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-BusinessDayAdjustments.schema.json
-name: BusinessDayAdjustments
-namespace: cdm/base/datetime
+name: cdm/base/datetime/BusinessDayAdjustments
 description: |
   A class defining the business day convention and financial business centers used for adjusting any relevant date if it would otherwise fall on a day that is not a business day in the specified business center.
 businessCenters:
   description: |
     The business center(s), specified either explicitly or by reference to those specified somewhere else in the instance document.
-  type: FINOS-CDM-6.0-d07/BusinessCenters
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenters
 businessDayConvention:
   description: The convention for adjusting a date if it would otherwise fall on a day that is not a business day.
-  type: FINOS-CDM-6.0-d07/BusinessDayConventionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayConventionEnum
   schema:
     required: true

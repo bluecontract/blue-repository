@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-RestructuringEnum.schema.json
-name: RestructuringEnum
-namespace: cdm/observable/event
+name: cdm/observable/event/RestructuringEnum
 description: |
   The enumerated values to specify the form of the restructuring credit event that is applicable to the credit default swap.
 type: Text

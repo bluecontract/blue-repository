@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-TimeZone.schema.json
-name: TimeZone
-namespace: cdm/base/datetime
+name: cdm/base/datetime/TimeZone
 description: |
   The time alongside with the timezone location information. This class makes use of the FpML TimezoneLocation construct.
 location:
   description: |
     FpML specifies the timezoneLocationScheme by reference to the Time Zone Database (a.k.a. tz database) maintained by IANA, the Internet Assigned Numbers Authority.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 time:
   description: The observation time.
   type: Text

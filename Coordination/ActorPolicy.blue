@@ -1,0 +1,62 @@
+name: Actor Policy
+type: Marker
+description: |
+  Processor-visible policy marker that constrains which actor and source categories may invoke named operations. Actor
+  Policy turns actor/source attribution into enforceable workflow rules. It lets a document require direct principal
+  action for sensitive operations such as authorization, capture, cancellation, consent, or contract amendment, while
+  permitting delegated agents or API calls for lower-risk operations such as adding notes, requesting information, or
+  preparing drafts.
+
+  The policy is keyed by operation name. Each operation entry can constrain the actor category with `requiresActor`,
+  require a source category with `requiresSource`, and/or reject a source category with `excludeSource`. The core
+  actor categories are `principal`, `agent`, and `any`. The core source categories are `browserSession`, `apiCall`, and
+  `documentRequest`. These are intentionally broad categories. Domain-specific policies may refine them by requiring
+  a specialized actor or source type in the operation runtime, such as a strongly authenticated browser session or a
+  provider-specific agent delegation.
+
+  Actor Policy is a marker. It does not handle events, issue patches, or inspect timelines by itself. A supported
+  operation channel/runtime reads it when evaluating an Operation Request or comparable event. If the event's actor or
+  source does not satisfy the operation's policy, the operation is rejected or the scope terminates according to the
+  hosting processor's rules. Timeline Providers are not responsible for enforcing this document policy; they provide
+  infrastructure, attribution, append authorization, ordering, storage, and completeness guarantees. Blue documents use
+  Actor Policy to decide how to interpret those attributed entries.
+operations:
+  type: Dictionary
+  keyType: Text
+  valueType:
+    requiresActor:
+      type: Text
+      schema:
+        enum:
+        - principal
+        - agent
+        - any
+      description: |
+        Required actor category for the operation. `principal` means the actor must be a Principal Actor or compatible
+        subtype. `agent` means the actor must be an Agent Actor or compatible subtype. `any` means the operation does
+        not restrict the actor category at this policy level, though the operation runtime may still apply stricter
+        rules.
+    requiresSource:
+      type: Text
+      schema:
+        enum:
+        - browserSession
+        - apiCall
+        - documentRequest
+      description: |
+        Required source category for the operation. `browserSession` requires an interactive UI/source session,
+        `apiCall` requires a programmatic API source, and `documentRequest` requires a request originating from another
+        Blue document or document session. Omit this field when the policy does not require a particular source.
+    excludeSource:
+      type: Text
+      schema:
+        enum:
+        - browserSession
+        - apiCall
+        - documentRequest
+      description: |
+        Disallowed source category for the operation. This can prohibit a category even when the actor is otherwise
+        acceptable. For example, an operation may allow any actor but exclude `apiCall` to require a non-API source.
+  description: |
+    Per-operation constraints keyed by operation name. Each operation value may specify actor/source requirements.
+    Missing fields mean this policy marker does not constrain that dimension for the operation.

@@ -1,5 +1,5 @@
 name: Capture Failed
-type: Conversation/Response
+type: Coordination/Response
 description: The Guarantor attempted the transfer, but it failed for a technical reason.
 reason:
   type: Text

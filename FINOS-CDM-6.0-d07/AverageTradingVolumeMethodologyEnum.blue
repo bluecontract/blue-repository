@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AverageTradingVolumeMethodologyEnum.schema.json
-name: AverageTradingVolumeMethodologyEnum
-namespace: cdm/product/collateral
+name: cdm/product/collateral/AverageTradingVolumeMethodologyEnum
 description: |
   Indicates the type of equity average trading volume (single) the highest amount on one exchange, or (consolidated) volumes across more than one exchange.
 type: Text

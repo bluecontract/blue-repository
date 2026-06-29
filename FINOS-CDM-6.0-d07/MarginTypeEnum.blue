@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-MarginTypeEnum.schema.json
-name: MarginTypeEnum
-namespace: cdm/product/template
+name: cdm/product/template/MarginTypeEnum
 description: |
   This indicator defines which type of assets (cash or securities) is specified to apply as margin to the repo transaction.
 type: Text

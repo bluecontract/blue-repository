@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-NumberBound.schema.json
-name: NumberBound
-namespace: cdm/base/math
+name: cdm/base/math/NumberBound
 description: The number bound is defined as a number and whether the bound is inclusive.
 inclusive:
   description: |

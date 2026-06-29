@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-FutureValueAmount.schema.json
-name: FutureValueAmount
-namespace: cdm/product/asset
+name: cdm/product/asset/FutureValueAmount
 description: A class defining a currency and a future value date.
 calculationPeriodNumberOfDays:
   description: |
@@ -11,11 +10,11 @@ calculationPeriodNumberOfDays:
 currency:
   description: |
     The currency in which the an amount is denominated. The list of valid currencies is not presently positioned as an enumeration as part of the CDM because that scope is limited to the values specified by ISDA and FpML. As a result, implementers have to make reference to the relevant standard, such as the ISO 4217 standard for currency codes.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 quantity:
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaNonNegativeQuantitySchedule
+  type: FINOS-CDM-6.0-d07/cdm/base/math/metafields/ReferenceWithMetaNonNegativeQuantitySchedule
 valueDate:
   description: Adjusted value date of the future value amount.
   type: Text

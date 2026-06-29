@@ -1,12 +1,11 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-MeasureBase.schema.json
-name: MeasureBase
-namespace: cdm/base/math
+name: cdm/base/math/MeasureBase
 description: |
   Provides an abstract type to define a measure as a number associated to a unit. This type is abstract because all its attributes are optional. The types that extend it can specify further existence constraints.
 unit:
   description: |
     Qualifies the unit by which the amount is measured. Optional because a measure may be unit-less (e.g. when representing a ratio between amounts in the same unit).
-  type: FINOS-CDM-6.0-d07/UnitType
+  type: FINOS-CDM-6.0-d07/cdm/base/math/UnitType
 val:
   description: |
     Specifies the value of the measure as a number. Optional because in a measure vector or schedule, this single value may be omitted.

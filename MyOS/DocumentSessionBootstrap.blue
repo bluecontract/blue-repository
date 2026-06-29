@@ -9,7 +9,7 @@ avatarUrl:
 channelBindings:
   type: Dictionary
   keyType: Text
-  valueType: Core/Channel
+  valueType: Channel
   description: Maps channel names to participant identifiers
 initialMessages:
   description: Messages sent to participants when inviting them to the bootstrapped document
@@ -27,7 +27,7 @@ capabilities:
   valueType: Boolean
   description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
 bootstrapStatus:
-  type: Conversation/Document Status
+  type: Coordination/Document Status
   description: Overall bootstrap process status
 bootstrapError:
   type: Text
@@ -44,96 +44,146 @@ participantsState:
 
 contracts:
   triggeredEventsChannel:
-    type: Core/Triggered Event Channel
+    type: Triggered Event Channel
 
   lifecycle:
-    type: Core/Lifecycle Event Channel
+    type: Lifecycle Event Channel
     event:
-      type: Core/Document Processing Initiated
+      type: Document Processing Initiated
 
   initHandler:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: lifecycle
     steps:
       - name: Initialize Bootstrap Status
-        type: Conversation/Update Document
+        type: Coordination/Update Document
         changeset:
           - op: replace
             path: /bootstrapStatus
             val:
-              type: Conversation/Status In Progress
+              type: Coordination/Status In Progress
 
   handleParticipantResolved:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: triggeredEventsChannel
     event:
       type: MyOS/Participant Resolved
     steps:
-      - name: Prepare Participant State
-        type: Conversation/JavaScript Code
-        code: |
-          const participantState = {
-            accountStatus: event.participant?.status?.accountStatus || 'Unknown', // "Active" | "Inactive"
-            errorMessage: ''
-          };
-
-          return {
-            participantState,
-            channelName: event.channelName
-          };
-
-      - name: Update Participants State
-        type: Conversation/Update Document
-        changeset:
-          - op: replace
-            path: /participantsState/${steps['Prepare Participant State'].channelName}
-            val: "${steps['Prepare Participant State'].participantState}"
+      - name: Update Participant State
+        type: Coordination/Compute
+        do:
+          - $if:
+              cond:
+                $not:
+                  $exists:
+                    $event: /channelName
+              then:
+                - $return:
+                    changeset: []
+                    events: []
+          - $let:
+              order:
+                - channelName
+                - accountStatus
+              vars:
+                channelName:
+                  $event: /channelName
+                accountStatus:
+                  $default:
+                    - $event: /participant/status/accountStatus
+                    - Unknown
+          - $appendChange:
+              op: replace
+              path:
+                $pointerJoin:
+                  - participantsState
+                  - $var: channelName
+              val:
+                accountStatus:
+                  $var: accountStatus
+                errorMessage: ''
+          - $return:
+              changeset:
+                $changeset: true
 
   handleTargetDocumentSessionStarted:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: triggeredEventsChannel
     event:
       type: MyOS/Target Document Session Started
     steps:
-      - name: Update Initiator Session
-        type: Conversation/Update Document
-        changeset:
-          - op: replace
-            path: /initiatorSessionIds
-            val: "${event.initiatorSessionIds}"
-
-      - name: Emit Completion Event
-        type: Conversation/JavaScript Code
-        code: |
-          return { events: [ { type: 'Conversation/Status Change', status: { type: 'Conversation/Status Completed' } } ] };
+      - name: Update Initiator Session And Emit Completion
+        type: Coordination/Compute
+        do:
+          - $if:
+              cond:
+                $not:
+                  $exists:
+                    $event: /initiatorSessionIds
+              then:
+                - $return:
+                    changeset: []
+                    events: []
+          - $appendChange:
+              op: replace
+              path: /initiatorSessionIds
+              val:
+                $event: /initiatorSessionIds
+          - $appendEvent:
+              type: Coordination/Status Change
+              status:
+                type: Coordination/Status Completed
+                mode: terminated
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
 
   handleBootstrapFailed:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: triggeredEventsChannel
     event:
       type: MyOS/Bootstrap Failed
     steps:
-      - name: Update Error Message
-        type: Conversation/Update Document
-        changeset:
-          - op: replace
-            path: /bootstrapError
-            val: "${event.reason}"
-
-      - name: Emit Failure Event
-        type: Conversation/JavaScript Code
-        code: |
-          return { events: [ { type: 'Conversation/Status Change', status: { type: 'Conversation/Status Failed' } } ] };
+      - name: Update Error And Emit Failure
+        type: Coordination/Compute
+        do:
+          - $if:
+              cond:
+                $not:
+                  $exists:
+                    $event: /reason
+              then:
+                - $return:
+                    changeset: []
+                    events: []
+          - $appendChange:
+              op: replace
+              path: /bootstrapError
+              val:
+                $event: /reason
+          - $appendEvent:
+              type: Coordination/Status Change
+              status:
+                type: Coordination/Status Failed
+                mode: terminated
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
 
   handleStatusChange:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Conversation/Status Change
+      type: Coordination/Status Change
     steps:
       - name: Update Bootstrap Status
-        type: Conversation/Update Document
+        type: Coordination/Update Document
         changeset:
           - op: replace
             path: /bootstrapStatus
-            val: "${event.status}"
+            val:
+              $event: /status

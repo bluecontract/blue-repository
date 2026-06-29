@@ -1,0 +1,24 @@
+name: Document Section Changes
+description: |
+  Structured collection of section-based contract mutations. It divides `/contracts` changes into `add`, `modify`, and
+  `remove` lists so a workflow can validate and apply them coherently under Contracts Change Policy.
+
+  `add` creates new Document Section markers and their related contracts. `modify` replaces an existing section's marker
+  and related contracts with a full new section definition. `remove` deletes a section key and the contracts listed as
+  related to that section. The exact patch sequence is produced by the supporting workflow, but the semantic intent is
+  section-level contract evolution rather than low-level pointer editing.
+
+  This type is useful for human review, AI-agent proposal validation, and audit trails because it preserves why a set of
+  contract changes belong together.
+add:
+  type: List
+  itemType: Workflows/Document Section Change Entry
+  description: New sections to create with their Document Section and contracts.
+modify:
+  type: List
+  itemType: Workflows/Document Section Change Entry
+  description: Existing sections to update with a full contracts map.
+remove:
+  type: List
+  itemType: Text
+  description: Section keys to remove (also removes the section's related contracts).

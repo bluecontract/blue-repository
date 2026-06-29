@@ -1,5 +1,5 @@
 name: Payment Completion Lock Requested
-type: Conversation/Request
+type: Coordination/Request
 description: >
   Request that the Guarantor reject subsequent completion attempts
   for the governed transaction.

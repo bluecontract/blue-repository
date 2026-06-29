@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-event-PubliclyAvailableInformation.schema.json
-name: PubliclyAvailableInformation
-namespace: cdm/observable/event
+name: cdm/observable/event/PubliclyAvailableInformation
 publicSource:
   description: |
     A public information source, e.g. a particular newspaper or electronic news service, that may publish relevant information used in the determination of whether or not a credit event has occurred. ISDA 2003 Term: Public Source.

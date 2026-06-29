@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Id.schema.json
-name: Id
-namespace: cdm/regulation
+name: cdm/regulation/Id
 lei:
   type: Text
   schema:

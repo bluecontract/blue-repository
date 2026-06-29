@@ -1,25 +1,24 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-MandatoryEarlyTermination.schema.json
-name: MandatoryEarlyTermination
-namespace: cdm/product/template
+name: cdm/product/template/MandatoryEarlyTermination
 description: |
   A data to:  define an early termination provision for which exercise is mandatory.
 calculationAgent:
   description: The ISDA Calculation Agent responsible for performing duties associated with an optional early termination.
-  type: FINOS-CDM-6.0-d07/CalculationAgent
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/CalculationAgent
   schema:
     required: true
 cashSettlement:
   description: |
     If specified, this means that cash settlement is applicable to the transaction and defines the parameters associated with the cash settlement procedure. If not specified, then physical settlement is applicable.
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms
   schema:
     required: true
 mandatoryEarlyTerminationAdjustedDates:
   description: |
     The adjusted dates associated with a mandatory early termination provision. These dates have been adjusted for any applicable business day convention.
-  type: FINOS-CDM-6.0-d07/MandatoryEarlyTerminationAdjustedDates
+  type: FINOS-CDM-6.0-d07/cdm/product/template/MandatoryEarlyTerminationAdjustedDates
 mandatoryEarlyTerminationDate:
   description: The early termination date associated with a mandatory early termination of a swap.
-  type: FINOS-CDM-6.0-d07/AdjustableDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableDate
   schema:
     required: true

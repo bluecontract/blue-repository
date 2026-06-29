@@ -1,0 +1,5 @@
+name: Status In Progress
+type: Coordination/Document Status
+mode: active
+description: |
+  Concrete Document Status meaning work has started and is actively being processed, but no terminal success or failure has been reached. The fixed mode is `inProgress`.

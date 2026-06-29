@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-metafields-FieldWithMetaNonNegativeQuantitySchedule.schema.json
-name: FieldWithMetaNonNegativeQuantitySchedule
-namespace: cdm/base/math
+name: cdm/base/math/FieldWithMetaNonNegativeQuantitySchedule
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/NonNegativeQuantitySchedule
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NonNegativeQuantitySchedule

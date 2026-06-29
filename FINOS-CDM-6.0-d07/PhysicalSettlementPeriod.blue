@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PhysicalSettlementPeriod.schema.json
-name: PhysicalSettlementPeriod
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/PhysicalSettlementPeriod
 businessDays:
   description: |
     A number of business days. Its precise meaning is dependant on the context in which this element is used. ISDA 2003 Term: Business Day.

@@ -1,5 +1,5 @@
 name: Linked Documents Permission Granted
-type: Conversation/Response
+type: Coordination/Response
 description: All initial rights from this LDPG have been persisted.
 
 targetSessionId:

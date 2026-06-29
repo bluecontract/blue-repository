@@ -1,24 +1,23 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CreditIndex.schema.json
-name: CreditIndex
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CreditIndex
 description: |
   Specification of an index based on credit risk, typically composed using corporate debt instruments in a region or industry sector, e.g. the iTraxx indices.
 assetClass:
   description: The Asset Class of the Index.
-  type: FINOS-CDM-6.0-d07/AssetClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetClassEnum
 exchange:
   description: "If the Asset is listed, defines the public exchange of the listing."
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 excludedReferenceEntity:
   description: Excluded reference entity.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceInformation
+  itemType: FINOS-CDM-6.0-d07/cdm/product/asset/ReferenceInformation
   schema:
     minItems: 0
 identifier:
   description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetIdentifier
   schema:
     minItems: 1
 indexAnnexDate:
@@ -26,7 +25,7 @@ indexAnnexDate:
   type: Text
 indexAnnexSource:
   description: A CDS index series annex source.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaIndexAnnexSourceEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/FieldWithMetaIndexAnnexSourceEnum
 indexAnnexVersion:
   description: "A CDS index series version identifier, e.g. 1, 2, 3 etc."
   type: Integer
@@ -42,26 +41,26 @@ isExchangeListed:
   type: Boolean
 provider:
   description: The organisation that creates or maintains the Index.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 relatedExchange:
   description: "Provides the related Exchanges, if applicable."
   type: List
-  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     minItems: 0
 seniority:
   description: Seniority of debt instruments comprising the index.
-  type: FINOS-CDM-6.0-d07/CreditSeniorityEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/CreditSeniorityEnum
 settledEntityMatrix:
   description: Used to specify the Relevant Settled Entity Matrix when there are settled entities at the time of the trade.
-  type: FINOS-CDM-6.0-d07/SettledEntityMatrix
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/SettledEntityMatrix
 taxonomy:
   description: |
     Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Taxonomy
   schema:
     minItems: 0
 tranche:
   description: This element contains CDS tranche terms.
-  type: FINOS-CDM-6.0-d07/Tranche
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/Tranche

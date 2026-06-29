@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-ReferenceBanks.schema.json
-name: ReferenceBanks
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/ReferenceBanks
 description: |
   A class defining the list of reference institutions polled for relevant rates or prices when determining the cash settlement amount for a product where cash settlement is applicable.
 referenceBank:
   description: "An institution (party) identified by means of a coding scheme and an optional name."
   type: List
-  itemType: FINOS-CDM-6.0-d07/ReferenceBank
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/ReferenceBank
   schema:
     minItems: 1

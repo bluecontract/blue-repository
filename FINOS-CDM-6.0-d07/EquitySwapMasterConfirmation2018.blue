@@ -1,38 +1,37 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-EquitySwapMasterConfirmation2018.schema.json
-name: EquitySwapMasterConfirmation2018
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/EquitySwapMasterConfirmation2018
 description: |
   Specification for the General Terms and Relationship Supplement Elections as provided in the 2018 ISDA CDM Equity Confirmation for Security Equity Swap.
 equityCashSettlementDates:
   description: |
     The parameters used to generate the payment date schedule, relative to the equityCalculationPeriod. Per Part 1 Section 12, 'Definitions', of the 2018 ISDA CDM Equity Confirmation. Para 73
-  type: FINOS-CDM-6.0-d07/PaymentDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/PaymentDates
   schema:
     required: true
 linearInterpolationElection:
   description: "Per Part 1 Section 3, 'Floating Obligations', of the 2018 ISDA CDM Equity Confirmation. Para 3.3"
-  type: FINOS-CDM-6.0-d07/InterpolationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/InterpolationMethodEnum
   schema:
     required: true
 pricingMethodElection:
   description: "Per Part 1 Section 5, 'Pricing', of the 2018 ISDA CDM Equity Confirmation, Para 5.1"
-  type: FINOS-CDM-6.0-d07/PriceReturnTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/PriceReturnTerms
   schema:
     required: true
 settlementTerms:
   description: "Per Part 1 Section 8, 'Settlement', of the 2018 ISDA CDM Equity Confirmation for Security Equity Swap"
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms
   schema:
     required: true
 typeOfSwapElection:
   description: |
     Per Part 1 Section 4, 'Dividend Obligations', of the 2018 ISDA CDM Equity Confirmation, Para 4.2 'Dividend Returns'
-  type: FINOS-CDM-6.0-d07/ReturnTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/ReturnTypeEnum
   schema:
     required: true
 valuationDates:
   description: |
     The parameters used to generate the 'Equity Valuation Dates' schedule, including the Effective Date and Termination Date for the Swap.
-  type: FINOS-CDM-6.0-d07/ValuationDates
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/ValuationDates
   schema:
     required: true

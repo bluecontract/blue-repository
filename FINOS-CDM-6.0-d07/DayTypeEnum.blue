@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-DayTypeEnum.schema.json
-name: DayTypeEnum
-namespace: cdm/base/datetime
+name: cdm/base/datetime/DayTypeEnum
 description: |
   Lists the enumerated values to specify the day type classification used in counting the number of days between two dates.
 type: Text

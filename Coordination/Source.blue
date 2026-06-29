@@ -1,0 +1,17 @@
+name: Source
+description: |
+  Base coordination type for source attribution: how an event, request, or timeline entry reached the event source.
+  Actor answers "who or what caused this action"; Source answers "through what channel or context was the action
+  submitted". The two dimensions are intentionally separate. A principal may act through a browser session or an API
+  call; an agent may also act through an API call or a provider-managed automation channel.
+
+  Source nodes are passive provenance content. They do not execute logic and do not authorize anything by themselves.
+  They let documents distinguish interactive UI sessions, API calls, document-to-document requests, blockchain
+  transactions, customer consent flows, or other submission contexts. Actor Policy and domain-specific operation rules
+  can then require or exclude source categories. For example, a document can require principal actor attribution and a
+  browser-session source for authorizing funds, while allowing API-call sources for low-risk status queries.
+
+  Concrete Source subtypes should state exactly what the provider observed and what an auditor can rely on. A source
+  type should not overclaim: if it only identifies an API credential, it should not imply interactive human presence;
+  if it only identifies a browser session, it should not imply a specific authentication strength unless the subtype
+  says so.

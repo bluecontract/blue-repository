@@ -1,5 +1,5 @@
 name: Payment Target Preparation Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Request emitted from a MyOS Balance Account document when its owner asks MyOS Admin to prepare an opaque recipient payment target.
 amount:
   type: Integer

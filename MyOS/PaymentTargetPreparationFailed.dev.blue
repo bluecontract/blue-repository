@@ -1,5 +1,5 @@
 name: Payment Target Preparation Failed
-type: Conversation/Response
+type: Coordination/Response
 description: Failure result emitted when MyOS Admin cannot prepare an opaque recipient payment target.
 code:
   type: Text

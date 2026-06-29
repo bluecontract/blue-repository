@@ -1,3 +1,2 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-Representations.schema.json
-name: Representations
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/Representations

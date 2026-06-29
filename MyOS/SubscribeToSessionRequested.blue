@@ -1,5 +1,5 @@
 name: Subscribe to Session Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Document asks MyOS Admin to mediate a subscription to a target session it can READ.
 targetSessionId:
   type: Text

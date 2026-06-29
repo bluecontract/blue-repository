@@ -1,5 +1,5 @@
 name: Payment Initiation Rejected
-type: Conversation/Response
+type: Coordination/Response
 description: Result emitted when MyOS Admin rejects a payment initiation request before or instead of starting the payment.
 code:
   type: Text

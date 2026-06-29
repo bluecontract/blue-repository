@@ -1,23 +1,22 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-TransferableProduct.schema.json
-name: TransferableProduct
-namespace: cdm/product/template
+name: cdm/product/template/TransferableProduct
 description: |
   A TransferableProduct is a type of financial product which can be held or transferred, represented as an Asset with the addition of specific EconomicTerms.
 Cash:
   description: An Asset that consists solely of a monetary holding in a currency.
-  type: FINOS-CDM-6.0-d07/Cash
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Cash
 Commodity:
   description: "An Asset comprised of raw or refined materials or agricultural products, eg gold, oil or wheat."
-  type: FINOS-CDM-6.0-d07/Commodity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Commodity
 DigitalAsset:
   description: |
     An Asset that exists only in digital form, eg Bitcoin or Ethereum; excludes the digital representation of other Assets.
-  type: FINOS-CDM-6.0-d07/DigitalAsset
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/DigitalAsset
 economicTerms:
   description: "The price forming features, including payouts and provisions."
-  type: FINOS-CDM-6.0-d07/EconomicTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/template/EconomicTerms
   schema:
     required: true
 Instrument:
   description: "An asset that is issued by one party to one or more others; Instrument is also a choice data type."
-  type: FINOS-CDM-6.0-d07/Instrument
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Instrument

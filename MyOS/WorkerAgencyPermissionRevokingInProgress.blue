@@ -1,5 +1,5 @@
 name: Worker Agency Permission Revoking in Progress
-type: Conversation/Response
+type: Coordination/Response
 description: MyOS Admin is retracting rights granted by this WAG.
 granteeDocumentId:
   type: Text

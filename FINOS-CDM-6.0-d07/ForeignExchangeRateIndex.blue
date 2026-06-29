@@ -1,18 +1,17 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-ForeignExchangeRateIndex.schema.json
-name: ForeignExchangeRateIndex
-namespace: cdm/observable/asset
+name: cdm/observable/asset/ForeignExchangeRateIndex
 description: |
   Specification of a rate based on the exchange of a pair of cash assets in specific currencies, e.g. USD versus GBP.
 assetClass:
   description: The Asset Class of the Index.
-  type: FINOS-CDM-6.0-d07/AssetClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetClassEnum
 exchange:
   description: "If the Asset is listed, defines the public exchange of the listing."
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 identifier:
   description: "Asset Identifiers are used to uniquely identify an Asset, using a specified Asset Identifier Type."
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssetIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/AssetIdentifier
   schema:
     minItems: 1
 isExchangeListed:
@@ -20,30 +19,30 @@ isExchangeListed:
   type: Boolean
 primaryFxSpotRateSource:
   description: Specifies the primary source from which a rate should be observed.
-  type: FINOS-CDM-6.0-d07/InformationSource
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/InformationSource
   schema:
     required: true
 provider:
   description: The organisation that creates or maintains the Index.
-  type: FINOS-CDM-6.0-d07/LegalEntity
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
 quotedCurrencyPair:
   description: Describes the composition of a rate that has been quoted or is to be quoted.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaQuotedCurrencyPair
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FieldWithMetaQuotedCurrencyPair
   schema:
     required: true
 relatedExchange:
   description: "Provides the related Exchanges, if applicable."
   type: List
-  itemType: FINOS-CDM-6.0-d07/LegalEntity
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/LegalEntity
   schema:
     minItems: 0
 secondaryFxSpotRateSource:
   description: "Specifies an alternative, or secondary, source from which a rate should be observed."
-  type: FINOS-CDM-6.0-d07/InformationSource
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/InformationSource
 taxonomy:
   description: |
     Defines the taxonomy of an object by combining a taxonomy source (i.e. the rules to classify the object) and a value (i.e. the output of those rules on the object.
   type: List
-  itemType: FINOS-CDM-6.0-d07/Taxonomy
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/Taxonomy
   schema:
     minItems: 0

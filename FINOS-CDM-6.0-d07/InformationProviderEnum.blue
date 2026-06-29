@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-InformationProviderEnum.schema.json
-name: InformationProviderEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/InformationProviderEnum
 description: The enumerated values to specify the list of information providers.
 type: Text
 schema:

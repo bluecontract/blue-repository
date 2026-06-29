@@ -1,0 +1,48 @@
+name: Reject Change Workflow
+type: Coordination/Sequential Workflow Operation
+description: Discards a previously proposed change by removing its proposal state.
+postfix:
+  type: Text
+  description: Optional postfix used while building proposed change state key.
+steps:
+  - name: Prepare
+    type: Coordination/Compute
+    do:
+      - $let:
+          order:
+            - postfix
+            - proposedPath
+          vars:
+            postfix:
+              $default:
+                - $currentContract: /postfix
+                - ''
+            proposedPath:
+              $concat:
+                - /proposedChange
+                - $var: postfix
+      - $returnIf:
+          cond:
+            $not:
+              $exists:
+                $document:
+                  path:
+                    $var: proposedPath
+          expr:
+            changeset: []
+            events:
+              - type: Workflows/Proposed Change Invalid
+                reason:
+                  $concat:
+                    - no proposed change at
+                    - " "
+                    - $var: proposedPath
+      - $appendChange:
+          op: remove
+          path:
+            $var: proposedPath
+      - $return:
+          changeset:
+            $changeset: true
+          events:
+            $events: true

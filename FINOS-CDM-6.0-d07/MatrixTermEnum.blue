@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-MatrixTermEnum.schema.json
-name: MatrixTermEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/MatrixTermEnum
 description: |
   The enumerated values to specify a scheme of transaction types specified in the Equity Derivatives Settlement Matrix.
 type: Text

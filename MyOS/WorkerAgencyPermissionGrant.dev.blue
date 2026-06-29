@@ -14,12 +14,12 @@ contracts:
     description: Granter/owner’s timeline (direct grant-document revoke lives here).
 
   initLifecycleChannel:
-    type: Core/Lifecycle Event Channel
+    type: Lifecycle Event Channel
     event:
-      type: Core/Document Processing Initiated
+      type: Document Processing Initiated
 
   revoke:
-    type: Conversation/Operation
+    type: Coordination/Operation
     description: Granter requests revocation on the grant document. Grantee-document self-revoke uses the existing revoke-request event with grantDocumentId emitted from the grantee document itself.
     channel: granterChannel
     request:
@@ -27,186 +27,388 @@ contracts:
       description: Optional human-readable reason
 
   revokeImplGranter:
-    type: Conversation/Sequential Workflow Operation
+    type: Coordination/Sequential Workflow Operation
     operation: revoke
     steps:
       - name: EmitRevokeRequested
-        type: Conversation/JavaScript Code
-        code: |
-          return {
-            events: [
-              {
-                type: "MyOS/Worker Agency Permission Revoke Requested",
-                reason: event.message.request
-              }
-            ]
-          };
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              type: MyOS/Worker Agency Permission Revoke Requested
+              reason:
+                $event: /message/request
+          - $return:
+              events:
+                $events: true
 
   validateOnInit:
-    type: Conversation/Sequential Workflow
+    type: Coordination/Sequential Workflow
     channel: initLifecycleChannel
     steps:
       - name: ValidateBasicShape
-        type: Conversation/JavaScript Code
-        code: |
-          const issues = [];
-
-          const unwrapText = value => {
-            if (typeof value === 'string') {
-              const trimmed = value.trim();
-              return trimmed.length > 0 ? trimmed : undefined;
-            }
-            if (value && typeof value === 'object') {
-              if (typeof value.value === 'string') {
-                const trimmed = value.value.trim();
-                return trimmed.length > 0 ? trimmed : undefined;
-              }
-              if (typeof value.workerType === 'string') {
-                const trimmed = value.workerType.trim();
-                return trimmed.length > 0 ? trimmed : undefined;
-              }
-              if (typeof value.name === 'string') {
-                const trimmed = value.name.trim();
-                return trimmed.length > 0 ? trimmed : undefined;
-              }
-            }
-            return undefined;
-          };
-
-          const unwrapBoolean = value => {
-            if (typeof value === 'boolean') {
-              return value;
-            }
-            if (value && typeof value === 'object') {
-              if (typeof value.value === 'boolean') {
-                return value.value;
-              }
-              if (
-                value.value &&
-                typeof value.value === 'object' &&
-                typeof value.value.value === 'boolean'
-              ) {
-                return value.value.value;
-              }
-            }
-            return undefined;
-          };
-
-          const hasBooleanValue = value => {
-            if (typeof value === 'boolean') {
-              return true;
-            }
-            if (value && typeof value === 'object') {
-              if (typeof value.value === 'boolean') {
-                return true;
-              }
-              if (
-                value.value &&
-                typeof value.value === 'object' &&
-                typeof value.value.value === 'boolean'
-              ) {
-                return true;
-              }
-            }
-            return false;
-          };
-
-          const unwrapArray = value => {
-            if (Array.isArray(value)) {
-              return value;
-            }
-            if (value && typeof value === 'object' && Array.isArray(value.items)) {
-              return value.items;
-            }
-            return [];
-          };
-
-          const unwrapRecord = value => {
-            if (value && typeof value === 'object' && !Array.isArray(value)) {
-              if (value.value && typeof value.value === 'object') {
-                return value.value;
-              }
-              return value;
-            }
-            return {};
-          };
-
-          const granterId = document('/contracts/granterChannel/accountId');
-          if (typeof granterId !== 'string' || granterId.length === 0) {
-            issues.push("granterChannel must be bound to an accountId");
-          }
-
-          const granteeDocumentId = document('/granteeDocumentId');
-          if (
-            typeof granteeDocumentId !== 'string' ||
-            granteeDocumentId.trim().length === 0
-          ) {
-            issues.push("granteeDocumentId must be a non-empty string");
-          }
-
-          const list = document('/allowedWorkerAgencyPermissions');
-          if (!Array.isArray(list) || list.length === 0) {
-            issues.push("allowedWorkerAgencyPermissions must be a non-empty array");
-          } else {
-            const validateSDPS = (p, path) => {
-              const record = unwrapRecord(p);
-              if (Object.keys(record).length === 0) {
-                issues.push(`${path} must be an object`);
-                return;
-              }
-              const read = unwrapBoolean(record.read);
-              if (read !== true) {
-                issues.push(`${path}.read must be true`);
-              }
-              const share = record.share;
-              const shareValue = unwrapBoolean(share);
-              if (hasBooleanValue(share) && typeof shareValue !== 'boolean') {
-                issues.push(`${path}.share must be boolean if provided`);
-              }
-              const allOps = record.allOps;
-              const allOpsValue = unwrapBoolean(allOps);
-              if (hasBooleanValue(allOps) && typeof allOpsValue !== 'boolean') {
-                issues.push(`${path}.allOps must be boolean if provided`);
-              }
-              const singleOpsRaw = unwrapArray(record.singleOps)
-                .map(entry => unwrapText(entry))
-                .filter(Boolean);
-              const hasSingle = singleOpsRaw.length > 0;
-              if (hasSingle) {
-                const bad = singleOpsRaw.length !== unwrapArray(record.singleOps).length;
-                if (bad) issues.push(`${path}.singleOps must contain only non-empty strings`);
-              }
-              if (allOpsValue === true && hasSingle) {
-                issues.push(`${path}.allOps=true and ${path}.singleOps are mutually exclusive`);
-              }
-            };
-            const seenTypes = new Set();
-            list.forEach((item, idx) => {
-              const itemPath = `/allowedWorkerAgencyPermissions[${idx}]`;
-              if (typeof item !== 'object' || item === null) {
-                issues.push(`${itemPath} must be an object`);
-                return;
-              }
-              const workerType = unwrapText(item.workerType);
-              if (!workerType) {
-                issues.push(`${itemPath}.workerType must be a non-empty string`);
-              } else {
-                if (seenTypes.has(workerType)) {
-                  issues.push(`duplicate workerType '${workerType}' in allowedWorkerAgencyPermissions`);
-                } else {
-                  seenTypes.add(workerType);
-                }
-              }
-              const perms = item.permissions;
-              if (typeof perms === 'undefined') {
-                issues.push(`${itemPath}.permissions is required`);
-              } else {
-                validateSDPS(perms, `${itemPath}.permissions`);
-              }
-            });
-          }
-          if (issues.length > 0) {
-            return { events: [ { type: "MyOS/Worker Agency Permission Invalid", issues } ] };
-          } else {
-            return { events: [ { type: "MyOS/Worker Agency Permission Validated" } ] };
-          }
+        type: Coordination/Compute
+        entry: validate
+        functions:
+          asList:
+            args:
+              val:
+                description: BEX helper argument.
+            expr:
+              $choose:
+                cond:
+                  $isKind:
+                    val:
+                      $var: val
+                    kind: list
+                then:
+                  $var: val
+                else: []
+          asObject:
+            args:
+              val:
+                description: BEX helper argument.
+            expr:
+              $choose:
+                cond:
+                  $isKind:
+                    val:
+                      $var: val
+                    kind: object
+                then:
+                  $var: val
+                else:
+                  $emptyObject: true
+          isNonEmptyText:
+            args:
+              val:
+                description: BEX helper argument.
+            expr:
+              $and:
+                - $isKind:
+                    val:
+                      $var: val
+                    kind: text
+                - $truthy:
+                    $var: val
+          hasBadSingleOps:
+            args:
+              ops:
+                description: BEX helper argument.
+            expr:
+              $some:
+                in:
+                  $call:
+                    function: asList
+                    args:
+                      val:
+                        $var: ops
+                item: opName
+                where:
+                  $not:
+                    $call:
+                      function: isNonEmptyText
+                      args:
+                        val:
+                          $var: opName
+          validate:
+            do:
+              - $let:
+                  vars:
+                    issues: []
+                    seenWorkerTypes:
+                      $emptyObject: true
+                    granterId:
+                      $document: /contracts/granterChannel/accountId
+                    granteeDocumentId:
+                      $document: /granteeDocumentId
+                    permissionsList:
+                      $choose:
+                        cond:
+                          $exists:
+                            $document: /allowedWorkerAgencyPermissions
+                        then:
+                          $document: /allowedWorkerAgencyPermissions
+                        else: []
+              - $if:
+                  cond:
+                    $not:
+                      $call:
+                        function: isNonEmptyText
+                        args:
+                          val:
+                            $var: granterId
+                  then:
+                    - $set:
+                        name: issues
+                        expr:
+                          $listConcat:
+                            - $var: issues
+                            - - granterChannel must be bound to an accountId
+              - $if:
+                  cond:
+                    $not:
+                      $call:
+                        function: isNonEmptyText
+                        args:
+                          val:
+                            $var: granteeDocumentId
+                  then:
+                    - $set:
+                        name: issues
+                        expr:
+                          $listConcat:
+                            - $var: issues
+                            - - granteeDocumentId must be a non-empty string
+              - $if:
+                  cond:
+                    $eq:
+                      - $size:
+                          $call:
+                            function: asList
+                            args:
+                              val:
+                                $var: permissionsList
+                      - 0
+                  then:
+                    - $set:
+                        name: issues
+                        expr:
+                          $listConcat:
+                            - $var: issues
+                            - - allowedWorkerAgencyPermissions must be a non-empty array
+              - $forEach:
+                  in:
+                    $call:
+                      function: asList
+                      args:
+                        val:
+                          $var: permissionsList
+                  item: item
+                  index: idx
+                  do:
+                    - $let:
+                        order:
+                          - itemPath
+                          - itemObject
+                          - workerType
+                          - perms
+                          - singleOps
+                          - hasSingle
+                        vars:
+                          itemPath:
+                            $concat:
+                              - /allowedWorkerAgencyPermissions[
+                              - $var: idx
+                              - ']'
+                          itemObject:
+                            $call:
+                              function: asObject
+                              args:
+                                val:
+                                  $var: item
+                          workerType:
+                            $var:
+                              name: itemObject
+                              path: /workerType
+                          perms:
+                            $choose:
+                              cond:
+                                $exists:
+                                  $var:
+                                    name: itemObject
+                                    path: /permissions
+                              then:
+                                $call:
+                                  function: asObject
+                                  args:
+                                    val:
+                                      $var:
+                                        name: itemObject
+                                        path: /permissions
+                              else:
+                                $emptyObject: true
+                          singleOps:
+                            $choose:
+                              cond:
+                                $exists:
+                                  $var:
+                                    name: perms
+                                    path: /singleOps
+                              then:
+                                $var:
+                                  name: perms
+                                  path: /singleOps
+                              else: []
+                          hasSingle:
+                            $gt:
+                              - $size:
+                                  $call:
+                                    function: asList
+                                    args:
+                                      val:
+                                        $var: singleOps
+                              - 0
+                    - $if:
+                        cond:
+                          $not:
+                            $isKind:
+                              val:
+                                $var: item
+                              kind: object
+                        then:
+                          - $set:
+                              name: issues
+                              expr:
+                                $listConcat:
+                                  - $var: issues
+                                  - - $concat:
+                                        - $var: itemPath
+                                        - ' must be an object'
+                    - $if:
+                        cond:
+                          $not:
+                            $call:
+                              function: isNonEmptyText
+                              args:
+                                val:
+                                  $var: workerType
+                        then:
+                          - $set:
+                              name: issues
+                              expr:
+                                $listConcat:
+                                  - $var: issues
+                                  - - $concat:
+                                        - $var: itemPath
+                                        - .workerType must be a non-empty string
+                        else:
+                          - $if:
+                              cond:
+                                $hasKey:
+                                  object:
+                                    $var: seenWorkerTypes
+                                  key:
+                                    $var: workerType
+                              then:
+                                - $set:
+                                    name: issues
+                                    expr:
+                                      $listConcat:
+                                        - $var: issues
+                                        - - $concat:
+                                              - "duplicate workerType '"
+                                              - $var: workerType
+                                              - "' in allowedWorkerAgencyPermissions"
+                              else:
+                                - $set:
+                                    name: seenWorkerTypes
+                                    expr:
+                                      $objectSet:
+                                        object:
+                                          $var: seenWorkerTypes
+                                        key:
+                                          $var: workerType
+                                        val: true
+                    - $if:
+                        cond:
+                          $not:
+                            $exists:
+                              $var:
+                                name: itemObject
+                                path: /permissions
+                        then:
+                          - $set:
+                              name: issues
+                              expr:
+                                $listConcat:
+                                  - $var: issues
+                                  - - $concat:
+                                        - $var: itemPath
+                                        - .permissions is required
+                        else:
+                          - $if:
+                              cond:
+                                $eq:
+                                  - $size:
+                                      $keys:
+                                        $var: perms
+                                  - 0
+                              then:
+                                - $set:
+                                    name: issues
+                                    expr:
+                                      $listConcat:
+                                        - $var: issues
+                                        - - $concat:
+                                              - $var: itemPath
+                                              - .permissions must be an object
+                          - $if:
+                              cond:
+                                $ne:
+                                  - $var:
+                                      name: perms
+                                      path: /read
+                                  - true
+                              then:
+                                - $set:
+                                    name: issues
+                                    expr:
+                                      $listConcat:
+                                        - $var: issues
+                                        - - $concat:
+                                              - $var: itemPath
+                                              - .permissions.read must be true
+                          - $if:
+                              cond:
+                                $call:
+                                  function: hasBadSingleOps
+                                  args:
+                                    ops:
+                                      $var: singleOps
+                              then:
+                                - $set:
+                                    name: issues
+                                    expr:
+                                      $listConcat:
+                                        - $var: issues
+                                        - - $concat:
+                                              - $var: itemPath
+                                              - .permissions.singleOps must contain only non-empty strings
+                          - $if:
+                              cond:
+                                $and:
+                                  - $eq:
+                                      - $var:
+                                          name: perms
+                                          path: /allOps
+                                      - true
+                                  - $var: hasSingle
+                              then:
+                                - $set:
+                                    name: issues
+                                    expr:
+                                      $listConcat:
+                                        - $var: issues
+                                        - - $concat:
+                                              - $var: itemPath
+                                              - .permissions.allOps=true and
+                                              - ' '
+                                              - $var: itemPath
+                                              - .permissions.singleOps are mutually exclusive
+              - $if:
+                  cond:
+                    $gt:
+                      - $size:
+                          $var: issues
+                      - 0
+                  then:
+                    - $appendEvent:
+                        type: MyOS/Worker Agency Permission Invalid
+                        issues:
+                          $var: issues
+                  else:
+                    - $appendEvent:
+                        type: MyOS/Worker Agency Permission Validated
+              - $return:
+                  events:
+                    $events: true

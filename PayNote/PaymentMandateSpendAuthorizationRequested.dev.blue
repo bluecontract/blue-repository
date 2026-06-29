@@ -1,5 +1,5 @@
 name: Payment Mandate Spend Authorization Requested
-type: Conversation/Request
+type: Coordination/Request
 description: >
   Bank asks a Payment Mandate document to authorize a single spend before reserve/capture execution.
 

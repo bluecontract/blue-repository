@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-FxSettlementRateSource.schema.json
-name: FxSettlementRateSource
-namespace: cdm/observable/asset
+name: cdm/observable/asset/FxSettlementRateSource
 description: The source of the Foreign Exchange settlement rate.
 nonstandardSettlementRate:
   description: Indicates that a non-standard rate source will be used for the fixing.
-  type: FINOS-CDM-6.0-d07/FxInformationSource
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/FxInformationSource
 settlementRateOption:
   description: Indicates that an officially defined rate settlement rate option will be the used for the fixing.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString

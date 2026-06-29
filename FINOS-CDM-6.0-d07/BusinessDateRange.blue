@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-BusinessDateRange.schema.json
-name: BusinessDateRange
-namespace: cdm/base/datetime
+name: cdm/base/datetime/BusinessDateRange
 description: |
   A class defining a range of contiguous business days by defining an unadjusted first date, an unadjusted last date and a business day convention and business centers for adjusting the first and last dates if they would otherwise fall on a non business day in the specified business centers. The days between the first and last date must also be good business days in the specified centers to be counted in the range.
 businessCenters:
   description: |
     The business center(s), specified either explicitly or by reference to those specified somewhere else in the instance document.
-  type: FINOS-CDM-6.0-d07/BusinessCenters
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenters
 businessDayConvention:
   description: |
     The convention for adjusting a date if it would otherwise fall on a day that is not a business day, as specified by an ISDA convention (e.g. Following, Precedent).
-  type: FINOS-CDM-6.0-d07/BusinessDayConventionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayConventionEnum
   schema:
     required: true
 endDate:

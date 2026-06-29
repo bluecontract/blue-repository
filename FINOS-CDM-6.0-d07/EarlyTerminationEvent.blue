@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-EarlyTerminationEvent.schema.json
-name: EarlyTerminationEvent
-namespace: cdm/product/template
+name: cdm/product/template/EarlyTerminationEvent
 description: |
   A data to:  define the adjusted dates associated with an early termination provision.
 adjustedCashSettlementPaymentDate:

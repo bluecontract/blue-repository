@@ -1,8 +1,7 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-metafields-ReferenceWithMetaInterestRateIndex.schema.json
-name: ReferenceWithMetaInterestRateIndex
-namespace: cdm/observable/asset/metafields
+name: cdm/observable/asset/metafields/ReferenceWithMetaInterestRateIndex
 address:
-  type: FINOS-CDM-6.0-d07/Reference
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/lib/meta/Reference
 externalReference:
   type: Text
 globalReference:

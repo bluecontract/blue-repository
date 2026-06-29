@@ -1,7 +1,6 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-metafields-FieldWithMetaMatrixTypeEnum.schema.json
-name: FieldWithMetaMatrixTypeEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/FieldWithMetaMatrixTypeEnum
 meta:
-  type: FINOS-CDM-6.0-d07/MetaFields
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/metafields/MetaFields
 val:
-  type: FINOS-CDM-6.0-d07/MatrixTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/MatrixTypeEnum

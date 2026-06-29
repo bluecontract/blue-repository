@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-ReferenceBank.schema.json
-name: ReferenceBank
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/ReferenceBank
 description: "A class to describe an institution (party) identified by means of a coding scheme and an optional name."
 referenceBankId:
   description: "An institution (party) identifier, e.g. a bank identifier code (BIC). FpML specifies a referenceBankIdScheme."
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 referenceBankName:

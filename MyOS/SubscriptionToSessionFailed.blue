@@ -1,5 +1,5 @@
 name: Subscription to Session Failed
-type: Conversation/Response
+type: Coordination/Response
 description: Indicates MyOS Admin rejected the subscription request before activation.
 subscriptionId:
   type: Text

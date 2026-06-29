@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-margin-schedule-StandardizedScheduleProductClassEnum.schema.json
-name: StandardizedScheduleProductClassEnum
-namespace: cdm/margin/schedule
+name: cdm/margin/schedule/StandardizedScheduleProductClassEnum
 type: Text
 schema:
   enum: [BasisSwap, ContractForDifference, CorrelationSwap, CreditNthToDefault, CreditTotalReturnSwapOnABond, CrossCurrencySwap, DeliverableForward, DeliverableOption, DeliverableOptionF, DeliverableSwap, DividendSwap, FixedFloatSwap, Forward, ForwardRateAgreement, IRExoticSwapWithAnExoticCouponAgainstAFloatingLeg, IndexCDS, IndexTranche, NonDeliverableCrossCurrencySwap, NonDeliverableForward, NonDeliverableOption, Option, SingleNameCreditDefaultSwap, Swap, SwapWithCallableBermudanRightToEnterExitSwaps, SwapsAndPortfolioSwaps, Swaption, SwaptionStraddle, VarianceSwap, VolatilitySwap]

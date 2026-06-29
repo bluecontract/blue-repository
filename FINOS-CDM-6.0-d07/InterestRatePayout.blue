@@ -1,30 +1,29 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-InterestRatePayout.schema.json
-name: InterestRatePayout
-namespace: cdm/product/asset
+name: cdm/product/asset/InterestRatePayout
 description: |
   A class to specify all of the terms necessary to define and calculate a cash flow based on a fixed, a floating or an inflation index rate. The interest rate payout can be applied to interest rate swaps and FRA (which both have two associated interest rate payouts), credit default swaps (to represent the fee leg when subject to periodic payments) and equity swaps (to represent the funding leg). The associated globalKey denotes the ability to associate a hash value to the InterestRatePayout instantiations for the purpose of model cross-referencing, in support of functionality such as the event effect and the lineage.
 bondReference:
   description: Reference to a bond underlier to represent an asset swap or Condition Precedent Bond.
-  type: FINOS-CDM-6.0-d07/BondReference
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/BondReference
 calculationPeriodDates:
   description: |
     The parameters used to generate the calculation period dates schedule, including the specification of any initial or final stub calculation periods.
-  type: FINOS-CDM-6.0-d07/CalculationPeriodDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/CalculationPeriodDates
 cashflowRepresentation:
   description: The cashflow representation of the swap stream.
-  type: FINOS-CDM-6.0-d07/CashflowRepresentation
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/CashflowRepresentation
 compoundingMethod:
   description: |
     If one or more calculation period contributes to a single payment amount this element specifies whether compounding is applicable and, if so, what compounding method is to be used. This element must only be included when more than one calculation period contributes to a single payment amount.
-  type: FINOS-CDM-6.0-d07/CompoundingMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/CompoundingMethodEnum
 dayCountFraction:
   description: |
     The day count fraction. The cardinality has been relaxed when compared with the FpML interest rate swap for the purpose of accommodating standardized credit default swaps which DCF is not explicitly stated as part of the economic terms. The data rule InterestRatePayout_dayCountFraction requires that the DCF be stated for interest rate products.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaDayCountFractionEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/daycount/FieldWithMetaDayCountFractionEnum
 discountingMethod:
   description: |
     The parameters specifying any discounting conventions that may apply. This element must only be included if discounting applies.
-  type: FINOS-CDM-6.0-d07/DiscountingMethod
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DiscountingMethod
 fixedAmount:
   description: Fixed Amount Calculation
   type: Text
@@ -33,14 +32,14 @@ floatingAmount:
   type: Text
 payerReceiver:
   description: Canonical representation of the payer and receiver parties applicable to each payout leg.
-  type: FINOS-CDM-6.0-d07/PayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiver
 paymentDate:
   description: "The payment date, where only one date is specified, as for the FRA product."
-  type: FINOS-CDM-6.0-d07/AdjustableDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableDate
 paymentDates:
   description: |
     The payment date schedule, as defined by the parameters that are needed to specify it, either in a parametric way or by reference to another schedule of dates (e.g. the reset dates).
-  type: FINOS-CDM-6.0-d07/PaymentDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/PaymentDates
 paymentDelay:
   description: |
     Applicable to CDS on MBS to specify whether payment delays are applicable to the fixed Amount. RMBS typically have a payment delay of 5 days between the coupon date of the reference obligation and the payment date of the synthetic swap. CMBS do not, on the other hand, with both payment dates being on the 25th of each month.
@@ -48,28 +47,28 @@ paymentDelay:
 priceQuantity:
   description: |
     Each payout leg must implement the quantity concept as a 'resolvable' type, which allows for different payout legs to be linked to each other (e.g. in the case of cross-curreny products).
-  type: FINOS-CDM-6.0-d07/ResolvablePriceQuantity
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/ResolvablePriceQuantity
 principalPayment:
   description: |
     The specification of the principal exchange. Optional as only applicable in the case of cross-currency or zero-coupon swaps with a final payment.
-  type: FINOS-CDM-6.0-d07/PrincipalPayments
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PrincipalPayments
 rateSpecification:
   description: |
     The specification of the rate value(s) applicable to the contract using either a floating rate calculation, a single fixed rate, a fixed rate schedule, or an inflation rate calculation.
-  type: FINOS-CDM-6.0-d07/RateSpecification
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/RateSpecification
 resetDates:
   description: |
     The reset dates schedule, i.e. the dates on which the new observed index value is applied for each period and the interest rate hence begins to accrue.
-  type: FINOS-CDM-6.0-d07/ResetDates
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/ResetDates
 settlementTerms:
   description: |
     Each payout leg must specifies its settlement terms, including the delivery type (i.e. cash vs physical, and their respective terms), the transfer type (DvP etc.) and settlement date, if any.
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms
 spreadCalculationMethod:
   description: |
     Method by which spread is calculated. For example on an asset swap: 'ParPar' or 'Proceeds' may be the method indicated.
-  type: FINOS-CDM-6.0-d07/SpreadCalculationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/SpreadCalculationMethodEnum
 stubPeriod:
   description: |
     The stub calculation period amount parameters. This element must only be included if there is an initial or final stub calculation period. Even then, it must only be included if either the stub references a different floating rate tenor to the regular calculation periods, or if the stub is calculated as a linear interpolation of two different floating rate tenors, or if a specific stub rate or stub amount has been negotiated.
-  type: FINOS-CDM-6.0-d07/StubPeriod
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/StubPeriod

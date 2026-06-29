@@ -1,5 +1,5 @@
 name: Payment Initiated
-type: Conversation/Response
+type: Coordination/Response
 description: Result emitted after MyOS initiated the payment and attached paynote.
 paynoteDocumentId:
   type: Text

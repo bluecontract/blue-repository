@@ -1,21 +1,20 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-FxFeature.schema.json
-name: FxFeature
-namespace: cdm/product/template
+name: cdm/product/template/FxFeature
 description: A type for defining FX Features.
 composite:
   description: |
     If 'Composite' is specified as the Settlement Type in the relevant Transaction Supplement, an amount in the Settlement Currency, determined by the Calculation Agent as being equal to the number of Options exercised or deemed exercised, multiplied by: (Settlement Price – Strike Price) / (Strike Price – Settlement Price) x Multiplier provided that if the above is equal to a negative amount the Option Cash Settlement Amount shall be deemed to be zero.
-  type: FINOS-CDM-6.0-d07/Composite
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Composite
 crossCurrency:
   description: |
     If 'Cross-Currency' is specified as the Settlement Type in the relevant Transaction Supplement, an amount in the Settlement Currency, determined by the Calculation Agent as being equal to the number of Options exercised or deemed exercised, multiplied by: (Settlement Price – Strike Price) / (Strike Price – Settlement Price) x Multiplier x one unit of the Reference Currency converted into an amount in the Settlement Currency using the rate of exchange of the Settlement Currency as quoted on the Reference Price Source on the Valuation Date, provided that if the above is equal to a negative amount the Option Cash Settlement Amount shall be deemed to be zero.
-  type: FINOS-CDM-6.0-d07/Composite
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Composite
 quanto:
   description: |
     If 'Quanto' is specified as the Settlement Type in the relevant Transaction Supplement, an amount, as determined by the Calculation Agent in accordance with the Section 8.2 of the Equity Definitions.
-  type: FINOS-CDM-6.0-d07/Quanto
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Quanto
 referenceCurrency:
   description: Specifies the reference currency of the trade.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true

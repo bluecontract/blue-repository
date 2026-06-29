@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-ParametricDates.schema.json
-name: ParametricDates
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/ParametricDates
 description: Defines rules for the dates on which the price will be determined.
 businessCenters:
   description: The enumerated values to specify the business centers.
-  type: FINOS-CDM-6.0-d07/BusinessCenters
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessCenters
   schema:
     required: true
 dayDistribution:
   description: Denotes the method by which the pricing days are distributed across the pricing period.
-  type: FINOS-CDM-6.0-d07/DayDistributionEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DayDistributionEnum
 dayFrequency:
   description: |
     Defines the occurrence of the dayOfWeek within the pricing period on which pricing will take place, e.g. the 3rd Friday within each Calculation Period. If omitted, every dayOfWeek will be a pricing day.
@@ -17,17 +16,17 @@ dayFrequency:
 dayOfWeek:
   description: Indicates the days of the week on which the price will be determined.
   type: List
-  itemType: FINOS-CDM-6.0-d07/DayOfWeekEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/datetime/DayOfWeekEnum
   schema:
     minItems: 0
     maxItems: 7
 dayType:
   description: |
     Denotes the enumerated values to specify the day type classification used in counting the number of days between two dates.
-  type: FINOS-CDM-6.0-d07/DayTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/DayTypeEnum
   schema:
     required: true
 lag:
   description: |
     The pricing period per calculation period if the pricing days do not wholly fall within the respective calculation period.
-  type: FINOS-CDM-6.0-d07/Lag
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/Lag

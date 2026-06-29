@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-TermsChangeInstruction.schema.json
-name: TermsChangeInstruction
-namespace: cdm/event/common
+name: cdm/event/common/TermsChangeInstruction
 description: "Specifies instructions for terms change consisting of the new transaction terms, and the renegotiation fee."
 adjustment:
-  type: FINOS-CDM-6.0-d07/NotionalAdjustmentEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/common/NotionalAdjustmentEnum
 ancillaryParty:
   description: ancillary party to be changed
   type: List
-  itemType: FINOS-CDM-6.0-d07/AncillaryParty
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/AncillaryParty
   schema:
     minItems: 0
 product:
   description: product to be changed
-  type: FINOS-CDM-6.0-d07/NonTransferableProduct
+  type: FINOS-CDM-6.0-d07/cdm/product/template/NonTransferableProduct

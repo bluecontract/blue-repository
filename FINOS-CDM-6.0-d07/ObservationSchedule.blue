@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-ObservationSchedule.schema.json
-name: ObservationSchedule
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/ObservationSchedule
 description: Specifies a single date on which market observations take place and specifies optional associated weighting.
 dateAdjustments:
   description: |
     The business day convention and financial business centers used for adjusting the date if it would otherwise fall on a day that is not a business date in the specified business centers.
-  type: FINOS-CDM-6.0-d07/BusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayAdjustments
 observationDate:
   description: Specifies an adjusted or unadjusted date for a market observation.
   type: List
-  itemType: FINOS-CDM-6.0-d07/ObservationDate
+  itemType: FINOS-CDM-6.0-d07/cdm/product/common/schedule/ObservationDate
   schema:
     minItems: 0

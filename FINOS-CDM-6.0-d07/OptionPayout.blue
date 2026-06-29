@@ -1,57 +1,56 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionPayout.schema.json
-name: OptionPayout
-namespace: cdm/product/template
+name: cdm/product/template/OptionPayout
 description: |
   The option payout specification terms. The associated globalKey denotes the ability to associate a hash value to the respective OptionPayout instantiation for the purpose of model cross-referencing, in support of functionality such as the event effect and the lineage.
 buyerSeller:
-  type: FINOS-CDM-6.0-d07/BuyerSeller
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/BuyerSeller
   schema:
     required: true
 delivery:
   description: Contains the information relative to the delivery of the asset.
-  type: FINOS-CDM-6.0-d07/AssetDeliveryInformation
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/AssetDeliveryInformation
 exerciseTerms:
   description: |
     The terms for exercising the option, which include the option style (e.g. American style option), the exercise procedure (e.g. manual exercise) and the settlement terms (e.g. physical vs. cash).
-  type: FINOS-CDM-6.0-d07/ExerciseTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/template/ExerciseTerms
   schema:
     required: true
 feature:
   description: "The option feature, such as quanto, Asian, barrier, knock."
-  type: FINOS-CDM-6.0-d07/OptionFeature
+  type: FINOS-CDM-6.0-d07/cdm/product/template/OptionFeature
 observationTerms:
   description: |
     Class containing terms that are associated with observing a price/benchmark/index across either single or multple observations. To be used for option contracts that reference a benchmark price.
-  type: FINOS-CDM-6.0-d07/ObservationTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/schedule/ObservationTerms
 optionType:
   description: |
     The type of option transaction. From a usage standpoint, put/call is the default option type, while payer/receiver indicator is used for options on index credit default swaps, consistently with the industry practice. Straddle is used for the case of straddle strategy, that combine a call and a put with the same strike.
-  type: FINOS-CDM-6.0-d07/OptionTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/template/OptionTypeEnum
 payerReceiver:
   description: Canonical representation of the payer and receiver parties applicable to each payout leg.
-  type: FINOS-CDM-6.0-d07/PayerReceiver
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiver
 priceQuantity:
   description: |
     Each payout leg must implement the quantity concept as a 'resolvable' type, which allows for different payout legs to be linked to each other (e.g. in the case of cross-curreny products).
-  type: FINOS-CDM-6.0-d07/ResolvablePriceQuantity
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/ResolvablePriceQuantity
 principalPayment:
   description: |
     The specification of the principal exchange. Optional as only applicable in the case of cross-currency or zero-coupon swaps with a final payment.
-  type: FINOS-CDM-6.0-d07/PrincipalPayments
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PrincipalPayments
 schedule:
   description: |
     Allows the full representation of a payout by defining a set of schedule periods. It supports standard schedule customization by expressing all the dates, quantities, and pricing data in a non-parametric way.
-  type: FINOS-CDM-6.0-d07/CalculationSchedule
+  type: FINOS-CDM-6.0-d07/cdm/product/template/CalculationSchedule
 settlementTerms:
   description: |
     Each payout leg must specifies its settlement terms, including the delivery type (i.e. cash vs physical, and their respective terms), the transfer type (DvP etc.) and settlement date, if any.
-  type: FINOS-CDM-6.0-d07/SettlementTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/SettlementTerms
 strike:
   description: Specifies the strike of the option
-  type: FINOS-CDM-6.0-d07/OptionStrike
+  type: FINOS-CDM-6.0-d07/cdm/product/template/OptionStrike
 underlier:
   description: |
     The financial product underlying the option, which can be of any type including an Asset, Basket, Index or a NonTransferableProduct.
-  type: FINOS-CDM-6.0-d07/Underlier
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Underlier
   schema:
     required: true

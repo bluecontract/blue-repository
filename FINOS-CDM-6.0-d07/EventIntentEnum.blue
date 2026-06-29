@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-EventIntentEnum.schema.json
-name: EventIntentEnum
-namespace: cdm/event/common
+name: cdm/event/common/EventIntentEnum
 description: The enumeration values to qualify the intent associated with a transaction event.
 type: Text
 schema:

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-PriceReturnTerms.schema.json
-name: PriceReturnTerms
-namespace: cdm/product/asset
+name: cdm/product/asset/PriceReturnTerms
 conversionFactor:
   description: |
     Defines the conversion applied if the quantity unit on contract is different from unit on referenced underlier.
@@ -11,6 +10,6 @@ performance:
   type: Text
 returnType:
   description: The type of return associated with the equity swap.
-  type: FINOS-CDM-6.0-d07/ReturnTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/ReturnTypeEnum
   schema:
     required: true

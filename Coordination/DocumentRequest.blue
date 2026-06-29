@@ -1,0 +1,19 @@
+name: Document Request
+type: Coordination/Source
+description: |
+  Source specialization for a request that originated from another Blue document or document-processing session. It is
+  used when one document asks another document to perform an operation, provide data, bootstrap state, or respond to a
+  pending action.
+
+  Document Request is a source category, not an actor category. The actor may be a principal or agent; the source says
+  the action was mediated through another document. This is useful for policies that allow document-to-document
+  automation for some operations while requiring browser-session principal confirmation for others.
+documentId:
+  type: Text
+  description: |
+    Identifier or reference of the source document or document session that produced the request.
+epoch:
+  type: Integer
+  description: |
+    Optional monotonically increasing version, epoch, or processing counter for the source document. It helps recipients
+    detect stale requests and reason about document evolution.

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ExerciseEvent.schema.json
-name: ExerciseEvent
-namespace: cdm/event/common
+name: cdm/event/common/ExerciseEvent
 description: |
   A data defining:  the adjusted dates associated with a particular exercise event.
 adjustedCashSettlementPaymentDate:

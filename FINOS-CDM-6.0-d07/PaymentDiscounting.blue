@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PaymentDiscounting.schema.json
-name: PaymentDiscounting
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/PaymentDiscounting
 description: |
   This class corresponds to the FpML PaymentDiscounting.model group for representing the discounting elements that can be associated with a payment.
 discountFactor:
@@ -8,4 +7,4 @@ discountFactor:
   type: Double
 presentValueAmount:
   description: The amount representing the present value of the forecast payment.
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money

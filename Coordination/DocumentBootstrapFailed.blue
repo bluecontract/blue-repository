@@ -1,0 +1,9 @@
+name: Document Bootstrap Failed
+type: Coordination/Response
+description: |
+  Lifecycle/coordination event indicating that a document bootstrap request failed. The `reason` field should explain
+  the deterministic failure cause or provider-specific rejection reason.
+reason:
+  type: Text
+  description: |
+    Human-readable or structured failure reason.

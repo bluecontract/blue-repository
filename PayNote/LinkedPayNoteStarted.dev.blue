@@ -1,5 +1,5 @@
 name: Linked PayNote Started
-type: Conversation/Response
+type: Coordination/Response
 description: Confirmation that linked PayNote startup was requested successfully.
 payNoteSessionId:
   type: Text

@@ -1,5 +1,5 @@
 name: Card Transaction Report
-type: Conversation/Event
+type: Coordination/Event
 description: Bank reports a posted card transaction into the requesting contract timeline.
 transactionId:
   type: Text

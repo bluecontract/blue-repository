@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-identifier-CommodityLocationIdentifierTypeEnum.schema.json
-name: CommodityLocationIdentifierTypeEnum
-namespace: cdm/base/staticdata/identifier
+name: cdm/base/staticdata/identifier/CommodityLocationIdentifierTypeEnum
 description: Defines the enumerated values to specify the nature of a location identifier.
 type: Text
 schema:

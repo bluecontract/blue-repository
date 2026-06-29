@@ -1,0 +1,10 @@
+name: Lifecycle Event
+type: Coordination/Event
+description: |
+  Base event type for processor lifecycle notifications. Lifecycle events describe processor-state transitions such as
+  initialization, termination, bootstrap completion, or failure. They are distinct from domain events such as chat
+  messages or operation requests.
+
+  Lifecycle events are emitted by processor or workflow infrastructure to make state transitions observable and
+  auditable. A Blue document may listen for them through Lifecycle Event Channels or domain-specific coordination
+  workflows, but the event itself remains passive Blue content.

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-calculatedrate-CalculatedRateDetails.schema.json
-name: CalculatedRateDetails
-namespace: cdm/observable/asset/calculatedrate
+name: cdm/observable/asset/calculatedrate/CalculatedRateDetails
 description: |
   Type for reporting details of calculated rates, including the observations that went into the final reported rate.
 aggregateValue:
@@ -27,7 +26,7 @@ growthFactor:
     minItems: 0
 observations:
   description: The observation dates and weights for each observation date.
-  type: FINOS-CDM-6.0-d07/CalculatedRateObservations
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/calculatedrate/CalculatedRateObservations
 weightedRates:
   description: The weighted value of each observation.
   type: List

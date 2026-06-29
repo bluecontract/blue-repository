@@ -1,0 +1,15 @@
+name: Trigger Event
+type: Coordination/Sequential Workflow Step
+description: |
+  Workflow step that requests emission of a Blue event from the current invocation. Trigger Event constructs an event
+  payload and returns it as a processor effect. It does not directly deliver to external parties or arbitrary channels;
+  the Blue Contracts processor records, validates, charges, enqueues, bridges, routes, and exposes the emitted event
+  according to its event/FIFO/outbox rules.
+
+  Trigger Event is useful for notifying participants, asking another scope to act, producing domain events, or creating
+  follow-up Operation Requests. The event payload must be a valid Blue node. Construction work, such as BEX execution,
+  is charged by the compute/runtime layer; successful processor emission and routing are charged by Blue Contracts gas.
+event:
+  description: |
+    Event payload to emit. It may be any valid Blue node accepted by the host processor. Undefined or invalid event
+    construction must fail before successful emission gas is charged.

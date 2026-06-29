@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-InterestAmountApplication.schema.json
-name: InterestAmountApplication
-namespace: cdm/product/collateral
+name: cdm/product/collateral/InterestAmountApplication
 description: |
   A class to specify the application of Interest Amount with respect to the Delivery Amount and the Return Amount.
 deliveryAmount:
   description: The application of Interest Amount with respect the Delivery Amount.
-  type: FINOS-CDM-6.0-d07/DeliveryAmount
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/DeliveryAmount
   schema:
     required: true
 returnAmount:
   description: The application of Interest Amount with respect the Return Amount.
-  type: FINOS-CDM-6.0-d07/ReturnAmount
+  type: FINOS-CDM-6.0-d07/cdm/product/collateral/ReturnAmount
   schema:
     required: true

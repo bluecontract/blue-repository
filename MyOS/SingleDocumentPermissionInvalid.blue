@@ -1,5 +1,5 @@
 name: Single Document Permission Invalid
-type: Conversation/Event
+type: Coordination/Event
 description: Emitted on initialise when local shape checks fail.
 issues:
   type: List

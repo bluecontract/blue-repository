@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-ProductTaxonomy.schema.json
-name: ProductTaxonomy
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/ProductTaxonomy
 description: "Specifies the product taxonomy, which is composed of a taxonomy value and a taxonomy source."
 primaryAssetClass:
   description: Classifies the most important risk class of the trade.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaAssetClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/FieldWithMetaAssetClassEnum
 productQualifier:
   description: |
     Derived from the product payout features using a CDM product qualification function that determines the product type based on the product payout features.
@@ -12,14 +11,14 @@ productQualifier:
 secondaryAssetClass:
   description: "Classifies additional risk classes of the trade, if any."
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaAssetClassEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/FieldWithMetaAssetClassEnum
   schema:
     minItems: 0
 source:
   description: |
     The source of the taxonomy that defines the rules for classifying the object. The taxonomy source is taken from a enumerated list of taxonomy names. Optional as the taxonomy source may not be provided.
-  type: FINOS-CDM-6.0-d07/TaxonomySourceEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/TaxonomySourceEnum
 val:
   description: |
     The value according to that taxonomy. Optional as it may not be possible to classify the object in that taxonomy.
-  type: FINOS-CDM-6.0-d07/TaxonomyValue
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/TaxonomyValue

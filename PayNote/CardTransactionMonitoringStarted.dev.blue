@@ -1,5 +1,5 @@
 name: Card Transaction Monitoring Started
-type: Conversation/Response
+type: Coordination/Response
 description: Confirmation that card transaction monitoring has started.
 targetMerchantId:
   type: Text

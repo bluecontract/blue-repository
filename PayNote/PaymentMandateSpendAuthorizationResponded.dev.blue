@@ -1,5 +1,5 @@
 name: Payment Mandate Spend Authorization Responded
-type: Conversation/Response
+type: Coordination/Response
 description: Decision from Payment Mandate for a spend authorization request.
 
 authorizationId:

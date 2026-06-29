@@ -1,10 +1,9 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-NumberRange.schema.json
-name: NumberRange
-namespace: cdm/base/math
+name: cdm/base/math/NumberRange
 description: "The number range defined as either a lower and upper number bound, or both."
 lowerBound:
   description: "The lower bound of a number range, e.g. greater than or equal to 5."
-  type: FINOS-CDM-6.0-d07/NumberBound
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NumberBound
 upperBound:
   description: "The upper bound of a number range, e.g. less than 10."
-  type: FINOS-CDM-6.0-d07/NumberBound
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NumberBound

@@ -1,26 +1,25 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-OptionFeature.schema.json
-name: OptionFeature
-namespace: cdm/product/template
+name: cdm/product/template/OptionFeature
 description: Defines additional optional features that can be included in an option contract.
 averagingFeature:
   description: |
     Defines an option feature in which an average market observation price is determined on valuation and compared to the strike to determine a settlement amount.
-  type: FINOS-CDM-6.0-d07/AveragingCalculation
+  type: FINOS-CDM-6.0-d07/cdm/product/template/AveragingCalculation
 barrier:
   description: Specifies a barrier feature.
-  type: FINOS-CDM-6.0-d07/Barrier
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Barrier
 fxFeature:
   description: Describes a quanto or composite FX feature.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FxFeature
+  itemType: FINOS-CDM-6.0-d07/cdm/product/template/FxFeature
   schema:
     minItems: 0
 knock:
   description: Specifies a knock in or knock out feature.
-  type: FINOS-CDM-6.0-d07/Knock
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Knock
 passThrough:
   description: "Specifies the rules for pass-through payments from the underlier, such as dividends."
-  type: FINOS-CDM-6.0-d07/PassThrough
+  type: FINOS-CDM-6.0-d07/cdm/product/template/PassThrough
 strategyFeature:
   description: Defines a simple strategy feature.
-  type: FINOS-CDM-6.0-d07/StrategyFeature
+  type: FINOS-CDM-6.0-d07/cdm/product/template/StrategyFeature

@@ -1,5 +1,5 @@
 name: Transaction Initiated
-type: Conversation/Response
+type: Coordination/Response
 description: >
   The Guarantor confirms that the underlying transaction was initiated
   and records how this PayNote was attached to it.

@@ -1,5 +1,5 @@
 name: Linked Documents Permission Revoked
-type: Conversation/Response
+type: Coordination/Response
 description: All rights from this LDPG have been revoked.
 targetSessionId:
   type: Text

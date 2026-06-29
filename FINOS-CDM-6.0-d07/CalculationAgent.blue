@@ -1,17 +1,16 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-CalculationAgent.schema.json
-name: CalculationAgent
-namespace: cdm/observable/asset
+name: cdm/observable/asset/CalculationAgent
 description: |
   A class defining the ISDA calculation agent responsible for performing duties as defined in the applicable product definitions.
 calculationAgentBusinessCenter:
   description: |
     The city in which the office through which ISDA Calculation Agent is acting for purposes of the transaction is located The short-form confirm for a trade that is executed under a Sovereign or Asia Pacific Master Confirmation Agreement ( MCA ), does not need to specify the Calculation Agent. However, the confirm does need to specify the Calculation Agent City. This is due to the fact that the MCA sets the value for Calculation Agent but does not set the value for Calculation Agent City.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaBusinessCenterEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/FieldWithMetaBusinessCenterEnum
 calculationAgentParty:
   description: |
     Specifies the party which is the ISDA Calculation Agent for the trade. If more than one party is referenced then the parties are assumed to be co-calculation agents, i.e. they have joint responsibility.
-  type: FINOS-CDM-6.0-d07/AncillaryRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/AncillaryRoleEnum
 calculationAgentPartyEnum:
   description: |
     Specifies the ISDA calculation agent responsible for performing duties as defined in the applicable product definitions. For example, the Calculation Agent may be defined as being the Non-exercising Party.
-  type: FINOS-CDM-6.0-d07/PartyDeterminationEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/PartyDeterminationEnum

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-AssetTransferTypeEnum.schema.json
-name: AssetTransferTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/AssetTransferTypeEnum
 description: The qualification of the type of asset transfer.
 type: Text
 schema:

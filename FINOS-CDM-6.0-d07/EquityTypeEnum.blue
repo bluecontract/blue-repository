@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-EquityTypeEnum.schema.json
-name: EquityTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/EquityTypeEnum
 description: Represents an enumeration list to identify the type of Equity.
 type: Text
 schema:

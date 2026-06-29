@@ -1,0 +1,16 @@
+name: Principal Actor
+type: Coordination/Actor
+description: |
+  Actor specialization for an action attributed directly to a principal: a person, organization, account owner, or
+  other primary authority recognized by the event source. A Principal Actor means the provider is asserting that the
+  action was performed under the principal's own authority, not by a delegated agent acting independently on the
+  principal's behalf.
+
+  This type does not specify how the provider authenticated the principal. A concrete subtype can describe a browser
+  session, biometric challenge, API credential treated as direct principal control, hardware key, bank login, or
+  government identity proof. The important invariant is semantic attribution: when a Blue document asks whether an
+  operation was performed by a principal, a Principal Actor or compatible subtype is the category it is checking.
+
+  Principal Actor also does not automatically authorize every operation. A document may still require a particular
+  source, stronger authentication, a specific account, a particular organization role, or additional domain-specific
+  conditions. This type supplies the actor category used by those policies.

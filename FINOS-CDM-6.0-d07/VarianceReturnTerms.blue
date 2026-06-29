@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-VarianceReturnTerms.schema.json
-name: VarianceReturnTerms
-namespace: cdm/product/asset
+name: cdm/product/asset/VarianceReturnTerms
 annualizationFactor:
   description: |
     This specifies the numerator of an annualization factor. Frequently this number is equal to the number of observations of prices in a year e.g. 252.
   type: Integer
 dividendApplicability:
   description: The parameters which define whether dividends are applicable
-  type: FINOS-CDM-6.0-d07/DividendApplicability
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/DividendApplicability
 equityUnderlierProvisions:
   description: Contains Equity Underlyer provisions regarding jurisdiction and fallbacks.
-  type: FINOS-CDM-6.0-d07/EquityUnderlierProvisions
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/EquityUnderlierProvisions
 exchangeTradedContractNearest:
   description: Specification of the exchange traded contract nearest.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaObservable
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaObservable
 expectedN:
   description: Expected number of trading days.
   type: Integer
@@ -23,7 +22,7 @@ initialLevel:
   type: Double
 initialLevelSource:
   description: "In this context, this is AgreedInitialPrice - a specified Initial Index Level."
-  type: FINOS-CDM-6.0-d07/DeterminationMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/observable/common/DeterminationMethodEnum
 meanAdjustment:
   description: |
     Specifies whether Mean Adjustment is applicable or not in the calculation of the Realized Volatility, Variance or Correlation
@@ -37,20 +36,20 @@ sharePriceDividendAdjustment:
   type: Boolean
 valuationTerms:
   description: Contains all non-date valuation information.
-  type: FINOS-CDM-6.0-d07/ValuationTerms
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/ValuationTerms
 varianceCapFloor:
   description: "Contains possible barriers for variance products, both variance-based and underlier price based"
-  type: FINOS-CDM-6.0-d07/VarianceCapFloor
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/VarianceCapFloor
 varianceStrikePrice:
   description: Variance Strike Price in accordance with the ISDA 2011 Equity Derivatives Definitions.
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price
 vegaNotionalAmount:
   description: |
     Vega Notional represents the approximate gain/loss at maturity for a 1% difference between RVol (realised vol) and KVol (strike vol). It does not necessarily represent the Vega Risk of the trade.
-  type: FINOS-CDM-6.0-d07/NonNegativeQuantitySchedule
+  type: FINOS-CDM-6.0-d07/cdm/base/math/NonNegativeQuantitySchedule
 volatilityCapFloor:
   description: Contains containing volatility-based barriers
-  type: FINOS-CDM-6.0-d07/VolatilityCapFloor
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/VolatilityCapFloor
 volatilityStrikePrice:
   description: Volatility Strike Price in accordance with the ISDA 2011 Equity Derivatives Definitions.
-  type: FINOS-CDM-6.0-d07/Price
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Price

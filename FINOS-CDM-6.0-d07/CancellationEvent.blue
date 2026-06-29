@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-CancellationEvent.schema.json
-name: CancellationEvent
-namespace: cdm/product/template
+name: cdm/product/template/CancellationEvent
 description: |
   The adjusted dates for a specific cancellation date, including the adjusted exercise date and adjusted termination date.
 adjustedEarlyTerminationDate:

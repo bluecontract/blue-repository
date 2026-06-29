@@ -1,14 +1,13 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-PrincipalPaymentSchedule.schema.json
-name: PrincipalPaymentSchedule
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/PrincipalPaymentSchedule
 description: Describe dates schedules for Principal Exchanges and related role of the parties when known.
 finalPrincipalPayment:
   description: Principal Payment at Trade maturity
-  type: FINOS-CDM-6.0-d07/PrincipalPayment
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PrincipalPayment
 initialPrincipalPayment:
   description: Principal Payment made at Trade inception.
-  type: FINOS-CDM-6.0-d07/PrincipalPayment
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/PrincipalPayment
 intermediatePrincipalPayment:
   description: |
     Principal Payment as part of the Trade lifecycle e.g. as part of notional reset adjustements in a Cross Currency Swap with a varying notional leg.
-  type: FINOS-CDM-6.0-d07/AdjustableRelativeOrPeriodicDates
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableRelativeOrPeriodicDates

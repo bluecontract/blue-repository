@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-MatrixTypeEnum.schema.json
-name: MatrixTypeEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/MatrixTypeEnum
 description: The enumerated values to specify the identification the form of applicable matrix.
 type: Text
 schema:

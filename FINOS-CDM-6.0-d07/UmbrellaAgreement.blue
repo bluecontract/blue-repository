@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-UmbrellaAgreement.schema.json
-name: UmbrellaAgreement
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/UmbrellaAgreement
 description: |
   A class to specify a set of legal entities which are part of a legal agreement beyond the two contracting parties to that agreement. This data representation reflects the ISDA Create representation.
 isApplicable:
@@ -15,6 +14,6 @@ language:
 parties:
   description: Underlying principals to the umbrella agreement.
   type: List
-  itemType: FINOS-CDM-6.0-d07/UmbrellaAgreementEntity
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/common/UmbrellaAgreementEntity
   schema:
     minItems: 0

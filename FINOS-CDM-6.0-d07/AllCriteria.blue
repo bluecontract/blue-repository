@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-AllCriteria.schema.json
-name: AllCriteria
-namespace: cdm/product/collateral
+name: cdm/product/collateral/AllCriteria
 description: Used to combine two or more Collateral Criteria using AND logic.
 allCriteria:
   type: List
-  itemType: FINOS-CDM-6.0-d07/CollateralCriteria
+  itemType: FINOS-CDM-6.0-d07/cdm/product/collateral/CollateralCriteria
   schema:
     minItems: 2

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-common-GoverningLawEnum.schema.json
-name: GoverningLawEnum
-namespace: cdm/legaldocumentation/common
+name: cdm/legaldocumentation/common/GoverningLawEnum
 description: The enumerated values to specify the law governing the contract or legal document.
 type: Text
 schema:

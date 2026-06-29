@@ -1,0 +1,30 @@
+name: Operation Request
+description: |
+  Event payload requesting that a document perform a named operation. Operation Request is the standard shape for
+  invoking document-owned behavior through a Timeline Entry, direct event delivery, or another coordination channel.
+
+  `operation` names the requested operation. `request` contains the operation-specific input. `document`, when present,
+  can identify or carry the target document/request context. `allowNewerVersion` indicates whether the sender permits
+  the processor to use a newer document version than the one the sender expected. Actor and source attribution are not
+  fields of Operation Request itself; they normally come from the enclosing Timeline Entry or event envelope.
+
+  A processor or workflow should not treat Operation Request as authorized merely because it is well-formed. It must
+  match the operation, check any actor/source policy, validate the request shape expected by the operation, and then run
+  the corresponding handler or workflow.
+operation:
+  type: Text
+  description: |
+    Name of the operation being requested. This name is matched against Operation or Sequential Workflow Operation
+    contracts in the processing scope.
+request:
+  description: |
+    Operation-specific payload. Its shape is defined by the requested operation.
+document:
+  description: |
+    Optional target document reference, embedded document, or request context supplied by the caller. The operation type
+    defines how this field is interpreted.
+allowNewerVersion:
+  description: |
+    Whether the requester allows processing against a document version newer than the one implied by the request context.
+    A false value lets workflows reject stale or unexpected document-state transitions.
+  type: Boolean

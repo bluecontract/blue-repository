@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-margin-schedule-StandardizedScheduleTradeInfo.schema.json
-name: StandardizedScheduleTradeInfo
-namespace: cdm/margin/schedule
+name: cdm/margin/schedule/StandardizedScheduleTradeInfo
 assetClass:
-  type: FINOS-CDM-6.0-d07/StandardizedScheduleAssetClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/margin/schedule/StandardizedScheduleAssetClassEnum
 grossInitialMargin:
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 markToMarketValue:
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 productClass:
-  type: FINOS-CDM-6.0-d07/StandardizedScheduleProductClassEnum
+  type: FINOS-CDM-6.0-d07/cdm/margin/schedule/StandardizedScheduleProductClassEnum

@@ -1,5 +1,5 @@
 name: Payment Mandate Spend Settlement Responded
-type: Conversation/Response
+type: Coordination/Response
 description: Validation result emitted by Payment Mandate after processing a settlement update.
 
 authorizationId:

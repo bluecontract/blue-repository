@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-ReferenceSwapCurve.schema.json
-name: ReferenceSwapCurve
-namespace: cdm/observable/asset
+name: cdm/observable/asset/ReferenceSwapCurve
 description: |
   A complex type used to specify the option and convertible bond option strike when expressed in reference to a swap curve.
 makeWholeAmount:
   description: |
     Amount to be paid by the buyer of the option if the option is exercised prior to the Early Call Date. (The market practice in the convertible bond option space being that the buyer should be penalised if he/she exercises the option early on.)
-  type: FINOS-CDM-6.0-d07/MakeWholeAmount
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/MakeWholeAmount
 swapUnwindValue:
-  type: FINOS-CDM-6.0-d07/SwapCurveValuation
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/SwapCurveValuation
   schema:
     required: true

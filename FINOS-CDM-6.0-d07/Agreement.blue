@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-contract-Agreement.schema.json
-name: Agreement
-namespace: cdm/legaldocumentation/contract
+name: cdm/legaldocumentation/contract/Agreement
 description: Specification of the standard set of terms that define a legal agreement.
 collateralTransferAgreementElections:
   description: Elections to specify a Collateral Transfer Agreement.
-  type: FINOS-CDM-6.0-d07/CollateralTransferAgreementElections
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/csa/CollateralTransferAgreementElections
 creditSupportAgreementElections:
   description: Elections to specify a Credit Support Annex or Credit Support Deed for Intial or Variation Margin.
-  type: FINOS-CDM-6.0-d07/CreditSupportAgreementElections
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/csa/CreditSupportAgreementElections
 masterAgreementSchedule:
   description: Elections to specify a Master Agreement Schedule.
-  type: FINOS-CDM-6.0-d07/MasterAgreementSchedule
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/MasterAgreementSchedule
 securityAgreementElections:
   description: Elections to specify a Security agreement.
-  type: FINOS-CDM-6.0-d07/SecurityAgreementElections
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/csa/SecurityAgreementElections
 transactionAdditionalTerms:
   description: |
     Any additional terms which mainly intend to specify the extraordinary events that may affect a trade and the related contractual rights and obligation of the parties when this happens
-  type: FINOS-CDM-6.0-d07/TransactionAdditionalTerms
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/TransactionAdditionalTerms

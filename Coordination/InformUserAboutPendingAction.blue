@@ -1,0 +1,28 @@
+name: Inform User About Pending Action
+type: Coordination/Event
+description: |
+  Workflow/operation type that asks the system to notify a user about a pending action. It is typically used when a
+  document needs human attention: approval, consent, data entry, signature, correction, or review.
+
+  This type describes the notification request, not proof that the user has responded. A response should be represented
+  by Customer Action Responded or another explicit event. The `expectedRequest` field can help the UI or notification
+  system explain what kind of response should be sent back.
+operation:
+  type: Text
+  description: |
+    Operation name associated with the pending action.
+title:
+  type: Text
+  description: |
+    Short notification title.
+message:
+  type: Text
+  description: |
+    Detailed notification body.
+channel:
+  type: Text
+  description: |
+    Channel or delivery route to use for informing the user.
+expectedRequest:
+  description: |
+    Shape or description of the response expected from the user.

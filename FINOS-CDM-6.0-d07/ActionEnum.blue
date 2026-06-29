@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-ActionEnum.schema.json
-name: ActionEnum
-namespace: cdm/event/common
+name: cdm/event/common/ActionEnum
 description: The enumeration values to specify the actions associated with transactions.
 type: Text
 schema:

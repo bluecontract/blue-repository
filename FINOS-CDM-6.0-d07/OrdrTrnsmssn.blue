@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-OrdrTrnsmssn.schema.json
-name: OrdrTrnsmssn
-namespace: cdm/regulation
+name: cdm/regulation/OrdrTrnsmssn
 trnsmssnInd:
   type: Text
   schema:

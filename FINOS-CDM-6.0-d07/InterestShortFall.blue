@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-InterestShortFall.schema.json
-name: InterestShortFall
-namespace: cdm/product/asset
+name: cdm/product/asset/InterestShortFall
 description: A class to specify the interest shortfall floating rate payment event.
 compounding:
   type: Boolean
@@ -9,9 +8,9 @@ compounding:
 interestShortfallCap:
   description: |
     Specifies the nature of the interest Shortfall cap (i.e. Fixed Cap or Variable Cap) in the case where it is applicable. ISDA 2003 Term: Interest Shortfall Cap.
-  type: FINOS-CDM-6.0-d07/InterestShortfallCapEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/InterestShortfallCapEnum
   schema:
     required: true
 rateSource:
   description: The rate source in the case of a variable cap.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaFloatingRateIndexEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/rates/FieldWithMetaFloatingRateIndexEnum

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-CashSettlementMethodEnum.schema.json
-name: CashSettlementMethodEnum
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/CashSettlementMethodEnum
 description: Defines the different cash settlement methods for a product where cash settlement is applicable.
 type: Text
 schema:

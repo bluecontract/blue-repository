@@ -1,0 +1,9 @@
+name: Accept Change Operation
+type: Coordination/Operation
+description: |
+  Operation marker for accepting a previously stored proposed change. Acceptance means the document should apply the
+  changes contained in proposal state and remove the proposal record once the processor has committed the change.
+
+  This operation is part of the proposal/accept/reject workflow family. It separates review from mutation: Propose Change
+  captures a request, Accept Change applies it, and Reject Change discards it. The corresponding Accept Change Workflow
+  performs validation, policy checks, translation of sectionChanges, and final Update Document patching.

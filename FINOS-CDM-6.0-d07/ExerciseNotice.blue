@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExerciseNotice.schema.json
-name: ExerciseNotice
-namespace: cdm/product/template
+name: cdm/product/template/ExerciseNotice
 description: |
   Defines to whom and where notice of execution should be given. The exerciseNoticeGiver refers to one or both of the principal parties of the trade. If present the exerciseNoticeReceiver refers to a party, other than the principal party, to whom notice should be given.
 businessCenter:
   description: "Specifies the location where the exercise must be reported, e.g. where the exercise notice receiver is based."
-  type: FINOS-CDM-6.0-d07/FieldWithMetaBusinessCenterEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/FieldWithMetaBusinessCenterEnum
   schema:
     required: true
 exerciseNoticeGiver:
   description: Specifies the principal party of the trade that has the right to exercise.
-  type: FINOS-CDM-6.0-d07/ExerciseNoticeGiverEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/template/ExerciseNoticeGiverEnum
   schema:
     required: true
 exerciseNoticeReceiver:
   description: |
     Specifies the party to which notice of exercise should be given, e.g. by the buyer of the option. Although in many cases it is the buyer of the option who sends the exercise notice to the seller of the option, this component is reused, e.g. in case of OptionEarlyTermination, either or both parties have the right to exercise.
-  type: FINOS-CDM-6.0-d07/AncillaryRoleEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/AncillaryRoleEnum

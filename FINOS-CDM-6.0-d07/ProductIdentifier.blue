@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-ProductIdentifier.schema.json
-name: ProductIdentifier
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/ProductIdentifier
 description: |
   Comprises an identifier and a source. The associated metadata key denotes the ability to associate a hash value to the ProductIdentifier instantiations for the purpose of model cross-referencing, in support of functionality such as the event effect and the lineage.
 identifier:
   description: |
     Provides an identifier associated with a specific product.  The identifier is unique within the public source specified in the source attribute.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     required: true
 source:
   description: Defines the source of the identifier.
-  type: FINOS-CDM-6.0-d07/ProductIdTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/ProductIdTypeEnum
   schema:
     required: true

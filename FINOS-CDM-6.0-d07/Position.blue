@@ -1,22 +1,21 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-position-Position.schema.json
-name: Position
-namespace: cdm/event/position
+name: cdm/event/position/Position
 description: |
   A Position describes how much of a given Product is being held and constitutes the atomic element of a Portfolio.
 cashBalance:
   description: The aggregate cost of proceeds
-  type: FINOS-CDM-6.0-d07/Money
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/Money
 priceQuantity:
   description: Position with many price quantities.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PriceQuantity
+  itemType: FINOS-CDM-6.0-d07/cdm/observable/asset/PriceQuantity
   schema:
     minItems: 1
 product:
   description: The product underlying the position.
-  type: FINOS-CDM-6.0-d07/Product
+  type: FINOS-CDM-6.0-d07/cdm/product/template/Product
   schema:
     required: true
 tradeReference:
   description: "Reference to the Contract, in case product is contractual and the contract has been formed"
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaTradeState
+  type: FINOS-CDM-6.0-d07/cdm/event/common/metafields/ReferenceWithMetaTradeState

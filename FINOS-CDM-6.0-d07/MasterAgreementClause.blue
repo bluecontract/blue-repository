@@ -1,31 +1,30 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterAgreementClause.schema.json
-name: MasterAgreementClause
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/MasterAgreementClause
 description: Defines clauses that make up a Master Agreement
 counterparty:
   description: |
     Optional counterparty role. This can be used where a clause needs to be assigned to a specific party on the agreement based upon their role i.e. Party A or Party B.
   type: List
-  itemType: FINOS-CDM-6.0-d07/CounterpartyRoleEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/CounterpartyRoleEnum
   schema:
     minItems: 0
     maxItems: 2
 identifer:
   description: Unique identifier for the clause
-  type: FINOS-CDM-6.0-d07/MasterAgreementClauseIdentifierEnum
+  type: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/MasterAgreementClauseIdentifierEnum
   schema:
     required: true
 otherParty:
   description: |
     Optional party. This can be required for umbrella agreements where a clause may need to be assigned to a specific party who may or may not be on the agreement.
   type: List
-  itemType: FINOS-CDM-6.0-d07/PartyRoleEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PartyRoleEnum
   schema:
     minItems: 0
 variant:
   description: |
     Allows multiple variants to be defined for a clause. This needs to be an array as some clauses can specify different variants for different parties. At least one variant must be specified for a clause.
   type: List
-  itemType: FINOS-CDM-6.0-d07/MasterAgreementClauseVariant
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/MasterAgreementClauseVariant
   schema:
     minItems: 1

@@ -1,5 +1,5 @@
 name: Payment Mandate Spend Settled
-type: Conversation/Response
+type: Coordination/Response
 description: >
   Settlement update sent by bank to Payment Mandate after charge execution,
   used to apply deterministic reserved/captured deltas in mandate state.

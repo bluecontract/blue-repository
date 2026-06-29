@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-MasterAgreementVariableSet.schema.json
-name: MasterAgreementVariableSet
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/MasterAgreementVariableSet
 description: Defines a type where additional variables associated to clauses and their variants can be described.
 val:
   description: The value for this variable
@@ -9,6 +8,6 @@ variableSet:
   description: |
     For some variants a table of variables is required. To support this use case we need to be able to specify variables within variables. Including a variable set here gives us infinite nesting opportunities - realistically we are only ever expecting that a table would need to be defined for any particular clause, so we would expect two levels of nesting as a maximum i.e. variableSet->variableSet->name/value.
   type: List
-  itemType: FINOS-CDM-6.0-d07/MasterAgreementVariableSet
+  itemType: FINOS-CDM-6.0-d07/cdm/legaldocumentation/master/MasterAgreementVariableSet
   schema:
     minItems: 0

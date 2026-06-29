@@ -1,5 +1,5 @@
 name: Payee Assignment Confirmed
-type: Conversation/Response
+type: Coordination/Response
 description: The Guarantor accepted and recorded payee assignment.
 payeeRef:
   type: Text

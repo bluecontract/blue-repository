@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-AssetLeg.schema.json
-name: AssetLeg
-namespace: cdm/product/template
+name: cdm/product/template/AssetLeg
 description: Defines each asset movement of an asset payout.
 deliveryMethod:
   description: Specifies a delivery method for the security transaction.
-  type: FINOS-CDM-6.0-d07/DeliveryMethodEnum
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/DeliveryMethodEnum
   schema:
     required: true
 settlementDate:
   description: |
     Specifies the settlement date of securities.  In a repo transaction the purchase date would always be the effective date as specified under Economic Terms, the repurchase date would always be the termination date as specified under Economic Terms.
-  type: FINOS-CDM-6.0-d07/AdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/AdjustableOrRelativeDate
   schema:
     required: true

@@ -1,0 +1,13 @@
+name: Document Bootstrap Responded
+type: Coordination/Response
+description: |
+  Response event for a document bootstrap request. It records the resulting status and optional reason. Concrete
+  systems may use the more specific Completed or Failed events when they want clearer type-level distinction.
+status:
+  type: Text
+  description: |
+    Bootstrap response status. Prefer a Document Status specialization where possible.
+reason:
+  type: Text
+  description: |
+    Optional reason explaining success, failure, or pending state.

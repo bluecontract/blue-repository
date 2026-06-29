@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-AssetTypeEnum.schema.json
-name: AssetTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/AssetTypeEnum
 description: Represents an enumeration list to identify the asset type.
 type: Text
 schema:

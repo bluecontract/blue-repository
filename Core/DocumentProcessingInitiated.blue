@@ -1,9 +1,0 @@
-name: Document Processing Initiated
-description: |
-  Core type of Blue Language v1.0 (see https://language.blue).
-  Published once at a scope on first processing (before writing the
-  Processing Initialized Marker). At root, it is also included in the run's
-  triggered_events outbox.
-documentId:
-  type: Text
-  description: Stable document identifier (original BlueId).

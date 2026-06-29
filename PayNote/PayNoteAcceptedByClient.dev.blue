@@ -1,5 +1,5 @@
 name: PayNote Accepted By Client
-type: Conversation/Event
+type: Coordination/Event
 description: The client accepted the PayNote.
 acceptedAt:
   type: Common/Timestamp

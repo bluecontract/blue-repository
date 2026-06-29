@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-TaxonomyValue.schema.json
-name: TaxonomyValue
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/TaxonomyValue
 description: |
   Defines a taxonomy value as either a simple string or a more granular expression with class names and values for each class.
 classification:
   description: Specifies the taxonomy value as a set of class names and values for each class.
   type: List
-  itemType: FINOS-CDM-6.0-d07/TaxonomyClassification
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/asset/common/TaxonomyClassification
   schema:
     minItems: 0

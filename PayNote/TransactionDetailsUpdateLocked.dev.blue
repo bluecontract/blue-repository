@@ -1,5 +1,5 @@
 name: Transaction Details Update Locked
-type: Conversation/Response
+type: Coordination/Response
 description: >
   Transaction-details updates were locked. Subsequent details changes
   must be rejected until explicitly unlocked.

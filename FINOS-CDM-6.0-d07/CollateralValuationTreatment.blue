@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-collateral-CollateralValuationTreatment.schema.json
-name: CollateralValuationTreatment
-namespace: cdm/product/collateral
+name: cdm/product/collateral/CollateralValuationTreatment
 description: Specification of the valuation treatment for the specified collateral.
 additionalHaircutPercentage:
   description: |

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExpirationTimeTypeEnum.schema.json
-name: ExpirationTimeTypeEnum
-namespace: cdm/product/template
+name: cdm/product/template/ExpirationTimeTypeEnum
 description: "The time of day at which the equity option expires, for example the official closing time of the exchange."
 type: Text
 schema:

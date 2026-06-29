@@ -1,5 +1,5 @@
 name: Start Card Transaction Monitoring Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Request to start monitoring card events for a target merchant.
 targetMerchantId:
   type: Text

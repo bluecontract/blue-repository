@@ -1,5 +1,5 @@
 name: Linked Documents Permission Revoking in Progress
-type: Conversation/Response
+type: Coordination/Response
 description: MyOS Admin has started revoking this LDPG.
 targetSessionId:
   type: Text

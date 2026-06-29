@@ -1,22 +1,21 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-identifier-LocationIdentifier.schema.json
-name: LocationIdentifier
-namespace: cdm/base/staticdata/identifier
+name: cdm/base/staticdata/identifier/LocationIdentifier
 description: |
   Specifies a location identifier. An issuer and an identifier type can be associated with the actual identifier value as a way to properly qualify it.
 assignedIdentifier:
   description: |
     The identifier value. This level of indirection between the issuer and the identifier and its version provides the ability to associate multiple identifiers to one issuer, consistently with the FpML PartyTradeIdentifier.
   type: List
-  itemType: FINOS-CDM-6.0-d07/AssignedIdentifier
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/AssignedIdentifier
   schema:
     minItems: 1
 issuer:
   description: |
     The identifier issuer, when specified explicitly alongside the identifier value (instead of being specified by reference to a party).
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 issuerReference:
   description: "The identifier issuer, when specified by reference to a party specified as part of the transaction."
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaParty
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaParty
 locationIdentifierType:
   description: Specifies the nature of a location identifier.
-  type: FINOS-CDM-6.0-d07/CommodityLocationIdentifierTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/identifier/CommodityLocationIdentifierTypeEnum

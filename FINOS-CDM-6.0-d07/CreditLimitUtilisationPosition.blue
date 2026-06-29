@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-workflow-CreditLimitUtilisationPosition.schema.json
-name: CreditLimitUtilisationPosition
-namespace: cdm/event/workflow
+name: cdm/event/workflow/CreditLimitUtilisationPosition
 global:
   description: "Global credit limit utilisation amount, agnostic of long/short position direction."
   type: Double

@@ -1,5 +1,5 @@
 name: MyOS Agent Actor
-type: Conversation/Agent Actor
+type: Coordination/Agent Actor
 description: MyOS-specific agent actor specialization.
 accountId:
   type: Text

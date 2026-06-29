@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-AutomaticExercise.schema.json
-name: AutomaticExercise
-namespace: cdm/product/template
+name: cdm/product/template/AutomaticExercise
 description: |
   A type to define automatic exercise of a swaption. With automatic exercise the option is deemed to have exercised if it is in the money by more than the threshold amount on the exercise date.
 isApplicable:

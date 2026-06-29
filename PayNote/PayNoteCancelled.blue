@@ -1,3 +1,3 @@
 name: PayNote Cancelled
-type: Conversation/Response
+type: Coordination/Response
 description: The Guarantor confirms PayNote cancellation requested by Payer.

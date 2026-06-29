@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-ProductIdTypeEnum.schema.json
-name: ProductIdTypeEnum
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/ProductIdTypeEnum
 description: Provides the enumerated values to specify the product identifier source.
 type: Text
 schema:

@@ -1,5 +1,4 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-legaldocumentation-master-IndexAdjustmentEvents.schema.json
-name: IndexAdjustmentEvents
-namespace: cdm/legaldocumentation/master
+name: cdm/legaldocumentation/master/IndexAdjustmentEvents
 description: |
   Defines the specification of the consequences of Index Events as defined by the 2002 ISDA Equity Derivatives Definitions.

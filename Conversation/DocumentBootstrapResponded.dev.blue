@@ -1,9 +1,0 @@
-name: Document Bootstrap Responded
-type: Conversation/Response
-description: Decision response event for a document bootstrap request.
-status:
-  type: Text
-  description: Decision for the bootstrap request ("accepted" | "rejected").
-reason:
-  type: Text
-  description: Details when rejected or additional context.

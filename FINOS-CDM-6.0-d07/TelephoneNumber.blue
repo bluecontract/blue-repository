@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-TelephoneNumber.schema.json
-name: TelephoneNumber
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/TelephoneNumber
 description: |
   A class to specify a telephone number as a type of phone number (e.g. work, personal, ...) alongside with the actual number.
 number:
@@ -10,4 +9,4 @@ number:
     required: true
 telephoneNumberType:
   description: "The type of telephone number, e.g. work, mobile."
-  type: FINOS-CDM-6.0-d07/TelephoneTypeEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/TelephoneTypeEnum

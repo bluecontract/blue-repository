@@ -1,5 +1,5 @@
 name: Reverse Card Charge and Capture Immediately Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Request to create a reverse-direction card charge and capture it immediately.
 amount:
   type: Integer

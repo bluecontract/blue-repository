@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-FinalPrincipalExchangeCalculationEnum.schema.json
-name: FinalPrincipalExchangeCalculationEnum
-namespace: cdm/product/asset
+name: cdm/product/asset/FinalPrincipalExchangeCalculationEnum
 description: To be specified only for products that embed a redemption payment.
 type: Text
 schema:

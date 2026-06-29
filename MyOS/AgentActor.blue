@@ -1,5 +1,5 @@
 name: Agent Actor
-type: Conversation/Actor
+type: Coordination/Actor
 onBehalfOf:
   type: Text
   description: The principal's accountId

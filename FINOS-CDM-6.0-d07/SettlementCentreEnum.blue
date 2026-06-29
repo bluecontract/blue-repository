@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-settlement-SettlementCentreEnum.schema.json
-name: SettlementCentreEnum
-namespace: cdm/product/common/settlement
+name: cdm/product/common/settlement/SettlementCentreEnum
 description: Defines the settlement centre for a securities transaction.
 type: Text
 schema:

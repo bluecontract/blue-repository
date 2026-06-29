@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-StrikeSchedule.schema.json
-name: StrikeSchedule
-namespace: cdm/product/template
+name: cdm/product/template/StrikeSchedule
 description: A class describing a schedule of cap or floor rates.
 buyer:
   description: The buyer of the option.
-  type: FINOS-CDM-6.0-d07/PayerReceiverEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiverEnum
 price:
   description: "The initial rate. An initial rate of 5% would be represented as 0.05."
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaPriceSchedule
+  type: FINOS-CDM-6.0-d07/cdm/observable/asset/metafields/ReferenceWithMetaPriceSchedule
 seller:
   description: The party that has sold.
-  type: FINOS-CDM-6.0-d07/PayerReceiverEnum
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/PayerReceiverEnum

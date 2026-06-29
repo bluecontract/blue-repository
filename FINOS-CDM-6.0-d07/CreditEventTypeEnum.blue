@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-event-common-CreditEventTypeEnum.schema.json
-name: CreditEventTypeEnum
-namespace: cdm/event/common
+name: cdm/event/common/CreditEventTypeEnum
 description: Represents the enumerated values to specify a credit event type.
 type: Text
 schema:

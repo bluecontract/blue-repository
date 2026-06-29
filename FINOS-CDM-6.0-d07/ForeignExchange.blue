@@ -1,20 +1,19 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-ForeignExchange.schema.json
-name: ForeignExchange
-namespace: cdm/product/asset
+name: cdm/product/asset/ForeignExchange
 description: |
   From FpML: A type defining either a spot or forward FX transactions.
 exchangedCurrency1:
   description: |
     This is the first of the two currency flows that define a single leg of a standard foreign exchange transaction.
-  type: FINOS-CDM-6.0-d07/Cashflow
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/Cashflow
   schema:
     required: true
 exchangedCurrency2:
   description: |
     This is the second of the two currency flows that define a single leg of a standard foreign exchange transaction.
-  type: FINOS-CDM-6.0-d07/Cashflow
+  type: FINOS-CDM-6.0-d07/cdm/product/common/settlement/Cashflow
   schema:
     required: true
 tenorPeriod:
   description: "A tenor expressed as a period type and multiplier (e.g. 1D, 1Y, etc.)"
-  type: FINOS-CDM-6.0-d07/Period
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Period

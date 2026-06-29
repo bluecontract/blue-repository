@@ -1,0 +1,20 @@
+name: Actor
+description: |
+  Base coordination type for verifiable actor attribution. An Actor describes the accountable entity on whose authority
+  a timeline entry, operation request, response, status change, customer action, or other coordination event was
+  produced. The actor may be a human principal, an organization, an automated service, an AI agent, a device, or a
+  provider-defined specialization, but the crucial semantic point is that the event source is making an attribution
+  claim that downstream documents can inspect.
+
+  Actor attribution is not permission by itself. It is evidence about who or what caused an action. A Timeline Provider
+  or other event source authenticates the party trying to append an entry to a timeline and records the actor category
+  and any provider-specific audit fields. Blue documents then decide, through Actor Policy, operation-specific rules,
+  or domain-specific logic, whether that actor is allowed to perform the requested operation. Processors MUST NOT infer
+  actor category from message text; they use the explicit actor node supplied with the event or timeline entry.
+
+  Concrete actor types should precisely state what the provider is asserting. Principal Actor means the action is
+  attributed directly to the principal or account owner. Agent Actor means the action is attributed to delegated
+  automation acting on behalf of a principal. Provider-specific actor types may describe UI authentication strength,
+  API credentials, agent sessions, delegation references, device identity, assurance level, or other auditable
+  evidence. Because the description of an actor type is identity-bearing Blue content, it should be written as the
+  normative semantic contract of that actor type, not as informal documentation.

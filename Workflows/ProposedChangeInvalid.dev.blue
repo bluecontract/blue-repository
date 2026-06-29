@@ -1,0 +1,13 @@
+name: Proposed Change Invalid
+type: Coordination/Event
+description: |
+  Event emitted when a proposed, accepted, rejected, or direct change request cannot be processed under the document's
+  change-management rules. The event communicates a deterministic reason such as missing summary, missing proposal,
+  duplicate proposal, forbidden `/contracts` mutation, malformed sectionChanges, or another validation failure.
+
+  This event is intended to be observable by users, agents, and audit tools. It signals that the requested change did not
+  become document state. The `reason` field should be human-readable and stable enough for diagnostics, but it is not a
+  substitute for the processor's formal error category when the processor itself terminates fatally.
+reason:
+  type: Text
+  description: Human-readable reason for the failure.

@@ -1,16 +1,15 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-BasketReferenceInformation.schema.json
-name: BasketReferenceInformation
-namespace: cdm/product/asset
+name: cdm/product/asset/BasketReferenceInformation
 description: CDS Basket Reference Information.
 basketId:
   description: A CDS basket identifier.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaString
+  itemType: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
   schema:
     minItems: 0
 basketName:
   description: The name of the basket expressed as a free format string. FpML does not define usage rules for this element.
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 mthToDefault:
   description: M th reference obligation to default to allow representation of N th to M th defaults.
   type: Integer
@@ -20,9 +19,9 @@ nthToDefault:
 referencePool:
   description: |
     This element contains all the reference pool items to define the reference entity and reference obligation(s) in the basket.
-  type: FINOS-CDM-6.0-d07/ReferencePool
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/ReferencePool
   schema:
     required: true
 tranche:
   description: This element contains CDS tranche terms.
-  type: FINOS-CDM-6.0-d07/Tranche
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/Tranche

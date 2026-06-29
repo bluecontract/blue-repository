@@ -1,19 +1,18 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-datetime-AdjustableOrAdjustedOrRelativeDate.schema.json
-name: AdjustableOrAdjustedOrRelativeDate
-namespace: cdm/base/datetime
+name: cdm/base/datetime/AdjustableOrAdjustedOrRelativeDate
 description: |
   This Rosetta class specifies the date as either an unadjusted, adjusted or relative date. It supplements the features of the AdjustableOrAdjustedDate to support the credit default swap option premium, which uses the relative date construct.
 adjustedDate:
   description: |
     The date once the adjustment has been performed. (Note that this date may change if the business center holidays change).
-  type: FINOS-CDM-6.0-d07/FieldWithMetaString
+  type: FINOS-CDM-6.0-d07/com/rosetta/model/FieldWithMetaString
 dateAdjustments:
   description: |
     The business day convention and financial business centers used for adjusting the date if it would otherwise fall on a day that is not a business date in the specified business centers.
-  type: FINOS-CDM-6.0-d07/BusinessDayAdjustments
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/BusinessDayAdjustments
 relativeDate:
   description: "A date specified as some offset to another date (the anchor date)."
-  type: FINOS-CDM-6.0-d07/RelativeDateOffset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/RelativeDateOffset
 unadjustedDate:
   description: A date subject to adjustment.
   type: Text

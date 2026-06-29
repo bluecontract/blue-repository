@@ -1,15 +1,14 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-party-NaturalPersonRole.schema.json
-name: NaturalPersonRole
-namespace: cdm/base/staticdata/party
+name: cdm/base/staticdata/party/NaturalPersonRole
 description: "A class to specify the role(s) that natural person(s) may have in relation to the contract."
 personReference:
   description: A reference to the natural person to whom the role refers to.
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaNaturalPerson
+  type: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/metafields/ReferenceWithMetaNaturalPerson
   schema:
     required: true
 role:
   description: FpML specifies a person role that is distinct from the party role.
   type: List
-  itemType: FINOS-CDM-6.0-d07/FieldWithMetaNaturalPersonRoleEnum
+  itemType: FINOS-CDM-6.0-d07/cdm/base/staticdata/party/FieldWithMetaNaturalPersonRoleEnum
   schema:
     minItems: 0

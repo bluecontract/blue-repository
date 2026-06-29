@@ -1,0 +1,20 @@
+name: Operation
+type: Handler
+description: |
+  Base handler contract type describing a named operation supported by a document or scope. An Operation gives a stable
+  name to a business action, binds that action to a same-scope channel, and describes the expected request payload
+  shape.
+
+  Operation is the common interface for operation handlers. A plain Operation declares the channel and request shape;
+  concrete operation types such as Sequential Workflow Operation provide the executable behavior. Actor Policy and
+  source policy typically refer to operation names when deciding whether a Timeline Entry or Operation Request may be
+  processed.
+request:
+  description: |
+    Expected request payload shape or description for this operation. Concrete operation runtimes may use this for event
+    matching, validation, or documentation.
+channel:
+  type: Text
+  description: |
+    Same-scope channel key through which Operation Request events for this operation are expected to arrive. This is the
+    Handler channel binding for the operation.

@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-SettlementRateOptionEnum.schema.json
-name: SettlementRateOptionEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/SettlementRateOptionEnum
 description: |
   The enumerated values to specify the settlement rate options as specified in the Annex A to the 1998 FX and Currency Options Definitions.
 type: Text

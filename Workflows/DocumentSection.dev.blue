@@ -1,0 +1,29 @@
+name: Document Section
+type: Marker
+description: |
+  Marker contract that identifies a logical section of a document and links that section to the fields and contracts
+  responsible for it. A section gives humans, agents, and change-management workflows a coherent unit of meaning such as
+  payment setup, shipping details, consent terms, participant configuration, or embedded-order handling.
+
+  `title` and `summary` describe the section in user-facing terms. `relatedFields` lists absolute document pointers for
+  state fields covered by the section. `relatedContracts` lists same-scope contract keys that implement, enforce, or
+  affect the section. Section-aware workflows use this information to group proposed contract changes, validate that
+  contract edits belong to the right section, and present changes for review.
+
+  Document Section is metadata with runtime relevance only for workflows that understand it. It is also identity-bearing
+  document content. Changing a section's title, summary, fields, or related contracts changes what the document says
+  about its own structure and review surface.
+title:
+  type: Text
+  description: Short, human-readable title shown in UI summaries.
+summary:
+  type: Text
+  description: Brief functional summary of the section's purpose and behavior.
+relatedFields:
+  type: List
+  itemType: Text
+  description: Absolute JSON Pointer paths of fields covered by this section.
+relatedContracts:
+  type: List
+  itemType: Text
+  description: Contract keys in the same scope that implement or affect the section.

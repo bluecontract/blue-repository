@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-math-CompareOp.schema.json
-name: CompareOp
-namespace: cdm/base/math
+name: cdm/base/math/CompareOp
 type: Text
 schema:
   enum: [Equals, GreaterThan, GreaterThanOrEquals, LessThan, LessThanOrEquals]

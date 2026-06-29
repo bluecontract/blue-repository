@@ -1,5 +1,5 @@
 name: Reverse Card Charge Requested
-type: Conversation/Request
+type: Coordination/Request
 description: Request to create a reverse-direction card charge (merchant to card owner) in root context.
 amount:
   type: Integer

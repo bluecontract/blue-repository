@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-observable-asset-PartyDeterminationEnum.schema.json
-name: PartyDeterminationEnum
-namespace: cdm/observable/asset
+name: cdm/observable/asset/PartyDeterminationEnum
 description: The enumerated values to specify how a calculation agent will be determined.
 type: Text
 schema:

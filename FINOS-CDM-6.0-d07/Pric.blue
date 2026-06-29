@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-regulation-Pric.schema.json
-name: Pric
-namespace: cdm/regulation
+name: cdm/regulation/Pric
 bsisPts:
   type: Text
   schema:
     required: true
 pric:
-  type: FINOS-CDM-6.0-d07/Pric
+  type: FINOS-CDM-6.0-d07/cdm/regulation/Pric
   schema:
     required: true

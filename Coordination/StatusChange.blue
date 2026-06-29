@@ -1,0 +1,14 @@
+name: Status Change
+type: Coordination/Event
+description: |
+  Event announcing that a status value has changed or should be observed as changed. Status Change is useful when a
+  workflow wants to notify participants or parent scopes about state progress without exposing an entire document
+  snapshot.
+
+  The `status` field carries the new status object. Consumers should use the status type and `mode` value rather than
+  parsing human-readable text.
+status:
+  type: Coordination/Document Status
+  description: |
+    New status value. Usually a Document Status specialization such as Status Pending, Status In Progress, Status
+    Completed, or Status Failed.

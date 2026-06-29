@@ -1,13 +1,12 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-Lag.schema.json
-name: Lag
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/Lag
 description: |
   The pricing period per calculation period if the pricing days do not wholly fall within the respective calculation period.
 firstObservationDateOffset:
   description: Defines the offset of the series of pricing dates relative to the calculation period.
-  type: FINOS-CDM-6.0-d07/Offset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Offset
 lagDuration:
   description: Defines the offset of the series of pricing dates relative to the calculation period.
-  type: FINOS-CDM-6.0-d07/Offset
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/Offset
   schema:
     required: true

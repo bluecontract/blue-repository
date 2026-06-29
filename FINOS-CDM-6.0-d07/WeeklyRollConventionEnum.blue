@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-common-schedule-WeeklyRollConventionEnum.schema.json
-name: WeeklyRollConventionEnum
-namespace: cdm/product/common/schedule
+name: cdm/product/common/schedule/WeeklyRollConventionEnum
 description: The enumerated values to specify the weekly roll day.
 type: Text
 schema:

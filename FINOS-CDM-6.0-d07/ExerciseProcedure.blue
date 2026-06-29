@@ -1,11 +1,10 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-template-ExerciseProcedure.schema.json
-name: ExerciseProcedure
-namespace: cdm/product/template
+name: cdm/product/template/ExerciseProcedure
 description: A class describing how notice of exercise should be given. This can be either manual or automatic.
 automaticExercise:
   description: |
     If automatic is specified, then the notional amount of the underlying swap not previously exercised under the swaption will be automatically exercised at the expiration time on the expiration date if at such time the buyer is in-the-money, provided that the difference between the settlement rate and the fixed rate under the relevant underlying swap is not less than the specified threshold rate. The term in-the-money is assumed to have the meaning defining in the 2000 ISDA Definitions, Section 17.4 In-the-money.
-  type: FINOS-CDM-6.0-d07/AutomaticExercise
+  type: FINOS-CDM-6.0-d07/cdm/product/template/AutomaticExercise
 followUpConfirmation:
   description: |
     A flag to indicate whether follow-up confirmation of exercise (written or electronic) is required following telephonic notice by the buyer to the seller or seller's agent.
@@ -18,7 +17,7 @@ limitedRightToConfirm:
   type: Boolean
 manualExercise:
   description: "Specifies that the notice of exercise must be given by the buyer to the seller or seller's agent."
-  type: FINOS-CDM-6.0-d07/ManualExercise
+  type: FINOS-CDM-6.0-d07/cdm/product/template/ManualExercise
 splitTicket:
   description: |
     Typically applicable to the physical settlement of bond and convertible bond options. If present, means that the party required to deliver the bonds will divide those to be delivered as notifying party desires to facilitate delivery obligations.

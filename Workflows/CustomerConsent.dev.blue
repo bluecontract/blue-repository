@@ -1,0 +1,130 @@
+name: Customer Consent
+description: Generic customer consent granted to a grantee (e.g., merchant).
+
+consentKind:
+  type: Text
+  description: Classification of the consent (e.g., cardTransactionMonitoring).
+
+consentDetails:
+  type: Dictionary
+  keyType: Text
+  valueType: Text
+  description: Generic scope details (merchant id, event categories, requesting contract refs, etc.).
+
+consentStatus:
+  type: Text
+  description: Consent state (granted, revoked).
+
+grantedAt:
+  type: Common/Timestamp
+  description: Timestamp when consent was granted.
+
+revokedAt:
+  type: Common/Timestamp
+  description: Timestamp when consent was revoked.
+
+revocationReason:
+  type: Text
+  description: Reason for revocation.
+
+contracts:
+  granteeChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Grantee (e.g., merchant MyOS timeline).
+
+  granterChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Granter (customer represented by the bank; customer has no MyOS account).
+
+  guarantorChannel:
+    type: MyOS/MyOS Timeline Channel
+    description: Bank/admin channel.
+
+  initLifecycleChannel:
+    type: Lifecycle Event Channel
+    event:
+      type: Document Processing Initiated
+
+  initialize:
+    type: Coordination/Sequential Workflow
+    channel: initLifecycleChannel
+    steps:
+      - name: Initialize
+        type: Coordination/Compute
+        do:
+          - $appendChange:
+              op: replace
+              path: /consentStatus
+              val: granted
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+  revokeConsent:
+    type: Coordination/Operation
+    description: Customer revokes the consent.
+    channel: granterChannel
+    request:
+      reason:
+        type: Text
+      revokedAt:
+        type: Common/Timestamp
+
+  revokeConsentImpl:
+    type: Coordination/Sequential Workflow Operation
+    operation: revokeConsent
+    steps:
+      - name: Capture
+        type: Coordination/Compute
+        do:
+          - $let:
+              order:
+                - request
+                - reason
+                - revokedAt
+                - canRevoke
+              vars:
+                request:
+                  $event: /message/request
+                reason:
+                  $default:
+                    - $event: /message/request/reason
+                    - ''
+                revokedAt:
+                  $default:
+                    - $event: /message/request/revokedAt
+                    - ''
+                canRevoke:
+                  $eq:
+                    - $document: /consentStatus
+                    - granted
+          - $if:
+              cond:
+                $var: canRevoke
+              then:
+                - $appendEvent:
+                    type: Coordination/Customer Consent Revoked
+                    reason:
+                      $var: reason
+                    revokedAt:
+                      $var: revokedAt
+          - $appendChange:
+              op: replace
+              path: /consentStatus
+              val: revoked
+          - $appendChange:
+              op: replace
+              path: /revocationReason
+              val:
+                $var: reason
+          - $appendChange:
+              op: replace
+              path: /revokedAt
+              val:
+                $var: revokedAt
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true

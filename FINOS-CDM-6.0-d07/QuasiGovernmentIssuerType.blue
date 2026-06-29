@@ -1,6 +1,5 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-base-staticdata-asset-common-QuasiGovernmentIssuerType.schema.json
-name: QuasiGovernmentIssuerType
-namespace: cdm/base/staticdata/asset/common
+name: cdm/base/staticdata/asset/common/QuasiGovernmentIssuerType
 description: Represents a class to allow specification of different types of Quasi Government collateral.
 sovereignEntity:
   description: |

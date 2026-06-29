@@ -1,9 +1,8 @@
 # Generated from https://cdm.finos.org/schemas/6.0/cdm-product-asset-DividendPaymentDate.schema.json
-name: DividendPaymentDate
-namespace: cdm/product/asset
+name: cdm/product/asset/DividendPaymentDate
 description: |
   A class describing the date on which the dividend will be paid/received. This class is also used to specify the date on which the FX rate will be determined, when applicable.
 dividendDate:
-  type: FINOS-CDM-6.0-d07/ReferenceWithMetaAdjustableOrRelativeDate
+  type: FINOS-CDM-6.0-d07/cdm/base/datetime/metafields/ReferenceWithMetaAdjustableOrRelativeDate
 dividendDateReference:
-  type: FINOS-CDM-6.0-d07/DividendDateReference
+  type: FINOS-CDM-6.0-d07/cdm/product/asset/DividendDateReference
