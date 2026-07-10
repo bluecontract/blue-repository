@@ -2,13 +2,13 @@ name: PayNote Delivery
 description: Tracks delivery of a PayNote through a deliverer (e.g., bank) to a receiver (payer - client).
 
 payNoteBootstrapRequest:
-  type: Coordination/Document Bootstrap Requested
+  type: Bootstrap/Document Bootstrap Requested
   document:
     type: PayNote/PayNote
   description: PayNote bootstrap request details.
 
 paymentMandateBootstrapRequest:
-  type: Coordination/Document Bootstrap Requested
+  type: Bootstrap/Document Bootstrap Requested
   document:
     type: PayNote/Payment Mandate
   description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.

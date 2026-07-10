@@ -1,0 +1,24 @@
+name: Operation Mandate
+type: Mandate/Mandate
+description: >
+  Mandate authorizing the actor bound to authorizedActorChannel to invoke one
+  operation through a different effective channel on one logical target
+  document, on behalf of the actor bound to authorityHolderChannel.
+
+target:
+  initialDocument:
+    schema:
+      required: true
+    description: Initial document identifying the logical target document.
+
+  channel:
+    type: Text
+    schema:
+      required: true
+    description: Effective target channel authorized by this mandate.
+
+  operation:
+    type: Text
+    schema:
+      required: true
+    description: Single operation authorized by this mandate.

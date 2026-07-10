@@ -1,0 +1,11 @@
+name: Mandate Activation Requested
+type: Coordination/Message
+description: |
+  Intermediate lifecycle Message requesting activation of a mandate in Mandate/Status Authority Confirmed.
+
+  It does not directly modify mandate state. Only the inherited
+  applyMandateActivation workflow may transition the mandate to Mandate/Status Active and emit
+  Mandate/Mandate Activated.
+
+  The inherited Message correlation fields may be used. No lifecycle timestamp
+  is supplied by this Message.

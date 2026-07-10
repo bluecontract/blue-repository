@@ -1,0 +1,5 @@
+name: Status
+type: Coordination/Document Status
+description: >
+  Base coordination status marker. Concrete status types describe the current
+  lifecycle or business state of a coordination document.

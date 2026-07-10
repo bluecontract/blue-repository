@@ -1,0 +1,24 @@
+name: MyOS Session Subscription Ended
+type: Coordination/Response
+description: >
+  Response indicating that a root or linked-document subscription stream has
+  ended. No further updates for this sourceInitialDocument are delivered under
+  the identified subscription unless a future reinitiation protocol creates a
+  new active stream.
+
+subscriptionId:
+  type: Text
+  schema:
+    required: true
+  description: Subscription stream that ended.
+
+sourceInitialDocument:
+  schema:
+    required: true
+  description: Initial document identifying the ended root or linked-document stream.
+
+reason:
+  type: Text
+  description: >
+    End reason, such as Requested, MandateTerminated, SourceUnavailable,
+    Unlinked, or ProviderStopped.

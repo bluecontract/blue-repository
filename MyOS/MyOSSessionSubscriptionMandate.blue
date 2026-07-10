@@ -1,0 +1,28 @@
+name: MyOS Session Subscription Mandate
+type: Mandate/Document Responder Mandate
+description: >
+  MyOS-hosted responder mandate allowing sessions of the inherited
+  authorizedInitialDocument to request a provider-mediated subscription to a
+  source logical document. The authority holder must control the source
+  document or the explicitly constrained source session. The canonical subtype
+  constrains the guarantor and authorized-actor roles to MyOS Admin.
+
+sourceInitialDocument:
+  schema:
+    required: true
+  description: Initial document whose selected session may be observed.
+
+sourceDocumentSessionId:
+  type: Text
+  description: >
+    Optional concrete source session. When absent, MyOS Admin chooses an
+    eligible session of sourceInitialDocument.
+
+linkedDocuments:
+  allowedAnchors:
+    type: List
+    itemType: Text
+    description: >
+      Optional anchors from which linked-document subscriptions may be
+      requested. More detailed filter restrictions may be expressed through
+      inherited validation.

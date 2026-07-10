@@ -1,0 +1,27 @@
+name: MyOS Session Subscription Update
+type: Coordination/Response
+description: >
+  Provider-mediated subscription update for one logical source document. The
+  same subscriptionId is used for the root source and derived linked-document
+  streams. sourceInitialDocument identifies the logical document represented by
+  this update.
+
+subscriptionId:
+  type: Text
+  schema:
+    required: true
+  description: Stable identifier of the subscription stream.
+
+sourceInitialDocument:
+  schema:
+    required: true
+  description: Initial document identifying the logical source of this update.
+
+document:
+  description: Optional processed source-document snapshot selected by the filter.
+
+events:
+  type: List
+  schema:
+    required: true
+  description: Matching emitted events for the delivered source epoch; may be empty.

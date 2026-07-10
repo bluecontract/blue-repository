@@ -1,5 +1,5 @@
 name: Status Completed
-type: Coordination/Document Status
+type: Coordination/Status
 mode: terminated
 description: |
   Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation has completed successfully. The fixed mode is `completed`.

@@ -1,0 +1,25 @@
+name: Document Bootstrap Requested
+type: Coordination/Request
+description: >
+  Request asking the participant addressed by recipientChannel to bootstrap
+  the supplied initial document with the requested channel bindings and
+  optional initial Messages. This type defines bootstrap request data; mandate
+  authority is resolved independently by the recipient/platform.
+
+document:
+  schema:
+    required: true
+  description: Initial document requested for bootstrap.
+
+channelBindings:
+  schema:
+    required: true
+  description: Requested mapping from target document channel keys to participant bindings.
+
+initialMessages:
+  type: List
+  description: Optional standard bootstrap initial Messages.
+
+onBehalfOf:
+  type: Coordination/Principal Actor
+  description: Optional principal actor on whose behalf bootstrap is requested.

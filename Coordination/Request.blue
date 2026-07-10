@@ -1,13 +1,9 @@
 name: Request
-type: Coordination/Event
-description: |
-  Base event/content type for request objects that can be paired with responses. A Request identifies an intent or
-  question that another participant, document, provider, or workflow may answer.
-
-  `requestId` is the stable correlation key. It should be unique in the relevant conversation, timeline, operation, or
-  document scope so that responses and follow-up events can refer back to the original request deterministically.
-requestId:
-  type: Text
-  description: |
-    Stable request correlation identifier. It is not necessarily globally unique, but it should be unique in the scope or
-    conversation where responses are matched.
+type: Coordination/Message
+description: >
+  A Message that solicits an answer. It establishes the expectation that the
+  participant addressed by recipientChannel, or a suitable participant at the
+  table when recipientChannel is absent, may eventually send a Response whose
+  inResponseTo points to this Request. A Request may itself answer another
+  Message, such as a counter-offer or clarifying question. Concrete request
+  types define their payload and domain-specific recipient semantics.

@@ -1,0 +1,17 @@
+name: Mandate Authority Confirmed
+type: Coordination/Message
+description: |
+  Authoritative Message emitted when the inherited mandate workflow
+  successfully confirms the declared authority relationship.
+
+  Confirmation does not necessarily activate the mandate. When immediate
+  activation is enabled, this Message is followed by Mandate Activation
+  Requested and, if accepted, Mandate Activated.
+
+timestampUs:
+  type: Integer
+  schema:
+    required: true
+  description: >
+    Authority-confirmation timestamp derived from the root causal Timeline
+    Entry.

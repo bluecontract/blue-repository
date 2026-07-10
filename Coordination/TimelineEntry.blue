@@ -1,55 +1,51 @@
 name: Timeline Entry
-description: |
-  A Timeline Entry is one immutable entry in an append-only Timeline. It records a Blue message, the timeline it belongs
-  to, the previous entry reference, the provider-assigned or provider-recorded timestamp, and attribution fields such
-  as actor and source. Its BlueId is a content address over this data. If entries use `prevEntry`, each entry commits to
-  the BlueId of its predecessor, creating a tamper-evident chain: changing an old entry changes its BlueId and breaks
-  every later `prevEntry` link.
+description: >
+  Immutable entry in an append-only Timeline. The Timeline Provider assigns
+  sequence and timestamp, links the entry to its predecessor, and authenticates
+  actor attribution. A feeder validates, orders, and filters entries before
+  passing eligible events to a processor.
 
-  A Timeline Entry is not automatically a document operation. It is a stored statement or action on a timeline. A Blue
-  document may consume it through a Timeline Channel, but other applications may use the same timeline for audit,
-  messaging, public announcements, personal storage, signed receipts, or other purposes. The provider does not need to
-  know why the message was written. The provider's claims are about append authorization, identity/source attribution,
-  timestamp/order, storage, and completeness.
-
-  `timestamp` is used for deterministic ordering. For managed providers it is typically microseconds since Unix epoch
-  and must respect all outstanding completeness guarantees. For blockchain-backed timelines it may be derived from
-  finalized block timestamps and may have lower precision. When multiple entries have the same timestamp, processing
-  environments must use deterministic tie-breakers such as channel key and provider-specific finalized order.
-
-  `message` is the Blue payload. It may be an Operation Request, Chat Message, Status Change, customer response,
-  domain-specific event, or any other Blue node. `actor` says who or what the provider attributes the entry to.
-  `source` says how the message reached the provider. Blue documents should evaluate actor/source policy from these
-  fields rather than guessing from the message body.
 timeline:
   type: Coordination/Timeline
-  description: |
-    Timeline to which this entry belongs. This should be sufficient, together with provider-specific fields on concrete
-    timeline types, for readers to query the provider or storage mechanism for neighboring entries and completeness
-    proofs.
+  schema:
+    required: true
+  description: Timeline containing this entry.
+
+sequence:
+  type: Integer
+  schema:
+    required: true
+  description: >
+    Monotonically increasing position of this entry within its timeline.
+
 prevEntry:
-  description: |
-    Reference to the previous entry in the same timeline. The first entry may omit this field or use a provider-defined
-    beginning marker. Later entries should reference the predecessor's BlueId, forming the timeline hash chain and making
-    historical tampering detectable.
-message:
-  description: |
-    Blue payload recorded in this entry. The provider stores the message but generally does not validate it against every
-    possible consuming document. Document processors and domain-specific channels decide whether a message is relevant and
-    valid for a given document.
+  type: Coordination/Timeline Entry
+  description: >
+    Previous entry in the same timeline, normally represented as a pure
+    reference. The first entry may omit this field.
+
 timestamp:
   type: Integer
-  description: |
-    Provider-assigned or provider-recorded integer timestamp, commonly microseconds since Unix epoch. It establishes
-    entry order and is the value used in completeness guarantees. Future entries accepted after a completeness guarantee
-    for T must not receive timestamps less than T.
+  schema:
+    required: true
+  description: >
+    Microsecond timestamp assigned by the Timeline Provider. The provider must
+    preserve its timeline and completeness semantics for this value.
+
 actor:
   type: Coordination/Actor
-  description: |
-    Provider's attribution of the actor responsible for this entry. This should be a Coordination/Actor specialization,
-    such as Principal Actor or Agent Actor. Actor attribution supports audit and Actor Policy enforcement.
-source:
-  description: |
-    Optional provider's attribution of the source through which the entry was submitted, such as Browser Session, API
-    Call, Document Request, blockchain transaction, or provider-specific source type. Source complements actor; it does
-    not replace actor.
+  schema:
+    required: true
+  description: Actor attributed as the writer or submitter of this entry.
+
+onBehalfOf:
+  type: Mandate/Mandate Authority
+  description: >
+    Optional mandate-backed authority under which actor claims to act for
+    another actor. A feeder validates this authority before delivery when the
+    requested action is not directly eligible through a source channel.
+
+message:
+  schema:
+    required: true
+  description: Message or event recorded by the entry.

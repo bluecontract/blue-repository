@@ -1,0 +1,16 @@
+name: Mandate Termination Requested
+type: Coordination/Message
+description: |
+  Intermediate lifecycle Message requesting permanent mandate termination.
+
+  It does not directly modify mandate state. Only the inherited
+  applyMandateTermination workflow may transition the mandate to Mandate/Status Terminated,
+  emit Mandate/Mandate Terminated, and gracefully terminate mandate
+  processing.
+
+  The inherited Message correlation fields may be used. No lifecycle timestamp
+  is supplied by this Message.
+
+reason:
+  type: Text
+  description: Optional human-readable or machine-generated termination reason.

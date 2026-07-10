@@ -1,21 +1,23 @@
 name: Timeline Channel
 type: Channel
-description: |
-  Channel contract that accepts Timeline Entry events for a configured timeline. Timeline Channel is the scope-local
-  runtime entry point that lets a Blue document react to messages stored in append-only timeline infrastructure.
+description: >
+  External Coordination channel backed by one timeline and bound to one actor
+  in the containing document. A feeder uses both bindings to determine whether
+  a Timeline Entry is eligible through this channel. The same timeline may be
+  bound to several channels, but one input entry must never produce duplicate
+  logical delivery solely because several bindings match.
 
-  The channel identifies which timeline it observes, usually through `timelineId` and concrete provider fields. It does
-  not define the provider protocol by itself. A feeder or provider integration is responsible for fetching entries,
-  obtaining completeness or finality guarantees, deduplicating through checkpoints, and delivering entries in a
-  deterministic order. Once an entry is delivered, the channel can expose the entry or its `message` as the payload for
-  same-scope handlers.
+timeline:
+  type: Coordination/Timeline
+  schema:
+    required: true
+  description: >
+    Timeline whose entries may be accepted through this channel.
 
-  Timeline Channel must not be confused with the Timeline. The Timeline is storage and attribution infrastructure; the
-  channel is a contract inside one Blue document. Multiple documents may observe the same timeline, and one document may
-  observe many timelines. The channel does not make the provider understand the document's semantics. It simply defines
-  how attributed timeline entries enter the processor.
-timelineId:
-  type: Text
-  description: |
-    Identifier of the timeline whose entries this channel accepts. A concrete subtype may include provider, account,
-    chain, contract address, finality policy, or other fields needed to locate and verify the timeline.
+actor:
+  type: Coordination/Actor
+  schema:
+    required: true
+  description: >
+    Actor represented by this channel. A feeder matches this actor against the
+    actor attributed on a candidate Timeline Entry.

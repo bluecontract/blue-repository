@@ -1,0 +1,312 @@
+name: Mandate
+description: |
+  Base executable document type for guaranteed authority delegation.
+
+  The actor bound to authorityHolderChannel controls the authority or resource
+  being delegated. The actor bound to authorizedActorChannel receives the
+  delegated authority. The actor bound to mandateGuarantorChannel confirms that
+  the declared authority relationship is legitimate and may terminate the
+  mandate.
+
+  Authority confirmation and activation are separate lifecycle facts.
+  Confirmation records that the guarantor accepted the authority declaration.
+  Activation records the timestamp from which the authorized actor may use the
+  delegated authority.
+
+  By default, successful authority confirmation requests immediate activation.
+  A mandate may set activateOnAuthorityConfirmation to false and define
+  additional deterministic workflows that emit Mandate/Mandate Activation
+  Requested when a later condition is satisfied.
+
+  The base type defines and implements initialization, authority confirmation,
+  activation, termination, lifecycle event emission, lifecycle transition
+  guards, and graceful mandate-document termination. Subtypes inherit these
+  lifecycle implementations unchanged. They may add specialized fields,
+  validation, participants, embedded documents, and workflows that emit the
+  standard activation or termination request Messages.
+
+status:
+  type: Coordination/Status
+  description: |
+    Current lifecycle status of the mandate.
+
+    Initialization sets exactly one initial status:
+
+    - Coordination/Status Pending when deterministic initialization succeeds.
+    - Coordination/Status Failed when deterministic initialization fails.
+
+    Supported transitions are:
+
+    - Coordination/Status Pending -> Mandate/Status Authority Confirmed
+    - Mandate/Status Authority Confirmed -> Mandate/Status Active
+    - Coordination/Status Pending -> Mandate/Status Terminated
+    - Mandate/Status Authority Confirmed -> Mandate/Status Terminated
+    - Mandate/Status Active -> Mandate/Status Terminated
+
+    Coordination/Status Failed and Mandate/Status Terminated are terminal.
+    Lifecycle workflows do not replace timestamps or statuses after the
+    corresponding transition succeeds.
+
+initializationError:
+  type: Text
+  description: |
+    First deterministic initialization error when status is
+    Coordination/Status Failed.
+
+    This field is absent when initialization succeeds. Initialization stops at
+    the first material error rather than accumulating an error list.
+
+activateOnAuthorityConfirmation:
+  type: Boolean
+  description: |
+    Controls whether successful authority confirmation also requests mandate
+    activation.
+
+    When true, successful confirmation emits Mandate/Mandate Activation
+    Requested, which is handled by the inherited activation workflow.
+
+    When false, successful confirmation leaves the mandate in
+    Mandate/Status Authority Confirmed. A specialized workflow must later emit
+    Mandate/Mandate Activation Requested.
+
+    When absent before initialization, the initialization workflow materializes
+    true. The field is not a fixed inherited value, so a concrete mandate may
+    explicitly set it to false.
+
+authorityConfirmedAt:
+  type: Integer
+  description: |
+    Microsecond timestamp of the root causal Coordination/Timeline Entry that
+    successfully changed the mandate from Coordination/Status Pending to
+    Mandate/Status Authority Confirmed.
+
+    The value is derived by the inherited authority-confirmation workflow. It
+    is never supplied by the operation request and is never replaced.
+
+activatedAt:
+  type: Integer
+  description: |
+    Microsecond timestamp from which the mandate entered Mandate/Status Active.
+
+    The value is derived by the inherited activation workflow from the root
+    causal Coordination/Timeline Entry that led to the accepted
+    Mandate/Mandate Activation Requested Message. It is never supplied by
+    the activation request and is never replaced.
+
+terminatedAt:
+  type: Integer
+  description: |
+    Microsecond timestamp from which the mandate entered Mandate/Status Terminated.
+
+    The value is derived by the inherited termination workflow from the root
+    causal Coordination/Timeline Entry that led to the accepted
+    Mandate/Mandate Termination Requested Message. It is never supplied by
+    the termination request and is never replaced.
+
+validation:
+  description: |
+    Optional request-validation convention inherited by mandate subtypes.
+
+    A concrete mandate type defines which request or event is matched by
+    validation.request and which runtime component performs the validation.
+    Mandate/Operation Mandate matches the Operation Request payload.
+    Document-responder and MyOS mandate types may validate an entire request
+    Message.
+
+  request:
+    description: |
+      Optional static Blue pattern matched against the input defined by the
+      concrete mandate type. When absent, static request-shape matching imposes
+      no additional restriction.
+
+  function:
+    type: Blue/BEX Program
+    entry: validateMandateRequest
+    description: |
+      Optional deterministic BEX validation program.
+
+      When present, it must expose validateMandateRequest and compile during
+      initialization. A missing, malformed, or uncompilable function causes
+      initialization to set status to Coordination/Status Failed and
+      initializationError to the first failure. When absent, custom BEX
+      validation is treated as passing.
+
+contracts:
+  mandateGuarantorChannel:
+    type: Coordination/Timeline Channel
+    schema:
+      required: true
+    description: |
+      Required participant channel whose actor is the mandate guarantor.
+
+      The guarantor confirms that the declared authority relationship is
+      legitimate and may invoke the standard termination operation.
+
+  authorityHolderChannel:
+    type: Coordination/Timeline Channel
+    schema:
+      required: true
+    description: |
+      Required participant channel whose actor controls the authority or
+      resource delegated by this mandate. The authority holder may invoke the
+      standard termination operation.
+
+  authorizedActorChannel:
+    type: Coordination/Timeline Channel
+    schema:
+      required: true
+    description: |
+      Required participant channel whose actor receives the delegated
+      authority. Concrete mandate subtypes define the delegated resource,
+      action, target, or request semantics.
+
+  mandateTerminationChannel:
+    type: Coordination/Composite Timeline Channel
+    channels:
+      - mandateGuarantorChannel
+      - authorityHolderChannel
+    description: |
+      Composite channel through which either the guarantor or authority holder
+      may invoke terminateMandate. When one entry is eligible through both
+      members, the composite produces one logical delivery.
+
+  mandateLifecycleChannel:
+    type: Lifecycle Event Channel
+    description: |
+      Processor-managed lifecycle channel used by the inherited initialization
+      workflow.
+
+  mandateActivationRequestedChannel:
+    type: Triggered Event Channel
+    description: |
+      Internal triggered-event channel routing Mandate/Mandate Activation
+      Requested Messages emitted by confirmation or specialized mandate
+      workflows. External Timeline Entries do not enter this channel directly.
+
+  mandateTerminationRequestedChannel:
+    type: Triggered Event Channel
+    description: |
+      Internal triggered-event channel routing Mandate/Mandate Termination
+      Requested Messages emitted by the standard termination operation or
+      specialized mandate workflows.
+
+  mandateLifecycleDefinition:
+    type: Coordination/Compute Definition
+    description: |
+      Canonical reusable BEX implementation of mandate lifecycle transitions.
+      It contains deterministic functions used by initializeMandate,
+      confirmMandateAuthority, applyMandateActivation, and
+      applyMandateTermination. Subtypes do not replace these functions.
+
+  initializeMandate:
+    type: Coordination/Sequential Workflow
+    channel: mandateLifecycleChannel
+    event:
+      type: Document Processing Initiated
+    description: |
+      Inherited initialization implementation.
+
+      It validates required role-channel bindings, lifecycle configuration, and
+      the optional validateMandateRequest function.
+
+      On success it materializes activateOnAuthorityConfirmation as true when
+      absent, sets status to Coordination/Status Pending, and leaves
+      lifecycle timestamps absent.
+
+      On failure it sets status to Coordination/Status Failed, stores the
+      first deterministic failure in initializationError, and leaves lifecycle
+      timestamps absent.
+
+      Concrete workflow steps and BEX implementation are defined in this base
+      type.
+
+  confirmMandateAuthority:
+    type: Coordination/Sequential Workflow Operation
+    channel: mandateGuarantorChannel
+    description: |
+      Inherited operation through which the guarantor confirms that the
+      declared authority relationship is legitimate.
+
+      On Coordination/Status Pending it changes status to
+      Mandate/Status Authority Confirmed, records authorityConfirmedAt
+      from the root causal Timeline Entry, emits Mandate/Mandate Authority
+      Confirmed, and, when activateOnAuthorityConfirmation is not false, emits
+      Mandate/Mandate Activation Requested.
+
+      On Mandate/Status Authority Confirmed, Mandate/Status Active,
+      Mandate/Status Terminated, or Coordination/Status Failed it performs no
+      lifecycle mutation and does not replace authorityConfirmedAt.
+
+      A guarantor may choose to use Operation Request.document and
+      requireExactDocumentVersion to pin the reviewed mandate state. This base
+      operation does not require or enforce that choice.
+
+      Concrete workflow steps and BEX implementation are defined in this base
+      type.
+
+  applyMandateActivation:
+    type: Coordination/Sequential Workflow
+    channel: mandateActivationRequestedChannel
+    event:
+      type: Mandate/Mandate Activation Requested
+    description: |
+      Sole authoritative mandate-activation implementation.
+
+      On Mandate/Status Authority Confirmed it changes status to
+      Mandate/Status Active, records activatedAt from the root causal Timeline
+      Entry, and emits Mandate/Mandate Activated with
+      inResponseTo referencing the accepted activation request when available.
+
+      On Coordination/Status Pending, Mandate/Status Active,
+      Mandate/Status Terminated, or Coordination/Status Failed it performs no
+      lifecycle mutation and does not replace activatedAt.
+
+      A request without a root causal Timeline Entry cannot establish an
+      activation timestamp and must not activate the mandate.
+
+      Concrete workflow steps and BEX implementation are defined in this base
+      type.
+
+  terminateMandate:
+    type: Coordination/Sequential Workflow Operation
+    channel: mandateTerminationChannel
+    request:
+      type: Mandate/Mandate Termination Requested
+    description: |
+      Standard termination operation available to the guarantor and authority
+      holder.
+
+      It does not write lifecycle state directly. It emits or forwards the
+      normalized Mandate/Mandate Termination Requested Message so that
+      applyMandateTermination remains the sole authoritative termination
+      implementation.
+
+      Specialized mandate types may add other operations or workflows that emit
+      the same request Message.
+
+      Concrete workflow steps are defined in this base type.
+
+  applyMandateTermination:
+    type: Coordination/Sequential Workflow
+    channel: mandateTerminationRequestedChannel
+    event:
+      type: Mandate/Mandate Termination Requested
+    description: |
+      Sole authoritative mandate-termination implementation.
+
+      On Coordination/Status Pending, Mandate/Status Authority Confirmed, or
+      Mandate/Status Active it changes status to Mandate/Status Terminated,
+      records terminatedAt from the root causal Timeline Entry, and emits
+      Mandate/Mandate Terminated, copies the accepted reason, sets
+      inResponseTo to the accepted termination request when available, and
+      requests graceful termination of the root processing scope after state
+      updates and emitted Messages are applied.
+
+      On Mandate/Status Terminated or Coordination/Status Failed it performs no
+      lifecycle mutation and does not replace terminatedAt.
+
+      A request without a root causal Timeline Entry cannot establish a
+      termination timestamp and must not terminate the mandate.
+
+      Concrete workflow steps, BEX implementation, and the
+      Coordination/Terminate Processing step are defined in this base type.

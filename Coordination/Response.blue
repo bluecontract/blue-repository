@@ -1,20 +1,16 @@
 name: Response
-type: Coordination/Event
-description: |
-  Base event/content type for responses to requests. A Response links back to a Request through `inResponseTo` and may
-  be specialized by concrete response types that define status, result, error, payload, or participant-specific fields.
+type: Coordination/Message
+description: >
+  A Message that answers a Request. A single Request may receive multiple
+  Responses, including responses from several participants or successive
+  responses from one participant. A Response does not by itself perform an
+  operation unless its concrete type and enclosing document contracts define
+  that behavior.
 
-  Response is intentionally generic. It provides correlation semantics only; domain workflows decide whether the
-  response is accepted, whether it completes a pending action, and what document changes or events follow.
 inResponseTo:
-  type:
-    name: Correlation
-    description: A structured reference linking this response back to the original action and trigger.
-    requestId:
-      type: Text
-      description: The 'requestId' from the specific Request event this is a response to.
-    incomingEvent:
-      description: An event which initiated the entire workflow. Normally just blueId of it.
-  description: |
-    Reference or request identifier for the request being answered. Concrete response types may require a full Request
-    node, a requestId text value, or another deterministic correlation object.
+  type: Coordination/Request
+  schema:
+    required: true
+  description: >
+    Required reference to the exact Coordination/Request occurrence answered by
+    this Response.

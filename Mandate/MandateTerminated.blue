@@ -1,0 +1,19 @@
+name: Mandate Terminated
+type: Coordination/Message
+description: |
+  Authoritative Message emitted after the inherited mandate workflow changes
+  the mandate to Mandate/Status Terminated and before graceful processing termination is
+  applied.
+
+  When termination follows Mandate Termination Requested, inResponseTo
+  references that exact Message occurrence.
+
+timestampUs:
+  type: Integer
+  schema:
+    required: true
+  description: Effective termination timestamp derived from the root causal Timeline Entry.
+
+reason:
+  type: Text
+  description: Optional reason copied from the accepted termination request.

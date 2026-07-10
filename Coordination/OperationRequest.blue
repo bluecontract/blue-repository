@@ -1,30 +1,35 @@
 name: Operation Request
-description: |
-  Event payload requesting that a document perform a named operation. Operation Request is the standard shape for
-  invoking document-owned behavior through a Timeline Entry, direct event delivery, or another coordination channel.
+type: Coordination/Request
+description: >
+  Request to invoke one named operation through one effective channel. The
+  enclosing Timeline Entry supplies actor attribution and any mandate-backed
+  authority. A feeder verifies source-channel eligibility, mandate authority,
+  and document-version constraints before passing the entry to a processor.
 
-  `operation` names the requested operation. `request` contains the operation-specific input. `document`, when present,
-  can identify or carry the target document/request context. `allowNewerVersion` indicates whether the sender permits
-  the processor to use a newer document version than the one the sender expected. Actor and source attribution are not
-  fields of Operation Request itself; they normally come from the enclosing Timeline Entry or event envelope.
-
-  A processor or workflow should not treat Operation Request as authorized merely because it is well-formed. It must
-  match the operation, check any actor/source policy, validate the request shape expected by the operation, and then run
-  the corresponding handler or workflow.
 operation:
   type: Text
-  description: |
-    Name of the operation being requested. This name is matched against Operation or Sequential Workflow Operation
-    contracts in the processing scope.
-request:
-  description: |
-    Operation-specific payload. Its shape is defined by the requested operation.
+  schema:
+    required: true
+  description: Required operation contract key/name to invoke.
+
+channel:
+  type: Text
+  schema:
+    required: true
+  description: Required effective target channel key.
+
 document:
-  description: |
-    Optional target document reference, embedded document, or request context supplied by the caller. The operation type
-    defines how this field is interpreted.
-allowNewerVersion:
-  description: |
-    Whether the requester allows processing against a document version newer than the one implied by the request context.
-    A false value lets workflows reject stale or unexpected document-state transitions.
+  description: >
+    Optional current target document state on which the invocation is based.
+    The value may be materialized or represented by an equivalent pure BlueId
+    reference.
+
+requireExactDocumentVersion:
   type: Boolean
+  description: >
+    When true, the feeder passes the request only if document equals the current
+    target state. When false or absent, a newer state may be accepted according
+    to operation-matching rules.
+
+request:
+  description: Operation-specific request payload.

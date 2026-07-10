@@ -1,0 +1,31 @@
+name: MyOS Operation Call Requested
+type: Coordination/Request
+description: >
+  Request asking MyOS Admin to write an Operation Request into a target
+  document. The request does not carry a mandate; MyOS Admin finds and verifies
+  an active matching MyOS Document Operation Mandate.
+
+target:
+  document:
+    schema:
+      required: true
+    description: Current target document state used as the basis for the call.
+
+  channel:
+    type: Text
+    schema:
+      required: true
+    description: Effective target channel.
+
+  operation:
+    type: Text
+    schema:
+      required: true
+    description: Target operation.
+
+  requireExactDocumentVersion:
+    type: Boolean
+    description: Whether the target Operation Request requires exact target-state equality.
+
+request:
+  description: Target operation payload.
