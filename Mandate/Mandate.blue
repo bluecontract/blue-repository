@@ -123,10 +123,11 @@ validation:
       immutable BEX binding named request.
 
   function:
-    type: Blue/BEX Program
     entry: validateMandateRequest
     description: |
-      Optional deterministic BEX validation program.
+      Optional deterministic BEX validation program represented as a Blue node.
+      The field intentionally has no repository-local nominal type: BEX program
+      syntax and compilation are defined by the BEX specification and runtime.
 
       By convention, the host passes the candidate input being validated as the
       immutable BEX binding named request. Concrete mandate types define the

@@ -1,49 +1,5 @@
 name: Blue Repository
 packages:
-  - name: Blue
-    types:
-      - status: stable
-        content:
-          name: BEX Program
-          description: |
-            Blue Expression Object (BEX) program. A BEX Program is deterministic Blue data selected by a host for compilation and execution by a BEX engine. It may define constants, functions, an inline expression body, an ordered statement body, an entry function selector, execution flags, and a gas limit.
-            BEX Program is not JavaScript, WASM, a network runtime, an LLM extension point, or a contract processor. It has no ambient time, randomness, filesystem, network, database, asynchronous execution, or hidden mutable state. Host capabilities are available only through explicitly registered intrinsic processors.
-          expr:
-            description: Optional single BEX expression.
-          do:
-            description: Ordered BEX statement body.
-            type:
-              blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-          definition:
-            description: Optional reference to reusable BEX definitions.
-          entry:
-            description: Entry function name.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          constants:
-            description: Literal constants available through $const.
-            type:
-              blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-          functions:
-            description: Local BEX function definitions keyed by function name.
-            type:
-              blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-          emitEvents:
-            description: Whether result events are emitted by the host.
-            type:
-              blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
-          returnResult:
-            description: Whether the host retains the result.
-            type:
-              blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
-          gasLimit:
-            description: Optional maximum BEX gas.
-            type:
-              blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 7wt8r4tCsMjZtyGQVQsSz9xSqntaDw9TvVhrwuXbuvGJ
-            attributesAdded: []
   - name: Bootstrap
     types:
       - status: stable
@@ -1595,14 +1551,14 @@ packages:
             description: |
               Optional mandate-backed authority under which actor claims to act for another actor. A feeder validates this authority before delivery when the requested action is not directly eligible through a source channel.
             type:
-              blueId: 7qp2sdagsQcW1sYttHgjLHNqioYuwAEJaohqFMkxeUbn
+              blueId: TezMTNGaVTS2npLQM2cVJ2aoegKyWyaz8XT5aZA5FNU
           message:
             description: Message or event recorded by the entry.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CKyCXmf7wNmJuWZ56hxSZTViQn1RBQYmgxu2JWASfL38#0
+            typeBlueId: 38geh61JwRyM5YoJkAzs2U3p2KoT1dPXFeCeXKAo7z7K#0
             attributesAdded: []
       - status: stable
         content:
@@ -33479,14 +33435,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
+            blueId: 2Vi4sG1bVEaGvkVpaxeuAWDXt2R2efvR33NPMoUsrPLC
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5ooS4geJP4d1SvThKvD9R5pYnN4JPbF81BGsSk17uZC3
+            typeBlueId: DD3D1o23bGYK8ab7x2vihfe6gJrHBH8tNwifo6VffT1s
             attributesAdded: []
       - status: stable
         content:
@@ -34783,7 +34739,9 @@ packages:
                 immutable BEX binding named request.
             function:
               description: |
-                Optional deterministic BEX validation program.
+                Optional deterministic BEX validation program represented as a Blue node.
+                The field intentionally has no repository-local nominal type: BEX program
+                syntax and compilation are defined by the BEX specification and runtime.
 
                 By convention, the host passes the candidate input being validated as the
                 immutable BEX binding named request. Concrete mandate types define the
@@ -34794,15 +34752,13 @@ packages:
                 initialization to set status to Coordination/Status Failed and
                 initializationError to the first failure. When absent, custom BEX
                 validation is treated as passing.
-              type:
-                blueId: 7wt8r4tCsMjZtyGQVQsSz9xSqntaDw9TvVhrwuXbuvGJ
               entry:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                 value: validateMandateRequest
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
+            typeBlueId: 2Vi4sG1bVEaGvkVpaxeuAWDXt2R2efvR33NPMoUsrPLC
             attributesAdded: []
       - status: stable
         content:
@@ -34861,12 +34817,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
+              blueId: 2Vi4sG1bVEaGvkVpaxeuAWDXt2R2efvR33NPMoUsrPLC
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7qp2sdagsQcW1sYttHgjLHNqioYuwAEJaohqFMkxeUbn
+            typeBlueId: TezMTNGaVTS2npLQM2cVJ2aoegKyWyaz8XT5aZA5FNU
             attributesAdded: []
       - status: stable
         content:
@@ -34946,7 +34902,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
+            blueId: 2Vi4sG1bVEaGvkVpaxeuAWDXt2R2efvR33NPMoUsrPLC
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -34966,7 +34922,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: oYm7CzcZJ2bPCHF4xXipMZRpTvvo7NSPUWGbdE6XCyH
+            typeBlueId: 2pmjjR9iigLxijkcLnufXMSxm8isjcguvBzfuJmFy2xG
             attributesAdded: []
       - status: stable
         content:
@@ -37377,10 +37333,10 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: 5ooS4geJP4d1SvThKvD9R5pYnN4JPbF81BGsSk17uZC3
+            blueId: DD3D1o23bGYK8ab7x2vihfe6gJrHBH8tNwifo6VffT1s
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 22XXnjUrfmY995h6H7dAJDYBHBoxGHMDDtno9e1JGNX7
+            typeBlueId: EFLUzn8XGvYWkKoiwwrSp4pLr7JBaJoAaghbMu167eY6
             attributesAdded: []
       - status: stable
         content:
@@ -37388,14 +37344,14 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: oYm7CzcZJ2bPCHF4xXipMZRpTvvo7NSPUWGbdE6XCyH
+            blueId: 2pmjjR9iigLxijkcLnufXMSxm8isjcguvBzfuJmFy2xG
           authorizedInitialDocument:
             description: Initial document whose sessions may request the operation call.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CieHXC7iJZNr31XE78HntVmujFXqaJ1BnACGz5Zr1cQn
+            typeBlueId: 5eDszmF9XpMbpUxw4n4N8x6Cy1mhKpfizHbAtNUSTP4R
             attributesAdded: []
       - status: stable
         content:
@@ -37601,7 +37557,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 5ooS4geJP4d1SvThKvD9R5pYnN4JPbF81BGsSk17uZC3
+            blueId: DD3D1o23bGYK8ab7x2vihfe6gJrHBH8tNwifo6VffT1s
           sourceInitialDocument:
             description: Initial document whose selected session may be observed.
             schema:
@@ -37621,7 +37577,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Doo1AtxwWXGCAsSoum8cVeR8v91yErC4UKmiKHuJueSH
+            typeBlueId: FAya42QYpR6vsC76sYV4SKMMbieHA6PJ3cCoGbTE44U8
             attributesAdded: []
       - status: stable
         content:
@@ -37735,13 +37691,13 @@ packages:
           name: MyOS Timeline Entry
           description: MyOS-specific timeline entry with account and email information
           type:
-            blueId: CKyCXmf7wNmJuWZ56hxSZTViQn1RBQYmgxu2JWASfL38#0
+            blueId: 38geh61JwRyM5YoJkAzs2U3p2KoT1dPXFeCeXKAo7z7K#0
           timeline:
             type:
               blueId: 9TnFznYnqWWjHhGzcKngTLfq1a2H4sVd5EM4vfek2ec5
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3grpMEqjedyWa5u6rHPk4tcizaPDJjhAAUW3g8DwcV1f
+            typeBlueId: AEEtH8WQBVb64wNGMRUZk3FP2sWoTSU69YC2euocsBqW
             attributesAdded: []
       - status: dev
         content:
@@ -53424,4 +53380,4 @@ packages:
             typeBlueId: 4GBqF7ko9oN34RAFL9uY5tx7R8FFP8idM1VaBKiXA1Tb
             attributesAdded: []
 repositoryVersions:
-  - Eo1W6eYo8JcvRUPVVzxQx37wLRFh5n9xptLQM9GeJPAD
+  - 2bzc3vc4wq4yQFD1rj1iuBjEfdTTXoTkGiLiqT9s2WcX
