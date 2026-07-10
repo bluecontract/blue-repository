@@ -1595,14 +1595,14 @@ packages:
             description: |
               Optional mandate-backed authority under which actor claims to act for another actor. A feeder validates this authority before delivery when the requested action is not directly eligible through a source channel.
             type:
-              blueId: 5xr5AuXb6SrdEz5GAKdr88R3UeoyYLF8pQtRv4nXDY2b
+              blueId: 7qp2sdagsQcW1sYttHgjLHNqioYuwAEJaohqFMkxeUbn
           message:
             description: Message or event recorded by the entry.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5jdGN2r2WCDWCgSq8njDFDoMTk2ZN6vFMj6ZPmVrqY3M#0
+            typeBlueId: CKyCXmf7wNmJuWZ56hxSZTViQn1RBQYmgxu2JWASfL38#0
             attributesAdded: []
       - status: stable
         content:
@@ -33479,14 +33479,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: Fc5HbRnwawF3wJcpP8DqJoeaxBrCr6YrJw3rYSpfadgr
+            blueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DS9xZbRU4uWEWvHnD3k6kXeeuQVvuBBkW9DRAYVuuoWr
+            typeBlueId: 5ooS4geJP4d1SvThKvD9R5pYnN4JPbF81BGsSk17uZC3
             attributesAdded: []
       - status: stable
         content:
@@ -33588,6 +33588,883 @@ packages:
                 applyMandateTermination. Subtypes do not replace these functions.
               type:
                 blueId: HifMgFGBgsqstDFZ2kXeQ45LVKXQMP52fV8TqeN6Z1j3
+              functions:
+                isPending:
+                  expr:
+                    $is:
+                      node:
+                        $document:
+                          type:
+                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                          value: /status
+                      pattern:
+                        type:
+                          blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                isAuthorityConfirmed:
+                  expr:
+                    $is:
+                      node:
+                        $document:
+                          type:
+                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                          value: /status
+                      pattern:
+                        type:
+                          blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+                isActive:
+                  expr:
+                    $is:
+                      node:
+                        $document:
+                          type:
+                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                          value: /status
+                      pattern:
+                        type:
+                          blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+                hasValidRoleChannels:
+                  expr:
+                    $and:
+                      items:
+                        - $isKind:
+                            val:
+                              $document:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /contracts/mandateGuarantorChannel/actor
+                            kind:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: object
+                        - $isKind:
+                            val:
+                              $document:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /contracts/authorityHolderChannel/actor
+                            kind:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: object
+                        - $isKind:
+                            val:
+                              $document:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /contracts/authorizedActorChannel/actor
+                            kind:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: object
+                hasValidActivationConfiguration:
+                  expr:
+                    $or:
+                      items:
+                        - $not:
+                            $exists:
+                              $document:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /activateOnAuthorityConfirmation
+                        - $isKind:
+                            val:
+                              $document:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /activateOnAuthorityConfirmation
+                            kind:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: boolean
+                hasValidValidationFunction:
+                  expr:
+                    $or:
+                      items:
+                        - $not:
+                            $exists:
+                              $document:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /validation/function
+                        - $and:
+                            items:
+                              - $isKind:
+                                  val:
+                                    $document:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: /validation/function
+                                  kind:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: object
+                              - $hasKey:
+                                  object:
+                                    $document:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: /validation/function/functions
+                                  key:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: validateMandateRequest
+                processingEventTimestamp:
+                  expr:
+                    $choose:
+                      cond:
+                        $and:
+                          items:
+                            - $isKind:
+                                val:
+                                  $binding:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: processingEvent
+                                kind:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: object
+                            - $isKind:
+                                val:
+                                  $binding:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: processingEvent/timestamp
+                                kind:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: integer
+                      then:
+                        $binding:
+                          type:
+                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                          value: processingEvent/timestamp
+                sourceMessage:
+                  expr:
+                    $choose:
+                      cond:
+                        $isKind:
+                          val:
+                            $event:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /message
+                          kind:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: object
+                      then:
+                        $event:
+                          type:
+                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                          value: /message
+                      else:
+                        $event:
+                          type:
+                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                          value: /
+                authorityConfirmedMessage:
+                  args:
+                    timestampUs:
+                      description: Root Timeline Entry timestamp.
+                    inResponseTo:
+                      description: Exact Message answered by this lifecycle Message.
+                  expr:
+                    type:
+                      blueId: F4AoZc1CD8TWUemaHy8VrNNBgEUM5JwRBHwkr4WtJ8En
+                    timestampUs:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: timestampUs
+                    inResponseTo:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: inResponseTo
+                activationRequestedMessage:
+                  args:
+                    inResponseTo:
+                      description: Exact Message that caused the activation request.
+                  expr:
+                    type:
+                      blueId: JA8tkhbAgaZ4T3wc8JXzTN3Swsaw1MpfNAPqTizdCSh1
+                    inResponseTo:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: inResponseTo
+                activatedMessage:
+                  args:
+                    timestampUs:
+                      description: Root Timeline Entry timestamp.
+                    inResponseTo:
+                      description: Accepted activation request.
+                  expr:
+                    type:
+                      blueId: 4kYaMvec6yt4xdXwoHaPDH1gXamJY11txz7cBeFuJYD5
+                    timestampUs:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: timestampUs
+                    inResponseTo:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: inResponseTo
+                terminationRequestedMessage:
+                  args:
+                    reason:
+                      description: Optional termination reason.
+                    inResponseTo:
+                      description: Exact Message that caused the termination request.
+                  expr:
+                    type:
+                      blueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
+                    reason:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: reason
+                    inResponseTo:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: inResponseTo
+                terminatedMessage:
+                  args:
+                    timestampUs:
+                      description: Root Timeline Entry timestamp.
+                    reason:
+                      description: Optional termination reason.
+                    inResponseTo:
+                      description: Accepted termination request.
+                  expr:
+                    type:
+                      blueId: 5SR8BVQL9t5UakLBZFfmnFb4hEPrGx8NUcpMT2gncA16
+                    timestampUs:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: timestampUs
+                    reason:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: reason
+                    inResponseTo:
+                      $var:
+                        type:
+                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                        value: inResponseTo
+                initializeMandate:
+                  do:
+                    items:
+                      - $let:
+                          order:
+                            items:
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: roleChannelsValid
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: activationConfigurationValid
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: validationFunctionValid
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: valid
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: initializationError
+                          vars:
+                            roleChannelsValid:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: hasValidRoleChannels
+                            activationConfigurationValid:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: hasValidActivationConfiguration
+                            validationFunctionValid:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: hasValidValidationFunction
+                            valid:
+                              $and:
+                                items:
+                                  - $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: roleChannelsValid
+                                  - $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: activationConfigurationValid
+                                  - $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: validationFunctionValid
+                            initializationError:
+                              $choose:
+                                cond:
+                                  $not:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: roleChannelsValid
+                                then:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: Required mandate role channels must each bind a Coordination/Actor.
+                                else:
+                                  $choose:
+                                    cond:
+                                      $not:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: activationConfigurationValid
+                                    then:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: activateOnAuthorityConfirmation must be Boolean when present.
+                                    else:
+                                      $choose:
+                                        cond:
+                                          $not:
+                                            $var:
+                                              type:
+                                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                              value: validationFunctionValid
+                                        then:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: validation.function must expose validateMandateRequest.
+                      - $if:
+                          cond:
+                            $var:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: valid
+                          then:
+                            items:
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /status
+                                  val:
+                                    type:
+                                      blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                              - $if:
+                                  cond:
+                                    $not:
+                                      $exists:
+                                        $document:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: /activateOnAuthorityConfirmation
+                                  then:
+                                    items:
+                                      - $appendChange:
+                                          op:
+                                            type:
+                                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                            value: replace
+                                          path:
+                                            type:
+                                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                            value: /activateOnAuthorityConfirmation
+                                          val:
+                                            type:
+                                              blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                            value: true
+                          else:
+                            items:
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /status
+                                  val:
+                                    type:
+                                      blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /initializationError
+                                  val:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: initializationError
+                      - $return:
+                          changeset:
+                            $changeset:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                          events:
+                            $events:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                confirmMandateAuthority:
+                  do:
+                    items:
+                      - $let:
+                          order:
+                            items:
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: timestampUs
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: requestMessage
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: confirmationMessage
+                          vars:
+                            timestampUs:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: processingEventTimestamp
+                            requestMessage:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: sourceMessage
+                            confirmationMessage:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: authorityConfirmedMessage
+                                args:
+                                  timestampUs:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: timestampUs
+                                  inResponseTo:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: requestMessage
+                      - $if:
+                          cond:
+                            $and:
+                              items:
+                                - $call:
+                                    function:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: isPending
+                                - $isKind:
+                                    val:
+                                      $var:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: timestampUs
+                                    kind:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: integer
+                          then:
+                            items:
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /status
+                                  val:
+                                    type:
+                                      blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /authorityConfirmedAt
+                                  val:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: timestampUs
+                              - $appendEvent:
+                                  $var:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: confirmationMessage
+                              - $if:
+                                  cond:
+                                    $ne:
+                                      items:
+                                        - $document:
+                                            type:
+                                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                            value: /activateOnAuthorityConfirmation
+                                        - type:
+                                            blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                          value: false
+                                  then:
+                                    items:
+                                      - $appendEvent:
+                                          $call:
+                                            function:
+                                              type:
+                                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                              value: activationRequestedMessage
+                                            args:
+                                              inResponseTo:
+                                                $var:
+                                                  type:
+                                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                                  value: confirmationMessage
+                      - $return:
+                          changeset:
+                            $changeset:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                          events:
+                            $events:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                applyMandateActivation:
+                  do:
+                    items:
+                      - $let:
+                          order:
+                            items:
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: timestampUs
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: activationRequest
+                          vars:
+                            timestampUs:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: processingEventTimestamp
+                            activationRequest:
+                              $event:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /
+                      - $if:
+                          cond:
+                            $and:
+                              items:
+                                - $call:
+                                    function:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: isAuthorityConfirmed
+                                - $isKind:
+                                    val:
+                                      $var:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: timestampUs
+                                    kind:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: integer
+                          then:
+                            items:
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /status
+                                  val:
+                                    type:
+                                      blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /activatedAt
+                                  val:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: timestampUs
+                              - $appendEvent:
+                                  $call:
+                                    function:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: activatedMessage
+                                    args:
+                                      timestampUs:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: timestampUs
+                                      inResponseTo:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: activationRequest
+                      - $return:
+                          changeset:
+                            $changeset:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                          events:
+                            $events:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                requestMandateTermination:
+                  do:
+                    items:
+                      - $let:
+                          order:
+                            items:
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: sourceMessage
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: reason
+                          vars:
+                            sourceMessage:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: sourceMessage
+                            reason:
+                              $choose:
+                                cond:
+                                  $isKind:
+                                    val:
+                                      $event:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: /message/request/reason
+                                    kind:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: text
+                                then:
+                                  $event:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /message/request/reason
+                                else:
+                                  $event:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /reason
+                      - $appendEvent:
+                          $call:
+                            function:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: terminationRequestedMessage
+                            args:
+                              reason:
+                                $var:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: reason
+                              inResponseTo:
+                                $var:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: sourceMessage
+                      - $return:
+                          changeset:
+                            $changeset:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                          events:
+                            $events:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                applyMandateTermination:
+                  do:
+                    items:
+                      - $let:
+                          order:
+                            items:
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: timestampUs
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: terminationRequest
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: reason
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: terminable
+                          vars:
+                            timestampUs:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: processingEventTimestamp
+                            terminationRequest:
+                              $event:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /
+                            reason:
+                              $event:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /reason
+                            terminable:
+                              $or:
+                                items:
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isPending
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isAuthorityConfirmed
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isActive
+                      - $if:
+                          cond:
+                            $and:
+                              items:
+                                - $var:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: terminable
+                                - $isKind:
+                                    val:
+                                      $var:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: timestampUs
+                                    kind:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: integer
+                          then:
+                            items:
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /status
+                                  val:
+                                    type:
+                                      blueId: DKEgt3kG9dLAf1RoKDcacsVuZrfFY2eVujtYr2YQsQR6
+                              - $appendChange:
+                                  op:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: replace
+                                  path:
+                                    type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: /terminatedAt
+                                  val:
+                                    $var:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: timestampUs
+                              - $appendEvent:
+                                  $call:
+                                    function:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: terminatedMessage
+                                    args:
+                                      timestampUs:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: timestampUs
+                                      reason:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: reason
+                                      inResponseTo:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: terminationRequest
+                      - $return:
+                          changeset:
+                            $changeset:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
+                          events:
+                            $events:
+                              type:
+                                blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                              value: true
             initializeMandate:
               description: |
                 Inherited initialization implementation.
@@ -33614,6 +34491,19 @@ packages:
               event:
                 type:
                   blueId: Ht1o66MTLKf7JmnEiR27rRLSwdz8FUTgf2mGPNuLSDUL
+              steps:
+                items:
+                  - name: Initialize Mandate Lifecycle
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    definition:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: mandateLifecycleDefinition
+                    entry:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: initializeMandate
             confirmMandateAuthority:
               description: |
                 Inherited operation through which the guarantor confirms that the
@@ -33641,6 +34531,19 @@ packages:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                 value: mandateGuarantorChannel
+              steps:
+                items:
+                  - name: Confirm Mandate Authority
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    definition:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: mandateLifecycleDefinition
+                    entry:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: confirmMandateAuthority
             applyMandateActivation:
               description: |
                 Sole authoritative mandate-activation implementation.
@@ -33668,6 +34571,19 @@ packages:
               event:
                 type:
                   blueId: JA8tkhbAgaZ4T3wc8JXzTN3Swsaw1MpfNAPqTizdCSh1
+              steps:
+                items:
+                  - name: Apply Mandate Activation
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    definition:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: mandateLifecycleDefinition
+                    entry:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: applyMandateActivation
             terminateMandate:
               description: |
                 Standard termination operation available to the guarantor and authority
@@ -33691,6 +34607,19 @@ packages:
               request:
                 type:
                   blueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
+              steps:
+                items:
+                  - name: Request Mandate Termination
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    definition:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: mandateLifecycleDefinition
+                    entry:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: requestMandateTermination
             applyMandateTermination:
               description: |
                 Sole authoritative mandate-termination implementation.
@@ -33720,6 +34649,43 @@ packages:
               event:
                 type:
                   blueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
+              steps:
+                items:
+                  - name: Apply Mandate Termination
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    definition:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: mandateLifecycleDefinition
+                    entry:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: applyMandateTermination
+            finalizeMandateTermination:
+              description: |
+                Inherited terminal workflow. It runs only for the authoritative Mandate
+                Terminated Message emitted after applyMandateTermination has committed the
+                terminal state and lifecycle evidence, then requests graceful termination
+                of the mandate processing scope.
+              type:
+                blueId: MyaXwTXty7ZujV89fT5STJvXpEr1W59puqdK2XM9ALv
+              channel:
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                value: mandateTerminationRequestedChannel
+              event:
+                type:
+                  blueId: 5SR8BVQL9t5UakLBZFfmnFb4hEPrGx8NUcpMT2gncA16
+              steps:
+                items:
+                  - name: Gracefully Terminate Mandate Processing
+                    type:
+                      blueId: GWdZwV4wh4D6d8knKC2ULofFTEZmtVE31Cm6pGtMiKxh
+                    reason:
+                      type:
+                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                      value: Mandate terminated
           status:
             description: |
               Current lifecycle status of the mandate.
@@ -33812,9 +34778,16 @@ packages:
                 Optional static Blue pattern matched against the input defined by the
                 concrete mandate type. When absent, static request-shape matching imposes
                 no additional restriction.
+
+                The same candidate input is passed to validation.function as the
+                immutable BEX binding named request.
             function:
               description: |
                 Optional deterministic BEX validation program.
+
+                By convention, the host passes the candidate input being validated as the
+                immutable BEX binding named request. Concrete mandate types define the
+                semantic meaning of that input.
 
                 When present, it must expose validateMandateRequest and compile during
                 initialization. A missing, malformed, or uncompilable function causes
@@ -33829,7 +34802,7 @@ packages:
                 value: validateMandateRequest
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Fc5HbRnwawF3wJcpP8DqJoeaxBrCr6YrJw3rYSpfadgr
+            typeBlueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
             attributesAdded: []
       - status: stable
         content:
@@ -33888,12 +34861,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: Fc5HbRnwawF3wJcpP8DqJoeaxBrCr6YrJw3rYSpfadgr
+              blueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5xr5AuXb6SrdEz5GAKdr88R3UeoyYLF8pQtRv4nXDY2b
+            typeBlueId: 7qp2sdagsQcW1sYttHgjLHNqioYuwAEJaohqFMkxeUbn
             attributesAdded: []
       - status: stable
         content:
@@ -33973,7 +34946,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: Fc5HbRnwawF3wJcpP8DqJoeaxBrCr6YrJw3rYSpfadgr
+            blueId: Doe6AppEeceZJsxbVzHfZfCWyoBnmZ1crRDsS7ht8vka
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -33993,7 +34966,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FDGpNb5NYC2AxnzWjL1CDQz3hcqcwccRk8kD6REfhZ2c
+            typeBlueId: oYm7CzcZJ2bPCHF4xXipMZRpTvvo7NSPUWGbdE6XCyH
             attributesAdded: []
       - status: stable
         content:
@@ -36404,10 +37377,10 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: DS9xZbRU4uWEWvHnD3k6kXeeuQVvuBBkW9DRAYVuuoWr
+            blueId: 5ooS4geJP4d1SvThKvD9R5pYnN4JPbF81BGsSk17uZC3
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6MR7QiXoPmMCnjn4WJhUN1MX3Rybqo92tCLLVnSafvvS
+            typeBlueId: 22XXnjUrfmY995h6H7dAJDYBHBoxGHMDDtno9e1JGNX7
             attributesAdded: []
       - status: stable
         content:
@@ -36415,14 +37388,14 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: FDGpNb5NYC2AxnzWjL1CDQz3hcqcwccRk8kD6REfhZ2c
+            blueId: oYm7CzcZJ2bPCHF4xXipMZRpTvvo7NSPUWGbdE6XCyH
           authorizedInitialDocument:
             description: Initial document whose sessions may request the operation call.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DUEnDaf64YkNiEuFPftpsFeGdPidgQW51Wt6QDRKgc5e
+            typeBlueId: CieHXC7iJZNr31XE78HntVmujFXqaJ1BnACGz5Zr1cQn
             attributesAdded: []
       - status: stable
         content:
@@ -36628,7 +37601,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: DS9xZbRU4uWEWvHnD3k6kXeeuQVvuBBkW9DRAYVuuoWr
+            blueId: 5ooS4geJP4d1SvThKvD9R5pYnN4JPbF81BGsSk17uZC3
           sourceInitialDocument:
             description: Initial document whose selected session may be observed.
             schema:
@@ -36648,7 +37621,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5jWDSBLkyGw3fYnMPxi2vNnTB1WWJKgoTTqxwxJX3vYw
+            typeBlueId: Doo1AtxwWXGCAsSoum8cVeR8v91yErC4UKmiKHuJueSH
             attributesAdded: []
       - status: stable
         content:
@@ -36762,13 +37735,13 @@ packages:
           name: MyOS Timeline Entry
           description: MyOS-specific timeline entry with account and email information
           type:
-            blueId: 5jdGN2r2WCDWCgSq8njDFDoMTk2ZN6vFMj6ZPmVrqY3M#0
+            blueId: CKyCXmf7wNmJuWZ56hxSZTViQn1RBQYmgxu2JWASfL38#0
           timeline:
             type:
               blueId: 9TnFznYnqWWjHhGzcKngTLfq1a2H4sVd5EM4vfek2ec5
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6XMxZGXAhb4qGmF8SzVBEzq6CW3qHVMGePfmRiE8WVV
+            typeBlueId: 3grpMEqjedyWa5u6rHPk4tcizaPDJjhAAUW3g8DwcV1f
             attributesAdded: []
       - status: dev
         content:
@@ -52451,4 +53424,4 @@ packages:
             typeBlueId: 4GBqF7ko9oN34RAFL9uY5tx7R8FFP8idM1VaBKiXA1Tb
             attributesAdded: []
 repositoryVersions:
-  - GmwSKJWSwo2nKCjpjS3aAKAR85YW6db6EquJeiJ7HwYb
+  - Eo1W6eYo8JcvRUPVVzxQx37wLRFh5n9xptLQM9GeJPAD

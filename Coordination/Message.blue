@@ -29,6 +29,7 @@ recipientChannel:
     document itself. Addressing does not make a Message private; visibility
     follows the enclosing document and timeline rules.
 
+# comment
 inResponseTo:
   description: >
     Optional reference to the Message being answered, normally a pure
