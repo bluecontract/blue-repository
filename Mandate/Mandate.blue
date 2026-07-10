@@ -133,11 +133,11 @@ validation:
       immutable BEX binding named request. Concrete mandate types define the
       semantic meaning of that input.
 
-      When present, it must expose validateMandateRequest and compile during
-      initialization. A missing, malformed, or uncompilable function causes
-      initialization to set status to Coordination/Status Failed and
-      initializationError to the first failure. When absent, custom BEX
-      validation is treated as passing.
+      When validation.function.entry is present, initialization verifies that
+      validation.function.functions declares a local function with that name.
+      The feeder or provider compiles and invokes the selected program when it
+      validates a request. When absent, custom BEX validation is treated as
+      passing.
 
 contracts:
   mandateGuarantorChannel:
@@ -206,7 +206,7 @@ contracts:
       confirmMandateAuthority, applyMandateActivation, and
       applyMandateTermination. Subtypes do not replace these functions.
     functions:
-      isPending:
+      isStatusPending:
         expr:
           $is:
             node:
@@ -214,7 +214,7 @@ contracts:
             pattern:
               type: Coordination/Status Pending
 
-      isAuthorityConfirmed:
+      isStatusAuthorityConfirmed:
         expr:
           $is:
             node:
@@ -222,7 +222,7 @@ contracts:
             pattern:
               type: Mandate/Status Authority Confirmed
 
-      isActive:
+      isStatusActive:
         expr:
           $is:
             node:
@@ -230,48 +230,22 @@ contracts:
             pattern:
               type: Mandate/Status Active
 
-      hasValidRoleChannels:
-        expr:
-          $and:
-            - $isKind:
-                val:
-                  $document: /contracts/mandateGuarantorChannel/actor
-                kind: object
-            - $isKind:
-                val:
-                  $document: /contracts/authorityHolderChannel/actor
-                kind: object
-            - $isKind:
-                val:
-                  $document: /contracts/authorizedActorChannel/actor
-                kind: object
-
-      hasValidActivationConfiguration:
+      hasDeclaredValidationEntry:
         expr:
           $or:
             - $not:
                 $exists:
-                  $document: /activateOnAuthorityConfirmation
-            - $isKind:
-                val:
-                  $document: /activateOnAuthorityConfirmation
-                kind: boolean
-
-      hasValidValidationFunction:
-        expr:
-          $or:
-            - $not:
-                $exists:
-                  $document: /validation/function
+                  $document: /validation/function/entry
             - $and:
                 - $isKind:
                     val:
-                      $document: /validation/function
-                    kind: object
+                      $document: /validation/function/entry
+                    kind: text
                 - $hasKey:
                     object:
                       $document: /validation/function/functions
-                    key: validateMandateRequest
+                    key:
+                      $document: /validation/function/entry
 
       processingEventTimestamp:
         expr:
@@ -371,50 +345,22 @@ contracts:
         do:
           - $let:
               order:
-                - roleChannelsValid
-                - activationConfigurationValid
-                - validationFunctionValid
-                - valid
+                - validationEntryDeclared
                 - initializationError
               vars:
-                roleChannelsValid:
+                validationEntryDeclared:
                   $call:
-                    function: hasValidRoleChannels
+                    function: hasDeclaredValidationEntry
                     args: {}
-                activationConfigurationValid:
-                  $call:
-                    function: hasValidActivationConfiguration
-                    args: {}
-                validationFunctionValid:
-                  $call:
-                    function: hasValidValidationFunction
-                    args: {}
-                valid:
-                  $and:
-                    - $var: roleChannelsValid
-                    - $var: activationConfigurationValid
-                    - $var: validationFunctionValid
                 initializationError:
                   $choose:
                     cond:
                       $not:
-                        $var: roleChannelsValid
-                    then: Required mandate role channels must each bind a Coordination/Actor.
-                    else:
-                      $choose:
-                        cond:
-                          $not:
-                            $var: activationConfigurationValid
-                        then: activateOnAuthorityConfirmation must be Boolean when present.
-                        else:
-                          $choose:
-                            cond:
-                              $not:
-                                $var: validationFunctionValid
-                            then: validation.function must expose validateMandateRequest.
+                        $var: validationEntryDeclared
+                    then: validation.function.functions must declare the entry named by validation.function.entry.
           - $if:
               cond:
-                $var: valid
+                $var: validationEntryDeclared
               then:
                 - $appendChange:
                     op: replace
@@ -476,7 +422,7 @@ contracts:
               cond:
                 $and:
                   - $call:
-                      function: isPending
+                      function: isStatusPending
                       args: {}
                   - $isKind:
                       val:
@@ -530,7 +476,7 @@ contracts:
               cond:
                 $and:
                   - $call:
-                      function: isAuthorityConfirmed
+                      function: isStatusAuthorityConfirmed
                       args: {}
                   - $isKind:
                       val:
@@ -617,13 +563,13 @@ contracts:
                 terminable:
                   $or:
                     - $call:
-                        function: isPending
+                        function: isStatusPending
                         args: {}
                     - $call:
-                        function: isAuthorityConfirmed
+                        function: isStatusAuthorityConfirmed
                         args: {}
                     - $call:
-                        function: isActive
+                        function: isStatusActive
                         args: {}
           - $if:
               cond:
@@ -668,8 +614,10 @@ contracts:
     description: |
       Inherited initialization implementation.
 
-      It validates required role-channel bindings, lifecycle configuration, and
-      the optional validateMandateRequest function.
+      Normal Blue type resolution and bootstrap validate required role-channel
+      bindings and lifecycle configuration. When validation.function.entry is
+      present, this workflow verifies that validation.function.functions
+      declares the selected local function.
 
       On success it materializes activateOnAuthorityConfirmation as true when
       absent, sets status to Coordination/Status Pending, and leaves

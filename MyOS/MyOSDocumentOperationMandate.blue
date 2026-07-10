@@ -10,3 +10,12 @@ authorizedInitialDocument:
   schema:
     required: true
   description: Initial document whose sessions may request the operation call.
+
+contracts:
+  mandateGuarantorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor
+
+  authorizedActorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor

@@ -26,3 +26,12 @@ linkedDocuments:
       Optional anchors from which linked-document subscriptions may be
       requested. More detailed filter restrictions may be expressed through
       inherited validation.
+
+contracts:
+  mandateGuarantorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor
+
+  authorizedActorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor

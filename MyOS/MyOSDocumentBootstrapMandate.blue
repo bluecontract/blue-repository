@@ -6,3 +6,12 @@ description: >
   canonical subtype constrains the guarantor and authorized-actor roles to
   MyOS Admin. Allowed document, channel-binding, initial-message, and
   on-behalf-of constraints are expressed through inherited validation.
+
+contracts:
+  mandateGuarantorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor
+
+  authorizedActorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor
