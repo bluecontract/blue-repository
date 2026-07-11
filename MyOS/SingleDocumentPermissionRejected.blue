@@ -1,9 +1,0 @@
-name: Single Document Permission Rejected
-type: Coordination/Response
-description: Grant could not be applied.
-targetSessionId:
-  type: Text
-permissions:
-  type: MyOS/Single Document Permission Set
-reason:
-  type: Text
