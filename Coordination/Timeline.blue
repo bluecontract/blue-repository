@@ -6,25 +6,26 @@ description: |
   Timeline Channels. Blue document processing is one use case of timelines, not the definition of a timeline.
 
   A Timeline Provider supplies infrastructure for timelines. Its core responsibilities are to authenticate and
-  authorize parties that append entries to a timeline, store entries in append-only order, assign or record ordering
-  timestamps, link entries to previous entries where the timeline design requires a hash chain, expose entries to
-  authorized readers, and issue completeness/finality guarantees. A provider generally does not understand the business
-  meaning of every message. Someone may place arbitrary Blue messages on a timeline if the provider allows that party
-  to append to that timeline. Documents that later consume those entries decide whether the messages are relevant,
-  valid, authorized, or policy-compliant.
+  authorize parties that append entries to a timeline, assign a strictly increasing sequence to each accepted entry,
+  assign or record timestamps, link entries to previous entries where the timeline design requires a hash chain, expose
+  entries to authorized readers, and issue completeness/finality guarantees. A provider generally does not understand
+  the business meaning of every message. Someone may place arbitrary Blue messages on a timeline if the provider allows
+  that party to append to that timeline. Documents that later consume those entries decide whether the messages are
+  relevant, valid, authorized, or policy-compliant.
 
   Completeness is the guarantee that makes deterministic multi-party processing possible. When a provider says there
   are no entries with timestamp less than T, it is also promising that future entries it accepts will not be assigned a
-  timestamp less than T. A managed provider can preserve this by assigning monotonically advancing timestamps. A
-  blockchain-backed provider can provide the same kind of guarantee only for finalized history and must define the
-  finality rule. Completeness is about ordering and absence of earlier entries; it is not a claim that message content
-  is semantically valid for a particular Blue document.
+  timestamp less than T. Timestamps may repeat and do not uniquely identify entries or establish their total order within
+  one timeline; sequence is the authoritative intra-timeline order. A blockchain-backed provider can provide
+  completeness only for finalized history and must define the finality rule. Completeness is about a cross-timeline
+  processing window and the absence of earlier entries; it is not a claim that message content is semantically valid for
+  a particular Blue document.
 
-  Timeline entries are normally hash-linked through `prevEntry`, making tampering detectable. Timestamps establish
-  ordering; actor and source fields establish attribution; message contains the Blue payload. A Blue processor may use
-  entries from several timelines, but it should do so only after the relevant providers or finalized stores establish a
-  complete processing window. This lets independent processors merge individual perspectives deterministically without
-  global consensus.
+  Timeline entries are normally hash-linked through `prevEntry`, making tampering detectable. Sequence establishes
+  order within one timeline; timestamp supports cross-timeline ordering and completeness windows; actor and source
+  establish attribution; message contains the Blue payload. A Blue processor may use entries from several timelines,
+  but it should do so only after the relevant providers or finalized stores establish a complete processing window. This
+  lets independent processors merge individual perspectives deterministically without global consensus.
 timelineId:
   type: Text
   description: |

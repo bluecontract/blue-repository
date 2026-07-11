@@ -437,6 +437,11 @@ packages:
             confirmation. When participant channels are added or removed through normal document updates, this channel follows the
             current document structure automatically.
 
+            The union has no timeline or actor of its own. It delegates eligibility to the same-scope Timeline Channels, each of
+            which supplies its own timeline and actor binding. If several child channels accept the same entry, this channel
+            produces one logical delivery to handlers bound to the All Timelines Channel key. Its checkpoint is independent from
+            checkpoints of child channels used directly elsewhere in the document.
+
             All Timelines Channel does not create a new timeline, does not merge provider proofs, and does not change ordering.
             The feeder/runtime must still obtain completeness for every timeline that participates in the current document scope
             and must deliver entries in the canonical deterministic order. The channel only simplifies authoring by avoiding a
@@ -445,7 +450,7 @@ packages:
             blueId: 4FAZ94JPExNM4pn2ZhtdHa4CVP7uASmLNVrBy7aCG1p5
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: G8nAyzhkoFiXhXUV4Jv4hwsivv4x8ACpJX7JNbK9idgg
+            typeBlueId: 61Hu6aLPnN7bAbiMTUxzP9rXEt8JW7XrkqyrEwDWWnJS
             attributesAdded: []
       - status: stable
         content:
@@ -558,7 +563,7 @@ packages:
             This type is intentionally simple: chat is not authority, payment truth, permission truth, or workflow approval. Use
             domain-specific operations and strong response types for machine-actionable commitments.
           type:
-            blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+            blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
           request:
             description: Chat message payload.
             type:
@@ -581,7 +586,7 @@ packages:
                           value: /message/request
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5EA4bKUfcjKdkRdPwfstyeqmZqURUkERARV2ocHDE5xE
+            typeBlueId: 9wmjLC4c99GBCDDSiMU8veHosQfxZJW94AKTatiXxV3p
             attributesAdded: []
       - status: stable
         content:
@@ -591,10 +596,15 @@ packages:
             Channel matches when any referenced child channel would accept the delivered event. It is useful when a workflow
             should react to a family of participant timelines while binding handlers to one logical channel key.
 
+            The composite has no timeline or actor of its own. Each referenced Timeline Channel supplies its own timeline and actor
+            binding, and the composite delegates event eligibility to those children. If several children accept the same entry,
+            the composite produces one logical delivery to handlers bound to the composite key. The composite's checkpoint is
+            independent from checkpoints of child channels used directly elsewhere in the document.
+
             This type does not create global consensus and does not collapse the child timelines into one storage log. Each child
-            timeline retains its provider, checkpoint, completeness, actor attribution, and trust model. The composite only
-            simplifies routing inside the document. A correct feeder/processor must still preserve deterministic ordering across
-            the relevant timelines using provider completeness guarantees and the Blue Contracts checkpoint model.
+            timeline retains its provider, completeness, actor attribution, and trust model. The composite only simplifies routing
+            inside the document. A correct feeder/processor must still preserve deterministic ordering across the relevant
+            timelines using provider completeness guarantees and the Blue Contracts checkpoint model.
           type:
             blueId: 4FAZ94JPExNM4pn2ZhtdHa4CVP7uASmLNVrBy7aCG1p5
           channels:
@@ -608,7 +618,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4FE7wU8cnFsb7gEcgQk8vTGYZHLqvJH6Yjsv2TXovgr2
+            typeBlueId: BTGajXc8tHeprxrQXRBDfkZxA5tmxo9BEkFoDGXds6yp
             attributesAdded: []
       - status: stable
         content:
@@ -1075,8 +1085,8 @@ packages:
           name: Operation
           description: |
             Base handler contract type describing a named operation supported by a document or scope. An Operation gives a stable
-            name to a business action, binds that action to a same-scope channel, and describes the expected request payload
-            shape.
+            name to a business action, binds that action to a same-scope effective handler channel, and describes the expected
+            request payload shape.
 
             Operation is the common interface for operation handlers. A plain Operation declares the channel and request shape;
             concrete operation types such as Sequential Workflow Operation provide the executable behavior. Actor Policy and
@@ -1090,13 +1100,15 @@ packages:
               matching, validation, or documentation.
           channel:
             description: |
-              Same-scope channel key through which Operation Request events for this operation are expected to arrive. This is the
-              Handler channel binding for the operation.
+              Same-scope effective channel key used to discover and invoke this Operation handler. An Operation Request may be
+              accepted through a different eligible source channel; the feeder validates source and authority constraints, and a
+              supporting processor routes the accepted request to this effective channel without transferring source-channel
+              checkpoint ownership.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+            typeBlueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
             attributesAdded: []
       - status: stable
         content:
@@ -1122,14 +1134,14 @@ packages:
               Optional current target document state on which the invocation is based. The value may be materialized or represented by an equivalent pure BlueId reference.
           requireExactDocumentVersion:
             description: |
-              When true, the feeder passes the request only if document equals the current target state. When false or absent, a newer state may be accepted according to operation-matching rules.
+              When true, the feeder passes the request only if document equals the current target state. When false or absent, a newer state may be accepted according to the feeder's document-version eligibility policy.
             type:
               blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
           request:
             description: Operation-specific request payload.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CGmKUxvZgboHHdQwxR8jmDWJTmZazi9UTLVgArRyqLmt
+            typeBlueId: B1nYScibpo65XNv1Sy13UoEr6NHodMmdcMLwQmup8iKv
             attributesAdded: []
       - status: stable
         content:
@@ -1147,12 +1159,12 @@ packages:
             type:
               blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
             itemType:
-              blueId: 5JDK97TQA6nzVYRsoQ7kEeoQEtyXKxwAXQSzFeDKzfCU
+              blueId: FvGHnQXb72zffTbufdY8DSK1DWqtTGavSfHDcoeCLB7Y
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8bWEiYoHwoJ55sw6Z7UvFoZ1ir9SQKaNruPGctCJD3G3
+            typeBlueId: 9ZR7JFpcb5Eq2PHG5yK9XY3VTbygfaCoCQL4CnTFTpqE
             attributesAdded: []
       - status: stable
         content:
@@ -1194,14 +1206,14 @@ packages:
             type:
               blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
             itemType:
-              blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+              blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
           summary:
             description: Optional human-readable explanation of the participant's purpose.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5JDK97TQA6nzVYRsoQ7kEeoQEtyXKxwAXQSzFeDKzfCU
+            typeBlueId: FvGHnQXb72zffTbufdY8DSK1DWqtTGavSfHDcoeCLB7Y
             attributesAdded: []
       - status: stable
         content:
@@ -1273,15 +1285,17 @@ packages:
             a Sequential Workflow Operation is discovered and invoked as a same-scope handler bound to its channel.
 
             A Sequential Workflow Operation is still invoked like any other Operation: callers post an Operation Request naming
-            the operation contract key; the request payload must conform to this operation's request shape; and the message must
-            arrive through the operation's channel. The workflow then runs the declared steps deterministically and returns effects
-            such as triggered events or document updates through the Blue Contracts processor.
+            the operation contract key and its effective channel, and the request payload must conform to this operation's request
+            shape. The request may be accepted through a different eligible source channel. A supporting processor routes it to
+            the operation's effective channel while preserving source-channel checkpoint semantics. The workflow then runs the
+            declared steps deterministically and returns effects such as triggered events or document updates through the Blue
+            Contracts processor.
 
             Use this for document-owned behavior where the operation interface and implementation should live together in a single
             contract entry. A plain Operation can still declare the operation interface when a runtime or document chooses to bind
             the implementation separately.
           type:
-            blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+            blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
           steps:
             description: |
               Append-only ordered workflow steps to run when this operation is invoked. The steps have the same semantics as steps
@@ -1297,7 +1311,7 @@ packages:
               blueId: 9oGn8V6FSVcJYhRfuHRShfWjiHBUqzxVi9StGtHZNfev
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+            typeBlueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
             attributesAdded: []
       - status: stable
         content:
@@ -1456,25 +1470,26 @@ packages:
             Timeline Channels. Blue document processing is one use case of timelines, not the definition of a timeline.
 
             A Timeline Provider supplies infrastructure for timelines. Its core responsibilities are to authenticate and
-            authorize parties that append entries to a timeline, store entries in append-only order, assign or record ordering
-            timestamps, link entries to previous entries where the timeline design requires a hash chain, expose entries to
-            authorized readers, and issue completeness/finality guarantees. A provider generally does not understand the business
-            meaning of every message. Someone may place arbitrary Blue messages on a timeline if the provider allows that party
-            to append to that timeline. Documents that later consume those entries decide whether the messages are relevant,
-            valid, authorized, or policy-compliant.
+            authorize parties that append entries to a timeline, assign a strictly increasing sequence to each accepted entry,
+            assign or record timestamps, link entries to previous entries where the timeline design requires a hash chain, expose
+            entries to authorized readers, and issue completeness/finality guarantees. A provider generally does not understand
+            the business meaning of every message. Someone may place arbitrary Blue messages on a timeline if the provider allows
+            that party to append to that timeline. Documents that later consume those entries decide whether the messages are
+            relevant, valid, authorized, or policy-compliant.
 
             Completeness is the guarantee that makes deterministic multi-party processing possible. When a provider says there
             are no entries with timestamp less than T, it is also promising that future entries it accepts will not be assigned a
-            timestamp less than T. A managed provider can preserve this by assigning monotonically advancing timestamps. A
-            blockchain-backed provider can provide the same kind of guarantee only for finalized history and must define the
-            finality rule. Completeness is about ordering and absence of earlier entries; it is not a claim that message content
-            is semantically valid for a particular Blue document.
+            timestamp less than T. Timestamps may repeat and do not uniquely identify entries or establish their total order within
+            one timeline; sequence is the authoritative intra-timeline order. A blockchain-backed provider can provide
+            completeness only for finalized history and must define the finality rule. Completeness is about a cross-timeline
+            processing window and the absence of earlier entries; it is not a claim that message content is semantically valid for
+            a particular Blue document.
 
-            Timeline entries are normally hash-linked through `prevEntry`, making tampering detectable. Timestamps establish
-            ordering; actor and source fields establish attribution; message contains the Blue payload. A Blue processor may use
-            entries from several timelines, but it should do so only after the relevant providers or finalized stores establish a
-            complete processing window. This lets independent processors merge individual perspectives deterministically without
-            global consensus.
+            Timeline entries are normally hash-linked through `prevEntry`, making tampering detectable. Sequence establishes
+            order within one timeline; timestamp supports cross-timeline ordering and completeness windows; actor and source
+            establish attribution; message contains the Blue payload. A Blue processor may use entries from several timelines,
+            but it should do so only after the relevant providers or finalized stores establish a complete processing window. This
+            lets independent processors merge individual perspectives deterministically without global consensus.
           timelineId:
             description: |
               Stable provider- or application-defined identifier for this timeline. The identifier is used by channels, providers,
@@ -1484,7 +1499,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7wUHmjDmM9suCSX1HPL7NZncfwPmMmXq2vfSVBmRLgAu
+            typeBlueId: 3jwaTSdUWw47M6rkN85BE6nTemo7eoyN3R6ompsrDfgn
             attributesAdded: []
       - status: stable
         content:
@@ -1497,7 +1512,7 @@ packages:
             description: |
               Timeline whose entries may be accepted through this channel.
             type:
-              blueId: 7wUHmjDmM9suCSX1HPL7NZncfwPmMmXq2vfSVBmRLgAu
+              blueId: 3jwaTSdUWw47M6rkN85BE6nTemo7eoyN3R6ompsrDfgn
             schema:
               required: true
           actor:
@@ -1509,22 +1524,22 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7WV5TyMoq5Yomvu7Li8kzWdtNaP4vxJCQirDUhoSZmVu
+            typeBlueId: Ab5kRCjTekQwTpWBgBv2ofJ6kgGbrbqMrdRPPJ4aKX3d
             attributesAdded: []
       - status: stable
         content:
           name: Timeline Entry
           description: |
-            Immutable entry in an append-only Timeline. The Timeline Provider assigns sequence and timestamp, links the entry to its predecessor, and authenticates actor attribution. A feeder validates, orders, and filters entries before passing eligible events to a processor.
+            Immutable entry in an append-only Timeline. The Timeline Provider assigns sequence and timestamp, links the entry to its predecessor, and authenticates actor and available source attribution. A feeder validates, orders, and filters entries before passing eligible events to a processor.
           timeline:
             description: Timeline containing this entry.
             type:
-              blueId: 7wUHmjDmM9suCSX1HPL7NZncfwPmMmXq2vfSVBmRLgAu
+              blueId: 3jwaTSdUWw47M6rkN85BE6nTemo7eoyN3R6ompsrDfgn
             schema:
               required: true
           sequence:
             description: |
-              Monotonically increasing position of this entry within its timeline.
+              Strictly increasing position of this entry within its timeline. Sequence, rather than timestamp, is the authoritative intra-timeline order.
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
             schema:
@@ -1536,7 +1551,7 @@ packages:
               blueId: this#0
           timestamp:
             description: |
-              Microsecond timestamp assigned by the Timeline Provider. The provider must preserve its timeline and completeness semantics for this value.
+              Microsecond timestamp assigned by the Timeline Provider for cross-timeline ordering and completeness. Timestamps may repeat within a timeline and do not replace sequence as its authoritative order.
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
             schema:
@@ -1547,18 +1562,23 @@ packages:
               blueId: GnMntk3hLvHEsZTBE8Gk7ytPBexj6jhBJHdaxnJYhEQ7
             schema:
               required: true
+          source:
+            description: |
+              Optional provider-authenticated attribution of how the entry was submitted, such as through a browser session, API call, or document request. Source complements actor attribution and does not grant authority by itself. A policy that requires or excludes a source category must treat an absent source as not satisfying that source constraint.
+            type:
+              blueId: Qm35f9xFUH84i745uPMj5jjMX1oCCG79aeSfHViipxG
           onBehalfOf:
             description: |
               Optional mandate-backed authority under which actor claims to act for another actor. A feeder validates this authority before delivery when the requested action is not directly eligible through a source channel.
             type:
-              blueId: 23FicPLnviwjgSK62qSsUJCPpioDbdC8PXm8cc2LGwKZ
+              blueId: 8gZzjsHjuprmqBs7wCWSfuLL9ebemxvbRMHt82pmXviq
           message:
             description: Message or event recorded by the entry.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: ApAZHVVEaavMNqzootYiXZVCFUd7ZgLbbbHgTuS6vpkm#0
+            typeBlueId: 9Cwdwkzrs8w9x2S78qrfnsa6EFj7AeCVocSqXYXFkfJ6#0
             attributesAdded: []
       - status: stable
         content:
@@ -33435,14 +33455,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: F5tjRLuEoBKMPv7RXGQtFCi91ryisSCXqnq99Lg4QxgD
+            blueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9HtAHoZqLJ1EPBi8nPs8Vda89HCsZ85sgwSFdpKbdx22
+            typeBlueId: 64YXUmTp7hjij8kw9o2mki2nGDJAa5zEpGnqWrkFvKAR
             attributesAdded: []
       - status: stable
         content:
@@ -33480,7 +33500,7 @@ packages:
                 The guarantor confirms that the declared authority relationship is
                 legitimate and may invoke the standard termination operation.
               type:
-                blueId: 7WV5TyMoq5Yomvu7Li8kzWdtNaP4vxJCQirDUhoSZmVu
+                blueId: Ab5kRCjTekQwTpWBgBv2ofJ6kgGbrbqMrdRPPJ4aKX3d
               schema:
                 required: true
             authorityHolderChannel:
@@ -33489,7 +33509,7 @@ packages:
                 resource delegated by this mandate. The authority holder may invoke the
                 standard termination operation.
               type:
-                blueId: 7WV5TyMoq5Yomvu7Li8kzWdtNaP4vxJCQirDUhoSZmVu
+                blueId: Ab5kRCjTekQwTpWBgBv2ofJ6kgGbrbqMrdRPPJ4aKX3d
               schema:
                 required: true
             authorizedActorChannel:
@@ -33498,7 +33518,7 @@ packages:
                 authority. Concrete mandate subtypes define the delegated resource,
                 action, target, or request semantics.
               type:
-                blueId: 7WV5TyMoq5Yomvu7Li8kzWdtNaP4vxJCQirDUhoSZmVu
+                blueId: Ab5kRCjTekQwTpWBgBv2ofJ6kgGbrbqMrdRPPJ4aKX3d
               schema:
                 required: true
             mandateTerminationChannel:
@@ -33507,7 +33527,7 @@ packages:
                 may invoke terminateMandate. When one entry is eligible through both
                 members, the composite produces one logical delivery.
               type:
-                blueId: 4FE7wU8cnFsb7gEcgQk8vTGYZHLqvJH6Yjsv2TXovgr2
+                blueId: BTGajXc8tHeprxrQXRBDfkZxA5tmxo9BEkFoDGXds6yp
               channels:
                 items:
                   - type:
@@ -34371,7 +34391,7 @@ packages:
                 Concrete workflow steps and BEX implementation are defined in this base
                 type.
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -34444,7 +34464,7 @@ packages:
 
                 Concrete workflow steps are defined in this base type.
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -34647,7 +34667,7 @@ packages:
                 value: validateMandateRequest
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: F5tjRLuEoBKMPv7RXGQtFCi91ryisSCXqnq99Lg4QxgD
+            typeBlueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
             attributesAdded: []
       - status: stable
         content:
@@ -34706,12 +34726,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: F5tjRLuEoBKMPv7RXGQtFCi91ryisSCXqnq99Lg4QxgD
+              blueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 23FicPLnviwjgSK62qSsUJCPpioDbdC8PXm8cc2LGwKZ
+            typeBlueId: 8gZzjsHjuprmqBs7wCWSfuLL9ebemxvbRMHt82pmXviq
             attributesAdded: []
       - status: stable
         content:
@@ -34791,7 +34811,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: F5tjRLuEoBKMPv7RXGQtFCi91ryisSCXqnq99Lg4QxgD
+            blueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -34811,7 +34831,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3jtQHb14GCJZXj6HKUgHdSFUCGu5WuAKkSenVxpSWHaP
+            typeBlueId: JXDSRcjyaHM73NPYEpwRjRKaPZP95pR4STterb4c6yE
             attributesAdded: []
       - status: stable
         content:
@@ -35111,7 +35131,7 @@ packages:
           name: Document Session Bootstrap
           description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
           type:
-            blueId: 7ZnSQEukZaByVG7mKfW86xXZPLfW8uTQgFRAa1PffftY
+            blueId: CgHxjKAYf2rF5vGpwHiKgfr9jfhTxQVris2nTcuhR6fS
           contracts:
             triggeredEventsChannel:
               type:
@@ -35459,7 +35479,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7dzJjCxaXg1chtZbBhZKV2fJ5sqmVF6aMvJhscJ4y7hu
+            typeBlueId: 66zD4DF3aCGvitW79bTBZy5iYAuMzCfyquyvKsKpCKiD
             attributesAdded: []
       - status: stable
         content:
@@ -35538,11 +35558,11 @@ packages:
             myOsAdminChannel:
               description: MyOS Admin (accountId=0) — posts operational progress/decisions via myOsAdminUpdate
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             myOsAdminUpdate:
               description: The standard, required operation for MyOS Admin to deliver events.
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -35550,7 +35570,7 @@ packages:
             myOsAdminUpdateImpl:
               description: Implementation that re-emits the provided events
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -35570,7 +35590,7 @@ packages:
                                 value: /message/request
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7ZnSQEukZaByVG7mKfW86xXZPLfW8uTQgFRAa1PffftY
+            typeBlueId: CgHxjKAYf2rF5vGpwHiKgfr9jfhTxQVris2nTcuhR6fS
             attributesAdded: []
       - status: stable
         content:
@@ -35652,7 +35672,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: 9HtAHoZqLJ1EPBi8nPs8Vda89HCsZ85sgwSFdpKbdx22
+            blueId: 64YXUmTp7hjij8kw9o2mki2nGDJAa5zEpGnqWrkFvKAR
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35664,7 +35684,7 @@ packages:
                   blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5f6KfDBXMdgizBbf3rYeCSxeafhMrsF8JW5XgT5MgVbk
+            typeBlueId: AcBGCh8ceAgQRi2MNfrXSFSSiiq6VCVDzTbwU3JXcCFH
             attributesAdded: []
       - status: stable
         content:
@@ -35672,7 +35692,7 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 3jtQHb14GCJZXj6HKUgHdSFUCGu5WuAKkSenVxpSWHaP
+            blueId: JXDSRcjyaHM73NPYEpwRjRKaPZP95pR4STterb4c6yE
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35688,7 +35708,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3qpPwbE17rcFt1KkFqo6V2Y4PrE9gmnYivdkrzAp3zZL
+            typeBlueId: 9rF6zL8dTjb5RhT5qoqU1mxMabRZd9wRLFXnJ6oS3QXo
             attributesAdded: []
       - status: stable
         content:
@@ -35894,7 +35914,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 9HtAHoZqLJ1EPBi8nPs8Vda89HCsZ85sgwSFdpKbdx22
+            blueId: 64YXUmTp7hjij8kw9o2mki2nGDJAa5zEpGnqWrkFvKAR
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35923,7 +35943,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AL6L3bSbHPYmgh9JXnEPaJbMcUJq5VEzvHU3NK4X34xD
+            typeBlueId: DDigmSqGxmppDu6t9FuUQETvZV5vhq21VVK1jcQpoLvR
             attributesAdded: []
       - status: stable
         content:
@@ -36005,21 +36025,21 @@ packages:
           name: MyOS Timeline
           description: A managed timeline implementation providing convenient email-based authentication and extensive features. MyOS timelines are straightforward to set up and use, offering a balance of convenience and security through hash-chained, authenticated event sequences.
           type:
-            blueId: 7wUHmjDmM9suCSX1HPL7NZncfwPmMmXq2vfSVBmRLgAu
+            blueId: 3jwaTSdUWw47M6rkN85BE6nTemo7eoyN3R6ompsrDfgn
           accountId:
             description: Identifier for the MyOS account associated with this timeline
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9TnFznYnqWWjHhGzcKngTLfq1a2H4sVd5EM4vfek2ec5
+            typeBlueId: FxJvs5C7UPo2gK1jU4d3R1fGC8HUHNC26erWf86z7EFg
             attributesAdded: []
       - status: stable
         content:
           name: MyOS Timeline Channel
           description: MyOS-specific Timeline Channel
           type:
-            blueId: 7WV5TyMoq5Yomvu7Li8kzWdtNaP4vxJCQirDUhoSZmVu
+            blueId: Ab5kRCjTekQwTpWBgBv2ofJ6kgGbrbqMrdRPPJ4aKX3d
           accountId:
             description: Account identifier for the MyOS timeline
             type:
@@ -36030,20 +36050,20 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+            typeBlueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             attributesAdded: []
       - status: stable
         content:
           name: MyOS Timeline Entry
           description: MyOS-specific timeline entry with account and email information
           type:
-            blueId: ApAZHVVEaavMNqzootYiXZVCFUd7ZgLbbbHgTuS6vpkm#0
+            blueId: 9Cwdwkzrs8w9x2S78qrfnsa6EFj7AeCVocSqXYXFkfJ6#0
           timeline:
             type:
-              blueId: 9TnFznYnqWWjHhGzcKngTLfq1a2H4sVd5EM4vfek2ec5
+              blueId: FxJvs5C7UPo2gK1jU4d3R1fGC8HUHNC26erWf86z7EFg
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DuBKxPY5v6UURT1pkyACFhmCM966fF1ytEv9x3k15Sm8
+            typeBlueId: BmZ2PAs59AyQGzDaF3UW4H3MM4WchxkVvMHRb9r5wjys
             attributesAdded: []
       - status: dev
         content:
@@ -36898,13 +36918,13 @@ packages:
           name: Card Transaction PayNote
           description: PayNote tied to a specific card transaction via ISO scheme identifiers.
           type:
-            blueId: 7k3iQ1VBArSDnj4giRXyGp5nEMP3J6pXd1nRWvXHdf5G
+            blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
           cardTransactionDetails:
             type:
               blueId: DVykYmmbhDsjsNQCjETGqumKJW5doNkkk6K6R4xeFWTV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8HLEANYEwbgyTR6gQBz6DmAHuVfD5Yj6VwWc96jVUxYP
+            typeBlueId: 9Brtfgkzcbe9YP99asHvi7UHoHr3r3bgMn1vUHMZi8Pv
             attributesAdded: []
       - status: dev
         content:
@@ -37201,10 +37221,10 @@ packages:
           name: Merchant To Customer PayNote
           description: Base PayNote where payer is merchant and payee is customer. Bank sets/validates payer channel bindings.
           type:
-            blueId: 7k3iQ1VBArSDnj4giRXyGp5nEMP3J6pXd1nRWvXHdf5G
+            blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5YRwy7qDrNPQ8jLJaY3f5DEyWGwv1XWh58RCEVbH6Lyb
+            typeBlueId: 4QW85PM6t2McK3sxKqCsyhajZJv6WVk1AhBT45PGDLZb
             attributesAdded: []
       - status: dev
         content:
@@ -37398,15 +37418,15 @@ packages:
             granterChannel:
               description: Granting party timeline channel.
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             granteeChannel:
               description: Grantee timeline channel (party allowed to use the mandate).
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             guarantorChannel:
               description: Bank/admin channel executing mandate checks and settlement updates.
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -37438,7 +37458,7 @@ packages:
             authorizeSpend:
               description: Validate a charge attempt against mandate policy and reserve capacity.
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -37448,7 +37468,7 @@ packages:
                   blueId: 5c5mfwYpEs3LLawHVLWJVUFTgqdSMGBCHG6iPaTmqefJ
             authorizeSpendImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -38473,7 +38493,7 @@ packages:
             settleSpend:
               description: Apply final reserve/capture deltas for a previously authorized charge attempt.
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -38483,7 +38503,7 @@ packages:
                   blueId: 12zhLzvXiUjVQsbNQGRRZk15M1fc2WcohZ8Nbz7Wmd1m
             settleSpendImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -39816,7 +39836,7 @@ packages:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4AT8fhRxHuLYRFrcRrmxJgTxAcv1ucnDfkDSRejJ8hS8
+            typeBlueId: ARHztUKsJmj1rEpdi8sv1488QaWRvdsJLcXYchfZXdg7
             attributesAdded: []
       - status: dev
         content:
@@ -40400,7 +40420,7 @@ packages:
                                 value: true
             acceptPayNote:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40410,7 +40430,7 @@ packages:
                   blueId: EWJLkS8q4TE5NWDh4qpQZMcbgGWdiePNkbZMCtGYVRAN
             acceptPayNoteImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40442,7 +40462,7 @@ packages:
                         blueId: EWJLkS8q4TE5NWDh4qpQZMcbgGWdiePNkbZMCtGYVRAN
             rejectPayNote:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40452,7 +40472,7 @@ packages:
                   blueId: FJqmEa4mSV4FrJkeZn9KLbTZMBeULqaBkzEhceuoaLJG
             rejectPayNoteImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40521,7 +40541,7 @@ packages:
                                 value: true
             recordTransactionInitiated:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40531,7 +40551,7 @@ packages:
                   blueId: 7WG5MSrMMCeAEYwavUJ2eZQhYdYn2xZv5T8ZYoFyFA4Z
             recordTransactionInitiatedImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40759,7 +40779,7 @@ packages:
                                     value: true
             recordTransactionInitiationFailed:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40769,7 +40789,7 @@ packages:
                   blueId: 4RWHs3KE6EL4cyMHvhrxR7pm6wQcgW5wGefM5t7p8jn2
             recordTransactionInitiationFailedImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40822,7 +40842,7 @@ packages:
                       value: true
             confirmPayeeAssignment:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40832,7 +40852,7 @@ packages:
                   blueId: 79ZV4j1dHpE5nt9nGN141Pte8hDbKgsxSavm9RV9wu1U
             confirmPayeeAssignmentImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -40996,7 +41016,7 @@ packages:
                                     value: true
             rejectPayeeAssignment:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41006,7 +41026,7 @@ packages:
                   blueId: EHxam7uVrzwbyKVGmHk4QcnKtcPaeM7JzZiiURXj7M33
             rejectPayeeAssignmentImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41042,7 +41062,7 @@ packages:
                       value: true
             confirmTransactionDetailsUpdated:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41052,7 +41072,7 @@ packages:
                   blueId: 5B6omzwwUauNNbarndynuCMyMCqZVu6ikTqnLocXZyWA
             confirmTransactionDetailsUpdatedImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41228,7 +41248,7 @@ packages:
                                     value: true
             rejectTransactionDetailsUpdate:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41238,7 +41258,7 @@ packages:
                   blueId: 3iWy5uSeaCr149THj4x9sAeb2AhTtkHFY9yCuqeV7LCT
             rejectTransactionDetailsUpdateImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41274,7 +41294,7 @@ packages:
                       value: true
             failTransactionDetailsUpdate:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41284,7 +41304,7 @@ packages:
                   blueId: DDuuaogLyNgVHbSoJxxQcX5iZqWy6U9DAxjgtdzWRnWB
             failTransactionDetailsUpdateImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41320,7 +41340,7 @@ packages:
                       value: true
             secureFunds:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41330,7 +41350,7 @@ packages:
                   blueId: 3wSieJf5cYTa6o9CMcYAFNmVRS1mJe9wMeQ8Jmo3Xp3i
             secureFundsImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41408,7 +41428,7 @@ packages:
                       value: true
             declineSecureFunds:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41418,7 +41438,7 @@ packages:
                   blueId: 8x9kLwfX9bJdvChLgQjwhPBCAMDZrmRJPMdaWsKKkbjN
             declineSecureFundsImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41471,7 +41491,7 @@ packages:
                       value: true
             failSecureFunds:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41481,7 +41501,7 @@ packages:
                   blueId: 5X9UpCYn4uR6vidaBwpsng98RsVMXjnweXeVgGPXkzQi
             failSecureFundsImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41534,7 +41554,7 @@ packages:
                       value: true
             completePayment:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41544,7 +41564,7 @@ packages:
                   blueId: HRPugeYyuAMpDR4rKoDeDbJpewtFGgAPpFtwyw1T6Row
             completePaymentImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41622,7 +41642,7 @@ packages:
                       value: true
             declineCompletePayment:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41632,7 +41652,7 @@ packages:
                   blueId: HV1cMM1SfwUna62hDFcwaHwMgDN3QVVSVWWMqmr3Y4jx
             declineCompletePaymentImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41685,7 +41705,7 @@ packages:
                       value: true
             failCompletePayment:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41695,7 +41715,7 @@ packages:
                   blueId: 7nzmwZ5GYggD81cgK9aTduPVhznB8ay1k128CZA4nvzt
             failCompletePaymentImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41748,7 +41768,7 @@ packages:
                       value: true
             cancelBeforeCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41758,7 +41778,7 @@ packages:
                   blueId: BVVMg23GQoEyUwPxQj1uif1cxc1PgMd6reAdfkt1k77
             cancelBeforeCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41790,7 +41810,7 @@ packages:
                         blueId: BVVMg23GQoEyUwPxQj1uif1cxc1PgMd6reAdfkt1k77
             declineCancelBeforeCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41800,7 +41820,7 @@ packages:
                   blueId: AygrNas7s1Gvg5zb7X1dVrufVNrGvUxPU7qgQHJ9QLzQ
             declineCancelBeforeCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41853,7 +41873,7 @@ packages:
                       value: true
             failCancelBeforeCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41863,7 +41883,7 @@ packages:
                   blueId: HpeKXtecYHLk8Mm787Pof8hYgQ92SjRQzTDcUdFwrhZV
             failCancelBeforeCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41916,7 +41936,7 @@ packages:
                       value: true
             reverseAfterCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -41926,7 +41946,7 @@ packages:
                   blueId: 42iMsNHFY4jUTy1yhZeEeZu9XZL4ZJqReRe191f1KHXf
             reverseAfterCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42004,7 +42024,7 @@ packages:
                       value: true
             declineReverseAfterCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42014,7 +42034,7 @@ packages:
                   blueId: 3zqCf4fDYcC5ETzvGZA8Jasf1LXdujZTZyL88zL3EDSF
             declineReverseAfterCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42067,7 +42087,7 @@ packages:
                       value: true
             failReverseAfterCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42077,7 +42097,7 @@ packages:
                   blueId: HgRjnfFyp9156xXVSeXhzKWuZFQE4jVuL1WYD3Gbm98T
             failReverseAfterCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42130,7 +42150,7 @@ packages:
                       value: true
             resolveFinalAmount:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42140,7 +42160,7 @@ packages:
                   blueId: CDwF6APqf9NVAn49dBfJsJVQU1gB4Ah2gbxs3T7DT3Fc
             resolveFinalAmountImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42205,7 +42225,7 @@ packages:
                       value: true
             rejectFinalAmountResolution:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42215,7 +42235,7 @@ packages:
                   blueId: 4rw9kwJRP7P5opfxz1AFAX3mp1wmPNf3qKBz1om9gr8A
             rejectFinalAmountResolutionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42251,7 +42271,7 @@ packages:
                       value: true
             lockPaymentCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42261,7 +42281,7 @@ packages:
                   blueId: GiarUWCiPuTZ2g7YfosXP17bTi1cH1ZqkguGcYKNqUvY
             lockPaymentCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42314,7 +42334,7 @@ packages:
                       value: true
             unlockPaymentCompletion:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42324,7 +42344,7 @@ packages:
                   blueId: 4qyUrMxKg5b3zPiB3kBwwy4Yh9fgD4DSqGeLTXh57b7i
             unlockPaymentCompletionImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42377,7 +42397,7 @@ packages:
                       value: true
             failPaymentCompletionLockChange:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42387,7 +42407,7 @@ packages:
                   blueId: 7A765v3durX3otiybhEomfPAqtztUSt9Ywqef2dsyvLx
             failPaymentCompletionLockChangeImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42423,7 +42443,7 @@ packages:
                       value: true
             lockPaymentReversal:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42433,7 +42453,7 @@ packages:
                   blueId: 6qKyexNfVD2WhQQ5FGuCoPGQF89SAigGgwyzbKXsPMRP
             lockPaymentReversalImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42486,7 +42506,7 @@ packages:
                       value: true
             unlockPaymentReversal:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42496,7 +42516,7 @@ packages:
                   blueId: FVjUChq6akLbAux94Gs4Sv2VQ1JtQWqy1WekMUTyNXuv
             unlockPaymentReversalImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42549,7 +42569,7 @@ packages:
                       value: true
             failPaymentReversalLockChange:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42559,7 +42579,7 @@ packages:
                   blueId: 9wsCVU7Pw5BzQhN8RYZXJhiwJAEfBzCkLEWURkJymKsy
             failPaymentReversalLockChangeImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42595,7 +42615,7 @@ packages:
                       value: true
             lockTransactionDetailsUpdate:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42605,7 +42625,7 @@ packages:
                   blueId: 44MphyKwNYqXzF8aS5WTmXZMQ4x35PViXyoy2Ks14G1Z
             lockTransactionDetailsUpdateImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42658,7 +42678,7 @@ packages:
                       value: true
             unlockTransactionDetailsUpdate:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42668,7 +42688,7 @@ packages:
                   blueId: ASnHnJCtcbdEsWa5wcbRpmoUBnw9yajf9vLpsovXyTXg
             unlockTransactionDetailsUpdateImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42721,7 +42741,7 @@ packages:
                       value: true
             failTransactionDetailsUpdateLockChange:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42731,7 +42751,7 @@ packages:
                   blueId: 369jQqbKxUNXz4yZHMgeomhtQUbAByuCCXCcXKaUSun9
             failTransactionDetailsUpdateLockChangeImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -42831,7 +42851,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7k3iQ1VBArSDnj4giRXyGp5nEMP3J6pXd1nRWvXHdf5G
+            typeBlueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
             attributesAdded: []
       - status: dev
         content:
@@ -42945,11 +42965,11 @@ packages:
             payNoteSender:
               description: Participant submitting the PayNote delivery (merchant or processor).
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             payNoteDeliverer:
               description: Participant delivering and reporting status (e.g., bank).
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -43019,7 +43039,7 @@ packages:
                             value: ''
             updateTransactionIdentificationStatus:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43030,7 +43050,7 @@ packages:
                   blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
             updateTransactionIdentificationStatusImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43280,7 +43300,7 @@ packages:
                                 value: true
             acceptPayNote:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43292,7 +43312,7 @@ packages:
                     blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
             acceptPayNoteImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43710,7 +43730,7 @@ packages:
                                     value: true
             rejectPayNote:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43726,7 +43746,7 @@ packages:
                     blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
             rejectPayNoteImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44186,7 +44206,7 @@ packages:
                                     value: true
             reportDeliveryError:
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44197,7 +44217,7 @@ packages:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             reportDeliveryErrorImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44288,14 +44308,14 @@ packages:
               blueId: DGtbvBCuFFKAH3ncDb6LAibSAq8Smr5oChLSdvNvGuZu
             document:
               type:
-                blueId: 7k3iQ1VBArSDnj4giRXyGp5nEMP3J6pXd1nRWvXHdf5G
+                blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
           paymentMandateBootstrapRequest:
             description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
             type:
               blueId: DGtbvBCuFFKAH3ncDb6LAibSAq8Smr5oChLSdvNvGuZu
             document:
               type:
-                blueId: 4AT8fhRxHuLYRFrcRrmxJgTxAcv1ucnDfkDSRejJ8hS8
+                blueId: ARHztUKsJmj1rEpdi8sv1488QaWRvdsJLcXYchfZXdg7
           cardTransactionDetails:
             description: Card network identifiers used to match processor and issuer records.
             type:
@@ -44326,7 +44346,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GpnyepMZZiMdqvgiCE7A5c52LPCc6e2SJr2CXp2rRNUy
+            typeBlueId: A6RnpmzCkHNgf3sybwFNszfNKmN3EvxTfRrmY1ChNQ3d
             attributesAdded: []
       - status: dev
         content:
@@ -44787,17 +44807,17 @@ packages:
             captures a request, Accept Change applies it, and Reject Change discards it. The corresponding Accept Change Workflow
             performs validation, policy checks, translation of sectionChanges, and final Update Document patching.
           type:
-            blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+            blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: F8yzCwY9qUvLmBtoJFshSpwepjNB9VZdbqdBmZ2USqN
+            typeBlueId: AQiBjYvNGNupbn8GoAVjJD3GytsuktbfUJ8EXxm24uiX
             attributesAdded: []
       - status: dev
         content:
           name: Accept Change Workflow
           description: Applies a previously proposed change and removes its proposal state.
           type:
-            blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+            blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
           postfix:
             description: Optional postfix used while building proposed change state key.
             type:
@@ -46795,7 +46815,7 @@ packages:
                                 value: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Ax4Z2wn5NyUqNm8XVoPvc37iSiJg5fYHDAGgkGmdKNz1
+            typeBlueId: 9Ke8Cm7sbxbdezqTBsHYAgKqsncGSsF1MQPhT8Lh7R4a
             attributesAdded: []
       - status: dev
         content:
@@ -46812,13 +46832,13 @@ packages:
             Use this operation when immediate mutation is acceptable. Use Propose Change Operation followed by Accept or Reject when
             changes must be reviewed before becoming document state.
           type:
-            blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+            blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
           request:
             type:
               blueId: 6DTYzUFXoVEV5WjVKmQveSztfXfVN5nr1bso3ygW9ocU
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2GU1BcpX5YZRi9unTpM2ma9jq2gqmeAAN7sxL5N9zdYx
+            typeBlueId: AKkQ1Sq3MRCEoDNv4FjEpx3Dn72DuM4DTVJNCJsSs1Ai
             attributesAdded: []
       - status: dev
         content:
@@ -46858,7 +46878,7 @@ packages:
           name: Change Workflow
           description: Applies a requested changeset immediately to the document.
           type:
-            blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+            blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
           request:
             description: Expected request payload for this workflow.
             type:
@@ -48826,7 +48846,7 @@ packages:
                                 value: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2rYpSjRi9FhYFkymGBM6GJbJ1aqxrUVfe6wJVLGXgyge
+            typeBlueId: J4N7XgGHAwMZJGJ4SkWuUHmTfKvsSHvSsbAduEsriARk
             attributesAdded: []
       - status: dev
         content:
@@ -48861,15 +48881,15 @@ packages:
             granteeChannel:
               description: Grantee (e.g., merchant MyOS timeline).
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             granterChannel:
               description: Granter (customer represented by the bank; customer has no MyOS account).
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             guarantorChannel:
               description: Bank/admin channel.
               type:
-                blueId: 6NhTXeD6LK3jJb31ZDQH4h1kJ5FAc2r47VfitPrup7bw
+                blueId: HbecELqPUgjEnPDnu9uAVuuFj4DA2H8M9vsVmPXPaUmV
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -48917,7 +48937,7 @@ packages:
             revokeConsent:
               description: Customer revokes the consent.
               type:
-                blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -48931,7 +48951,7 @@ packages:
                     blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
             revokeConsentImpl:
               type:
-                blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               operation:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -49097,7 +49117,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: E4cDb3uFCFAa7633dQDBpnNjmPndWHEtFHojNTSnrG7k
+            typeBlueId: 5jGgL9ZjxrWjCnBBho2pXpG7nAc4QxoymAk3kvMeECj9
             attributesAdded: []
       - status: dev
         content:
@@ -49223,20 +49243,20 @@ packages:
             mutation. The request shape is Workflows/Change Request, including a summary and optional structured sectionChanges.
             The operation itself only declares the action; the paired Propose Change Workflow implements storage and validation.
           type:
-            blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+            blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
           request:
             type:
               blueId: 6DTYzUFXoVEV5WjVKmQveSztfXfVN5nr1bso3ygW9ocU
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8HQK7y79nm3M3cRCnM3gCWEbS6PqurBCqcYPoaWgKD84
+            typeBlueId: 6KfyYR3LoTKJLsgPkmYkXacY7JMPvTjJUeqtJXXfVHMr
             attributesAdded: []
       - status: dev
         content:
           name: Propose Change Workflow
           description: Stores a proposed change under /proposedChange{postfix}.
           type:
-            blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+            blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
           request:
             description: Expected request payload for this workflow.
             type:
@@ -49387,7 +49407,7 @@ packages:
                             value: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: D46msJi1VAwKc9ANScqNsoCFGuXkcodMaPGWKXg77uPj
+            typeBlueId: 8vYuJh8cJGWzYHFG5z42LCpx219obwXWc2Z9D1CJ5bJa
             attributesAdded: []
       - status: dev
         content:
@@ -49422,17 +49442,17 @@ packages:
             Change Workflow checks that proposal state exists and removes it through an Update Document step. If no proposal exists
             at the expected path, the workflow emits Proposed Change Invalid.
           type:
-            blueId: wGksq5vE8TroTr6StteHDnMx9mJKqT7dHoYT9bEddym
+            blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2KuL6JGr5dMpdw1YgcoDkFNDW4h86LgBQBWCejqFeUvE
+            typeBlueId: J3eHxcp4f3sKC2zohWMWLo5AvWAi2DJiNBPkExd1EhvU
             attributesAdded: []
       - status: dev
         content:
           name: Reject Change Workflow
           description: Discards a previously proposed change by removing its proposal state.
           type:
-            blueId: CXotTNTYxqqSgDBzTGJjbLVvsjrxJMgmJZaC1rA826CF
+            blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
           postfix:
             description: Optional postfix used while building proposed change state key.
             type:
@@ -49527,7 +49547,7 @@ packages:
                             value: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4GBqF7ko9oN34RAFL9uY5tx7R8FFP8idM1VaBKiXA1Tb
+            typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 2tnaX9QwU5LNWk5BZBUPNPJTntygyA6Ec2XqGtmWC765
+  - DgPudiAXeLaTZ8NRJncKrsikjGTYRT5qA2gmW4JTrLkQ

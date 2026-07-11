@@ -5,9 +5,11 @@ description: |
   a Sequential Workflow Operation is discovered and invoked as a same-scope handler bound to its channel.
 
   A Sequential Workflow Operation is still invoked like any other Operation: callers post an Operation Request naming
-  the operation contract key; the request payload must conform to this operation's request shape; and the message must
-  arrive through the operation's channel. The workflow then runs the declared steps deterministically and returns effects
-  such as triggered events or document updates through the Blue Contracts processor.
+  the operation contract key and its effective channel, and the request payload must conform to this operation's request
+  shape. The request may be accepted through a different eligible source channel. A supporting processor routes it to
+  the operation's effective channel while preserving source-channel checkpoint semantics. The workflow then runs the
+  declared steps deterministically and returns effects such as triggered events or document updates through the Blue
+  Contracts processor.
 
   Use this for document-owned behavior where the operation interface and implementation should live together in a single
   contract entry. A plain Operation can still declare the operation interface when a runtime or document chooses to bind

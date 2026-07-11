@@ -29,7 +29,7 @@ requireExactDocumentVersion:
   description: >
     When true, the feeder passes the request only if document equals the current
     target state. When false or absent, a newer state may be accepted according
-    to operation-matching rules.
+    to the feeder's document-version eligibility policy.
 
 request:
   description: Operation-specific request payload.

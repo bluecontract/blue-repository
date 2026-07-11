@@ -6,6 +6,11 @@ description: |
   confirmation. When participant channels are added or removed through normal document updates, this channel follows the
   current document structure automatically.
 
+  The union has no timeline or actor of its own. It delegates eligibility to the same-scope Timeline Channels, each of
+  which supplies its own timeline and actor binding. If several child channels accept the same entry, this channel
+  produces one logical delivery to handlers bound to the All Timelines Channel key. Its checkpoint is independent from
+  checkpoints of child channels used directly elsewhere in the document.
+
   All Timelines Channel does not create a new timeline, does not merge provider proofs, and does not change ordering.
   The feeder/runtime must still obtain completeness for every timeline that participates in the current document scope
   and must deliver entries in the canonical deterministic order. The channel only simplifies authoring by avoiding a

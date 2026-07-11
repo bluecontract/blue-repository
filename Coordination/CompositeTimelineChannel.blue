@@ -5,10 +5,15 @@ description: |
   Channel matches when any referenced child channel would accept the delivered event. It is useful when a workflow
   should react to a family of participant timelines while binding handlers to one logical channel key.
 
+  The composite has no timeline or actor of its own. Each referenced Timeline Channel supplies its own timeline and actor
+  binding, and the composite delegates event eligibility to those children. If several children accept the same entry,
+  the composite produces one logical delivery to handlers bound to the composite key. The composite's checkpoint is
+  independent from checkpoints of child channels used directly elsewhere in the document.
+
   This type does not create global consensus and does not collapse the child timelines into one storage log. Each child
-  timeline retains its provider, checkpoint, completeness, actor attribution, and trust model. The composite only
-  simplifies routing inside the document. A correct feeder/processor must still preserve deterministic ordering across
-  the relevant timelines using provider completeness guarantees and the Blue Contracts checkpoint model.
+  timeline retains its provider, completeness, actor attribution, and trust model. The composite only simplifies routing
+  inside the document. A correct feeder/processor must still preserve deterministic ordering across the relevant
+  timelines using provider completeness guarantees and the Blue Contracts checkpoint model.
 channels:
   type: List
   itemType: Text
