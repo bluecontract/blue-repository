@@ -123,7 +123,6 @@ validation:
       immutable BEX binding named request.
 
   function:
-    entry: validateMandateRequest
     description: |
       Optional deterministic BEX validation program represented as a Blue node.
       The field intentionally has no repository-local nominal type: BEX program
@@ -138,6 +137,12 @@ validation:
       The feeder or provider compiles and invokes the selected program when it
       validates a request. When absent, custom BEX validation is treated as
       passing.
+
+    entry:
+      type: Text
+      description: |
+        Optional name of the local function to invoke. When present, functions
+        must declare a function with exactly this name.
 
 contracts:
   mandateGuarantorChannel:

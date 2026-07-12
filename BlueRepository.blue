@@ -136,19 +136,6 @@ packages:
             attributesAdded: []
       - status: dev
         content:
-          name: PermissionGrant
-          description: |
-            Broad document family for documents whose main purpose is granting or revoking authority.
-            Use the top-level `kind` to describe the business permission shape,
-            such as `Single Document Permission Grant` or `Linked Documents Permission Grant`.
-          type:
-            blueId: B62tsckv8aQiyFAchgqgptfB5C6jtDPkS2pLT1h3G793
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: EqJ715y2fFsWhgBRXg5X9GDBxrkEsdend14hHmSsD8Ma
-            attributesAdded: []
-      - status: dev
-        content:
           name: Profile
           description: |
             Broad document family for a public-facing identity or presence.
@@ -1571,14 +1558,14 @@ packages:
             description: |
               Optional mandate-backed authority under which actor claims to act for another actor. A feeder validates this authority before delivery when the requested action is not directly eligible through a source channel.
             type:
-              blueId: 8gZzjsHjuprmqBs7wCWSfuLL9ebemxvbRMHt82pmXviq
+              blueId: J4NZYjNPMRgQq9y56UHUBumg1rATxBPEbp9yiWZtjwfY
           message:
             description: Message or event recorded by the entry.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9Cwdwkzrs8w9x2S78qrfnsa6EFj7AeCVocSqXYXFkfJ6#0
+            typeBlueId: H4cyvQ2SpkZK1BffH15ZGV7X8a99S3kFQJhX3AFgG5va#0
             attributesAdded: []
       - status: stable
         content:
@@ -33455,14 +33442,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
+            blueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 64YXUmTp7hjij8kw9o2mki2nGDJAa5zEpGnqWrkFvKAR
+            typeBlueId: 4GceQTHVxT6Hn6ycYu6jynN1Nno7sq9fDs2LeCFKWRK9
             attributesAdded: []
       - status: stable
         content:
@@ -34662,12 +34649,14 @@ packages:
                 validates a request. When absent, custom BEX validation is treated as
                 passing.
               entry:
+                description: |
+                  Optional name of the local function to invoke. When present, functions
+                  must declare a function with exactly this name.
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                value: validateMandateRequest
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
+            typeBlueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
             attributesAdded: []
       - status: stable
         content:
@@ -34726,12 +34715,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
+              blueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8gZzjsHjuprmqBs7wCWSfuLL9ebemxvbRMHt82pmXviq
+            typeBlueId: J4NZYjNPMRgQq9y56UHUBumg1rATxBPEbp9yiWZtjwfY
             attributesAdded: []
       - status: stable
         content:
@@ -34811,7 +34800,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: 3U6cy95gVZ8BP882ayNnBh3uK6VefE2fBmjMwLjkYJze
+            blueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -34831,7 +34820,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: JXDSRcjyaHM73NPYEpwRjRKaPZP95pR4STterb4c6yE
+            typeBlueId: 9vxhKfACpWiwry8SHnfRxi43NuWYHmUwvwwZW2TKeKk3
             attributesAdded: []
       - status: stable
         content:
@@ -34914,40 +34903,10 @@ packages:
             attributesAdded: []
       - status: stable
         content:
-          name: Agent Actor
-          type:
-            blueId: GnMntk3hLvHEsZTBE8Gk7ytPBexj6jhBJHdaxnJYhEQ7
-          onBehalfOf:
-            description: The principal's accountId
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          agentRef:
-            description: Which Worker acted
-            type:
-              blueId: 3FcyLzeWjTqmYYg1Tmqu2en4SKfYbCFn8Shf3gDxo9xK
-          delegation:
-            description: The grant document/session used
-            type:
-              blueId: 3FcyLzeWjTqmYYg1Tmqu2en4SKfYbCFn8Shf3gDxo9xK
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 6HbWNKhkmhQMDxVww1mvQpvSy33G7anaeWPUohj3g1bC
-            attributesAdded: []
-      - status: stable
-        content:
           name: All Participants Ready
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: Ff61TKzxLStjvfMksRNUBif2PRJGJM6XvmTqSf3M76wC
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Anchor Automation Template
-          description: |
-            Template payload that can be included in a MyOS package to optionally start an automation after the Agent session is created.
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 8eyv5ogjHbTqUeaJKWHMenLs3MaCnpGSQkbPrCqvk2Ga
             attributesAdded: []
       - status: stable
         content:
@@ -35448,7 +35407,7 @@ packages:
               valueType:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
           capabilities:
-            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction)
             type:
               blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
             keyType:
@@ -35479,7 +35438,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 66zD4DF3aCGvitW79bTBZy5iYAuMzCfyquyvKsKpCKiD
+            typeBlueId: C7nQJFDtUMCNte6TSiSciWkJbDKrux3AwrhjzMs6psVY
             attributesAdded: []
       - status: stable
         content:
@@ -35492,26 +35451,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: 5z86Uk79T94VasXdy6RSWjZqVUmiEfwGVWrkGc9ZooLm
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Inform User To Install MyOS Package
-          description: Notifies the user that a MyOS Package is ready to install.
-          title:
-            description: Short, user-facing headline (e.g., "Install Agent Package")
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          message:
-            description: Context for the user (e.g., who suggested it, what it does)
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          package:
-            description: The complete package to be bootstrapped
-            type:
-              blueId: FX9yvQWAiZMMwnUF1vY1HMumJNNg7ENP7ETxha1kvWkn
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: B7HmEAQxcEvr6CPyXwPZGLVGYcddcaajrDKgt5eEubQa
             attributesAdded: []
       - status: stable
         content:
@@ -35672,7 +35611,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: 64YXUmTp7hjij8kw9o2mki2nGDJAa5zEpGnqWrkFvKAR
+            blueId: 4GceQTHVxT6Hn6ycYu6jynN1Nno7sq9fDs2LeCFKWRK9
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35684,7 +35623,7 @@ packages:
                   blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AcBGCh8ceAgQRi2MNfrXSFSSiiq6VCVDzTbwU3JXcCFH
+            typeBlueId: 8hJjvdfqBx5GNVorWQHXaqA4VPzaauAJtxdj5AVFw93N
             attributesAdded: []
       - status: stable
         content:
@@ -35692,7 +35631,7 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: JXDSRcjyaHM73NPYEpwRjRKaPZP95pR4STterb4c6yE
+            blueId: 9vxhKfACpWiwry8SHnfRxi43NuWYHmUwvwwZW2TKeKk3
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35708,7 +35647,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9rF6zL8dTjb5RhT5qoqU1mxMabRZd9wRLFXnJ6oS3QXo
+            typeBlueId: FL7Caksowk6AvTQbLW3cTECTCyhbWKeb3iFbZLPRg5UV
             attributesAdded: []
       - status: stable
         content:
@@ -35759,61 +35698,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: 8fSvEL47NFBSYEFSRNfDpx6qWXHr1T6bNfimrcZ1JR9w
-            attributesAdded: []
-      - status: stable
-        content:
-          name: MyOS Package
-          description: |
-            A distributable blueprint for a new Agent session, which can include pre-configured automations that start on installation.
-          type:
-            blueId: 8s2rAFDtiB6sCwqeURkT4Lq7fcc2FXBkmX9B9p7R4Boc
-          document:
-            description: The full initial state of the Agent to be created. Root type MUST specialize 'Agent'.
-          agentStoreDescription:
-            description: Human-readable description for stores/directories
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          channelBindings:
-            description: Maps channel names to participant identifiers
-            type:
-              blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-            keyType:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            valueType:
-              blueId: 4FAZ94JPExNM4pn2ZhtdHa4CVP7uASmLNVrBy7aCG1p5
-          installerChannel:
-            description: Channel name in 'document' to bind to the installing user/account
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          initialMessages:
-            description: Optional per-participant invitation messages (installer's message is public)
-            defaultMessage:
-              description: Default invitation message sent to all participants
-              type:
-                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            perChannel:
-              description: Per-channel custom invitation messages
-              type:
-                blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-              keyType:
-                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-              valueType:
-                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          capabilities:
-            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
-            type:
-              blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-            keyType:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            valueType:
-              blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
-          automationTemplate:
-            description: Optional automation template to start post-creation
-            type:
-              blueId: 8eyv5ogjHbTqUeaJKWHMenLs3MaCnpGSQkbPrCqvk2Ga
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: FX9yvQWAiZMMwnUF1vY1HMumJNNg7ENP7ETxha1kvWkn
             attributesAdded: []
       - status: stable
         content:
@@ -35914,7 +35798,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 64YXUmTp7hjij8kw9o2mki2nGDJAa5zEpGnqWrkFvKAR
+            blueId: 4GceQTHVxT6Hn6ycYu6jynN1Nno7sq9fDs2LeCFKWRK9
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35943,7 +35827,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DDigmSqGxmppDu6t9FuUQETvZV5vhq21VVK1jcQpoLvR
+            typeBlueId: J7NZXKP2EC6Fu8oijfkW3oQ8qSwbKFLxUvsmNJZZszv4
             attributesAdded: []
       - status: stable
         content:
@@ -36057,13 +35941,13 @@ packages:
           name: MyOS Timeline Entry
           description: MyOS-specific timeline entry with account and email information
           type:
-            blueId: 9Cwdwkzrs8w9x2S78qrfnsa6EFj7AeCVocSqXYXFkfJ6#0
+            blueId: H4cyvQ2SpkZK1BffH15ZGV7X8a99S3kFQJhX3AFgG5va#0
           timeline:
             type:
               blueId: FxJvs5C7UPo2gK1jU4d3R1fGC8HUHNC26erWf86z7EFg
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BmZ2PAs59AyQGzDaF3UW4H3MM4WchxkVvMHRb9r5wjys
+            typeBlueId: 7riEBA1ark9wV7HSGANRczHtUWZKg63Wkxn83NoCWjGV
             attributesAdded: []
       - status: dev
         content:
@@ -36076,13 +35960,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: Cw952SXno2SWR9HL8EwUxWGeioRjxHjCd7G7uFAwC9kN
-            attributesAdded: []
-      - status: stable
-        content:
-          name: MyOS Worker Agency
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 4Lix4AKXvBDvrwxw2htSdYFKxL4wugEQzqoSEYet5Dh1
             attributesAdded: []
       - status: stable
         content:
@@ -36450,51 +36327,6 @@ packages:
             attributesAdded: []
       - status: stable
         content:
-          name: Start Worker Session Requested
-          description: Parent worker requests from MyOS Admin to start a new child session. Parent worker requires to have Worker Agency Permission Grant.
-          type:
-            blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
-          onBehalfOf:
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          document:
-            description: Target Blue document to be bootstrapped
-          channelBindings:
-            description: Maps channel names to participant identifiers
-            type:
-              blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-            keyType:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            valueType:
-              blueId: 4FAZ94JPExNM4pn2ZhtdHa4CVP7uASmLNVrBy7aCG1p5
-          initialMessages:
-            description: Messages sent to participants when inviting them to the bootstrapped document
-            defaultMessage:
-              description: Default invitation message sent to all participants
-              type:
-                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            perChannel:
-              description: Per-channel custom invitation messages
-              type:
-                blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-              keyType:
-                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-              valueType:
-                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          capabilities:
-            description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
-            type:
-              blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-            keyType:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            valueType:
-              blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: EQx8myuxYAQfzWxuHfXnG97ymr9PbZfUM4R8Eymvbvhg
-            attributesAdded: []
-      - status: stable
-        content:
           name: Subscribe to Session Requested
           description: Document asks MyOS Admin to mediate a subscription to a target session it can READ.
           type:
@@ -36622,22 +36454,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: 4RvVyoEwATa2dtpRRoXbnRLbizq2vqeeMQVmqUrCd8JN
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Worker Session Starting
-          description: Worker session is starting.
-          type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
-          granteeDocumentId:
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          targetDocumentType:
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: F1WdMJXz9SxycuszEXxaq2d9HM5XWGSh2JTRWjAxutfp
             attributesAdded: []
   - name: PayNote
     types:
@@ -49550,4 +49366,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - DgPudiAXeLaTZ8NRJncKrsikjGTYRT5qA2gmW4JTrLkQ
+  - DuEAmqH8j5rFSC5rnjzKqe7gT8t6mRvpg6aV5eawCSuq

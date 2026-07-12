@@ -25,7 +25,7 @@ capabilities:
   type: Dictionary
   keyType: Text
   valueType: Boolean
-  description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+  description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction)
 bootstrapStatus:
   type: Coordination/Document Status
   description: Overall bootstrap process status
