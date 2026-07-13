@@ -5,8 +5,8 @@ description: |
   successfully confirms the declared authority relationship.
 
   Confirmation does not necessarily activate the mandate. When immediate
-  activation is enabled, this Message is followed by Mandate Activation
-  Requested and, if accepted, Mandate Activated.
+  activation is enabled, the same operation also emits Mandate Activated for
+  the inherited activation workflow to apply.
 
 timestampUs:
   type: Integer

@@ -1,0 +1,38 @@
+name: Mandate Validation
+description: |
+  Optional static and deterministic request-validation configuration used by
+  Mandate documents. The containing concrete mandate type defines the input
+  examined by this configuration and the runtime component that invokes it.
+
+  Validation passes only when both configured checks pass: request is absent or
+  matches the candidate input, and function is absent or evaluates to Boolean
+  true for that same input.
+
+request:
+  description: |
+    Optional static Blue pattern matched against the input defined by the
+    concrete mandate type. When absent, static request-shape matching imposes
+    no additional restriction.
+
+    The same candidate input is passed to function as the immutable BEX binding
+    named request.
+
+function:
+  description: |
+    Optional deterministic BEX validation program represented as a Blue node.
+    This field intentionally has no repository-local nominal BEX type: program
+    syntax and compilation are defined by the BEX specification and runtime.
+
+    By convention, the host passes the candidate input being validated as the
+    immutable BEX binding named request. Concrete mandate types define the
+    semantic meaning of that input.
+
+    A concrete mandate document may define function.entry to select a local
+    function. When present, function.functions must declare a callable function
+    with exactly that name. The feeder or provider invokes the selected entry
+    without arguments; the candidate input remains available through the
+    request binding.
+
+    When function is absent, function validation passes. When present, only the
+    Boolean result true passes. False, null, undefined, a non-Boolean result, or
+    deterministic compilation or execution failure rejects the candidate.

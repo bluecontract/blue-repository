@@ -13,17 +13,17 @@ description: |
   Activation records the timestamp from which the authorized actor may use the
   delegated authority.
 
-  By default, successful authority confirmation requests immediate activation.
-  A mandate may set activateOnAuthorityConfirmation to false and define
-  additional deterministic workflows that emit Mandate/Mandate Activation
-  Requested when a later condition is satisfied.
+  By default, successful authority confirmation emits Mandate/Mandate
+  Activated for the inherited activation workflow to apply. A mandate may set
+  activateOnAuthorityConfirmation to false and define an additional operation
+  that emits Mandate/Mandate Activated when a later condition is satisfied.
 
   The base type defines and implements initialization, authority confirmation,
   activation, termination, lifecycle event emission, lifecycle transition
   guards, and graceful mandate-document termination. Subtypes inherit these
   lifecycle implementations unchanged. They may add specialized fields,
-  validation, participants, embedded documents, and workflows that emit the
-  standard activation or termination request Messages.
+  validation, participants, embedded documents, and operations that emit the
+  standard activation or termination Messages.
 
 status:
   type: Coordination/Status
@@ -53,21 +53,23 @@ initializationError:
     First deterministic initialization error when status is
     Coordination/Status Failed.
 
-    This field is absent when initialization succeeds. Initialization stops at
-    the first material error rather than accumulating an error list.
+    Initialization writes this field only when initialization fails and stops
+    at the first material error rather than accumulating an error list. A
+    successful initialization does not write, clear, or normalize a value
+    already present in an authored document.
 
 activateOnAuthorityConfirmation:
   type: Boolean
   description: |
-    Controls whether successful authority confirmation also requests mandate
-    activation.
+    Controls whether successful authority confirmation also emits the mandate
+    activation Message.
 
-    When true, successful confirmation emits Mandate/Mandate Activation
-    Requested, which is handled by the inherited activation workflow.
+    When true, successful confirmation emits Mandate/Mandate Activated, which
+    is handled by the inherited activation workflow.
 
     When false, successful confirmation leaves the mandate in
-    Mandate/Status Authority Confirmed. A specialized workflow must later emit
-    Mandate/Mandate Activation Requested.
+    Mandate/Status Authority Confirmed. A specialized operation must later emit
+    Mandate/Mandate Activated.
 
     When absent before initialization, the initialization workflow materializes
     true. The field is not a fixed inherited value, so a concrete mandate may
@@ -81,7 +83,8 @@ authorityConfirmedAt:
     Mandate/Status Authority Confirmed.
 
     The value is derived by the inherited authority-confirmation workflow. It
-    is never supplied by the operation request and is never replaced.
+    is never supplied by the operation request. After authority confirmation
+    succeeds, inherited lifecycle workflows do not replace it.
 
 activatedAt:
   type: Integer
@@ -90,8 +93,9 @@ activatedAt:
 
     The value is derived by the inherited activation workflow from the root
     causal Coordination/Timeline Entry that led to the accepted
-    Mandate/Mandate Activation Requested Message. It is never supplied by
-    the activation request and is never replaced.
+    Mandate/Mandate Activated Message. It is not supplied by that Message.
+    After activation succeeds, inherited lifecycle workflows do not replace
+    it.
 
 terminatedAt:
   type: Integer
@@ -100,10 +104,12 @@ terminatedAt:
 
     The value is derived by the inherited termination workflow from the root
     causal Coordination/Timeline Entry that led to the accepted
-    Mandate/Mandate Termination Requested Message. It is never supplied by
-    the termination request and is never replaced.
+    Mandate/Mandate Terminated Message. It is not supplied by that Message.
+    After termination succeeds, inherited lifecycle workflows do not replace
+    it.
 
 validation:
+  type: Mandate/Mandate Validation
   description: |
     Optional request-validation convention inherited by mandate subtypes.
 
@@ -112,37 +118,6 @@ validation:
     Mandate/Operation Mandate matches the Operation Request payload.
     Document-responder and MyOS mandate types may validate an entire request
     Message.
-
-  request:
-    description: |
-      Optional static Blue pattern matched against the input defined by the
-      concrete mandate type. When absent, static request-shape matching imposes
-      no additional restriction.
-
-      The same candidate input is passed to validation.function as the
-      immutable BEX binding named request.
-
-  function:
-    description: |
-      Optional deterministic BEX validation program represented as a Blue node.
-      The field intentionally has no repository-local nominal type: BEX program
-      syntax and compilation are defined by the BEX specification and runtime.
-
-      By convention, the host passes the candidate input being validated as the
-      immutable BEX binding named request. Concrete mandate types define the
-      semantic meaning of that input.
-
-      When validation.function.entry is present, initialization verifies that
-      validation.function.functions declares a local function with that name.
-      The feeder or provider compiles and invokes the selected program when it
-      validates a request. When absent, custom BEX validation is treated as
-      passing.
-
-    entry:
-      type: Text
-      description: |
-        Optional name of the local function to invoke. When present, functions
-        must declare a function with exactly this name.
 
 contracts:
   mandateGuarantorChannel:
@@ -189,19 +164,19 @@ contracts:
       Processor-managed lifecycle channel used by the inherited initialization
       workflow.
 
-  mandateActivationRequestedChannel:
+  mandateActivatedChannel:
     type: Triggered Event Channel
     description: |
-      Internal triggered-event channel routing Mandate/Mandate Activation
-      Requested Messages emitted by confirmation or specialized mandate
-      workflows. External Timeline Entries do not enter this channel directly.
+      Internal triggered-event channel routing Mandate/Mandate Activated
+      Messages emitted by confirmation or specialized mandate operations.
+      External Timeline Entries do not enter this channel directly.
 
-  mandateTerminationRequestedChannel:
+  mandateTerminatedChannel:
     type: Triggered Event Channel
     description: |
-      Internal triggered-event channel routing Mandate/Mandate Termination
-      Requested Messages emitted by the standard termination operation or
-      specialized mandate workflows.
+      Internal triggered-event channel routing Mandate/Mandate Terminated
+      Messages emitted by the standard termination operation or specialized
+      mandate operations.
 
   mandateLifecycleDefinition:
     type: Coordination/Compute Definition
@@ -210,30 +185,60 @@ contracts:
       It contains deterministic functions used by initializeMandate,
       confirmMandateAuthority, applyMandateActivation, and
       applyMandateTermination. Subtypes do not replace these functions.
+    constants:
+      statusPendingType:
+        type: List
+        itemType: Coordination/Status Pending
+      statusAuthorityConfirmedType:
+        type: List
+        itemType: Mandate/Status Authority Confirmed
+      statusActiveType:
+        type: List
+        itemType: Mandate/Status Active
+      statusFailedType:
+        type: List
+        itemType: Coordination/Status Failed
+      authorityConfirmedMessageType:
+        type: List
+        itemType: Mandate/Mandate Authority Confirmed
+      activatedMessageType:
+        type: List
+        itemType: Mandate/Mandate Activated
+      terminatedMessageType:
+        type: List
+        itemType: Mandate/Mandate Terminated
     functions:
       isStatusPending:
         expr:
-          $is:
-            node:
-              $document: /status
-            pattern:
-              type: Coordination/Status Pending
+          $eq:
+            - $document: /status/type/blueId
+            - $const:
+                name: statusPendingType
+                path: /itemType/blueId
 
       isStatusAuthorityConfirmed:
         expr:
-          $is:
-            node:
-              $document: /status
-            pattern:
-              type: Mandate/Status Authority Confirmed
+          $eq:
+            - $document: /status/type/blueId
+            - $const:
+                name: statusAuthorityConfirmedType
+                path: /itemType/blueId
 
       isStatusActive:
         expr:
-          $is:
-            node:
-              $document: /status
-            pattern:
-              type: Mandate/Status Active
+          $eq:
+            - $document: /status/type/blueId
+            - $const:
+                name: statusActiveType
+                path: /itemType/blueId
+
+      isStatusFailed:
+        expr:
+          $eq:
+            - $document: /status/type/blueId
+            - $const:
+                name: statusFailedType
+                path: /itemType/blueId
 
       hasDeclaredValidationEntry:
         expr:
@@ -288,63 +293,53 @@ contracts:
           inResponseTo:
             description: Exact Message answered by this lifecycle Message.
         expr:
-          type: Mandate/Mandate Authority Confirmed
-          timestampUs:
-            $var: timestampUs
-          inResponseTo:
-            $var: inResponseTo
-
-      activationRequestedMessage:
-        args:
-          inResponseTo:
-            description: Exact Message that caused the activation request.
-        expr:
-          type: Mandate/Mandate Activation Requested
-          inResponseTo:
-            $var: inResponseTo
+          $objectSet:
+            object:
+              timestampUs:
+                $var: timestampUs
+              inResponseTo:
+                $var: inResponseTo
+            key: type
+            val:
+              $const:
+                name: authorityConfirmedMessageType
+                path: /itemType
 
       activatedMessage:
         args:
-          timestampUs:
-            description: Root Timeline Entry timestamp.
           inResponseTo:
-            description: Accepted activation request.
+            description: Exact Message that caused activation.
         expr:
-          type: Mandate/Mandate Activated
-          timestampUs:
-            $var: timestampUs
-          inResponseTo:
-            $var: inResponseTo
-
-      terminationRequestedMessage:
-        args:
-          reason:
-            description: Optional termination reason.
-          inResponseTo:
-            description: Exact Message that caused the termination request.
-        expr:
-          type: Mandate/Mandate Termination Requested
-          reason:
-            $var: reason
-          inResponseTo:
-            $var: inResponseTo
+          $objectSet:
+            object:
+              inResponseTo:
+                $var: inResponseTo
+            key: type
+            val:
+              $const:
+                name: activatedMessageType
+                path: /itemType
 
       terminatedMessage:
         args:
-          timestampUs:
-            description: Root Timeline Entry timestamp.
-          reason:
-            description: Optional termination reason.
+          request:
+            description: Operation request payload, including any optional reason.
           inResponseTo:
-            description: Accepted termination request.
+            description: Exact Message that invoked termination.
         expr:
-          type: Mandate/Mandate Terminated
-          timestampUs:
-            $var: timestampUs
-          reason:
-            $var: reason
-          inResponseTo:
-            $var: inResponseTo
+          $objectSet:
+            object:
+              reason:
+                $var:
+                  name: request
+                  path: /reason
+              inResponseTo:
+                $var: inResponseTo
+            key: type
+            val:
+              $const:
+                name: terminatedMessageType
+                path: /itemType
 
       initializeMandate:
         do:
@@ -454,7 +449,7 @@ contracts:
                     then:
                       - $appendEvent:
                           $call:
-                            function: activationRequestedMessage
+                            function: activatedMessage
                             args:
                               inResponseTo:
                                 $var: confirmationMessage
@@ -469,14 +464,11 @@ contracts:
           - $let:
               order:
                 - timestampUs
-                - activationRequest
               vars:
                 timestampUs:
                   $call:
                     function: processingEventTimestamp
                     args: {}
-                activationRequest:
-                  $event: /
           - $if:
               cond:
                 $and:
@@ -498,50 +490,70 @@ contracts:
                     path: /activatedAt
                     val:
                       $var: timestampUs
-                - $appendEvent:
-                    $call:
-                      function: activatedMessage
-                      args:
-                        timestampUs:
-                          $var: timestampUs
-                        inResponseTo:
-                          $var: activationRequest
           - $return:
               changeset:
                 $changeset: true
               events:
                 $events: true
 
-      requestMandateTermination:
+      emitMandateTermination:
         do:
           - $let:
               order:
                 - sourceMessage
-                - reason
+                - terminationRequest
+                - terminable
               vars:
                 sourceMessage:
                   $call:
                     function: sourceMessage
                     args: {}
-                reason:
+                terminationRequest:
                   $choose:
                     cond:
                       $isKind:
                         val:
-                          $event: /message/request/reason
-                        kind: text
+                          $event: /message/request
+                        kind: object
                     then:
-                      $event: /message/request/reason
+                      $event: /message/request
                     else:
-                      $event: /reason
-          - $appendEvent:
-              $call:
-                function: terminationRequestedMessage
-                args:
-                  reason:
-                    $var: reason
-                  inResponseTo:
-                    $var: sourceMessage
+                      $choose:
+                        cond:
+                          $isKind:
+                            val:
+                              $event: /request
+                            kind: object
+                        then:
+                          $event: /request
+                        else:
+                          $event: /
+                terminable:
+                  $or:
+                    - $call:
+                        function: isStatusPending
+                        args: {}
+                    - $call:
+                        function: isStatusAuthorityConfirmed
+                        args: {}
+                    - $call:
+                        function: isStatusActive
+                        args: {}
+                    - $call:
+                        function: isStatusFailed
+                        args: {}
+          - $if:
+              cond:
+                $var: terminable
+              then:
+                - $appendEvent:
+                    $call:
+                      function: terminatedMessage
+                      args:
+                        request:
+                          $var: terminationRequest
+                        inResponseTo:
+                          $var: sourceMessage
           - $return:
               changeset:
                 $changeset: true
@@ -553,18 +565,12 @@ contracts:
           - $let:
               order:
                 - timestampUs
-                - terminationRequest
-                - reason
                 - terminable
               vars:
                 timestampUs:
                   $call:
                     function: processingEventTimestamp
                     args: {}
-                terminationRequest:
-                  $event: /
-                reason:
-                  $event: /reason
                 terminable:
                   $or:
                     - $call:
@@ -595,16 +601,6 @@ contracts:
                     path: /terminatedAt
                     val:
                       $var: timestampUs
-                - $appendEvent:
-                    $call:
-                      function: terminatedMessage
-                      args:
-                        timestampUs:
-                          $var: timestampUs
-                        reason:
-                          $var: reason
-                        inResponseTo:
-                          $var: terminationRequest
           - $return:
               changeset:
                 $changeset: true
@@ -625,12 +621,12 @@ contracts:
       declares the selected local function.
 
       On success it materializes activateOnAuthorityConfirmation as true when
-      absent, sets status to Coordination/Status Pending, and leaves
-      lifecycle timestamps absent.
+      absent and sets status to Coordination/Status Pending.
 
       On failure it sets status to Coordination/Status Failed, stores the
-      first deterministic failure in initializationError, and leaves lifecycle
-      timestamps absent.
+      first deterministic failure in initializationError.
+
+      Initialization does not write, clear, or normalize lifecycle timestamps.
 
       Concrete workflow steps and BEX implementation are defined in this base
       type.
@@ -651,7 +647,7 @@ contracts:
       Mandate/Status Authority Confirmed, records authorityConfirmedAt
       from the root causal Timeline Entry, emits Mandate/Mandate Authority
       Confirmed, and, when activateOnAuthorityConfirmation is not false, emits
-      Mandate/Mandate Activation Requested.
+      Mandate/Mandate Activated for the inherited activation workflow.
 
       On Mandate/Status Authority Confirmed, Mandate/Status Active,
       Mandate/Status Terminated, or Coordination/Status Failed it performs no
@@ -671,22 +667,22 @@ contracts:
 
   applyMandateActivation:
     type: Coordination/Sequential Workflow
-    channel: mandateActivationRequestedChannel
+    channel: mandateActivatedChannel
     event:
-      type: Mandate/Mandate Activation Requested
+      type: Mandate/Mandate Activated
     description: |
       Sole authoritative mandate-activation implementation.
 
-      On Mandate/Status Authority Confirmed it changes status to
-      Mandate/Status Active, records activatedAt from the root causal Timeline
-      Entry, and emits Mandate/Mandate Activated with
-      inResponseTo referencing the accepted activation request when available.
+      It accepts Mandate/Mandate Activated emitted by an operation. On
+      Mandate/Status Authority Confirmed it changes status to Mandate/Status
+      Active and records activatedAt from the root causal Timeline Entry. The
+      Message itself does not supply the timestamp and is not emitted again.
 
       On Coordination/Status Pending, Mandate/Status Active,
       Mandate/Status Terminated, or Coordination/Status Failed it performs no
       lifecycle mutation and does not replace activatedAt.
 
-      A request without a root causal Timeline Entry cannot establish an
+      A Message without a root causal Timeline Entry cannot establish an
       activation timestamp and must not activate the mandate.
 
       Concrete workflow steps and BEX implementation are defined in this base
@@ -701,47 +697,54 @@ contracts:
     type: Coordination/Sequential Workflow Operation
     channel: mandateTerminationChannel
     request:
-      type: Mandate/Mandate Termination Requested
+      reason:
+        type: Text
+        description: Optional human-readable or machine-generated termination reason.
     description: |
       Standard termination operation available to the guarantor and authority
       holder.
 
-      It does not write lifecycle state directly. It emits or forwards the
-      normalized Mandate/Mandate Termination Requested Message so that
+      Unless the mandate is already Mandate/Status Terminated, it emits
+      Mandate/Mandate Terminated with the optional request reason and
+      correlation to the invoking Message. This includes a failed mandate,
+      allowing the guarantor or authority holder to stop its processing. The
+      operation does not write lifecycle state directly;
       applyMandateTermination remains the sole authoritative termination
       implementation.
 
-      Specialized mandate types may add other operations or workflows that emit
-      the same request Message.
+      On Mandate/Status Terminated it emits no lifecycle Message. Specialized
+      mandate types may add other operations that emit Mandate/Mandate
+      Terminated.
 
       Concrete workflow steps are defined in this base type.
     steps:
-      - name: Request Mandate Termination
+      - name: Emit Mandate Terminated
         type: Coordination/Compute
         definition: mandateLifecycleDefinition
-        entry: requestMandateTermination
+        entry: emitMandateTermination
 
   applyMandateTermination:
     type: Coordination/Sequential Workflow
-    channel: mandateTerminationRequestedChannel
+    channel: mandateTerminatedChannel
     event:
-      type: Mandate/Mandate Termination Requested
+      type: Mandate/Mandate Terminated
     description: |
       Sole authoritative mandate-termination implementation.
 
-      On Coordination/Status Pending, Mandate/Status Authority Confirmed, or
-      Mandate/Status Active it changes status to Mandate/Status Terminated,
-      records terminatedAt from the root causal Timeline Entry, and emits
-      Mandate/Mandate Terminated, copies the accepted reason, sets
-      inResponseTo to the accepted termination request when available, and
-      requests graceful termination of the root processing scope after state
-      updates and emitted Messages are applied.
+      It accepts Mandate/Mandate Terminated emitted by an operation. On
+      Coordination/Status Pending, Mandate/Status Authority Confirmed, or
+      Mandate/Status Active it changes status to Mandate/Status Terminated and
+      records terminatedAt from the root causal Timeline Entry. The Message
+      itself carries any reason and correlation, does not supply the timestamp,
+      and is not emitted again.
+
+      After the state update, the workflow requests graceful termination of the
+      root processing scope.
 
       On Mandate/Status Terminated or Coordination/Status Failed it performs no
-      lifecycle mutation and does not replace terminatedAt.
-
-      A request without a root causal Timeline Entry cannot establish a
-      termination timestamp and must not terminate the mandate.
+      lifecycle mutation and does not replace terminatedAt. Receipt of the
+      termination Message still requests graceful processing termination, so a
+      failed mandate can be stopped without replacing its failure state.
 
       Concrete workflow steps, BEX implementation, and the
       Coordination/Terminate Processing step are defined in this base type.
@@ -750,18 +753,6 @@ contracts:
         type: Coordination/Compute
         definition: mandateLifecycleDefinition
         entry: applyMandateTermination
-
-  finalizeMandateTermination:
-    type: Coordination/Sequential Workflow
-    channel: mandateTerminationRequestedChannel
-    event:
-      type: Mandate/Mandate Terminated
-    description: |
-      Inherited terminal workflow. It runs only for the authoritative Mandate
-      Terminated Message emitted after applyMandateTermination has committed the
-      terminal state and lifecycle evidence, then requests graceful termination
-      of the mandate processing scope.
-    steps:
       - name: Gracefully Terminate Mandate Processing
         type: Coordination/Terminate Processing
         reason: Mandate terminated

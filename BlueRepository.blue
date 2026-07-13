@@ -1558,14 +1558,14 @@ packages:
             description: |
               Optional mandate-backed authority under which actor claims to act for another actor. A feeder validates this authority before delivery when the requested action is not directly eligible through a source channel.
             type:
-              blueId: J4NZYjNPMRgQq9y56UHUBumg1rATxBPEbp9yiWZtjwfY
+              blueId: 2AMMqD252NjcjZAHoCVitWx14XFT6rFuwjA3tZss5diu
           message:
             description: Message or event recorded by the entry.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: H4cyvQ2SpkZK1BffH15ZGV7X8a99S3kFQJhX3AFgG5va#0
+            typeBlueId: 6RcBVMHDvhHZ3doMB3qMU6Yj1KKsiPp8anFm46Y4CBWr#0
             attributesAdded: []
       - status: stable
         content:
@@ -33442,14 +33442,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
+            blueId: HP2QzwJvrCBddtzJ3FZk3eSkEiE9k7ZcMVA9NDV26jma
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4GceQTHVxT6Hn6ycYu6jynN1Nno7sq9fDs2LeCFKWRK9
+            typeBlueId: EWu5YYJiwvaaCrP8MeSGHQHzKmz5RDS8dYPERAKXxcgq
             attributesAdded: []
       - status: stable
         content:
@@ -33468,17 +33468,17 @@ packages:
             Activation records the timestamp from which the authorized actor may use the
             delegated authority.
 
-            By default, successful authority confirmation requests immediate activation.
-            A mandate may set activateOnAuthorityConfirmation to false and define
-            additional deterministic workflows that emit Mandate/Mandate Activation
-            Requested when a later condition is satisfied.
+            By default, successful authority confirmation emits Mandate/Mandate
+            Activated for the inherited activation workflow to apply. A mandate may set
+            activateOnAuthorityConfirmation to false and define an additional operation
+            that emits Mandate/Mandate Activated when a later condition is satisfied.
 
             The base type defines and implements initialization, authority confirmation,
             activation, termination, lifecycle event emission, lifecycle transition
             guards, and graceful mandate-document termination. Subtypes inherit these
             lifecycle implementations unchanged. They may add specialized fields,
-            validation, participants, embedded documents, and workflows that emit the
-            standard activation or termination request Messages.
+            validation, participants, embedded documents, and operations that emit the
+            standard activation or termination Messages.
           contracts:
             mandateGuarantorChannel:
               description: |
@@ -33529,18 +33529,18 @@ packages:
                 workflow.
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
-            mandateActivationRequestedChannel:
+            mandateActivatedChannel:
               description: |
-                Internal triggered-event channel routing Mandate/Mandate Activation
-                Requested Messages emitted by confirmation or specialized mandate
-                workflows. External Timeline Entries do not enter this channel directly.
+                Internal triggered-event channel routing Mandate/Mandate Activated
+                Messages emitted by confirmation or specialized mandate operations.
+                External Timeline Entries do not enter this channel directly.
               type:
                 blueId: 5HwxfbwRBCxG8xYpowWkCPC9akqUSKV7So2M4QHEmLsZ
-            mandateTerminationRequestedChannel:
+            mandateTerminatedChannel:
               description: |
-                Internal triggered-event channel routing Mandate/Mandate Termination
-                Requested Messages emitted by the standard termination operation or
-                specialized mandate workflows.
+                Internal triggered-event channel routing Mandate/Mandate Terminated
+                Messages emitted by the standard termination operation or specialized
+                mandate operations.
               type:
                 blueId: 5HwxfbwRBCxG8xYpowWkCPC9akqUSKV7So2M4QHEmLsZ
             mandateLifecycleDefinition:
@@ -33551,40 +33551,99 @@ packages:
                 applyMandateTermination. Subtypes do not replace these functions.
               type:
                 blueId: HifMgFGBgsqstDFZ2kXeQ45LVKXQMP52fV8TqeN6Z1j3
+              constants:
+                statusPendingType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                statusAuthorityConfirmedType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+                statusActiveType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+                statusFailedType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                authorityConfirmedMessageType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: EbNsQWy645JPPuWhkDw3XcrQk1neH2Z8KBsTvUTCrrmk
+                activatedMessageType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: 3HtuEaYgkn8rV9xZf1x5uY2v7S9WXbVkcV3rj3Sy6arJ
+                terminatedMessageType:
+                  type:
+                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                  itemType:
+                    blueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
               functions:
                 isStatusPending:
                   expr:
-                    $is:
-                      node:
-                        $document:
-                          type:
-                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                          value: /status
-                      pattern:
-                        type:
-                          blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                    $eq:
+                      items:
+                        - $document:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /status/type/blueId
+                        - $const:
+                            name: statusPendingType
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /itemType/blueId
                 isStatusAuthorityConfirmed:
                   expr:
-                    $is:
-                      node:
-                        $document:
-                          type:
-                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                          value: /status
-                      pattern:
-                        type:
-                          blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+                    $eq:
+                      items:
+                        - $document:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /status/type/blueId
+                        - $const:
+                            name: statusAuthorityConfirmedType
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /itemType/blueId
                 isStatusActive:
                   expr:
-                    $is:
-                      node:
-                        $document:
-                          type:
-                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                          value: /status
-                      pattern:
-                        type:
-                          blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+                    $eq:
+                      items:
+                        - $document:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /status/type/blueId
+                        - $const:
+                            name: statusActiveType
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /itemType/blueId
+                isStatusFailed:
+                  expr:
+                    $eq:
+                      items:
+                        - $document:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /status/type/blueId
+                        - $const:
+                            name: statusFailedType
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /itemType/blueId
                 hasDeclaredValidationEntry:
                   expr:
                     $or:
@@ -33680,94 +33739,84 @@ packages:
                     inResponseTo:
                       description: Exact Message answered by this lifecycle Message.
                   expr:
-                    type:
-                      blueId: F4AoZc1CD8TWUemaHy8VrNNBgEUM5JwRBHwkr4WtJ8En
-                    timestampUs:
-                      $var:
+                    $objectSet:
+                      object:
+                        timestampUs:
+                          $var:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: timestampUs
+                        inResponseTo:
+                          $var:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: inResponseTo
+                      key:
                         type:
                           blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: timestampUs
-                    inResponseTo:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: inResponseTo
-                activationRequestedMessage:
-                  args:
-                    inResponseTo:
-                      description: Exact Message that caused the activation request.
-                  expr:
-                    type:
-                      blueId: JA8tkhbAgaZ4T3wc8JXzTN3Swsaw1MpfNAPqTizdCSh1
-                    inResponseTo:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: inResponseTo
+                        value: type
+                      val:
+                        $const:
+                          name: authorityConfirmedMessageType
+                          path:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /itemType
                 activatedMessage:
                   args:
-                    timestampUs:
-                      description: Root Timeline Entry timestamp.
                     inResponseTo:
-                      description: Accepted activation request.
+                      description: Exact Message that caused activation.
                   expr:
-                    type:
-                      blueId: 4kYaMvec6yt4xdXwoHaPDH1gXamJY11txz7cBeFuJYD5
-                    timestampUs:
-                      $var:
+                    $objectSet:
+                      object:
+                        inResponseTo:
+                          $var:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: inResponseTo
+                      key:
                         type:
                           blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: timestampUs
-                    inResponseTo:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: inResponseTo
-                terminationRequestedMessage:
-                  args:
-                    reason:
-                      description: Optional termination reason.
-                    inResponseTo:
-                      description: Exact Message that caused the termination request.
-                  expr:
-                    type:
-                      blueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
-                    reason:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: reason
-                    inResponseTo:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: inResponseTo
+                        value: type
+                      val:
+                        $const:
+                          name: activatedMessageType
+                          path:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /itemType
                 terminatedMessage:
                   args:
-                    timestampUs:
-                      description: Root Timeline Entry timestamp.
-                    reason:
-                      description: Optional termination reason.
+                    request:
+                      description: Operation request payload, including any optional reason.
                     inResponseTo:
-                      description: Accepted termination request.
+                      description: Exact Message that invoked termination.
                   expr:
-                    type:
-                      blueId: 5SR8BVQL9t5UakLBZFfmnFb4hEPrGx8NUcpMT2gncA16
-                    timestampUs:
-                      $var:
+                    $objectSet:
+                      object:
+                        reason:
+                          $var:
+                            name: request
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /reason
+                        inResponseTo:
+                          $var:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: inResponseTo
+                      key:
                         type:
                           blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: timestampUs
-                    reason:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: reason
-                    inResponseTo:
-                      $var:
-                        type:
-                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                        value: inResponseTo
+                        value: type
+                      val:
+                        $const:
+                          name: terminatedMessageType
+                          path:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: /itemType
                 initializeMandate:
                   do:
                     items:
@@ -33996,7 +34045,7 @@ packages:
                                             function:
                                               type:
                                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                              value: activationRequestedMessage
+                                              value: activatedMessage
                                             args:
                                               inResponseTo:
                                                 $var:
@@ -34023,9 +34072,6 @@ packages:
                               - type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                 value: timestampUs
-                              - type:
-                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: activationRequest
                           vars:
                             timestampUs:
                               $call:
@@ -34033,11 +34079,6 @@ packages:
                                   type:
                                     blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                   value: processingEventTimestamp
-                            activationRequest:
-                              $event:
-                                type:
-                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: /
                       - $if:
                           cond:
                             $and:
@@ -34085,23 +34126,6 @@ packages:
                                       type:
                                         blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                       value: timestampUs
-                              - $appendEvent:
-                                  $call:
-                                    function:
-                                      type:
-                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                      value: activatedMessage
-                                    args:
-                                      timestampUs:
-                                        $var:
-                                          type:
-                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                          value: timestampUs
-                                      inResponseTo:
-                                        $var:
-                                          type:
-                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                          value: activationRequest
                       - $return:
                           changeset:
                             $changeset:
@@ -34113,7 +34137,7 @@ packages:
                               type:
                                 blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
                               value: true
-                requestMandateTermination:
+                emitMandateTermination:
                   do:
                     items:
                       - $let:
@@ -34124,7 +34148,10 @@ packages:
                                 value: sourceMessage
                               - type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: reason
+                                value: terminationRequest
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: terminable
                           vars:
                             sourceMessage:
                               $call:
@@ -34132,7 +34159,7 @@ packages:
                                   type:
                                     blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                   value: sourceMessage
-                            reason:
+                            terminationRequest:
                               $choose:
                                 cond:
                                   $isKind:
@@ -34140,38 +34167,87 @@ packages:
                                       $event:
                                         type:
                                           blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                        value: /message/request/reason
+                                        value: /message/request
                                     kind:
                                       type:
                                         blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                      value: text
+                                      value: object
                                 then:
                                   $event:
                                     type:
                                       blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                    value: /message/request/reason
+                                    value: /message/request
                                 else:
-                                  $event:
-                                    type:
-                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                    value: /reason
-                      - $appendEvent:
-                          $call:
-                            function:
+                                  $choose:
+                                    cond:
+                                      $isKind:
+                                        val:
+                                          $event:
+                                            type:
+                                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                            value: /request
+                                        kind:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: object
+                                    then:
+                                      $event:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: /request
+                                    else:
+                                      $event:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: /
+                            terminable:
+                              $or:
+                                items:
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isStatusPending
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isStatusAuthorityConfirmed
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isStatusActive
+                                  - $call:
+                                      function:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: isStatusFailed
+                      - $if:
+                          cond:
+                            $var:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: terminationRequestedMessage
-                            args:
-                              reason:
-                                $var:
-                                  type:
-                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                  value: reason
-                              inResponseTo:
-                                $var:
-                                  type:
-                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                  value: sourceMessage
+                              value: terminable
+                          then:
+                            items:
+                              - $appendEvent:
+                                  $call:
+                                    function:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: terminatedMessage
+                                    args:
+                                      request:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: terminationRequest
+                                      inResponseTo:
+                                        $var:
+                                          type:
+                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                          value: sourceMessage
                       - $return:
                           changeset:
                             $changeset:
@@ -34194,12 +34270,6 @@ packages:
                                 value: timestampUs
                               - type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: terminationRequest
-                              - type:
-                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: reason
-                              - type:
-                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                 value: terminable
                           vars:
                             timestampUs:
@@ -34208,16 +34278,6 @@ packages:
                                   type:
                                     blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                   value: processingEventTimestamp
-                            terminationRequest:
-                              $event:
-                                type:
-                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: /
-                            reason:
-                              $event:
-                                type:
-                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: /reason
                             terminable:
                               $or:
                                 items:
@@ -34282,28 +34342,6 @@ packages:
                                       type:
                                         blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                       value: timestampUs
-                              - $appendEvent:
-                                  $call:
-                                    function:
-                                      type:
-                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                      value: terminatedMessage
-                                    args:
-                                      timestampUs:
-                                        $var:
-                                          type:
-                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                          value: timestampUs
-                                      reason:
-                                        $var:
-                                          type:
-                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                          value: reason
-                                      inResponseTo:
-                                        $var:
-                                          type:
-                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                          value: terminationRequest
                       - $return:
                           changeset:
                             $changeset:
@@ -34325,12 +34363,12 @@ packages:
                 declares the selected local function.
 
                 On success it materializes activateOnAuthorityConfirmation as true when
-                absent, sets status to Coordination/Status Pending, and leaves
-                lifecycle timestamps absent.
+                absent and sets status to Coordination/Status Pending.
 
                 On failure it sets status to Coordination/Status Failed, stores the
-                first deterministic failure in initializationError, and leaves lifecycle
-                timestamps absent.
+                first deterministic failure in initializationError.
+
+                Initialization does not write, clear, or normalize lifecycle timestamps.
 
                 Concrete workflow steps and BEX implementation are defined in this base
                 type.
@@ -34365,7 +34403,7 @@ packages:
                 Mandate/Status Authority Confirmed, records authorityConfirmedAt
                 from the root causal Timeline Entry, emits Mandate/Mandate Authority
                 Confirmed, and, when activateOnAuthorityConfirmation is not false, emits
-                Mandate/Mandate Activation Requested.
+                Mandate/Mandate Activated for the inherited activation workflow.
 
                 On Mandate/Status Authority Confirmed, Mandate/Status Active,
                 Mandate/Status Terminated, or Coordination/Status Failed it performs no
@@ -34400,16 +34438,16 @@ packages:
               description: |
                 Sole authoritative mandate-activation implementation.
 
-                On Mandate/Status Authority Confirmed it changes status to
-                Mandate/Status Active, records activatedAt from the root causal Timeline
-                Entry, and emits Mandate/Mandate Activated with
-                inResponseTo referencing the accepted activation request when available.
+                It accepts Mandate/Mandate Activated emitted by an operation. On
+                Mandate/Status Authority Confirmed it changes status to Mandate/Status
+                Active and records activatedAt from the root causal Timeline Entry. The
+                Message itself does not supply the timestamp and is not emitted again.
 
                 On Coordination/Status Pending, Mandate/Status Active,
                 Mandate/Status Terminated, or Coordination/Status Failed it performs no
                 lifecycle mutation and does not replace activatedAt.
 
-                A request without a root causal Timeline Entry cannot establish an
+                A Message without a root causal Timeline Entry cannot establish an
                 activation timestamp and must not activate the mandate.
 
                 Concrete workflow steps and BEX implementation are defined in this base
@@ -34419,10 +34457,10 @@ packages:
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                value: mandateActivationRequestedChannel
+                value: mandateActivatedChannel
               event:
                 type:
-                  blueId: JA8tkhbAgaZ4T3wc8JXzTN3Swsaw1MpfNAPqTizdCSh1
+                  blueId: 3HtuEaYgkn8rV9xZf1x5uY2v7S9WXbVkcV3rj3Sy6arJ
               steps:
                 items:
                   - name: Apply Mandate Activation
@@ -34441,13 +34479,17 @@ packages:
                 Standard termination operation available to the guarantor and authority
                 holder.
 
-                It does not write lifecycle state directly. It emits or forwards the
-                normalized Mandate/Mandate Termination Requested Message so that
+                Unless the mandate is already Mandate/Status Terminated, it emits
+                Mandate/Mandate Terminated with the optional request reason and
+                correlation to the invoking Message. This includes a failed mandate,
+                allowing the guarantor or authority holder to stop its processing. The
+                operation does not write lifecycle state directly;
                 applyMandateTermination remains the sole authoritative termination
                 implementation.
 
-                Specialized mandate types may add other operations or workflows that emit
-                the same request Message.
+                On Mandate/Status Terminated it emits no lifecycle Message. Specialized
+                mandate types may add other operations that emit Mandate/Mandate
+                Terminated.
 
                 Concrete workflow steps are defined in this base type.
               type:
@@ -34457,11 +34499,13 @@ packages:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                 value: mandateTerminationChannel
               request:
-                type:
-                  blueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
+                reason:
+                  description: Optional human-readable or machine-generated termination reason.
+                  type:
+                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
               steps:
                 items:
-                  - name: Request Mandate Termination
+                  - name: Emit Mandate Terminated
                     type:
                       blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
                     definition:
@@ -34471,24 +34515,25 @@ packages:
                     entry:
                       type:
                         blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                      value: requestMandateTermination
+                      value: emitMandateTermination
             applyMandateTermination:
               description: |
                 Sole authoritative mandate-termination implementation.
 
-                On Coordination/Status Pending, Mandate/Status Authority Confirmed, or
-                Mandate/Status Active it changes status to Mandate/Status Terminated,
-                records terminatedAt from the root causal Timeline Entry, and emits
-                Mandate/Mandate Terminated, copies the accepted reason, sets
-                inResponseTo to the accepted termination request when available, and
-                requests graceful termination of the root processing scope after state
-                updates and emitted Messages are applied.
+                It accepts Mandate/Mandate Terminated emitted by an operation. On
+                Coordination/Status Pending, Mandate/Status Authority Confirmed, or
+                Mandate/Status Active it changes status to Mandate/Status Terminated and
+                records terminatedAt from the root causal Timeline Entry. The Message
+                itself carries any reason and correlation, does not supply the timestamp,
+                and is not emitted again.
+
+                After the state update, the workflow requests graceful termination of the
+                root processing scope.
 
                 On Mandate/Status Terminated or Coordination/Status Failed it performs no
-                lifecycle mutation and does not replace terminatedAt.
-
-                A request without a root causal Timeline Entry cannot establish a
-                termination timestamp and must not terminate the mandate.
+                lifecycle mutation and does not replace terminatedAt. Receipt of the
+                termination Message still requests graceful processing termination, so a
+                failed mandate can be stopped without replacing its failure state.
 
                 Concrete workflow steps, BEX implementation, and the
                 Coordination/Terminate Processing step are defined in this base type.
@@ -34497,10 +34542,10 @@ packages:
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                value: mandateTerminationRequestedChannel
+                value: mandateTerminatedChannel
               event:
                 type:
-                  blueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
+                  blueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
               steps:
                 items:
                   - name: Apply Mandate Termination
@@ -34514,23 +34559,6 @@ packages:
                       type:
                         blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                       value: applyMandateTermination
-            finalizeMandateTermination:
-              description: |
-                Inherited terminal workflow. It runs only for the authoritative Mandate
-                Terminated Message emitted after applyMandateTermination has committed the
-                terminal state and lifecycle evidence, then requests graceful termination
-                of the mandate processing scope.
-              type:
-                blueId: MyaXwTXty7ZujV89fT5STJvXpEr1W59puqdK2XM9ALv
-              channel:
-                type:
-                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                value: mandateTerminationRequestedChannel
-              event:
-                type:
-                  blueId: 5SR8BVQL9t5UakLBZFfmnFb4hEPrGx8NUcpMT2gncA16
-              steps:
-                items:
                   - name: Gracefully Terminate Mandate Processing
                     type:
                       blueId: GWdZwV4wh4D6d8knKC2ULofFTEZmtVE31Cm6pGtMiKxh
@@ -34565,21 +34593,23 @@ packages:
               First deterministic initialization error when status is
               Coordination/Status Failed.
 
-              This field is absent when initialization succeeds. Initialization stops at
-              the first material error rather than accumulating an error list.
+              Initialization writes this field only when initialization fails and stops
+              at the first material error rather than accumulating an error list. A
+              successful initialization does not write, clear, or normalize a value
+              already present in an authored document.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
           activateOnAuthorityConfirmation:
             description: |
-              Controls whether successful authority confirmation also requests mandate
-              activation.
+              Controls whether successful authority confirmation also emits the mandate
+              activation Message.
 
-              When true, successful confirmation emits Mandate/Mandate Activation
-              Requested, which is handled by the inherited activation workflow.
+              When true, successful confirmation emits Mandate/Mandate Activated, which
+              is handled by the inherited activation workflow.
 
               When false, successful confirmation leaves the mandate in
-              Mandate/Status Authority Confirmed. A specialized workflow must later emit
-              Mandate/Mandate Activation Requested.
+              Mandate/Status Authority Confirmed. A specialized operation must later emit
+              Mandate/Mandate Activated.
 
               When absent before initialization, the initialization workflow materializes
               true. The field is not a fixed inherited value, so a concrete mandate may
@@ -34593,7 +34623,8 @@ packages:
               Mandate/Status Authority Confirmed.
 
               The value is derived by the inherited authority-confirmation workflow. It
-              is never supplied by the operation request and is never replaced.
+              is never supplied by the operation request. After authority confirmation
+              succeeds, inherited lifecycle workflows do not replace it.
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
           activatedAt:
@@ -34602,8 +34633,9 @@ packages:
 
               The value is derived by the inherited activation workflow from the root
               causal Coordination/Timeline Entry that led to the accepted
-              Mandate/Mandate Activation Requested Message. It is never supplied by
-              the activation request and is never replaced.
+              Mandate/Mandate Activated Message. It is not supplied by that Message.
+              After activation succeeds, inherited lifecycle workflows do not replace
+              it.
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
           terminatedAt:
@@ -34612,8 +34644,9 @@ packages:
 
               The value is derived by the inherited termination workflow from the root
               causal Coordination/Timeline Entry that led to the accepted
-              Mandate/Mandate Termination Requested Message. It is never supplied by
-              the termination request and is never replaced.
+              Mandate/Mandate Terminated Message. It is not supplied by that Message.
+              After termination succeeds, inherited lifecycle workflows do not replace
+              it.
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
           validation:
@@ -34625,78 +34658,30 @@ packages:
               Mandate/Operation Mandate matches the Operation Request payload.
               Document-responder and MyOS mandate types may validate an entire request
               Message.
-            request:
-              description: |
-                Optional static Blue pattern matched against the input defined by the
-                concrete mandate type. When absent, static request-shape matching imposes
-                no additional restriction.
-
-                The same candidate input is passed to validation.function as the
-                immutable BEX binding named request.
-            function:
-              description: |
-                Optional deterministic BEX validation program represented as a Blue node.
-                The field intentionally has no repository-local nominal type: BEX program
-                syntax and compilation are defined by the BEX specification and runtime.
-
-                By convention, the host passes the candidate input being validated as the
-                immutable BEX binding named request. Concrete mandate types define the
-                semantic meaning of that input.
-
-                When validation.function.entry is present, initialization verifies that
-                validation.function.functions declares a local function with that name.
-                The feeder or provider compiles and invokes the selected program when it
-                validates a request. When absent, custom BEX validation is treated as
-                passing.
-              entry:
-                description: |
-                  Optional name of the local function to invoke. When present, functions
-                  must declare a function with exactly this name.
-                type:
-                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            type:
+              blueId: 333eCC8uWcMWgw8Ev2FfvZgJMUK9pw8LGUa1D1cYTSsQ
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
+            typeBlueId: HP2QzwJvrCBddtzJ3FZk3eSkEiE9k7ZcMVA9NDV26jma
             attributesAdded: []
       - status: stable
         content:
           name: Mandate Activated
           description: |
-            Authoritative Message emitted after the inherited mandate workflow
-            successfully changes the mandate from `Mandate/Status Authority Confirmed`
-            to `Mandate/Status Active`.
+            Lifecycle Message emitted by authority confirmation or another authorized
+            mandate operation.
 
-            When activation follows Mandate Activation Requested, inResponseTo references
-            that exact Message occurrence.
-          type:
-            blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
-          timestampUs:
-            description: Effective activation timestamp derived from the root causal Timeline Entry.
-            type:
-              blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
-            schema:
-              required: true
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 4kYaMvec6yt4xdXwoHaPDH1gXamJY11txz7cBeFuJYD5
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Mandate Activation Requested
-          description: |
-            Intermediate lifecycle Message requesting activation of a mandate in Mandate/Status Authority Confirmed.
-
-            It does not directly modify mandate state. Only the inherited
-            applyMandateActivation workflow may transition the mandate to Mandate/Status Active and emit
-            Mandate/Mandate Activated.
-
-            The inherited Message correlation fields may be used. No lifecycle timestamp
-            is supplied by this Message.
+            The inherited activation workflow accepts this Message while the mandate is
+            in Mandate/Status Authority Confirmed, changes the status to
+            Mandate/Status Active, and derives activatedAt from the root causal Timeline
+            Entry. This Message does not supply the effective timestamp and is not
+            re-emitted by the accepting workflow. The inherited inResponseTo field may
+            identify the Message that caused activation.
           type:
             blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: JA8tkhbAgaZ4T3wc8JXzTN3Swsaw1MpfNAPqTizdCSh1
+            typeBlueId: 3HtuEaYgkn8rV9xZf1x5uY2v7S9WXbVkcV3rj3Sy6arJ
             attributesAdded: []
       - status: stable
         content:
@@ -34715,12 +34700,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
+              blueId: HP2QzwJvrCBddtzJ3FZk3eSkEiE9k7ZcMVA9NDV26jma
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: J4NZYjNPMRgQq9y56UHUBumg1rATxBPEbp9yiWZtjwfY
+            typeBlueId: 2AMMqD252NjcjZAHoCVitWx14XFT6rFuwjA3tZss5diu
             attributesAdded: []
       - status: stable
         content:
@@ -34730,8 +34715,8 @@ packages:
             successfully confirms the declared authority relationship.
 
             Confirmation does not necessarily activate the mandate. When immediate
-            activation is enabled, this Message is followed by Mandate Activation
-            Requested and, if accepted, Mandate Activated.
+            activation is enabled, the same operation also emits Mandate Activated for
+            the inherited activation workflow to apply.
           type:
             blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
           timestampUs:
@@ -34743,47 +34728,22 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: F4AoZc1CD8TWUemaHy8VrNNBgEUM5JwRBHwkr4WtJ8En
+            typeBlueId: EbNsQWy645JPPuWhkDw3XcrQk1neH2Z8KBsTvUTCrrmk
             attributesAdded: []
       - status: stable
         content:
           name: Mandate Terminated
           description: |
-            Authoritative Message emitted after the inherited mandate workflow changes
-            the mandate to Mandate/Status Terminated and before graceful processing termination is
-            applied.
+            Lifecycle Message emitted by the standard termination operation or another
+            authorized mandate operation.
 
-            When termination follows Mandate Termination Requested, inResponseTo
-            references that exact Message occurrence.
-          type:
-            blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
-          timestampUs:
-            description: Effective termination timestamp derived from the root causal Timeline Entry.
-            type:
-              blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
-            schema:
-              required: true
-          reason:
-            description: Optional reason copied from the accepted termination request.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 5SR8BVQL9t5UakLBZFfmnFb4hEPrGx8NUcpMT2gncA16
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Mandate Termination Requested
-          description: |
-            Intermediate lifecycle Message requesting permanent mandate termination.
-
-            It does not directly modify mandate state. Only the inherited
-            applyMandateTermination workflow may transition the mandate to Mandate/Status Terminated,
-            emit Mandate/Mandate Terminated, and gracefully terminate mandate
-            processing.
-
-            The inherited Message correlation fields may be used. No lifecycle timestamp
-            is supplied by this Message.
+            The inherited termination workflow applies the terminal lifecycle transition
+            when the current status permits it, derives terminatedAt from the root causal
+            Timeline Entry, and requests graceful processing termination. A failed
+            mandate may therefore stop processing without replacing its failure state.
+            This Message does not supply the effective timestamp and is not re-emitted by
+            the accepting workflow. The inherited inResponseTo field may identify the
+            Message that invoked termination.
           type:
             blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
           reason:
@@ -34792,7 +34752,49 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8azbFfadtUzwW6iD96ajqrrW4szxitBLSGjLhKtj3HTc
+            typeBlueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Mandate Validation
+          description: |
+            Optional static and deterministic request-validation configuration used by
+            Mandate documents. The containing concrete mandate type defines the input
+            examined by this configuration and the runtime component that invokes it.
+
+            Validation passes only when both configured checks pass: request is absent or
+            matches the candidate input, and function is absent or evaluates to Boolean
+            true for that same input.
+          request:
+            description: |
+              Optional static Blue pattern matched against the input defined by the
+              concrete mandate type. When absent, static request-shape matching imposes
+              no additional restriction.
+
+              The same candidate input is passed to function as the immutable BEX binding
+              named request.
+          function:
+            description: |
+              Optional deterministic BEX validation program represented as a Blue node.
+              This field intentionally has no repository-local nominal BEX type: program
+              syntax and compilation are defined by the BEX specification and runtime.
+
+              By convention, the host passes the candidate input being validated as the
+              immutable BEX binding named request. Concrete mandate types define the
+              semantic meaning of that input.
+
+              A concrete mandate document may define function.entry to select a local
+              function. When present, function.functions must declare a callable function
+              with exactly that name. The feeder or provider invokes the selected entry
+              without arguments; the candidate input remains available through the
+              request binding.
+
+              When function is absent, function validation passes. When present, only the
+              Boolean result true passes. False, null, undefined, a non-Boolean result, or
+              deterministic compilation or execution failure rejects the candidate.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 333eCC8uWcMWgw8Ev2FfvZgJMUK9pw8LGUa1D1cYTSsQ
             attributesAdded: []
       - status: stable
         content:
@@ -34800,7 +34802,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: hWzGSMv7WXsYLupLMkSCFVU1mpzqDGduvqXcb3Cf7kw
+            blueId: HP2QzwJvrCBddtzJ3FZk3eSkEiE9k7ZcMVA9NDV26jma
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -34820,7 +34822,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9vxhKfACpWiwry8SHnfRxi43NuWYHmUwvwwZW2TKeKk3
+            typeBlueId: H7r8qr4yEQKDZ6zDyCJyxaWNxtAZoXNBui3FwhTowvxP
             attributesAdded: []
       - status: stable
         content:
@@ -35611,7 +35613,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: 4GceQTHVxT6Hn6ycYu6jynN1Nno7sq9fDs2LeCFKWRK9
+            blueId: EWu5YYJiwvaaCrP8MeSGHQHzKmz5RDS8dYPERAKXxcgq
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35623,7 +35625,7 @@ packages:
                   blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8hJjvdfqBx5GNVorWQHXaqA4VPzaauAJtxdj5AVFw93N
+            typeBlueId: 7meyNi9rt1Pbr5PC6JqGT6B3YfQnQ3T81JeUNDw44HrT
             attributesAdded: []
       - status: stable
         content:
@@ -35631,7 +35633,7 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 9vxhKfACpWiwry8SHnfRxi43NuWYHmUwvwwZW2TKeKk3
+            blueId: H7r8qr4yEQKDZ6zDyCJyxaWNxtAZoXNBui3FwhTowvxP
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35647,7 +35649,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FL7Caksowk6AvTQbLW3cTECTCyhbWKeb3iFbZLPRg5UV
+            typeBlueId: 2t2emCycVDM2cZ9p8ih4VuAZPCPY1WqNgxs1oS6C29WL
             attributesAdded: []
       - status: stable
         content:
@@ -35798,7 +35800,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 4GceQTHVxT6Hn6ycYu6jynN1Nno7sq9fDs2LeCFKWRK9
+            blueId: EWu5YYJiwvaaCrP8MeSGHQHzKmz5RDS8dYPERAKXxcgq
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35827,7 +35829,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: J7NZXKP2EC6Fu8oijfkW3oQ8qSwbKFLxUvsmNJZZszv4
+            typeBlueId: 2iWKqHGA6EZiG15KcRmkkESbewVBAPG5JEEruJbrE44t
             attributesAdded: []
       - status: stable
         content:
@@ -35941,13 +35943,13 @@ packages:
           name: MyOS Timeline Entry
           description: MyOS-specific timeline entry with account and email information
           type:
-            blueId: H4cyvQ2SpkZK1BffH15ZGV7X8a99S3kFQJhX3AFgG5va#0
+            blueId: 6RcBVMHDvhHZ3doMB3qMU6Yj1KKsiPp8anFm46Y4CBWr#0
           timeline:
             type:
               blueId: FxJvs5C7UPo2gK1jU4d3R1fGC8HUHNC26erWf86z7EFg
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7riEBA1ark9wV7HSGANRczHtUWZKg63Wkxn83NoCWjGV
+            typeBlueId: nRpkCUL8G7qSkdDUpWZxirCfS6k4BJGZVrmm5efJWCY
             attributesAdded: []
       - status: dev
         content:
@@ -49366,4 +49368,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - DuEAmqH8j5rFSC5rnjzKqe7gT8t6mRvpg6aV5eawCSuq
+  - J66DFgpHSJrq3peC7k1wnXtqNqbEdX9MrCn4GRaeTcCE
