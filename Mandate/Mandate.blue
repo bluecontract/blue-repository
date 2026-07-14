@@ -606,6 +606,8 @@ contracts:
                 $changeset: true
               events:
                 $events: true
+              termination:
+                reason: Mandate terminated
 
   initializeMandate:
     type: Coordination/Sequential Workflow
@@ -738,21 +740,20 @@ contracts:
       itself carries any reason and correlation, does not supply the timestamp,
       and is not emitted again.
 
-      After the state update, the workflow requests graceful termination of the
-      root processing scope.
+      The Compute result requests graceful termination after its state changes
+      and emitted events have been buffered. Coordination validates the complete
+      result before applying effects, then applies changes, emits events, and
+      requests graceful termination in that order.
 
       On Mandate/Status Terminated or Coordination/Status Failed it performs no
       lifecycle mutation and does not replace terminatedAt. Receipt of the
       termination Message still requests graceful processing termination, so a
       failed mandate can be stopped without replacing its failure state.
 
-      Concrete workflow steps, BEX implementation, and the
-      Coordination/Terminate Processing step are defined in this base type.
+      Concrete workflow steps and BEX implementation are defined in this base
+      type. No dedicated termination workflow-step type is required.
     steps:
       - name: Apply Mandate Termination
         type: Coordination/Compute
         definition: mandateLifecycleDefinition
         entry: applyMandateTermination
-      - name: Gracefully Terminate Mandate Processing
-        type: Coordination/Terminate Processing
-        reason: Mandate terminated

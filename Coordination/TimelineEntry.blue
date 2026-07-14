@@ -50,11 +50,12 @@ source:
     source as not satisfying that source constraint.
 
 onBehalfOf:
-  type: Mandate/Mandate Authority
+  type: Coordination/Authority
   description: >
-    Optional mandate-backed authority under which actor claims to act for
-    another actor. A feeder validates this authority before delivery when the
-    requested action is not directly eligible through a source channel.
+    Optional authority under which actor claims to act for another actor. A
+    feeder validates the concrete authority before delivery when the requested
+    action is not directly eligible through a source channel. Mandate-backed
+    authority uses Mandate/Mandate Authority.
 
 message:
   schema:
