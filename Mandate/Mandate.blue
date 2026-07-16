@@ -187,26 +187,19 @@ contracts:
       applyMandateTermination. Subtypes do not replace these functions.
     constants:
       statusPendingType:
-        type: List
-        itemType: Coordination/Status Pending
+        type: Coordination/Status Pending
       statusAuthorityConfirmedType:
-        type: List
-        itemType: Mandate/Status Authority Confirmed
+        type: Mandate/Status Authority Confirmed
       statusActiveType:
-        type: List
-        itemType: Mandate/Status Active
+        type: Mandate/Status Active
       statusFailedType:
-        type: List
-        itemType: Coordination/Status Failed
+        type: Coordination/Status Failed
       authorityConfirmedMessageType:
-        type: List
-        itemType: Mandate/Mandate Authority Confirmed
+        type: Mandate/Mandate Authority Confirmed
       activatedMessageType:
-        type: List
-        itemType: Mandate/Mandate Activated
+        type: Mandate/Mandate Activated
       terminatedMessageType:
-        type: List
-        itemType: Mandate/Mandate Terminated
+        type: Mandate/Mandate Terminated
     functions:
       isStatusPending:
         expr:
@@ -214,7 +207,7 @@ contracts:
             - $document: /status/type/blueId
             - $const:
                 name: statusPendingType
-                path: /itemType/blueId
+                path: /type/blueId
 
       isStatusAuthorityConfirmed:
         expr:
@@ -222,7 +215,7 @@ contracts:
             - $document: /status/type/blueId
             - $const:
                 name: statusAuthorityConfirmedType
-                path: /itemType/blueId
+                path: /type/blueId
 
       isStatusActive:
         expr:
@@ -230,7 +223,7 @@ contracts:
             - $document: /status/type/blueId
             - $const:
                 name: statusActiveType
-                path: /itemType/blueId
+                path: /type/blueId
 
       isStatusFailed:
         expr:
@@ -238,7 +231,7 @@ contracts:
             - $document: /status/type/blueId
             - $const:
                 name: statusFailedType
-                path: /itemType/blueId
+                path: /type/blueId
 
       hasDeclaredValidationEntry:
         expr:
@@ -261,15 +254,10 @@ contracts:
         expr:
           $choose:
             cond:
-              $and:
-                - $isKind:
-                    val:
-                      $binding: processingEvent
-                    kind: object
-                - $isKind:
-                    val:
-                      $binding: processingEvent/timestamp
-                    kind: integer
+              $isKind:
+                val:
+                  $binding: processingEvent/timestamp
+                kind: integer
             then:
               $binding: processingEvent/timestamp
 
@@ -303,7 +291,7 @@ contracts:
             val:
               $const:
                 name: authorityConfirmedMessageType
-                path: /itemType
+                path: /type
 
       activatedMessage:
         args:
@@ -318,7 +306,7 @@ contracts:
             val:
               $const:
                 name: activatedMessageType
-                path: /itemType
+                path: /type
 
       terminatedMessage:
         args:
@@ -339,7 +327,7 @@ contracts:
             val:
               $const:
                 name: terminatedMessageType
-                path: /itemType
+                path: /type
 
       initializeMandate:
         do:
@@ -509,25 +497,9 @@ contracts:
                     function: sourceMessage
                     args: {}
                 terminationRequest:
-                  $choose:
-                    cond:
-                      $isKind:
-                        val:
-                          $event: /message/request
-                        kind: object
-                    then:
-                      $event: /message/request
-                    else:
-                      $choose:
-                        cond:
-                          $isKind:
-                            val:
-                              $event: /request
-                            kind: object
-                        then:
-                          $event: /request
-                        else:
-                          $event: /
+                  $var:
+                    name: sourceMessage
+                    path: /request
                 terminable:
                   $or:
                     - $call:

@@ -1453,7 +1453,7 @@ packages:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
-          - repositoryVersionIndex: 1
+          - repositoryVersionIndex: 0
             typeBlueId: DacNQ6C6PgsEiE4QfUHmaWBztpEvo2YyXxUcP86ze77w
             attributesAdded: []
       - status: stable
@@ -33451,14 +33451,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: 42RioU4YgtKX5KQ4xzwiNfRy7JHSkbBFVjm3NCSQ1L5m
+            blueId: 6cS7BANfxw87QmcKvCMUHxAQoqHuBmKMED1vWzk79BxJ
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: D6LfLWrkMMg84P12LPbXiekYjcuuCdDma4tvArtzBS43
+            typeBlueId: z3ELFQtaTyVQwKLoD3NKVSKKauwG5g648Usr4MExPcH
             attributesAdded: []
       - status: stable
         content:
@@ -33563,38 +33563,24 @@ packages:
               constants:
                 statusPendingType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
                 statusAuthorityConfirmedType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
                 statusActiveType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
                 statusFailedType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
                 authorityConfirmedMessageType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: EbNsQWy645JPPuWhkDw3XcrQk1neH2Z8KBsTvUTCrrmk
                 activatedMessageType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: 3HtuEaYgkn8rV9xZf1x5uY2v7S9WXbVkcV3rj3Sy6arJ
                 terminatedMessageType:
                   type:
-                    blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-                  itemType:
                     blueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
               functions:
                 isStatusPending:
@@ -33610,7 +33596,7 @@ packages:
                             path:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /itemType/blueId
+                              value: /type/blueId
                 isStatusAuthorityConfirmed:
                   expr:
                     $eq:
@@ -33624,7 +33610,7 @@ packages:
                             path:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /itemType/blueId
+                              value: /type/blueId
                 isStatusActive:
                   expr:
                     $eq:
@@ -33638,7 +33624,7 @@ packages:
                             path:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /itemType/blueId
+                              value: /type/blueId
                 isStatusFailed:
                   expr:
                     $eq:
@@ -33652,7 +33638,7 @@ packages:
                             path:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /itemType/blueId
+                              value: /type/blueId
                 hasDeclaredValidationEntry:
                   expr:
                     $or:
@@ -33690,28 +33676,16 @@ packages:
                   expr:
                     $choose:
                       cond:
-                        $and:
-                          items:
-                            - $isKind:
-                                val:
-                                  $binding:
-                                    type:
-                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                    value: processingEvent
-                                kind:
-                                  type:
-                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                  value: object
-                            - $isKind:
-                                val:
-                                  $binding:
-                                    type:
-                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                    value: processingEvent/timestamp
-                                kind:
-                                  type:
-                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                  value: integer
+                        $isKind:
+                          val:
+                            $binding:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: processingEvent/timestamp
+                          kind:
+                            type:
+                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                            value: integer
                       then:
                         $binding:
                           type:
@@ -33770,7 +33744,7 @@ packages:
                           path:
                             type:
                               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                            value: /itemType
+                            value: /type
                 activatedMessage:
                   args:
                     inResponseTo:
@@ -33793,7 +33767,7 @@ packages:
                           path:
                             type:
                               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                            value: /itemType
+                            value: /type
                 terminatedMessage:
                   args:
                     request:
@@ -33825,7 +33799,7 @@ packages:
                           path:
                             type:
                               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                            value: /itemType
+                            value: /type
                 initializeMandate:
                   do:
                     items:
@@ -34169,46 +34143,12 @@ packages:
                                     blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                   value: sourceMessage
                             terminationRequest:
-                              $choose:
-                                cond:
-                                  $isKind:
-                                    val:
-                                      $event:
-                                        type:
-                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                        value: /message/request
-                                    kind:
-                                      type:
-                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                      value: object
-                                then:
-                                  $event:
-                                    type:
-                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                    value: /message/request
-                                else:
-                                  $choose:
-                                    cond:
-                                      $isKind:
-                                        val:
-                                          $event:
-                                            type:
-                                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                            value: /request
-                                        kind:
-                                          type:
-                                            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                          value: object
-                                    then:
-                                      $event:
-                                        type:
-                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                        value: /request
-                                    else:
-                                      $event:
-                                        type:
-                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                        value: /
+                              $var:
+                                name: sourceMessage
+                                path:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: /request
                             terminable:
                               $or:
                                 items:
@@ -34671,7 +34611,7 @@ packages:
               blueId: 333eCC8uWcMWgw8Ev2FfvZgJMUK9pw8LGUa1D1cYTSsQ
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 42RioU4YgtKX5KQ4xzwiNfRy7JHSkbBFVjm3NCSQ1L5m
+            typeBlueId: 6cS7BANfxw87QmcKvCMUHxAQoqHuBmKMED1vWzk79BxJ
             attributesAdded: []
       - status: stable
         content:
@@ -34709,12 +34649,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: 42RioU4YgtKX5KQ4xzwiNfRy7JHSkbBFVjm3NCSQ1L5m
+              blueId: 6cS7BANfxw87QmcKvCMUHxAQoqHuBmKMED1vWzk79BxJ
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7PQhFPiE1EQENXgjeYLXrAMjrhjmUz9UAYDEP56UqomR
+            typeBlueId: 3oCuMKxneozS3zMfBnnuvPwesUQDgWFwnF76uy2ERuQr
             attributesAdded: []
       - status: stable
         content:
@@ -34811,7 +34751,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: 42RioU4YgtKX5KQ4xzwiNfRy7JHSkbBFVjm3NCSQ1L5m
+            blueId: 6cS7BANfxw87QmcKvCMUHxAQoqHuBmKMED1vWzk79BxJ
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -34831,7 +34771,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6hTpL14zWffNvbLKVBRR14MB7zGCUNXfnExdBFghpLMc
+            typeBlueId: BNCHNpZueeZEq3SdckkV3Xym5b7mEDWouLxMFkGQ62tG
             attributesAdded: []
       - status: stable
         content:
@@ -35101,7 +35041,7 @@ packages:
           name: Document Session Bootstrap
           description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
           type:
-            blueId: CgHxjKAYf2rF5vGpwHiKgfr9jfhTxQVris2nTcuhR6fS
+            blueId: 9NrQCnrfCPStxHEtqieXNhGsFo3qDoJukzfSTAP22JnL
           contracts:
             triggeredEventsChannel:
               type:
@@ -35449,7 +35389,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: C7nQJFDtUMCNte6TSiSciWkJbDKrux3AwrhjzMs6psVY
+            typeBlueId: DQpT8yEf24onEmhAPwDCHzEmp2x8qLdagSzxFojgH45u
             attributesAdded: []
       - status: stable
         content:
@@ -35517,6 +35457,11 @@ packages:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                 value: myOsAdminChannel
+              request:
+                type:
+                  blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+                itemType:
+                  blueId: ENRQ621TbJpLg2cGyYkgTmPRLGKZkPqCzkBgm4yEXKF5
             myOsAdminUpdateImpl:
               description: Implementation that re-emits the provided events
               type:
@@ -35540,7 +35485,7 @@ packages:
                                 value: /message/request
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CgHxjKAYf2rF5vGpwHiKgfr9jfhTxQVris2nTcuhR6fS
+            typeBlueId: 9NrQCnrfCPStxHEtqieXNhGsFo3qDoJukzfSTAP22JnL
             attributesAdded: []
       - status: stable
         content:
@@ -35622,7 +35567,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: D6LfLWrkMMg84P12LPbXiekYjcuuCdDma4tvArtzBS43
+            blueId: z3ELFQtaTyVQwKLoD3NKVSKKauwG5g648Usr4MExPcH
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35634,7 +35579,7 @@ packages:
                   blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4L1adEzvQucyg36UwpMtKX4gYWB19dAQJVtvEs5E1gmH
+            typeBlueId: F6Fkn2tTQZbcT68incD2yYZPyax3cUiqcZHQa4zqY61g
             attributesAdded: []
       - status: stable
         content:
@@ -35642,7 +35587,7 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 6hTpL14zWffNvbLKVBRR14MB7zGCUNXfnExdBFghpLMc
+            blueId: BNCHNpZueeZEq3SdckkV3Xym5b7mEDWouLxMFkGQ62tG
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35658,7 +35603,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AeF3ZEBmh8QovUdKAtwzxFEXShesrwHh2XHbkxHuJcuE
+            typeBlueId: HxZk6Fj3mB4jCGxXWKsVXy5jTxiXgQpguyhiYVcy6R5q
             attributesAdded: []
       - status: stable
         content:
@@ -35809,7 +35754,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: D6LfLWrkMMg84P12LPbXiekYjcuuCdDma4tvArtzBS43
+            blueId: z3ELFQtaTyVQwKLoD3NKVSKKauwG5g648Usr4MExPcH
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35838,7 +35783,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DAGjmKf2xZbQhCab9huPbbqTvD6SdB5BGcBrbHgbRGUa
+            typeBlueId: FeoTUyNLZkrv9Aiw1HXHEhXwiYtM6tVU5JESn2ozABUA
             attributesAdded: []
       - status: stable
         content:
@@ -49377,5 +49322,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 6nA3djNMuGgjyin3PyLQqVAKU75DwHHx19egEaifMKWP
-  - GTMFwCUR1kdn5UMQ6BUS8LR5wyAjCXZiig4LzQNZABXT
+  - 3zLAj8nBBFTYuZiAgjntPsCcmBq9zr7SZKnK7xysDemF
