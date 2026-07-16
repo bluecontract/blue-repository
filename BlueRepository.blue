@@ -1434,6 +1434,30 @@ packages:
             attributesAdded: []
       - status: stable
         content:
+          name: Terminate Processing
+          description: |
+            Workflow step that requests graceful termination of the current processing scope. The request is buffered as the same
+            processor effect used by a Compute result containing `termination`. Previously buffered document changes and emitted
+            events are applied before termination according to Blue Contracts effect ordering, and later steps in the Sequential
+            Workflow are not evaluated.
+
+            The Blue Contracts processor owns the resulting Processing Terminated Marker, Document Processing Terminated lifecycle
+            event, scope deactivation, queue cutoff, and root or embedded-scope completion behavior. This step cannot request fatal
+            termination or target another scope.
+          type:
+            blueId: 9oGn8V6FSVcJYhRfuHRShfWjiHBUqzxVi9StGtHZNfev
+          reason:
+            description: |
+              Optional reason passed unchanged to graceful termination. Missing or empty Text produces no reason field in the
+              processor marker or lifecycle event.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+        versions:
+          - repositoryVersionIndex: 1
+            typeBlueId: DacNQ6C6PgsEiE4QfUHmaWBztpEvo2YyXxUcP86ze77w
+            attributesAdded: []
+      - status: stable
+        content:
           name: Timeline
           description: |
             A Timeline is an append-only, tamper-evident personal or institutional event log. It records entries associated with
@@ -49354,3 +49378,4 @@ packages:
             attributesAdded: []
 repositoryVersions:
   - 6nA3djNMuGgjyin3PyLQqVAKU75DwHHx19egEaifMKWP
+  - GTMFwCUR1kdn5UMQ6BUS8LR5wyAjCXZiig4LzQNZABXT

@@ -1,0 +1,16 @@
+name: Terminate Processing
+type: Coordination/Sequential Workflow Step
+description: |
+  Workflow step that requests graceful termination of the current processing scope. The request is buffered as the same
+  processor effect used by a Compute result containing `termination`. Previously buffered document changes and emitted
+  events are applied before termination according to Blue Contracts effect ordering, and later steps in the Sequential
+  Workflow are not evaluated.
+
+  The Blue Contracts processor owns the resulting Processing Terminated Marker, Document Processing Terminated lifecycle
+  event, scope deactivation, queue cutoff, and root or embedded-scope completion behavior. This step cannot request fatal
+  termination or target another scope.
+reason:
+  type: Text
+  description: |
+    Optional reason passed unchanged to graceful termination. Missing or empty Text produces no reason field in the
+    processor marker or lifecycle event.
