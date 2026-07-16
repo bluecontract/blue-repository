@@ -1,23 +1,16 @@
 name: Timeline Entry
 description: >
-  Immutable entry in an append-only Timeline. The Timeline Provider assigns
-  sequence and timestamp, links the entry to its predecessor, and authenticates
-  actor and available source attribution. A feeder validates, orders, and
-  filters entries before passing eligible events to a processor.
+  Immutable entry in an append-only Timeline. The Timeline Provider assigns a
+  timestamp that is unique and strictly increasing within the timeline, links
+  the entry to its predecessor, and authenticates actor and available source
+  attribution. A feeder validates, orders, and filters entries before passing
+  eligible events to a processor.
 
 timeline:
   type: Coordination/Timeline
   schema:
     required: true
   description: Timeline containing this entry.
-
-sequence:
-  type: Integer
-  schema:
-    required: true
-  description: >
-    Strictly increasing position of this entry within its timeline. Sequence,
-    rather than timestamp, is the authoritative intra-timeline order.
 
 prevEntry:
   type: Coordination/Timeline Entry
@@ -30,9 +23,10 @@ timestamp:
   schema:
     required: true
   description: >
-    Microsecond timestamp assigned by the Timeline Provider for cross-timeline
-    ordering and completeness. Timestamps may repeat within a timeline and do
-    not replace sequence as its authoritative order.
+    Microsecond timestamp assigned by the Timeline Provider. It is unique and
+    strictly increasing within this timeline and is the authoritative
+    intra-timeline ordering value. It also supports cross-timeline ordering and
+    completeness windows under the provider profile.
 
 actor:
   type: Coordination/Actor
