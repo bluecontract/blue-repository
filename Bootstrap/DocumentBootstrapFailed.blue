@@ -1,0 +1,9 @@
+name: Document Bootstrap Failed
+type: Coordination/Response
+description: Bootstrap provider response reporting that started bootstrap work failed.
+
+error:
+  type: Text
+  schema:
+    required: true
+  description: Explanation of the bootstrap failure.

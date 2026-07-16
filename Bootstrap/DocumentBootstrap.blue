@@ -1,0 +1,131 @@
+name: Document Bootstrap
+description: >
+  Generic document for requesting and tracking bootstrap of another Blue
+  document. It defines the provider response operations but deliberately does
+  not define how or when bootstrapRequest is emitted. A concrete platform or
+  document may add its own initialization or request workflow.
+
+bootstrapRequest:
+  type: Bootstrap/Document Bootstrap Requested
+  schema:
+    required: true
+  description: Request describing the target document bootstrap.
+
+status:
+  type: Text
+  description: Current bootstrap lifecycle state.
+
+result:
+  description: Provider-neutral bootstrap result after successful completion.
+
+error:
+  type: Text
+  description: Decline or failure explanation when bootstrap does not complete.
+
+contracts:
+  bootstrapProviderChannel:
+    type: Coordination/Timeline Channel
+    schema:
+      required: true
+    description: Participant channel for the bootstrap provider.
+
+  declineBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap Declined
+    steps:
+      - name: Record Bootstrap Declined
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val: Declined
+          - $appendChange:
+              op: replace
+              path: /error
+              val:
+                $default:
+                  - $event: /message/request/reason
+                  - ''
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+
+  startBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap In Progress
+    steps:
+      - name: Record Bootstrap In Progress
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val: In Progress
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+
+  completeBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap Completed
+    steps:
+      - name: Record Bootstrap Completed
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val: Completed
+          - $appendChange:
+              op: replace
+              path: /result
+              val:
+                $event: /message/request/result
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+
+  failBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap Failed
+    steps:
+      - name: Record Bootstrap Failed
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val: Failed
+          - $appendChange:
+              op: replace
+              path: /error
+              val:
+                $event: /message/request/error
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true

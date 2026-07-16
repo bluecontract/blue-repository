@@ -1,0 +1,8 @@
+name: Document Bootstrap Completed
+type: Coordination/Response
+description: Bootstrap provider response reporting successful completion.
+
+result:
+  schema:
+    required: true
+  description: Provider-neutral result of the completed bootstrap.

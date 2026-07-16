@@ -4,9 +4,326 @@ packages:
     types:
       - status: stable
         content:
+          name: Document Bootstrap
+          description: |
+            Generic document for requesting and tracking bootstrap of another Blue document. It defines the provider response operations but deliberately does not define how or when bootstrapRequest is emitted. A concrete platform or document may add its own initialization or request workflow.
+          contracts:
+            bootstrapProviderChannel:
+              description: Participant channel for the bootstrap provider.
+              type:
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+              schema:
+                required: true
+            declineBootstrap:
+              type:
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
+              channel:
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                value: bootstrapProviderChannel
+              request:
+                type:
+                  blueId: Eefj81vPFkfRLajbo4kJ3ovsNkRXdNvceB2hxE4FGRcu
+              steps:
+                items:
+                  - name: Record Bootstrap Declined
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    do:
+                      items:
+                        - $appendEvent:
+                            $event:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /message/request
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /status
+                            val:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: Declined
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /error
+                            val:
+                              $default:
+                                items:
+                                  - $event:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: /message/request/reason
+                                  - type:
+                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                    value: ''
+                        - $return:
+                            changeset:
+                              $changeset:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+                            events:
+                              $events:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+            startBootstrap:
+              type:
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
+              channel:
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                value: bootstrapProviderChannel
+              request:
+                type:
+                  blueId: DTuSuuJbcoFMafrdhVkgt1eAkdC54rqw2KLZF8CPAJtp
+              steps:
+                items:
+                  - name: Record Bootstrap In Progress
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    do:
+                      items:
+                        - $appendEvent:
+                            $event:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /message/request
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /status
+                            val:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: In Progress
+                        - $return:
+                            changeset:
+                              $changeset:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+                            events:
+                              $events:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+            completeBootstrap:
+              type:
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
+              channel:
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                value: bootstrapProviderChannel
+              request:
+                type:
+                  blueId: ANZLbrLasT8rEzgXijJayrAXsohv5RCzPweSZc9DmWgm
+              steps:
+                items:
+                  - name: Record Bootstrap Completed
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    do:
+                      items:
+                        - $appendEvent:
+                            $event:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /message/request
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /status
+                            val:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: Completed
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /result
+                            val:
+                              $event:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /message/request/result
+                        - $return:
+                            changeset:
+                              $changeset:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+                            events:
+                              $events:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+            failBootstrap:
+              type:
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
+              channel:
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                value: bootstrapProviderChannel
+              request:
+                type:
+                  blueId: CoanvUioSeBPRS6TCq4xfbLQbBMa7ebd1Jh7jSUAu9c8
+              steps:
+                items:
+                  - name: Record Bootstrap Failed
+                    type:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    do:
+                      items:
+                        - $appendEvent:
+                            $event:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /message/request
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /status
+                            val:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: Failed
+                        - $appendChange:
+                            op:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /error
+                            val:
+                              $event:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /message/request/error
+                        - $return:
+                            changeset:
+                              $changeset:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+                            events:
+                              $events:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
+          bootstrapRequest:
+            description: Request describing the target document bootstrap.
+            type:
+              blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
+            schema:
+              required: true
+          status:
+            description: Current bootstrap lifecycle state.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+          result:
+            description: Provider-neutral bootstrap result after successful completion.
+          error:
+            description: Decline or failure explanation when bootstrap does not complete.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CQ5gfWhEDopNpKDS7aBkvAoefwG8y26eLajDe2a9eLq4
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Bootstrap Completed
+          description: Bootstrap provider response reporting successful completion.
+          type:
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
+          result:
+            description: Provider-neutral result of the completed bootstrap.
+            schema:
+              required: true
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: ANZLbrLasT8rEzgXijJayrAXsohv5RCzPweSZc9DmWgm
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Bootstrap Declined
+          description: Bootstrap provider response declining the requested bootstrap.
+          type:
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
+          reason:
+            description: Explanation for declining the request.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: Eefj81vPFkfRLajbo4kJ3ovsNkRXdNvceB2hxE4FGRcu
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Bootstrap Failed
+          description: Bootstrap provider response reporting that started bootstrap work failed.
+          type:
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
+          error:
+            description: Explanation of the bootstrap failure.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: CoanvUioSeBPRS6TCq4xfbLQbBMa7ebd1Jh7jSUAu9c8
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Bootstrap In Progress
+          description: Bootstrap provider response confirming that bootstrap work started.
+          type:
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: DTuSuuJbcoFMafrdhVkgt1eAkdC54rqw2KLZF8CPAJtp
+            attributesAdded: []
+      - status: stable
+        content:
           name: Document Bootstrap Requested
           description: |
-            Request asking the participant addressed by recipientChannel to bootstrap the supplied initial document with the requested channel bindings and optional initial Messages. This type defines bootstrap request data; mandate authority is resolved independently by the recipient/platform.
+            Request asking the participant addressed by recipientChannel to bootstrap the supplied initial document with the requested channel bindings and optional initial Messages. The document that emits this request decides how and when to emit it.
           type:
             blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
           document:
@@ -21,13 +338,9 @@ packages:
             description: Optional standard bootstrap initial Messages.
             type:
               blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
-          onBehalfOf:
-            description: Optional principal actor on whose behalf bootstrap is requested.
-            type:
-              blueId: 23cWKG6LF47H1G3EfhV5dmEYtxkNaqLWgFDxEurdc6Ef
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DGtbvBCuFFKAH3ncDb6LAibSAq8Smr5oChLSdvNvGuZu
+            typeBlueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
             attributesAdded: []
   - name: Common
     types:
@@ -817,7 +1130,7 @@ packages:
             This event is not proof of authorization by itself. Actor and source attribution should come from the enclosing
             Timeline Entry or event source. Workflows should check Actor Policy when the response authorizes sensitive behavior.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           actionLabel:
             description: |
               Label of the selected action from the corresponding Customer Action Requested event.
@@ -833,7 +1146,7 @@ packages:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6C9hES9r92QmbLEgtk4yrgz54abzs7B8jqEaMgSVJv7m
+            typeBlueId: H4Vxp9tPXuHZPQifppw4thwdgFV4HnzViURUiLZttNcE
             attributesAdded: []
       - status: stable
         content:
@@ -868,7 +1181,7 @@ packages:
             Lifecycle/coordination event indicating that a requested document bootstrap completed successfully. It records the
             resulting document identifier so the requester can continue interacting with the new document or session.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           documentId:
             description: |
               Identifier, reference, or BlueId of the bootstrapped document/session, according to the bootstrap runtime.
@@ -876,7 +1189,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7caaA9fZUxooF7LW4drW97DuoJpu5fyEZKyrQttLaBmQ
+            typeBlueId: 7rfzResVWD7U3BTtwvNhZLtLfw8xwTW9iwJTcacpWHo2
             attributesAdded: []
       - status: stable
         content:
@@ -885,7 +1198,7 @@ packages:
             Lifecycle/coordination event indicating that a document bootstrap request failed. The `reason` field should explain
             the deterministic failure cause or provider-specific rejection reason.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             description: |
               Human-readable or structured failure reason.
@@ -893,7 +1206,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2D7DDoEJge1j3G4oXGhGzTQ9CxePKxxxTYhdtee5r7SV
+            typeBlueId: 6BnPuHWBuiAWb5o9xFoJtsQiRU6NTNDtCbAjpqCLiN9U
             attributesAdded: []
       - status: stable
         content:
@@ -902,7 +1215,7 @@ packages:
             Response event for a document bootstrap request. It records the resulting status and optional reason. Concrete
             systems may use the more specific Completed or Failed events when they want clearer type-level distinction.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           status:
             description: |
               Bootstrap response status. Prefer a Document Status specialization where possible.
@@ -915,7 +1228,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8HdfdnkeL2v31q56qsN6bAwUHtBYK5VseaMQ3owdWtuF
+            typeBlueId: Fjg6Ft5LBthiCCunjZfeBZCJeMwP5xMwARFza25aMuVA
             attributesAdded: []
       - status: stable
         content:
@@ -1222,14 +1535,20 @@ packages:
             blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
           inResponseTo:
             description: |
-              Required reference to the exact Coordination/Request occurrence answered by this Response.
+              Required correlation to the exact Coordination/Request occurrence answered by this Response.
             type:
-              blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
+              name: Response Correlation
+              description: Correlation from a Response to the Request occurrence it answers.
+              incomingEvent:
+                description: |
+                  Pure { blueId: ... } reference to the exact Request occurrence. The Request payload is not embedded in the correlation object.
+                schema:
+                  required: true
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            typeBlueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
             attributesAdded: []
       - status: stable
         content:
@@ -34827,7 +35146,7 @@ packages:
         content:
           name: Adding Participant Responded
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           request:
             type:
               blueId: HEBuC9grhoHisjpjXHAgg2RZ494YHj4nKJWq7pQS6BxH
@@ -34836,7 +35155,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FoJDXJsUjhiDU8pVxF7TzxE3qh1EvLKyoHQG41WaTTGB
+            typeBlueId: 5dn8zzefpCa8hamHXyoDaw7qZabq8Wdt9nsnm5HbWNVZ
             attributesAdded: []
       - status: stable
         content:
@@ -34868,7 +35187,7 @@ packages:
           name: Call Operation Accepted
           description: MyOS Admin accepted the call and submitted the operation request.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           targetSessionId:
             description: Target document session that received the request.
             type:
@@ -34879,14 +35198,14 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GacCAN4FEa7u3e7Qmm9997PYHwHmkGDCnSdYEfAVcZxh
+            typeBlueId: GqVRP4zQZYvcNM64CVoxbQRMNZkcwBokiq914KJHE8DX
             attributesAdded: []
       - status: stable
         content:
           name: Call Operation Failed
           description: MyOS Admin could not invoke the requested operation.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           targetSessionId:
             description: Target document session that was attempted.
             type:
@@ -34901,7 +35220,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FFXVAea2mRHoJq3PRdmz5cXG8eETqx4yr5KCbeTxhEqB
+            typeBlueId: 3Xiqhesc1E2zuomHb6ZuHcLwMH9AX8k3e9Zjk5PExnVA
             attributesAdded: []
       - status: stable
         content:
@@ -34932,16 +35251,16 @@ packages:
           name: Call Operation Responded
           description: MyOS Admin forwards operation Response events to the requesting session
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           events:
             description: Operation Response events
             type:
               blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
             itemType:
-              blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+              blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AnkvQ2ms9RnPXMfQUP37VP8Gs8MZsSiM72yjWv2DU38c
+            typeBlueId: 72S2g3xuDYEY7Rqm5ZcmJmHKBv1SVmuCbwxyEJuaWcnd
             attributesAdded: []
       - status: stable
         content:
@@ -34983,24 +35302,24 @@ packages:
         content:
           name: Document Initial Snapshot Resolved
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           document:
             description: Initial snapshot of requested document session.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3bWvNkMNpan2ofiptgtBQidFtwhUAjdZUx9Eo1Hns3u2
+            typeBlueId: 6AUEZnmUpwJJNyLcciddK92WQVG51KDreBHtzfy62hSP
             attributesAdded: []
       - status: stable
         content:
           name: Document Initial Snapshot Unresolved
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2oWDimMA574XdPA5QFDSPETcU8HzpycEKRseE6CUhred
+            typeBlueId: 25Vy5JGqixjNxv6G3PCNoWSwwj71n78CCm4YMdBFguXH
             attributesAdded: []
       - status: stable
         content:
@@ -35697,7 +36016,7 @@ packages:
           description: |
             Response indicating that a root or linked-document subscription stream has ended. No further updates for this sourceInitialDocument are delivered under the identified subscription unless a future reinitiation protocol creates a new active stream.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           subscriptionId:
             description: Subscription stream that ended.
             type:
@@ -35715,7 +36034,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: V7YKW41NsJsw4oKxGvwzdkJXZg2wDjsKTFnF6L6GmEp
+            typeBlueId: FKBh7gZ3TMcDoJBoMxue76dffftEinitTdffxx8PPJo8
             attributesAdded: []
       - status: stable
         content:
@@ -35820,10 +36139,10 @@ packages:
           description: |
             First update of a MyOS session subscription. It marks the clear start boundary of the stream and may carry the initial source snapshot when requested by the filter, together with any matching events delivered at that boundary.
           type:
-            blueId: EkNokZ4svfJ4Xhza5qNxm285pcRHXhZvA97KZKYf8cyb
+            blueId: HJ5J4tXLaNzA5p2rQ5qEmrk6hnZCfXQobtefsANu5x1S
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BGhd3kZMEMd8Yv8nqnqfLngaUEAn5WkbPjPsS6o3U7mg
+            typeBlueId: 2rGqiUa5Kf7yVvR5fBKieFH4YhF8Lu2qUyhQFcwJ68kE
             attributesAdded: []
       - status: stable
         content:
@@ -35831,7 +36150,7 @@ packages:
           description: |
             Provider-mediated subscription update for one logical source document. The same subscriptionId is used for the root source and derived linked-document streams. sourceInitialDocument identifies the logical document represented by this update.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           subscriptionId:
             description: Stable identifier of the subscription stream.
             type:
@@ -35852,7 +36171,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: EkNokZ4svfJ4Xhza5qNxm285pcRHXhZvA97KZKYf8cyb
+            typeBlueId: HJ5J4tXLaNzA5p2rQ5qEmrk6hnZCfXQobtefsANu5x1S
             attributesAdded: []
       - status: stable
         content:
@@ -35978,7 +36297,7 @@ packages:
           name: Payment Initiated
           description: Result emitted after MyOS initiated the payment and attached paynote.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           paynoteDocumentId:
             description: Blue document id of the initiated PayNote.
             type:
@@ -35989,24 +36308,24 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2B5GfyYAMpB2qa9AebDQCyorMi311v8bZLjXn6fsDPPw
+            typeBlueId: G7SGNNoeARSQgANmH4BkkxoN87Vg2RWV3CfkbNbksa1B
             attributesAdded: []
       - status: dev
         content:
           name: Payment Initiation Accepted
           description: Result emitted after MyOS Admin accepts a payment initiation request.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GLKfKi29WiEb2Hq87Zj6hfJXXV6TpDXtGprdpNbk2dxq
+            typeBlueId: 5JCKvTv8Xq3LfK1LN9NTFxaHGnaSRnmbL8LPTRJedB7r
             attributesAdded: []
       - status: dev
         content:
           name: Payment Initiation Rejected
           description: Result emitted when MyOS Admin rejects a payment initiation request before or instead of starting the payment.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           code:
             description: |
               Stable machine-readable rejection reason, for example:
@@ -36029,7 +36348,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FLozmcCXEUsKNT86fixLbrdy9Dy4yn7jn6eftQuHpK8B
+            typeBlueId: DjUnzCzxCTLf8jf7kfGjx2esCxuoYei5NYYwucAwe6vV
             attributesAdded: []
       - status: dev
         content:
@@ -36083,7 +36402,7 @@ packages:
           name: Payment Target Preparation Failed
           description: Failure result emitted when MyOS Admin cannot prepare an opaque recipient payment target.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           code:
             description: Stable machine-readable failure code.
             type:
@@ -36094,7 +36413,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HKvJdxfZDY7agMAH8Z5pjhd4iB8mrTNRRhG1QEnEFRgd
+            typeBlueId: FNk94sjfEeHTw1ZbXE9U57TgrSdqQXxVwWVDw3E7D8Jj
             attributesAdded: []
       - status: dev
         content:
@@ -36135,7 +36454,7 @@ packages:
           name: Payment Target Prepared
           description: Result emitted after MyOS Admin successfully prepares an opaque recipient payment target.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           recipient:
             description: Prepared recipient reference.
             type:
@@ -36170,7 +36489,7 @@ packages:
             description: Optional effective PayNote matcher echoed back to the caller.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: EZQPqDj5iDyHzM6DQE11Z2NwcPNSPx34v9SMyXsrwe6h
+            typeBlueId: CpN9cPkBhwzFRLWFrXUu5L8vcBgG2q4UuoWrWfjcowwD
             attributesAdded: []
       - status: stable
         content:
@@ -36203,7 +36522,7 @@ packages:
         content:
           name: Removing Participant Responded
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           request:
             type:
               blueId: BcSFAt3ZtG3CdpNzKUKBodvz9cux8kwtbNNNPrrhYSja
@@ -36212,7 +36531,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HV36fBXcdWce4WhfG6dxSZmtRMQoNaNLNpHgxc2PakuN
+            typeBlueId: 2uDmwWVxXhiGT93piY1WFCdWqUnWa7Nn2oCwUCMXj4pK
             attributesAdded: []
       - status: dev
         content:
@@ -36303,7 +36622,7 @@ packages:
           name: Subscription to Session Failed
           description: Indicates MyOS Admin rejected the subscription request before activation.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           subscriptionId:
             description: The subscription id that failed.
             type:
@@ -36318,14 +36637,14 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FqL1t69VjbKdAmffjxV5o1dAJooKyQ6vxdpsmbavFFia
+            typeBlueId: HENftmjAVprZgEquUmgSyL8GNTAjpNrLgS9iMdb3LCgR
             attributesAdded: []
       - status: stable
         content:
           name: Subscription to Session Initiated
           description: Confirms that MyOS Admin accepted the subscription request and will start forwarding updates.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           subscriptionId:
             description: The subscription id that was initiated.
             type:
@@ -36346,14 +36665,14 @@ packages:
             description: The document state at the time the subscription became active.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FdzN1H5Qe7CRbcXVeqD7PfJJ5TH6cxgHd3FRcNjvRJzk
+            typeBlueId: 8LuVvRbnG7Ccdx9ZVTZY8gyeZavxhr1Xx8JCeM5DgNs9
             attributesAdded: []
       - status: stable
         content:
           name: Subscription to Session Revoked
           description: Indicates MyOS Admin stopped forwarding updates for the subscription.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           subscriptionId:
             description: The subscription id that was revoked.
             type:
@@ -36368,7 +36687,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BzThvgTJD2zLX2wLFToLFRgs5KUvw7x3shCsmyxJ54pP
+            typeBlueId: CQzQg5ZGd2zketQupLKGZCsSBABHzJVMVWY6HpkZpN98
             attributesAdded: []
       - status: stable
         content:
@@ -36426,26 +36745,26 @@ packages:
           name: Capture Declined
           description: The Guarantor declined the capture request before attempting the transfer.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FKmgCVJYnpqy9KJ2fNhEsiPUQHRyoG9oUunkdrwhG65t
+            typeBlueId: FJwimLSvqcQkLzLmkefi8qTr1A1m267CaBXEdBKCiqBs
             attributesAdded: []
       - status: stable
         content:
           name: Capture Failed
           description: The Guarantor attempted the transfer, but it failed for a technical reason.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5KLJjeRj56sm2a1dj6guTWGKw533bwqNsiioSmntdSjg
+            typeBlueId: 4gBMJ7sMez4Z6rHdKHsnUvGQwbEM6Xds7mHctQwvpDAJ
             attributesAdded: []
       - status: stable
         content:
@@ -36465,7 +36784,7 @@ packages:
           name: Card Charge Completed
           description: Final outcome for a card charge request.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           status:
             description: Completion status ("succeeded" | "failed").
             type:
@@ -36484,14 +36803,14 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Dcw8D1XUmNrMBX2uHgJgJ3836Ued7vCy8oEP4aXekYPx
+            typeBlueId: HYu1rTtEYqX1Fm6RbEDWGphyu6Z2Cpp2ao5Ecq3QSRzf
             attributesAdded: []
       - status: dev
         content:
           name: Card Charge Responded
           description: Decision response for a card charge request.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           status:
             description: Request decision status ("accepted" | "rejected" | "pending").
             type:
@@ -36506,21 +36825,21 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3ku2VCNwWmypxQWFi6bU595iVPXTsCjgbotAi5y4peEq
+            typeBlueId: 7x2Zk1SgBEUrZXn5weEmzjdyMXB8yBn4UWtY759aS8yG
             attributesAdded: []
       - status: dev
         content:
           name: Card Transaction Capture Lock Change Failed
           description: Card transaction capture lock change failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             description: Failure reason.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DSszDxYtNpdSpnf56vs1oQ4bwbweRowhCLbkT7tvDQiV
+            typeBlueId: DMH5P9UvTUEiKwFBiaN7p44MrkDmhdRmxRmH8GdqMYVa
             attributesAdded: []
       - status: dev
         content:
@@ -36540,14 +36859,14 @@ packages:
           name: Card Transaction Capture Locked
           description: Card transaction capture was locked. Any following card transaction capture requests will be rejected.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           lockedAt:
             description: Timestamp of when the card transaction capture was locked.
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5ZefGb29XU9takV1ftp6aYkrrHs8q8AAfNJBW7Uy3ZyE
+            typeBlueId: DYZJRUa78J19mgGVVxddD5Dw1ETE2tuwdk7gWv3262QL
             attributesAdded: []
       - status: dev
         content:
@@ -36567,14 +36886,14 @@ packages:
           name: Card Transaction Capture Unlocked
           description: Card transaction capture was unlocked. Any following card transaction capture requests will be processed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           unlockedAt:
             description: Timestamp of when the card transaction capture was unlocked.
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 43LubJTPxDs9RGM7bcXwZpyczAstFCsjCkFZgk9zvfAc
+            typeBlueId: GDRN75qJS8fEwRZCxuKWWsJCNvQP65txXjGoSzZDeTxL
             attributesAdded: []
       - status: dev
         content:
@@ -36605,7 +36924,7 @@ packages:
           name: Card Transaction Monitoring Request Rejected
           description: Notification that card transaction monitoring was rejected.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           targetMerchantId:
             description: External merchant identifier requested for monitoring.
             type:
@@ -36625,14 +36944,14 @@ packages:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: ChTzNgt57FAEoZKk7oo1kFSkP6paXTideC3woe52BgPU
+            typeBlueId: FypECZPtPprxLwgcBJhitfoVYyciXojfNmpTBm1UXsaw
             attributesAdded: []
       - status: dev
         content:
           name: Card Transaction Monitoring Started
           description: Confirmation that card transaction monitoring has started.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           targetMerchantId:
             description: External merchant identifier being monitored.
             type:
@@ -36654,7 +36973,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GgzocgK2E91GPBsNsyJsAx2v1DsiQfFazpZqAYGuATv7
+            typeBlueId: 5W4EyRMbrynmMmqwxiBNuyCE95UPuaPCKwFCqy3w3dPy
             attributesAdded: []
       - status: dev
         content:
@@ -36684,13 +37003,13 @@ packages:
           name: Card Transaction PayNote
           description: PayNote tied to a specific card transaction via ISO scheme identifiers.
           type:
-            blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
+            blueId: EnU4iQTNuABWxFAV7DwcK3NAaU9nxrVHdP1RpjUtZpLw
           cardTransactionDetails:
             type:
               blueId: DVykYmmbhDsjsNQCjETGqumKJW5doNkkk6K6R4xeFWTV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9Brtfgkzcbe9YP99asHvi7UHoHr3r3bgMn1vUHMZi8Pv
+            typeBlueId: F3wmxrcgoZZ1bbaPTBhiGawWg6DW3v39HLxVbZ8ZxUM4
             attributesAdded: []
       - status: dev
         content:
@@ -36734,25 +37053,25 @@ packages:
           name: Child PayNote Issuance Declined
           description: The Guarantor declined the request to issue a Child PayNote.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5fW8b3vqSFGwaEvycu7CprBpmGEjW7QqT4vhmN6zX3sc
+            typeBlueId: CugQrayD5dAMwjygpGiXsfaK8AQPFV5tBQn7FAD6sDEX
             attributesAdded: []
       - status: stable
         content:
           name: Child PayNote Issued
           description: The Guarantor confirms that a new Child PayNote has been issued against this parent.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           childPayNote:
             description: Content of the issued PayNote
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DB6iVUgsWh96zaypurZR5jT6EGdwELEteNPomRqo4ZY7
+            typeBlueId: CBabY7LLk5G2dGhTECsptoHXWsxMrhdDmwcjWGKHQWYk
             attributesAdded: []
       - status: dev
         content:
@@ -36772,13 +37091,13 @@ packages:
           name: Final Amount Resolution Rejected
           description: The Guarantor rejected the proposed final amount.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4rw9kwJRP7P5opfxz1AFAX3mp1wmPNf3qKBz1om9gr8A
+            typeBlueId: 5oeXGJiovX5tm5tACCW459cB5FsvzjrVgWZmC1D2Jz6B
             attributesAdded: []
       - status: dev
         content:
@@ -36802,65 +37121,65 @@ packages:
           name: Final Amount Resolved
           description: The Guarantor confirms the final amount this PayNote should complete for.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           finalAmount:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CDwF6APqf9NVAn49dBfJsJVQU1gB4Ah2gbxs3T7DT3Fc
+            typeBlueId: 5vVmWFzgXHrrs8P212Rdm1pNv6WbCTq994RUPx8UM2Fw
             attributesAdded: []
       - status: stable
         content:
           name: Funds Captured
           description: The Guarantor confirms that funds have been successfully transferred to the Payee.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           amountCaptured:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3j1NrjZiu7mn6pcTtqfFo7N2JEQGNWEh2dcxUDuSSVBS
+            typeBlueId: FmURzXxf9hDHhAQ97V4KLVJYnp2EZUmSKRcTMHU6LEnC
             attributesAdded: []
       - status: stable
         content:
           name: Funds Reserved
           description: The Guarantor confirms that funds have been successfully reserved (held).
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           amountReserved:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4p216aqzABWnVNxJY1MkkTU8fZ511S93hQYo1wwHYpKi
+            typeBlueId: 2LibDBcYc3nxeagiH1UfEtxu1XmX2hCa5t4WbfbBZUdn
             attributesAdded: []
       - status: dev
         content:
           name: Funds Secured
           description: The Guarantor confirms that value is now secured / under its control.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           amountSecured:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3wSieJf5cYTa6o9CMcYAFNmVRS1mJe9wMeQ8Jmo3Xp3i
+            typeBlueId: 5Lm9x6Z9gZst4Jcurq1mEhR8QsXpk2xcqzbfvXNNMFt6
             attributesAdded: []
       - status: dev
         content:
           name: Funds Securing Declined
           description: The Guarantor declined the request to secure the funds.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8x9kLwfX9bJdvChLgQjwhPBCAMDZrmRJPMdaWsKKkbjN
+            typeBlueId: GYv38Geb2rvUwZGdRFv4xuCfUyfDPznzdg7SC4SLhsHm
             attributesAdded: []
       - status: dev
         content:
@@ -36868,13 +37187,13 @@ packages:
           description: |
             The Guarantor attempted to secure the funds, but a technical or provider-level failure occurred.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5X9UpCYn4uR6vidaBwpsng98RsVMXjnweXeVgGPXkzQi
+            typeBlueId: DfFDDhJPxVcnJLcHQwQJ6fWTwVRX2uridM45NNuxUJsJ
             attributesAdded: []
       - status: stable
         content:
@@ -36937,21 +37256,21 @@ packages:
           name: Linked PayNote Start Failed
           description: Linked PayNote startup failed after charge processing.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             description: Failure reason.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DAF5xuT1YvgntUkNuDt4q6ABX5ptgbxf2iJCpvajJbnn
+            typeBlueId: 4EtdcwScXEwVyHM7xb4rrAvpQWiRF5LTCsRVsCXfutS9
             attributesAdded: []
       - status: dev
         content:
           name: Linked PayNote Start Responded
           description: Decision response for starting a linked PayNote after successful charge.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           status:
             description: Decision status ("accepted" | "rejected").
             type:
@@ -36962,14 +37281,14 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9GC9R5HceZYKm9LVaKFXKPC9GDUAffn2R4hHNqhDtUAm
+            typeBlueId: 7UQrqwxiBYYGfVEsJEiFzqzDRSqWkAwpCpPQPviFUCo4
             attributesAdded: []
       - status: dev
         content:
           name: Linked PayNote Started
           description: Confirmation that linked PayNote startup was requested successfully.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           payNoteSessionId:
             description: Session id of the bootstrapped linked PayNote document.
             type:
@@ -36980,43 +37299,43 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: G2MqrvuVTgYpURszmzYEavQC7Ef8cQfjd931pE1gTTp2
+            typeBlueId: 6uT6fSBgavBDCPna9QfWWTafSK4R2AUyJwuXcxwdN85i
             attributesAdded: []
       - status: dev
         content:
           name: Merchant To Customer PayNote
           description: Base PayNote where payer is merchant and payee is customer. Bank sets/validates payer channel bindings.
           type:
-            blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
+            blueId: EnU4iQTNuABWxFAV7DwcK3NAaU9nxrVHdP1RpjUtZpLw
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4QW85PM6t2McK3sxKqCsyhajZJv6WVk1AhBT45PGDLZb
+            typeBlueId: 9d6inz92H28psPQBMGKvjVGZDMByTLBGhiEGfP6Kk5HM
             attributesAdded: []
       - status: dev
         content:
           name: Payee Assignment Confirmed
           description: The Guarantor accepted and recorded payee assignment.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           payeeRef:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 79ZV4j1dHpE5nt9nGN141Pte8hDbKgsxSavm9RV9wu1U
+            typeBlueId: B6sEmPnGreWh118mQcc7xfBayFYCu2rY5dRpTZLjPJZY
             attributesAdded: []
       - status: dev
         content:
           name: Payee Assignment Rejected
           description: The Guarantor rejected the proposed payee assignment.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: EHxam7uVrzwbyKVGmHk4QcnKtcPaeM7JzZiiURXj7M33
+            typeBlueId: GuYEq7v2TFSoLSXpkWBXwxe4atqq2PJmGimkgLJxTkSb
             attributesAdded: []
       - status: stable
         content:
@@ -37036,88 +37355,88 @@ packages:
           name: Payment Cancellation Declined
           description: The Guarantor declined the request to cancel before completion.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AygrNas7s1Gvg5zb7X1dVrufVNrGvUxPU7qgQHJ9QLzQ
+            typeBlueId: ALApdyNstCjjcwpQmwv4JtuqXsYcqne1dLwn7eUwohHp
             attributesAdded: []
       - status: dev
         content:
           name: Payment Cancellation Failed
           description: The Guarantor attempted to cancel before completion, but it failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HpeKXtecYHLk8Mm787Pof8hYgQ92SjRQzTDcUdFwrhZV
+            typeBlueId: H2sKDbsPvExGneLhdkGrwAq2pFqYNUn4ySyB3JapgR5D
             attributesAdded: []
       - status: dev
         content:
           name: Payment Cancelled Before Completion
           description: The Guarantor confirms that the transaction was cancelled before completion.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BVVMg23GQoEyUwPxQj1uif1cxc1PgMd6reAdfkt1k77
+            typeBlueId: Btq6DZigCnNpAzaWAkSnFDJiusCTPKFztzGs1vreAAa4
             attributesAdded: []
       - status: dev
         content:
           name: Payment Completed
           description: The Guarantor confirms that the payment was finalized.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           amountCompleted:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HRPugeYyuAMpDR4rKoDeDbJpewtFGgAPpFtwyw1T6Row
+            typeBlueId: 7MJg9P6DL2nTJ7Rqi1QYmb3N1sggredxwTrSdSXSrPw6
             attributesAdded: []
       - status: dev
         content:
           name: Payment Completion Declined
           description: The Guarantor declined the request to complete the payment.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HV1cMM1SfwUna62hDFcwaHwMgDN3QVVSVWWMqmr3Y4jx
+            typeBlueId: 9rxbuDg4cwaj2RHxxdfXqc78T3XKw2WLM9FgEgT1ccPj
             attributesAdded: []
       - status: dev
         content:
           name: Payment Completion Failed
           description: The Guarantor attempted to complete the payment, but it failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7nzmwZ5GYggD81cgK9aTduPVhznB8ay1k128CZA4nvzt
+            typeBlueId: BmUhYkGoV7ij9nGMUTcUKDrDke1GaW8j77oU73Wynesa
             attributesAdded: []
       - status: dev
         content:
           name: Payment Completion Lock Change Failed
           description: The requested completion-lock change failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7A765v3durX3otiybhEomfPAqtztUSt9Ywqef2dsyvLx
+            typeBlueId: 2vnoXfeAmpkkCam42SCdMF9jzMJ6hs1bQmwSJfRb1Qk8
             attributesAdded: []
       - status: dev
         content:
@@ -37139,13 +37458,13 @@ packages:
           description: |
             Payment completion was locked. Subsequent completion attempts must be rejected until explicitly unlocked.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           lockedAt:
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GiarUWCiPuTZ2g7YfosXP17bTi1cH1ZqkguGcYKNqUvY
+            typeBlueId: EAr5MGzN3Y9k1GtS5vqPv2Ye3doadedtfYdUCCNAzSui
             attributesAdded: []
       - status: dev
         content:
@@ -37167,13 +37486,13 @@ packages:
           description: |
             Payment completion was unlocked. Subsequent completion attempts may now be processed again.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           unlockedAt:
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4qyUrMxKg5b3zPiB3kBwwy4Yh9fgD4DSqGeLTXh57b7i
+            typeBlueId: BmcPEnRdWwrGzMCfbSjZtnTkb27ZHJemNEVNDnS1gC4V
             attributesAdded: []
       - status: dev
         content:
@@ -38211,7 +38530,7 @@ packages:
                                 value: nextAmountReserved
                         - $appendEvent:
                             type:
-                              blueId: Cg8SSdLksJdyWoGcFvq4VvoGwMkcQY88rNdcA9qc734j
+                              blueId: AL3ke9emJ2ruatfHdT2uZ6XT6casVo9UgeZyWGWCfHHT
                             authorizationId:
                               $var:
                                 type:
@@ -38266,7 +38585,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 12zhLzvXiUjVQsbNQGRRZk15M1fc2WcohZ8Nbz7Wmd1m
+                  blueId: GGPSsZjJkhQ6zGs1ggZY1mxr88rv92eqgGZEST8BWtFp
             settleSpendImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -39367,7 +39686,7 @@ packages:
                                 value: nextAmountCaptured
                         - $appendEvent:
                             type:
-                              blueId: AyxFRqp7CDgStXG1ATYUBmAVD62QAF3S3ZV867Q9iBAk
+                              blueId: 6KwRany8GD8Bh1ahj1EiL3vzwXNZgKevyqEZvTg27zN7
                             authorizationId:
                               $var:
                                 type:
@@ -39602,7 +39921,7 @@ packages:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DBrjV3fVNnCUv6bSjd1nZG2LhuUxyJnkw1CcXQkpir1W
+            typeBlueId: 3C1kgodeWjvHL6Kdawo89GhEaPtkrNKGqaSWCDHWRgJH
             attributesAdded: []
       - status: dev
         content:
@@ -39680,7 +39999,7 @@ packages:
           name: Payment Mandate Spend Authorization Responded
           description: Decision from Payment Mandate for a spend authorization request.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           authorizationId:
             description: Correlation key copied from Payment Mandate Spend Authorization Requested.
             type:
@@ -39703,7 +40022,7 @@ packages:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Cg8SSdLksJdyWoGcFvq4VvoGwMkcQY88rNdcA9qc734j
+            typeBlueId: AL3ke9emJ2ruatfHdT2uZ6XT6casVo9UgeZyWGWCfHHT
             attributesAdded: []
       - status: dev
         content:
@@ -39711,7 +40030,7 @@ packages:
           description: |
             Settlement update sent by bank to Payment Mandate after charge execution, used to apply deterministic reserved/captured deltas in mandate state. For approved authorizations, mandate may already reserve capacity at authorize step. Deltas should express net post-execution adjustment from current mandate state.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           authorizationId:
             description: Correlation key copied from Payment Mandate Spend Authorization Requested.
             type:
@@ -39752,14 +40071,14 @@ packages:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 12zhLzvXiUjVQsbNQGRRZk15M1fc2WcohZ8Nbz7Wmd1m
+            typeBlueId: GGPSsZjJkhQ6zGs1ggZY1mxr88rv92eqgGZEST8BWtFp
             attributesAdded: []
       - status: dev
         content:
           name: Payment Mandate Spend Settlement Responded
           description: Validation result emitted by Payment Mandate after processing a settlement update.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           authorizationId:
             description: Correlation key copied from Payment Mandate Spend Settled.
             type:
@@ -39790,46 +40109,46 @@ packages:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AyxFRqp7CDgStXG1ATYUBmAVD62QAF3S3ZV867Q9iBAk
+            typeBlueId: 6KwRany8GD8Bh1ahj1EiL3vzwXNZgKevyqEZvTg27zN7
             attributesAdded: []
       - status: dev
         content:
           name: Payment Reversal Declined
           description: The Guarantor declined the request to reverse after completion.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3zqCf4fDYcC5ETzvGZA8Jasf1LXdujZTZyL88zL3EDSF
+            typeBlueId: DMxGoR2gcwBmVTLMqf4dEMVnzgKix5VUqdna6JPTjK3z
             attributesAdded: []
       - status: dev
         content:
           name: Payment Reversal Failed
           description: The Guarantor attempted to reverse after completion, but it failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HgRjnfFyp9156xXVSeXhzKWuZFQE4jVuL1WYD3Gbm98T
+            typeBlueId: A3Az4YT8fWTkaTYqFssQBwN6Aj3JAjPnG8FHA3zisTfM
             attributesAdded: []
       - status: dev
         content:
           name: Payment Reversal Lock Change Failed
           description: The requested reversal-lock change failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9wsCVU7Pw5BzQhN8RYZXJhiwJAEfBzCkLEWURkJymKsy
+            typeBlueId: BF1oLjkuyjkAeLWbVoq9BEy7fx4pxExLaJERTUWWk9wC
             attributesAdded: []
       - status: dev
         content:
@@ -39851,13 +40170,13 @@ packages:
           description: |
             Payment reversal was locked. Subsequent reversal attempts must be rejected until explicitly unlocked.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           lockedAt:
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6qKyexNfVD2WhQQ5FGuCoPGQF89SAigGgwyzbKXsPMRP
+            typeBlueId: AwLYrbzX9wYnuoW2GPCnhj6vvWfnU1sktwWU44vJrEKf
             attributesAdded: []
       - status: dev
         content:
@@ -39879,26 +40198,26 @@ packages:
           description: |
             Payment reversal was unlocked. Subsequent reversal attempts may now be processed again.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           unlockedAt:
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FVjUChq6akLbAux94Gs4Sv2VQ1JtQWqy1WekMUTyNXuv
+            typeBlueId: AfThwp2g99BAnkGVt4nnjXjJ6Dqqzqbw9qQ9jrHxGaHR
             attributesAdded: []
       - status: dev
         content:
           name: Payment Reversed After Completion
           description: The Guarantor confirms that value was reversed after completion.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           amountReversed:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 42iMsNHFY4jUTy1yhZeEeZu9XZL4ZJqReRe191f1KHXf
+            typeBlueId: 54qKtmY2NwV692RPB6GuQx36TJkSuD2evNZiKTtCKP1
             attributesAdded: []
       - status: dev
         content:
@@ -40193,7 +40512,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: EWJLkS8q4TE5NWDh4qpQZMcbgGWdiePNkbZMCtGYVRAN
+                  blueId: 3GXYiv2Nmr9CP9FKFHzbQnez3MPq53dzPfoFwY8Q2xSC
             acceptPayNoteImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -40225,7 +40544,7 @@ packages:
                       blueId: Dg3nc6K9P7AWn4K1dpGCAKG3YXJjsUWRhG3YxfqyLTeK
                     event:
                       type:
-                        blueId: EWJLkS8q4TE5NWDh4qpQZMcbgGWdiePNkbZMCtGYVRAN
+                        blueId: 3GXYiv2Nmr9CP9FKFHzbQnez3MPq53dzPfoFwY8Q2xSC
             rejectPayNote:
               type:
                 blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
@@ -40235,7 +40554,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: FJqmEa4mSV4FrJkeZn9KLbTZMBeULqaBkzEhceuoaLJG
+                  blueId: BwBY7i6JhkwVsRaYMK9NJEzg5Nwa7KyLR1EghVRp75R3
             rejectPayNoteImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -40314,7 +40633,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 7WG5MSrMMCeAEYwavUJ2eZQhYdYn2xZv5T8ZYoFyFA4Z
+                  blueId: H1drpTrZV4VPCPeNV7Wsu3PvSLp5kaXSEszrE7ipCxb
             recordTransactionInitiatedImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -40552,7 +40871,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 4RWHs3KE6EL4cyMHvhrxR7pm6wQcgW5wGefM5t7p8jn2
+                  blueId: 7xv283WsGZMSARHfWsHjqcMFHPJk4czsihtDbb9Hx96T
             recordTransactionInitiationFailedImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -40586,7 +40905,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 4RWHs3KE6EL4cyMHvhrxR7pm6wQcgW5wGefM5t7p8jn2
+                              blueId: 7xv283WsGZMSARHfWsHjqcMFHPJk4czsihtDbb9Hx96T
                             reason:
                               $event:
                                 type:
@@ -40615,7 +40934,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 79ZV4j1dHpE5nt9nGN141Pte8hDbKgsxSavm9RV9wu1U
+                  blueId: B6sEmPnGreWh118mQcc7xfBayFYCu2rY5dRpTZLjPJZY
             confirmPayeeAssignmentImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -40789,7 +41108,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: EHxam7uVrzwbyKVGmHk4QcnKtcPaeM7JzZiiURXj7M33
+                  blueId: GuYEq7v2TFSoLSXpkWBXwxe4atqq2PJmGimkgLJxTkSb
             rejectPayeeAssignmentImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -40806,7 +41125,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: EHxam7uVrzwbyKVGmHk4QcnKtcPaeM7JzZiiURXj7M33
+                              blueId: GuYEq7v2TFSoLSXpkWBXwxe4atqq2PJmGimkgLJxTkSb
                             reason:
                               $event:
                                 type:
@@ -40835,7 +41154,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 5B6omzwwUauNNbarndynuCMyMCqZVu6ikTqnLocXZyWA
+                  blueId: 2TqfkNyR9Y2VSBLrR9m5om8KHAxJiP9mfvK9cqryf8Gp
             confirmTransactionDetailsUpdatedImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41021,7 +41340,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 3iWy5uSeaCr149THj4x9sAeb2AhTtkHFY9yCuqeV7LCT
+                  blueId: 4YaFyEh1wYWxr9WRiUat842AyckhGNoUTFPowtm4kGu2
             rejectTransactionDetailsUpdateImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41038,7 +41357,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 3iWy5uSeaCr149THj4x9sAeb2AhTtkHFY9yCuqeV7LCT
+                              blueId: 4YaFyEh1wYWxr9WRiUat842AyckhGNoUTFPowtm4kGu2
                             reason:
                               $event:
                                 type:
@@ -41067,7 +41386,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: DDuuaogLyNgVHbSoJxxQcX5iZqWy6U9DAxjgtdzWRnWB
+                  blueId: An4HLWaPYmxzxC2R695j31e1CHxGYu2ULPGknmwzss5m
             failTransactionDetailsUpdateImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41084,7 +41403,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: DDuuaogLyNgVHbSoJxxQcX5iZqWy6U9DAxjgtdzWRnWB
+                              blueId: An4HLWaPYmxzxC2R695j31e1CHxGYu2ULPGknmwzss5m
                             reason:
                               $event:
                                 type:
@@ -41113,7 +41432,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 3wSieJf5cYTa6o9CMcYAFNmVRS1mJe9wMeQ8Jmo3Xp3i
+                  blueId: 5Lm9x6Z9gZst4Jcurq1mEhR8QsXpk2xcqzbfvXNNMFt6
             secureFundsImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41172,7 +41491,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 3wSieJf5cYTa6o9CMcYAFNmVRS1mJe9wMeQ8Jmo3Xp3i
+                              blueId: 5Lm9x6Z9gZst4Jcurq1mEhR8QsXpk2xcqzbfvXNNMFt6
                             amountSecured:
                               $event:
                                 type:
@@ -41201,7 +41520,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 8x9kLwfX9bJdvChLgQjwhPBCAMDZrmRJPMdaWsKKkbjN
+                  blueId: GYv38Geb2rvUwZGdRFv4xuCfUyfDPznzdg7SC4SLhsHm
             declineSecureFundsImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41235,7 +41554,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 8x9kLwfX9bJdvChLgQjwhPBCAMDZrmRJPMdaWsKKkbjN
+                              blueId: GYv38Geb2rvUwZGdRFv4xuCfUyfDPznzdg7SC4SLhsHm
                             reason:
                               $event:
                                 type:
@@ -41264,7 +41583,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 5X9UpCYn4uR6vidaBwpsng98RsVMXjnweXeVgGPXkzQi
+                  blueId: DfFDDhJPxVcnJLcHQwQJ6fWTwVRX2uridM45NNuxUJsJ
             failSecureFundsImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41298,7 +41617,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 5X9UpCYn4uR6vidaBwpsng98RsVMXjnweXeVgGPXkzQi
+                              blueId: DfFDDhJPxVcnJLcHQwQJ6fWTwVRX2uridM45NNuxUJsJ
                             reason:
                               $event:
                                 type:
@@ -41327,7 +41646,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: HRPugeYyuAMpDR4rKoDeDbJpewtFGgAPpFtwyw1T6Row
+                  blueId: 7MJg9P6DL2nTJ7Rqi1QYmb3N1sggredxwTrSdSXSrPw6
             completePaymentImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41386,7 +41705,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: HRPugeYyuAMpDR4rKoDeDbJpewtFGgAPpFtwyw1T6Row
+                              blueId: 7MJg9P6DL2nTJ7Rqi1QYmb3N1sggredxwTrSdSXSrPw6
                             amountCompleted:
                               $event:
                                 type:
@@ -41415,7 +41734,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: HV1cMM1SfwUna62hDFcwaHwMgDN3QVVSVWWMqmr3Y4jx
+                  blueId: 9rxbuDg4cwaj2RHxxdfXqc78T3XKw2WLM9FgEgT1ccPj
             declineCompletePaymentImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41449,7 +41768,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: HV1cMM1SfwUna62hDFcwaHwMgDN3QVVSVWWMqmr3Y4jx
+                              blueId: 9rxbuDg4cwaj2RHxxdfXqc78T3XKw2WLM9FgEgT1ccPj
                             reason:
                               $event:
                                 type:
@@ -41478,7 +41797,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 7nzmwZ5GYggD81cgK9aTduPVhznB8ay1k128CZA4nvzt
+                  blueId: BmUhYkGoV7ij9nGMUTcUKDrDke1GaW8j77oU73Wynesa
             failCompletePaymentImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41512,7 +41831,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 7nzmwZ5GYggD81cgK9aTduPVhznB8ay1k128CZA4nvzt
+                              blueId: BmUhYkGoV7ij9nGMUTcUKDrDke1GaW8j77oU73Wynesa
                             reason:
                               $event:
                                 type:
@@ -41541,7 +41860,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: BVVMg23GQoEyUwPxQj1uif1cxc1PgMd6reAdfkt1k77
+                  blueId: Btq6DZigCnNpAzaWAkSnFDJiusCTPKFztzGs1vreAAa4
             cancelBeforeCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41573,7 +41892,7 @@ packages:
                       blueId: Dg3nc6K9P7AWn4K1dpGCAKG3YXJjsUWRhG3YxfqyLTeK
                     event:
                       type:
-                        blueId: BVVMg23GQoEyUwPxQj1uif1cxc1PgMd6reAdfkt1k77
+                        blueId: Btq6DZigCnNpAzaWAkSnFDJiusCTPKFztzGs1vreAAa4
             declineCancelBeforeCompletion:
               type:
                 blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
@@ -41583,7 +41902,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: AygrNas7s1Gvg5zb7X1dVrufVNrGvUxPU7qgQHJ9QLzQ
+                  blueId: ALApdyNstCjjcwpQmwv4JtuqXsYcqne1dLwn7eUwohHp
             declineCancelBeforeCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41617,7 +41936,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: AygrNas7s1Gvg5zb7X1dVrufVNrGvUxPU7qgQHJ9QLzQ
+                              blueId: ALApdyNstCjjcwpQmwv4JtuqXsYcqne1dLwn7eUwohHp
                             reason:
                               $event:
                                 type:
@@ -41646,7 +41965,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: HpeKXtecYHLk8Mm787Pof8hYgQ92SjRQzTDcUdFwrhZV
+                  blueId: H2sKDbsPvExGneLhdkGrwAq2pFqYNUn4ySyB3JapgR5D
             failCancelBeforeCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41680,7 +41999,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: HpeKXtecYHLk8Mm787Pof8hYgQ92SjRQzTDcUdFwrhZV
+                              blueId: H2sKDbsPvExGneLhdkGrwAq2pFqYNUn4ySyB3JapgR5D
                             reason:
                               $event:
                                 type:
@@ -41709,7 +42028,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 42iMsNHFY4jUTy1yhZeEeZu9XZL4ZJqReRe191f1KHXf
+                  blueId: 54qKtmY2NwV692RPB6GuQx36TJkSuD2evNZiKTtCKP1
             reverseAfterCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41768,7 +42087,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 42iMsNHFY4jUTy1yhZeEeZu9XZL4ZJqReRe191f1KHXf
+                              blueId: 54qKtmY2NwV692RPB6GuQx36TJkSuD2evNZiKTtCKP1
                             amountReversed:
                               $event:
                                 type:
@@ -41797,7 +42116,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 3zqCf4fDYcC5ETzvGZA8Jasf1LXdujZTZyL88zL3EDSF
+                  blueId: DMxGoR2gcwBmVTLMqf4dEMVnzgKix5VUqdna6JPTjK3z
             declineReverseAfterCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41831,7 +42150,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 3zqCf4fDYcC5ETzvGZA8Jasf1LXdujZTZyL88zL3EDSF
+                              blueId: DMxGoR2gcwBmVTLMqf4dEMVnzgKix5VUqdna6JPTjK3z
                             reason:
                               $event:
                                 type:
@@ -41860,7 +42179,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: HgRjnfFyp9156xXVSeXhzKWuZFQE4jVuL1WYD3Gbm98T
+                  blueId: A3Az4YT8fWTkaTYqFssQBwN6Aj3JAjPnG8FHA3zisTfM
             failReverseAfterCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41894,7 +42213,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: HgRjnfFyp9156xXVSeXhzKWuZFQE4jVuL1WYD3Gbm98T
+                              blueId: A3Az4YT8fWTkaTYqFssQBwN6Aj3JAjPnG8FHA3zisTfM
                             reason:
                               $event:
                                 type:
@@ -41923,7 +42242,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: CDwF6APqf9NVAn49dBfJsJVQU1gB4Ah2gbxs3T7DT3Fc
+                  blueId: 5vVmWFzgXHrrs8P212Rdm1pNv6WbCTq994RUPx8UM2Fw
             resolveFinalAmountImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -41969,7 +42288,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: CDwF6APqf9NVAn49dBfJsJVQU1gB4Ah2gbxs3T7DT3Fc
+                              blueId: 5vVmWFzgXHrrs8P212Rdm1pNv6WbCTq994RUPx8UM2Fw
                             finalAmount:
                               $event:
                                 type:
@@ -41998,7 +42317,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 4rw9kwJRP7P5opfxz1AFAX3mp1wmPNf3qKBz1om9gr8A
+                  blueId: 5oeXGJiovX5tm5tACCW459cB5FsvzjrVgWZmC1D2Jz6B
             rejectFinalAmountResolutionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42015,7 +42334,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 4rw9kwJRP7P5opfxz1AFAX3mp1wmPNf3qKBz1om9gr8A
+                              blueId: 5oeXGJiovX5tm5tACCW459cB5FsvzjrVgWZmC1D2Jz6B
                             reason:
                               $event:
                                 type:
@@ -42044,7 +42363,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: GiarUWCiPuTZ2g7YfosXP17bTi1cH1ZqkguGcYKNqUvY
+                  blueId: EAr5MGzN3Y9k1GtS5vqPv2Ye3doadedtfYdUCCNAzSui
             lockPaymentCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42078,7 +42397,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: GiarUWCiPuTZ2g7YfosXP17bTi1cH1ZqkguGcYKNqUvY
+                              blueId: EAr5MGzN3Y9k1GtS5vqPv2Ye3doadedtfYdUCCNAzSui
                             lockedAt:
                               $event:
                                 type:
@@ -42107,7 +42426,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 4qyUrMxKg5b3zPiB3kBwwy4Yh9fgD4DSqGeLTXh57b7i
+                  blueId: BmcPEnRdWwrGzMCfbSjZtnTkb27ZHJemNEVNDnS1gC4V
             unlockPaymentCompletionImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42141,7 +42460,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 4qyUrMxKg5b3zPiB3kBwwy4Yh9fgD4DSqGeLTXh57b7i
+                              blueId: BmcPEnRdWwrGzMCfbSjZtnTkb27ZHJemNEVNDnS1gC4V
                             unlockedAt:
                               $event:
                                 type:
@@ -42170,7 +42489,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 7A765v3durX3otiybhEomfPAqtztUSt9Ywqef2dsyvLx
+                  blueId: 2vnoXfeAmpkkCam42SCdMF9jzMJ6hs1bQmwSJfRb1Qk8
             failPaymentCompletionLockChangeImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42187,7 +42506,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 7A765v3durX3otiybhEomfPAqtztUSt9Ywqef2dsyvLx
+                              blueId: 2vnoXfeAmpkkCam42SCdMF9jzMJ6hs1bQmwSJfRb1Qk8
                             reason:
                               $event:
                                 type:
@@ -42216,7 +42535,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 6qKyexNfVD2WhQQ5FGuCoPGQF89SAigGgwyzbKXsPMRP
+                  blueId: AwLYrbzX9wYnuoW2GPCnhj6vvWfnU1sktwWU44vJrEKf
             lockPaymentReversalImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42250,7 +42569,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 6qKyexNfVD2WhQQ5FGuCoPGQF89SAigGgwyzbKXsPMRP
+                              blueId: AwLYrbzX9wYnuoW2GPCnhj6vvWfnU1sktwWU44vJrEKf
                             lockedAt:
                               $event:
                                 type:
@@ -42279,7 +42598,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: FVjUChq6akLbAux94Gs4Sv2VQ1JtQWqy1WekMUTyNXuv
+                  blueId: AfThwp2g99BAnkGVt4nnjXjJ6Dqqzqbw9qQ9jrHxGaHR
             unlockPaymentReversalImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42313,7 +42632,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: FVjUChq6akLbAux94Gs4Sv2VQ1JtQWqy1WekMUTyNXuv
+                              blueId: AfThwp2g99BAnkGVt4nnjXjJ6Dqqzqbw9qQ9jrHxGaHR
                             unlockedAt:
                               $event:
                                 type:
@@ -42342,7 +42661,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 9wsCVU7Pw5BzQhN8RYZXJhiwJAEfBzCkLEWURkJymKsy
+                  blueId: BF1oLjkuyjkAeLWbVoq9BEy7fx4pxExLaJERTUWWk9wC
             failPaymentReversalLockChangeImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42359,7 +42678,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 9wsCVU7Pw5BzQhN8RYZXJhiwJAEfBzCkLEWURkJymKsy
+                              blueId: BF1oLjkuyjkAeLWbVoq9BEy7fx4pxExLaJERTUWWk9wC
                             reason:
                               $event:
                                 type:
@@ -42388,7 +42707,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 44MphyKwNYqXzF8aS5WTmXZMQ4x35PViXyoy2Ks14G1Z
+                  blueId: 6EwsMA57MwN1Wtetc5yaxfeMLNCoF97sf3DKdSA1ZNjN
             lockTransactionDetailsUpdateImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42422,7 +42741,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 44MphyKwNYqXzF8aS5WTmXZMQ4x35PViXyoy2Ks14G1Z
+                              blueId: 6EwsMA57MwN1Wtetc5yaxfeMLNCoF97sf3DKdSA1ZNjN
                             lockedAt:
                               $event:
                                 type:
@@ -42451,7 +42770,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: ASnHnJCtcbdEsWa5wcbRpmoUBnw9yajf9vLpsovXyTXg
+                  blueId: 7m1Q2Dt5P6YbKZ894pWSyBriZjwj7xev2AkVJ2JpFbXr
             unlockTransactionDetailsUpdateImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42485,7 +42804,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: ASnHnJCtcbdEsWa5wcbRpmoUBnw9yajf9vLpsovXyTXg
+                              blueId: 7m1Q2Dt5P6YbKZ894pWSyBriZjwj7xev2AkVJ2JpFbXr
                             unlockedAt:
                               $event:
                                 type:
@@ -42514,7 +42833,7 @@ packages:
                 value: guarantorChannel
               request:
                 type:
-                  blueId: 369jQqbKxUNXz4yZHMgeomhtQUbAByuCCXCcXKaUSun9
+                  blueId: 7JhfPwWp4Tq1TXDw1GaG1XHBRdF2SL64i3eQE5e2miie
             failTransactionDetailsUpdateLockChangeImpl:
               type:
                 blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
@@ -42531,7 +42850,7 @@ packages:
                       items:
                         - $appendEvent:
                             type:
-                              blueId: 369jQqbKxUNXz4yZHMgeomhtQUbAByuCCXCcXKaUSun9
+                              blueId: 7JhfPwWp4Tq1TXDw1GaG1XHBRdF2SL64i3eQE5e2miie
                             reason:
                               $event:
                                 type:
@@ -42617,7 +42936,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
+            typeBlueId: EnU4iQTNuABWxFAV7DwcK3NAaU9nxrVHdP1RpjUtZpLw
             attributesAdded: []
       - status: dev
         content:
@@ -42635,10 +42954,10 @@ packages:
           name: PayNote Accepted
           description: The Guarantor accepted this PayNote as governing the referenced transaction.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: EWJLkS8q4TE5NWDh4qpQZMcbgGWdiePNkbZMCtGYVRAN
+            typeBlueId: 3GXYiv2Nmr9CP9FKFHzbQnez3MPq53dzPfoFwY8Q2xSC
             attributesAdded: []
       - status: dev
         content:
@@ -42659,23 +42978,23 @@ packages:
           name: PayNote Approved
           description: The Guarantor confirms the PayNote is valid and ready for further action.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8DVJqK8XnidDVa8ToiHg2C67LzszVMrV57yircF3zzyM
+            typeBlueId: 29y5ie2hbU5WCK6xBcdsjagYMprwuXxMj19oebPi2sZg
             attributesAdded: []
       - status: stable
         content:
           name: PayNote Cancellation Rejected
           description: The Guarantor denies PayNote cancellation requested by Payer.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AmVVqD9dehBLXhwmyRtfH9XhdMVbc9i9YEqhsMJrPnpN
+            typeBlueId: 4W8Rie1GTgUmbWofAhBCrSk1X8n44GyqZyE6DQTgnw9L
             attributesAdded: []
       - status: stable
         content:
@@ -42696,10 +43015,10 @@ packages:
           name: PayNote Cancelled
           description: The Guarantor confirms PayNote cancellation requested by Payer.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 29BnKeGGy1Z4ZQZk9tXccEtkjjjARP3xEw2sbxajtcn4
+            typeBlueId: Feo1czy1aQYvo4d21ZFuFApZb13vqCBkzt4W3nrZoeRH
             attributesAdded: []
       - status: dev
         content:
@@ -44071,17 +44390,17 @@ packages:
           payNoteBootstrapRequest:
             description: PayNote bootstrap request details.
             type:
-              blueId: DGtbvBCuFFKAH3ncDb6LAibSAq8Smr5oChLSdvNvGuZu
+              blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
             document:
               type:
-                blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
+                blueId: EnU4iQTNuABWxFAV7DwcK3NAaU9nxrVHdP1RpjUtZpLw
           paymentMandateBootstrapRequest:
             description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
             type:
-              blueId: DGtbvBCuFFKAH3ncDb6LAibSAq8Smr5oChLSdvNvGuZu
+              blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
             document:
               type:
-                blueId: DBrjV3fVNnCUv6bSjd1nZG2LhuUxyJnkw1CcXQkpir1W
+                blueId: 3C1kgodeWjvHL6Kdawo89GhEaPtkrNKGqaSWCDHWRgJH
           cardTransactionDetails:
             description: Card network identifiers used to match processor and issuer records.
             type:
@@ -44112,7 +44431,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Eow1WxHB8VC7kBCX5fn4tdQG1CPzhk7fswLvU3dpQEFL
+            typeBlueId: HuvrcZoFTgvsFwEb4LNjg57Y768qG8UTPUcgjSFughnv
             attributesAdded: []
       - status: dev
         content:
@@ -44133,13 +44452,13 @@ packages:
           name: PayNote Rejected
           description: The Guarantor denies the creation of the PayNote.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FJqmEa4mSV4FrJkeZn9KLbTZMBeULqaBkzEhceuoaLJG
+            typeBlueId: BwBY7i6JhkwVsRaYMK9NJEzg5Nwa7KyLR1EghVRp75R3
             attributesAdded: []
       - status: dev
         content:
@@ -44164,26 +44483,26 @@ packages:
           name: Reservation Declined
           description: The Guarantor could not reserve the requested funds.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DhMGXZUUoZKjNmPbBKyY882k9rAnPK5F6Kup76KPLdKR
+            typeBlueId: D2WDvFstYeAKtguHkV35B8a7aP8Rj5vpsqb9xGBnr9V8
             attributesAdded: []
       - status: stable
         content:
           name: Reservation Release Declined
           description: The Guarantor failed to release the reserved funds.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2vV995BK1aDswPiZr8bXfwLvRbbprmFnhMa7aJGfg3Df
+            typeBlueId: 3nBY7YyzYCLAUprBwNA8wbNs12ELJc5tcREKb74fGigq
             attributesAdded: []
       - status: stable
         content:
@@ -44203,13 +44522,13 @@ packages:
           name: Reservation Released
           description: The Guarantor confirms that previously reserved funds have been released.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           amountReleased:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 36QzhH7XYNZRBqNotXqdoo7VGkgeZBUojDzADhd1e6RB
+            typeBlueId: G6TDvitQ2xKgqrabq4SknqaifmDdsmUv59kNMUYzKvLp
             attributesAdded: []
       - status: stable
         content:
@@ -44311,26 +44630,26 @@ packages:
           name: Settlement Amount Rejected
           description: The Guarantor rejects the proposed settlement amount.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: EqtTi4QsxYWoyLu4X2iptWAQTTAVHh77MUgdp8aUjtjC
+            typeBlueId: 8pZycRVESC1ukhgPvXD3mDARn8oRWkDDDjxAf5jA3WAw
             attributesAdded: []
       - status: stable
         content:
           name: Settlement Amount Specified
           description: The Guarantor confirms the final settlement amount, which may differ from the initial total.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           finalAmount:
             type:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4dHGVnHSgn18Dj6VTYZE2359Ym67DLjfnwgDRcy5tHZH
+            typeBlueId: 5mmaYYHspULgg9BwGTMXeYTV7NN8QMAHYEyjd81zM77w
             attributesAdded: []
       - status: dev
         content:
@@ -44364,26 +44683,26 @@ packages:
           description: |
             The Guarantor attempted to apply the transaction details update, but a technical or provider-level failure occurred.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DDuuaogLyNgVHbSoJxxQcX5iZqWy6U9DAxjgtdzWRnWB
+            typeBlueId: An4HLWaPYmxzxC2R695j31e1CHxGYu2ULPGknmwzss5m
             attributesAdded: []
       - status: dev
         content:
           name: Transaction Details Update Lock Change Failed
           description: The requested transaction-details-update lock change failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 369jQqbKxUNXz4yZHMgeomhtQUbAByuCCXCcXKaUSun9
+            typeBlueId: 7JhfPwWp4Tq1TXDw1GaG1XHBRdF2SL64i3eQE5e2miie
             attributesAdded: []
       - status: dev
         content:
@@ -44405,26 +44724,26 @@ packages:
           description: |
             Transaction-details updates were locked. Subsequent details changes must be rejected until explicitly unlocked.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           lockedAt:
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 44MphyKwNYqXzF8aS5WTmXZMQ4x35PViXyoy2Ks14G1Z
+            typeBlueId: 6EwsMA57MwN1Wtetc5yaxfeMLNCoF97sf3DKdSA1ZNjN
             attributesAdded: []
       - status: dev
         content:
           name: Transaction Details Update Rejected
           description: The Guarantor rejected the proposed transaction details update.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3iWy5uSeaCr149THj4x9sAeb2AhTtkHFY9yCuqeV7LCT
+            typeBlueId: 4YaFyEh1wYWxr9WRiUat842AyckhGNoUTFPowtm4kGu2
             attributesAdded: []
       - status: dev
         content:
@@ -44459,25 +44778,25 @@ packages:
           description: |
             Transaction-details updates were unlocked. Subsequent details changes may now be processed again.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           unlockedAt:
             type:
               blueId: 47EN5A1B1ZXXdXMEoURVJquMSjdDuKFNDjMrkvVxoVJk
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: ASnHnJCtcbdEsWa5wcbRpmoUBnw9yajf9vLpsovXyTXg
+            typeBlueId: 7m1Q2Dt5P6YbKZ894pWSyBriZjwj7xev2AkVJ2JpFbXr
             attributesAdded: []
       - status: dev
         content:
           name: Transaction Details Updated
           description: The Guarantor accepted and recorded updated transaction details.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           transactionDetails:
             description: Opaque transaction details payload confirmed by the Guarantor.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5B6omzwwUauNNbarndynuCMyMCqZVu6ikTqnLocXZyWA
+            typeBlueId: 2TqfkNyR9Y2VSBLrR9m5om8KHAxJiP9mfvK9cqryf8Gp
             attributesAdded: []
       - status: dev
         content:
@@ -44509,7 +44828,7 @@ packages:
           description: |
             The Guarantor confirms that the underlying transaction was initiated and records how this PayNote was attached to it.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           railType:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44524,20 +44843,20 @@ packages:
               blueId: E2LM6qgzWG9ttagq2xTmiZkgYEAgkYedFCmU9v7NnVEq
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7WG5MSrMMCeAEYwavUJ2eZQhYdYn2xZv5T8ZYoFyFA4Z
+            typeBlueId: H1drpTrZV4VPCPeNV7Wsu3PvSLp5kaXSEszrE7ipCxb
             attributesAdded: []
       - status: dev
         content:
           name: Transaction Initiation Failed
           description: The Guarantor attempted to initiate the transaction, but it failed.
           type:
-            blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
+            blueId: AzASjrTzr6FPoRd6B3yYDv7k43Z8ap8kwhaxYrFaXpzV
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4RWHs3KE6EL4cyMHvhrxR7pm6wQcgW5wGefM5t7p8jn2
+            typeBlueId: 7xv283WsGZMSARHfWsHjqcMFHPJk4czsihtDbb9Hx96T
             attributesAdded: []
       - status: dev
         content:
@@ -49316,4 +49635,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - F7mowRpvfyh7PF2tSNPLEitCFynYjzhj2269nBYqamyM
+  - v2PYDvCa6WY3nVYe3dvxKiT9yZYHjKH4XtwAEtYh6BV
