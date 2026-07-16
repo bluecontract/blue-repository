@@ -8,17 +8,9 @@ description: >
   that behavior.
 
 inResponseTo:
-  type:
-    name: Response Correlation
-    description: Correlation from a Response to the Request occurrence it answers.
-    incomingEvent:
-      schema:
-        required: true
-      description: >
-        Pure { blueId: ... } reference to the exact Request occurrence. The
-        Request payload is not embedded in the correlation object.
+  type: Coordination/Request
   schema:
     required: true
   description: >
-    Required correlation to the exact Coordination/Request occurrence answered
-    by this Response.
+    Required reference to the exact Coordination/Request occurrence answered by
+    this Response.
