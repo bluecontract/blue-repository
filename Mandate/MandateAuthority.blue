@@ -1,10 +1,10 @@
 name: Mandate Authority
 type: Coordination/Authority
 description: >
-  Authority evidence backed by a Mandate/Mandate document. On a Timeline
-  Entry, the containing actor claims to act on behalf of actor under mandate.
-  The mandate value may be materialized inline or represented as an equivalent
-  pure { blueId: ... } reference.
+  Authority evidence backed by an initial Mandate/Mandate document. On a
+  Timeline Entry, the containing actor claims to act on behalf of actor under
+  that mandate. The initialMandateDocument value may be materialized inline or
+  represented as an equivalent pure { blueId: ... } reference.
 
 actor:
   type: Coordination/Actor
@@ -12,7 +12,7 @@ actor:
     required: true
   description: Actor on whose behalf the containing actor claims to act.
 
-mandate:
+initialMandateDocument:
   type: Mandate/Mandate
   schema:
     required: true

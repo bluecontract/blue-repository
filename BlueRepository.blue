@@ -34636,7 +34636,7 @@ packages:
         content:
           name: Mandate Authority
           description: |
-            Authority evidence backed by a Mandate/Mandate document. On a Timeline Entry, the containing actor claims to act on behalf of actor under mandate. The mandate value may be materialized inline or represented as an equivalent pure { blueId: ... } reference.
+            Authority evidence backed by an initial Mandate/Mandate document. On a Timeline Entry, the containing actor claims to act on behalf of actor under that mandate. The initialMandateDocument value may be materialized inline or represented as an equivalent pure { blueId: ... } reference.
           type:
             blueId: 5BrNKcZDq6q4UY1jQpjyeFjbTV6rxVKM9qNL5xzGMZRW
           actor:
@@ -34645,7 +34645,7 @@ packages:
               blueId: GnMntk3hLvHEsZTBE8Gk7ytPBexj6jhBJHdaxnJYhEQ7
             schema:
               required: true
-          mandate:
+          initialMandateDocument:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
@@ -34654,7 +34654,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3oCuMKxneozS3zMfBnnuvPwesUQDgWFwnF76uy2ERuQr
+            typeBlueId: 5bFqx3YquAHCFUvVzVEZ1h6aF89yhxfb1c3HnQys2kKz
             attributesAdded: []
       - status: stable
         content:
@@ -49322,4 +49322,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 3zLAj8nBBFTYuZiAgjntPsCcmBq9zr7SZKnK7xysDemF
+  - 7cU4LajZRqn5b6Li1cHpABhCtNRWVVEqASFHi2finahH
