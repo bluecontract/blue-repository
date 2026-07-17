@@ -43,11 +43,11 @@ deliveryError:
 
 contracts:
   payNoteSender:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Participant submitting the PayNote delivery (merchant or processor).
 
   payNoteDeliverer:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Participant delivering and reporting status (e.g., bank).
 
   initLifecycleChannel:

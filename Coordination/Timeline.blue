@@ -27,8 +27,17 @@ description: |
   attribution; message contains the Blue payload. A Blue processor may use entries from several timelines, but it should
   do so only after the relevant providers or finalized stores establish a complete processing window. This lets
   independent processors merge individual perspectives deterministically without global consensus.
+providerId:
+  type: Text
+  schema:
+    required: true
+  description: |
+    Stable identifier of the Timeline Provider responsible for append authorization, timestamp assignment,
+    and completeness guarantees for this timeline.
 timelineId:
   type: Text
+  schema:
+    required: true
   description: |
     Stable provider- or application-defined identifier for this timeline. The identifier is used by channels, providers,
     auditors, and participants to locate the append-only log. It should not be reused for a different history or owner

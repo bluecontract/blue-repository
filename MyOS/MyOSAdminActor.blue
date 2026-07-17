@@ -1,5 +1,5 @@
 name: MyOS Admin Actor
-type: Coordination/Principal Actor
+type: MyOS/Principal Actor
 description: >
   Fixed principal actor representing MyOS Admin as a participant, mandate
   guarantor, and platform-service actor in MyOS-hosted documents.

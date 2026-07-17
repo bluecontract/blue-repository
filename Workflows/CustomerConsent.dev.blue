@@ -29,15 +29,15 @@ revocationReason:
 
 contracts:
   granteeChannel:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Grantee (e.g., merchant MyOS timeline).
 
   granterChannel:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Granter (customer represented by the bank; customer has no MyOS account).
 
   guarantorChannel:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Bank/admin channel.
 
   initLifecycleChannel:

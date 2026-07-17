@@ -2,8 +2,12 @@ name: MyOS Admin Base
 description: Document base for MyOS Admin participant
 contracts:
   myOsAdminChannel:
-    type: MyOS/MyOS Timeline Channel
-    description: MyOS Admin (accountId=0) — posts operational progress/decisions via myOsAdminUpdate
+    type: Coordination/Timeline Channel
+    description: MyOS Admin channel for operational progress and decisions delivered through myOsAdminUpdate.
+    timeline:
+      type: MyOS/MyOS Timeline
+    actor:
+      type: MyOS/MyOS Admin Actor
 
   myOsAdminUpdate:
     type: Coordination/Operation

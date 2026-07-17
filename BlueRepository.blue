@@ -11,7 +11,7 @@ packages:
             bootstrapProviderChannel:
               description: Participant channel for the bootstrap provider.
               type:
-                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
               schema:
                 required: true
             declineBootstrap:
@@ -263,7 +263,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: E3M6aABVRmZiYTGfcXaE1FXjn8x2QHVPreiiWyGM1EEL
+            typeBlueId: GoHfsX6nJsXDLinzEgHus5gqXCwec6avmnoE5yzeXzVi
             attributesAdded: []
       - status: stable
         content:
@@ -1800,6 +1800,14 @@ packages:
             attribution; message contains the Blue payload. A Blue processor may use entries from several timelines, but it should
             do so only after the relevant providers or finalized stores establish a complete processing window. This lets
             independent processors merge individual perspectives deterministically without global consensus.
+          providerId:
+            description: |
+              Stable identifier of the Timeline Provider responsible for append authorization, timestamp assignment,
+              and completeness guarantees for this timeline.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
           timelineId:
             description: |
               Stable provider- or application-defined identifier for this timeline. The identifier is used by channels, providers,
@@ -1807,9 +1815,11 @@ packages:
               because readers treat all entries under the same identifier as one timeline perspective.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
+            typeBlueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
             attributesAdded: []
       - status: stable
         content:
@@ -1822,7 +1832,7 @@ packages:
             description: |
               Timeline whose entries may be accepted through this channel.
             type:
-              blueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
+              blueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
             schema:
               required: true
           actor:
@@ -1834,7 +1844,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+            typeBlueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             attributesAdded: []
       - status: stable
         content:
@@ -1844,7 +1854,7 @@ packages:
           timeline:
             description: Timeline containing this entry.
             type:
-              blueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
+              blueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
             schema:
               required: true
           prevEntry:
@@ -1881,7 +1891,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BipDEsAgTsG3HSm5CL4KAMeAWBkzRetdKdtnixAwJW9y#0
+            typeBlueId: JBzgu2CGXf4gFCrTu8geJoxphj8Gc2MTc776qoxh4WPJ#0
             attributesAdded: []
       - status: stable
         content:
@@ -33758,14 +33768,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: GGLJhEAQpAcSFSx2rJNMggFXUhuPV3guRT81NxKLtPog
+            blueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CoaL47vi1GrdNRvYKj7hsQuDDBy1VgXG93yY14ykC7tj
+            typeBlueId: 81DN9jPBdHdA6wdY5fqw64QnrXuwc9f2LxWNTF3q4EQ
             attributesAdded: []
       - status: stable
         content:
@@ -33803,7 +33813,7 @@ packages:
                 The guarantor confirms that the declared authority relationship is
                 legitimate and may invoke the standard termination operation.
               type:
-                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
               schema:
                 required: true
             authorityHolderChannel:
@@ -33812,7 +33822,7 @@ packages:
                 resource delegated by this mandate. The authority holder may invoke the
                 standard termination operation.
               type:
-                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
               schema:
                 required: true
             authorizedActorChannel:
@@ -33821,7 +33831,7 @@ packages:
                 authority. Concrete mandate subtypes define the delegated resource,
                 action, target, or request semantics.
               type:
-                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
               schema:
                 required: true
             mandateTerminationChannel:
@@ -34918,7 +34928,7 @@ packages:
               blueId: 333eCC8uWcMWgw8Ev2FfvZgJMUK9pw8LGUa1D1cYTSsQ
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GGLJhEAQpAcSFSx2rJNMggFXUhuPV3guRT81NxKLtPog
+            typeBlueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
             attributesAdded: []
       - status: stable
         content:
@@ -34956,12 +34966,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: GGLJhEAQpAcSFSx2rJNMggFXUhuPV3guRT81NxKLtPog
+              blueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: ExmQrsf67rLa6o2zk43EJJ2kTYVa9NFECdLvbEJAkCaS
+            typeBlueId: 4vU2SiCh553d9tGiUot94y3c6jqdQMkhZUYxy88NSLo2
             attributesAdded: []
       - status: stable
         content:
@@ -35058,7 +35068,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: GGLJhEAQpAcSFSx2rJNMggFXUhuPV3guRT81NxKLtPog
+            blueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -35078,7 +35088,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GjghRDKGt9TRvnRQvN38LiVzNvxmtEeb8fHQBeofPuMW
+            typeBlueId: CYULeTe7ZfSmSzZp3KHQ1DTtdGx257tazQjcP1QAzRpN
             attributesAdded: []
       - status: stable
         content:
@@ -35348,7 +35358,7 @@ packages:
           name: Document Session Bootstrap
           description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
           type:
-            blueId: 4dhQGwbNugCqazKrqkAdJ4DSUAYa36W1CMZ9s6ybacuy
+            blueId: GSheFv6JD35HAEZyoXHrjSEnC5baCwfmdy5VvLMtDuRN
           contracts:
             triggeredEventsChannel:
               type:
@@ -35696,7 +35706,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: H7gnsmPvmzJNYG6VQFh4M6r4dy7hVvsVRCtVkkunbVae
+            typeBlueId: DWV6u62ip7oukK5n5F1pRwZK7fKaiJaxCRDTyFcNwYCi
             attributesAdded: []
       - status: stable
         content:
@@ -35738,14 +35748,14 @@ packages:
           description: |
             Fixed principal actor representing MyOS Admin as a participant, mandate guarantor, and platform-service actor in MyOS-hosted documents.
           type:
-            blueId: 23cWKG6LF47H1G3EfhV5dmEYtxkNaqLWgFDxEurdc6Ef
+            blueId: BeUkW9h7yKH5DBgzTjF52u4PwYu9J9EmLZ5WaYZWnZuB
           accountId:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             value: myos-admin
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+            typeBlueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
             attributesAdded: []
       - status: stable
         content:
@@ -35753,9 +35763,15 @@ packages:
           description: Document base for MyOS Admin participant
           contracts:
             myOsAdminChannel:
-              description: MyOS Admin (accountId=0) — posts operational progress/decisions via myOsAdminUpdate
+              description: MyOS Admin channel for operational progress and decisions delivered through myOsAdminUpdate.
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+              timeline:
+                type:
+                  blueId: 81daJe9Ns5yUCEi1aX1gyjoaL3P94CU1wut9zJ4MuXy9
+              actor:
+                type:
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
             myOsAdminUpdate:
               description: The standard, required operation for MyOS Admin to deliver events.
               type:
@@ -35792,7 +35808,7 @@ packages:
                                 value: /message/request
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4dhQGwbNugCqazKrqkAdJ4DSUAYa36W1CMZ9s6ybacuy
+            typeBlueId: GSheFv6JD35HAEZyoXHrjSEnC5baCwfmdy5VvLMtDuRN
             attributesAdded: []
       - status: stable
         content:
@@ -35874,19 +35890,19 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: CoaL47vi1GrdNRvYKj7hsQuDDBy1VgXG93yY14ykC7tj
+            blueId: 81DN9jPBdHdA6wdY5fqw64QnrXuwc9f2LxWNTF3q4EQ
           contracts:
             mandateGuarantorChannel:
               actor:
                 type:
-                  blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
             authorizedActorChannel:
               actor:
                 type:
-                  blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3uhoCUanMZ9N1pKosNrjwGHxPbCxxAYz2kBgJTnqjftk
+            typeBlueId: GynB48exqLBVW5SKfd7DhjpaNv2efFn6yNt9sHe64rH4
             attributesAdded: []
       - status: stable
         content:
@@ -35894,23 +35910,23 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: GjghRDKGt9TRvnRQvN38LiVzNvxmtEeb8fHQBeofPuMW
+            blueId: CYULeTe7ZfSmSzZp3KHQ1DTtdGx257tazQjcP1QAzRpN
           contracts:
             mandateGuarantorChannel:
               actor:
                 type:
-                  blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
             authorizedActorChannel:
               actor:
                 type:
-                  blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
           authorizedInitialDocument:
             description: Initial document whose sessions may request the operation call.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: EMb4hgtXa7q5tHmb6qBGYaQbXhx6dgqyfnYxFdjXKg7r
+            typeBlueId: 9UuJZeNkNovTaJ17Z5j2bwhZDcFdPC78Vp2wujKJZPFW
             attributesAdded: []
       - status: stable
         content:
@@ -35968,20 +35984,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: 6tzp2YX1rei3aAXg22SqYbeiiteGthj1LesTNCWm7wbU
-            attributesAdded: []
-      - status: dev
-        content:
-          name: MyOS Principal Actor
-          description: MyOS-specific principal actor specialization.
-          type:
-            blueId: 23cWKG6LF47H1G3EfhV5dmEYtxkNaqLWgFDxEurdc6Ef
-          accountId:
-            description: MyOS account ID of the principal.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: G6EVpoRpQQb6f93eZtJPqDRAK47D1RXvUAmbXvhpsL6Y
             attributesAdded: []
       - status: stable
         content:
@@ -36061,16 +36063,16 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: CoaL47vi1GrdNRvYKj7hsQuDDBy1VgXG93yY14ykC7tj
+            blueId: 81DN9jPBdHdA6wdY5fqw64QnrXuwc9f2LxWNTF3q4EQ
           contracts:
             mandateGuarantorChannel:
               actor:
                 type:
-                  blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
             authorizedActorChannel:
               actor:
                 type:
-                  blueId: Cr6tRv7ivrRLo3Gi2cuFJNCXmQHUdagv2AZ9CYqEZZe9
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
           sourceInitialDocument:
             description: Initial document whose selected session may be observed.
             schema:
@@ -36090,7 +36092,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Hnqz1k5BnsZrHgTKerzYSdX9kaTdiTCYZnZZpvGEb8KK
+            typeBlueId: HVmVRH2ifFUDfguMDdsZfyNwyXRUa2DmQEM4GGjd4AsM
             attributesAdded: []
       - status: stable
         content:
@@ -36170,47 +36172,17 @@ packages:
       - status: stable
         content:
           name: MyOS Timeline
-          description: A managed timeline implementation providing convenient email-based authentication and extensive features. MyOS timelines are straightforward to set up and use, offering a balance of convenience and security through hash-chained, authenticated event sequences.
+          description: |
+            Timeline hosted by the MyOS Timeline Provider. MyOS determines append authorization, assigns timestamps, preserves the append-only history, and supplies completeness guarantees for this timeline.
           type:
-            blueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
-          accountId:
-            description: Identifier for the MyOS account associated with this timeline
+            blueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
+          providerId:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            value: myos
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 13LHPnj6jnbyjPPwcN7d5DhLxWjtawiazZ8NvoEHhJjD
-            attributesAdded: []
-      - status: stable
-        content:
-          name: MyOS Timeline Channel
-          description: MyOS-specific Timeline Channel
-          type:
-            blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
-          accountId:
-            description: Account identifier for the MyOS timeline
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          email:
-            description: Email address associated with the MyOS timeline
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
-            attributesAdded: []
-      - status: stable
-        content:
-          name: MyOS Timeline Entry
-          description: MyOS-specific timeline entry with account and email information
-          type:
-            blueId: BipDEsAgTsG3HSm5CL4KAMeAWBkzRetdKdtnixAwJW9y#0
-          timeline:
-            type:
-              blueId: 13LHPnj6jnbyjPPwcN7d5DhLxWjtawiazZ8NvoEHhJjD
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 61mR33cyeewLm2rboPbGBhH48xhNtuTLu1vbHDWQ2yyf
+            typeBlueId: 81daJe9Ns5yUCEi1aX1gyjoaL3P94CU1wut9zJ4MuXy9
             attributesAdded: []
       - status: dev
         content:
@@ -36488,16 +36460,18 @@ packages:
       - status: stable
         content:
           name: Principal Actor
-          description: The base type for a direct action by the account owner.
+          description: Actor representing an action attributed directly to a MyOS account principal.
           type:
-            blueId: GnMntk3hLvHEsZTBE8Gk7ytPBexj6jhBJHdaxnJYhEQ7
+            blueId: 23cWKG6LF47H1G3EfhV5dmEYtxkNaqLWgFDxEurdc6Ef
           accountId:
             description: MyOS account ID of the principal.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6G8JLcJ9bT9VnThaxt4ZRDQYSrKiaYiByppnPiyhdNCW
+            typeBlueId: BeUkW9h7yKH5DBgzTjF52u4PwYu9J9EmLZ5WaYZWnZuB
             attributesAdded: []
       - status: stable
         content:
@@ -37497,15 +37471,15 @@ packages:
             granterChannel:
               description: Granting party timeline channel.
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             granteeChannel:
               description: Grantee timeline channel (party allowed to use the mandate).
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             guarantorChannel:
               description: Bank/admin channel executing mandate checks and settlement updates.
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -39915,7 +39889,7 @@ packages:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DBrjV3fVNnCUv6bSjd1nZG2LhuUxyJnkw1CcXQkpir1W
+            typeBlueId: 7SqnbvCPkox8veMRdWGT5nUVGpEM65aT7eFcVwXaFtsB
             attributesAdded: []
       - status: dev
         content:
@@ -43044,11 +43018,11 @@ packages:
             payNoteSender:
               description: Participant submitting the PayNote delivery (merchant or processor).
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             payNoteDeliverer:
               description: Participant delivering and reporting status (e.g., bank).
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -44394,7 +44368,7 @@ packages:
               blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
             document:
               type:
-                blueId: DBrjV3fVNnCUv6bSjd1nZG2LhuUxyJnkw1CcXQkpir1W
+                blueId: 7SqnbvCPkox8veMRdWGT5nUVGpEM65aT7eFcVwXaFtsB
           cardTransactionDetails:
             description: Card network identifiers used to match processor and issuer records.
             type:
@@ -44425,7 +44399,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4ofF3F27Hjgsrm326PWGaWRJHA9rWU9atpnwLSkMADEA
+            typeBlueId: H7gNHMGfpNq7si3vow74N24FyM9DRZ9t6nD3G6UpuaQU
             attributesAdded: []
       - status: dev
         content:
@@ -48960,15 +48934,15 @@ packages:
             granteeChannel:
               description: Grantee (e.g., merchant MyOS timeline).
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             granterChannel:
               description: Granter (customer represented by the bank; customer has no MyOS account).
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             guarantorChannel:
               description: Bank/admin channel.
               type:
-                blueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
+                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -49196,7 +49170,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 24EmGfpFQFptWsNkgvu53WuvnfyJW9BtWUtuRLfn9srL
+            typeBlueId: BCoY7YXVS4wanw4HeudF91o99BEextZZrzFajYNcvQXp
             attributesAdded: []
       - status: dev
         content:
@@ -49629,4 +49603,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - BjtFwNvLZhWNDjc72WNxPQvtSZDkbdKXiyutfSgNYeN3
+  - 5vH9QdsV5ZBexoBap8wpEuYHYgarsaMX76wwQ84YaCbJ

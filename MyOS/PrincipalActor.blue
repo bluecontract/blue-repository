@@ -1,6 +1,8 @@
 name: Principal Actor
-type: Coordination/Actor
-description: The base type for a direct action by the account owner.
+type: Coordination/Principal Actor
+description: Actor representing an action attributed directly to a MyOS account principal.
 accountId:
   type: Text
+  schema:
+    required: true
   description: MyOS account ID of the principal.
