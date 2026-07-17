@@ -6,7 +6,7 @@ packages:
         content:
           name: Document Bootstrap
           description: |
-            Generic document for requesting and tracking bootstrap of another Blue document. It defines the provider response operations but deliberately does not define how or when bootstrapRequest is emitted. A concrete platform or document may add its own initialization or request workflow.
+            Generic coordination document contract for recording a bootstrap provider's response lifecycle. It defines only the provider-facing response operations and the state they materialize. Concrete documents decide how bootstrap is requested and which bootstrap input is supplied.
           contracts:
             bootstrapProviderChannel:
               description: Participant channel for the bootstrap provider.
@@ -23,7 +23,7 @@ packages:
                 value: bootstrapProviderChannel
               request:
                 type:
-                  blueId: 4ngRGoQZeSJNt8miE6CBaqYuevDrVwfAuwJMt4mRyeqb
+                  blueId: 4HrRcHN229bzcHXvGsEnbron77kYiFzTFEEHDWup1xRC
               steps:
                 items:
                   - name: Record Bootstrap Declined
@@ -47,27 +47,30 @@ packages:
                               value: /status
                             val:
                               type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: Declined
-                        - $appendChange:
-                            op:
-                              type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: replace
-                            path:
-                              type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /error
-                            val:
-                              $default:
-                                items:
-                                  - $event:
+                                blueId: 623skurB6ZSt3jpkdNpuu6fwRG3VdrVgj2FKxfrNnBbH
+                        - $if:
+                            cond:
+                              $exists:
+                                $event:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: /message/request/reason
+                            then:
+                              items:
+                                - $appendChange:
+                                    op:
                                       type:
                                         blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                      value: /message/request/reason
-                                  - type:
-                                      blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                    value: ''
+                                      value: replace
+                                    path:
+                                      type:
+                                        blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                      value: /error
+                                    val:
+                                      $event:
+                                        type:
+                                          blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                        value: /message/request/reason
                         - $return:
                             changeset:
                               $changeset:
@@ -88,7 +91,7 @@ packages:
                 value: bootstrapProviderChannel
               request:
                 type:
-                  blueId: CrfGW2YKFpPD1VNeUS4biWbaGxsudFnzd482N1Bd9oqN
+                  blueId: B6zgAWGB7543y6JcE2jjUKqLrVMEFWfu7NY7sLzfn8aR
               steps:
                 items:
                   - name: Record Bootstrap In Progress
@@ -112,8 +115,7 @@ packages:
                               value: /status
                             val:
                               type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: In Progress
+                                blueId: G5KJnJLaUCSvz4BaZAMNJAgxtfxssb64oWWJXsDW3Uoy
                         - $return:
                             changeset:
                               $changeset:
@@ -134,7 +136,7 @@ packages:
                 value: bootstrapProviderChannel
               request:
                 type:
-                  blueId: 3XoEgcEdCpeoxBf7uNsHTtp1FpN6HG3YqawRYUXYuee1
+                  blueId: EogcjRxna7zSMip2wSg53fdRtQG8apJL6JqHeh1egh9f
               steps:
                 items:
                   - name: Record Bootstrap Completed
@@ -158,8 +160,7 @@ packages:
                               value: /status
                             val:
                               type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: Completed
+                                blueId: 8LNqtg237MFe1zKdG3eWftMXtFTgVtyvrxgZkHcXYkC1
                         - $appendChange:
                             op:
                               type:
@@ -168,12 +169,12 @@ packages:
                             path:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /result
+                              value: /documentSession
                             val:
                               $event:
                                 type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                                value: /message/request/result
+                                value: /message/request/documentSession
                         - $return:
                             changeset:
                               $changeset:
@@ -194,7 +195,7 @@ packages:
                 value: bootstrapProviderChannel
               request:
                 type:
-                  blueId: BY9yFcgUUykE7E4wyV6iaxREGhN2pCHNgA49uSqTHgg9
+                  blueId: 9juepYbw4uwHiqDxcnjoJTn1Vv3TsDzPeSchpHUYRS3h
               steps:
                 items:
                   - name: Record Bootstrap Failed
@@ -218,8 +219,7 @@ packages:
                               value: /status
                             val:
                               type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: Failed
+                                blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                         - $appendChange:
                             op:
                               type:
@@ -245,102 +245,130 @@ packages:
                                 type:
                                   blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
                                 value: true
-          bootstrapRequest:
-            description: Request describing the target document bootstrap.
-            type:
-              blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
-            schema:
-              required: true
           status:
-            description: Current bootstrap lifecycle state.
+            description: Current bootstrap lifecycle status.
             type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          result:
-            description: Provider-neutral bootstrap result after successful completion.
+              blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
+          documentSession:
+            description: Running document session made available after successful bootstrap.
+            type:
+              blueId: FxcZycT49wFfrNAZpzquWVRw43epYQx5SkYXpdwx3c2Z
           error:
-            description: Decline or failure explanation when bootstrap does not complete.
+            description: Optional explanation recorded when bootstrap is declined or fails.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GoHfsX6nJsXDLinzEgHus5gqXCwec6avmnoE5yzeXzVi
+            typeBlueId: 8AHDwDB5pBrh8VKMKxuzawVLoz7HkjX6t5ys6wWZMjoD
             attributesAdded: []
       - status: stable
         content:
           name: Document Bootstrap Completed
-          description: Bootstrap provider response reporting successful completion.
+          description: |
+            Response reporting that a bootstrap provider successfully started the requested logical document and made a running session of that document available to the requester or to the participant on whose behalf bootstrap was requested.
           type:
             blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
-          result:
-            description: Provider-neutral result of the completed bootstrap.
+          documentSession:
+            description: |
+              Provider-neutral reference to the running session made available to the requester or to the participant on whose behalf bootstrap was requested. Its initialDocument identifies the requested logical document.
+            type:
+              blueId: FxcZycT49wFfrNAZpzquWVRw43epYQx5SkYXpdwx3c2Z
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3XoEgcEdCpeoxBf7uNsHTtp1FpN6HG3YqawRYUXYuee1
+            typeBlueId: EogcjRxna7zSMip2wSg53fdRtQG8apJL6JqHeh1egh9f
             attributesAdded: []
       - status: stable
         content:
           name: Document Bootstrap Declined
-          description: Bootstrap provider response declining the requested bootstrap.
+          description: Response reporting that a bootstrap provider declined the requested bootstrap.
           type:
             blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
           reason:
-            description: Explanation for declining the request.
+            description: Optional explanation for declining the request.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4ngRGoQZeSJNt8miE6CBaqYuevDrVwfAuwJMt4mRyeqb
+            typeBlueId: 4HrRcHN229bzcHXvGsEnbron77kYiFzTFEEHDWup1xRC
             attributesAdded: []
       - status: stable
         content:
           name: Document Bootstrap Failed
-          description: Bootstrap provider response reporting that started bootstrap work failed.
+          description: Response reporting that a bootstrap provider failed to complete started bootstrap work.
           type:
             blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
           error:
-            description: Explanation of the bootstrap failure.
+            description: Explanation of why the started bootstrap work failed.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BY9yFcgUUykE7E4wyV6iaxREGhN2pCHNgA49uSqTHgg9
+            typeBlueId: 9juepYbw4uwHiqDxcnjoJTn1Vv3TsDzPeSchpHUYRS3h
             attributesAdded: []
       - status: stable
         content:
           name: Document Bootstrap In Progress
-          description: Bootstrap provider response confirming that bootstrap work started.
+          description: Response reporting that a bootstrap provider started the requested bootstrap.
           type:
             blueId: 4rExHc9dQ4h6gqTj343qg2teiFr8GDwWv1aDYPdV21QH
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CrfGW2YKFpPD1VNeUS4biWbaGxsudFnzd482N1Bd9oqN
+            typeBlueId: B6zgAWGB7543y6JcE2jjUKqLrVMEFWfu7NY7sLzfn8aR
             attributesAdded: []
       - status: stable
         content:
           name: Document Bootstrap Requested
           description: |
-            Request asking the participant addressed by recipientChannel to bootstrap the supplied initial document with the requested channel bindings and optional initial Messages. The document that emits this request decides how and when to emit it.
+            Request asking the participant addressed by recipientChannel to bootstrap the supplied initial document with any participant resolution input and optional initial Messages. The emitting document decides how and when to create the request.
           type:
             blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
           document:
             description: Initial document requested for bootstrap.
             schema:
               required: true
-          channelBindings:
-            description: Requested mapping from target document channel keys to participant bindings.
-            schema:
-              required: true
-          initialMessages:
-            description: Optional standard bootstrap initial Messages.
+          participantMappings:
+            description: |
+              Optional participant resolution input for target channels whose actors are not already defined by the target document.
             type:
               blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+            itemType:
+              blueId: HqeiZDQNRH4YUcB6ZLXUc4jdjEcVURhBAc3CsX5HGB7m
+          initialMessages:
+            description: Optional Messages supplied as bootstrap input for the target document.
+            type:
+              blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+            itemType:
+              blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
+            typeBlueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Participant Mapping
+          description: |
+            Bootstrap input for one abstract channel in a target document. It identifies the participant whom the bootstrap provider should resolve or contact for that channel. The mapping intentionally contains only provider-neutral participant resolution hints.
+          channelName:
+            description: Abstract channel key in the target document.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
+          accountId:
+            description: Optional account identifier understood by the bootstrap provider.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+          email:
+            description: Optional email address used to resolve or invite the participant.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HqeiZDQNRH4YUcB6ZLXUc4jdjEcVURhBAc3CsX5HGB7m
             attributesAdded: []
   - name: Common
     types:
@@ -1265,18 +1293,20 @@ packages:
             Base type for document status markers. A Document Status summarizes the current lifecycle or business state of a
             coordination document in a compact, machine-readable form.
 
-            Concrete statuses such as pending, in progress, completed, and failed specialize this type by fixing the `mode` field.
-            Status values are Blue content: changing status changes document identity and may trigger Document Update channels or
-            workflows.
+            Concrete statuses specialize this type by fixing the `mode` field and may use
+            their concrete type to distinguish business outcomes that share a lifecycle
+            mode. Status values are Blue content: changing status changes document
+            identity and may trigger Document Update channels or workflows.
           mode:
             description: |
-              Canonical status mode text. Concrete status types fix this value, for example `pending`, `inProgress`, `completed`,
-              or `failed`.
+              Canonical lifecycle mode. Concrete status types fix this value to `pending`,
+              `active`, or `terminated`; the concrete type distinguishes outcomes such as
+              completion, failure, and decline.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9rzc7B4yEw9gVuuaoFbRUpfajTPuxBLecVWkmHuBSg7z
+            typeBlueId: 9Q7nZyiFKJyzxH6c6EWHsHsqQ8arUYtyrAUgwv9paoxe
             attributesAdded: []
       - status: stable
         content:
@@ -1658,10 +1688,10 @@ packages:
           description: |
             Base coordination status marker. Concrete status types describe the current lifecycle or business state of a coordination document.
           type:
-            blueId: 9rzc7B4yEw9gVuuaoFbRUpfajTPuxBLecVWkmHuBSg7z
+            blueId: 9Q7nZyiFKJyzxH6c6EWHsHsqQ8arUYtyrAUgwv9paoxe
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+            typeBlueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
             attributesAdded: []
       - status: stable
         content:
@@ -1680,55 +1710,66 @@ packages:
               New status value. Usually a Document Status specialization such as Status Pending, Status In Progress, Status
               Completed, or Status Failed.
             type:
-              blueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+              blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: B4btahVwY81bXQoXskPHEv3NrRPMYfXcR1fkUV8jcPne
+            typeBlueId: 3wCtHNjVZc4JKbbbvfctdMYLB5VjMNEePgWLMLSdFbdv
             attributesAdded: []
       - status: stable
         content:
           name: Status Completed
           description: |
-            Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation has completed successfully. The fixed mode is `completed`.
+            Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation completed successfully. The fixed mode is `terminated`; the concrete type distinguishes successful completion.
           type:
-            blueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+            blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
           mode:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             value: terminated
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FGhtoNCSpdvMk7ZK6V8g66aeLjSGVE14tjMZoV4xAhWF
+            typeBlueId: 8LNqtg237MFe1zKdG3eWftMXtFTgVtyvrxgZkHcXYkC1
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Status Declined
+          description: |
+            Concrete Status Failed specialization for requested work that was declined before it started. It is terminal, produces no successful result, and remains compatible with consumers matching Status Failed.
+          type:
+            blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 623skurB6ZSt3jpkdNpuu6fwRG3VdrVgj2FKxfrNnBbH
             attributesAdded: []
       - status: stable
         content:
           name: Status Failed
           description: |
-            Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation failed or was rejected. The fixed mode is `failed`.
+            Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation failed or was rejected. The fixed mode is `terminated`; the concrete type distinguishes failure.
           type:
-            blueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+            blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
           mode:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             value: terminated
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+            typeBlueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
             attributesAdded: []
       - status: stable
         content:
           name: Status In Progress
           description: |
-            Concrete Document Status meaning work has started and is actively being processed, but no terminal success or failure has been reached. The fixed mode is `inProgress`.
+            Concrete Document Status meaning work has started and is actively being processed, but no terminal success or failure has been reached. The fixed mode is `active`.
           type:
-            blueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+            blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
           mode:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             value: active
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CWnb7ngc7rpPVjn3eM8c6jZ6qQDGJzJcHKyARnXrSHiN
+            typeBlueId: G5KJnJLaUCSvz4BaZAMNJAgxtfxssb64oWWJXsDW3Uoy
             attributesAdded: []
       - status: stable
         content:
@@ -1736,14 +1777,14 @@ packages:
           description: |
             Concrete Document Status meaning work has not yet started, is waiting for external input, or is queued for later processing. The fixed mode is `pending`.
           type:
-            blueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+            blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
           mode:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
             value: pending
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+            typeBlueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
             attributesAdded: []
       - status: stable
         content:
@@ -33768,14 +33809,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
+            blueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 81DN9jPBdHdA6wdY5fqw64QnrXuwc9f2LxWNTF3q4EQ
+            typeBlueId: 48DBg1ijT56Jg2ZzxVcWp5CcfiivevM491iNJZMP9EVR
             attributesAdded: []
       - status: stable
         content:
@@ -33880,16 +33921,16 @@ packages:
               constants:
                 statusPendingType:
                   type:
-                    blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                    blueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
                 statusAuthorityConfirmedType:
                   type:
-                    blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+                    blueId: 65Lj5NBD9BaeXbWq1qQYcCyxV3EoH7r3rj877KDzbWCP
                 statusActiveType:
                   type:
-                    blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+                    blueId: por6Zfmm5x6kxeeeoARgZRVLWrZaDkTU3Dybc2TncPx
                 statusFailedType:
                   type:
-                    blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                    blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                 authorityConfirmedMessageType:
                   type:
                     blueId: EbNsQWy645JPPuWhkDw3XcrQk1neH2Z8KBsTvUTCrrmk
@@ -34167,7 +34208,7 @@ packages:
                                     value: /status
                                   val:
                                     type:
-                                      blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                                      blueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
                               - $if:
                                   cond:
                                     $not:
@@ -34204,7 +34245,7 @@ packages:
                                     value: /status
                                   val:
                                     type:
-                                      blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                                      blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                               - $appendChange:
                                   op:
                                     type:
@@ -34307,7 +34348,7 @@ packages:
                                     value: /status
                                   val:
                                     type:
-                                      blueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+                                      blueId: 65Lj5NBD9BaeXbWq1qQYcCyxV3EoH7r3rj877KDzbWCP
                               - $appendChange:
                                   op:
                                     type:
@@ -34411,7 +34452,7 @@ packages:
                                     value: /status
                                   val:
                                     type:
-                                      blueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+                                      blueId: por6Zfmm5x6kxeeeoARgZRVLWrZaDkTU3Dybc2TncPx
                               - $appendChange:
                                   op:
                                     type:
@@ -34593,7 +34634,7 @@ packages:
                                     value: /status
                                   val:
                                     type:
-                                      blueId: DKEgt3kG9dLAf1RoKDcacsVuZrfFY2eVujtYr2YQsQR6
+                                      blueId: CMW7kGBbCw1uDmaV5ydLVnzRSo2iaBNDFTspMX9QdvZ2
                               - $appendChange:
                                   op:
                                     type:
@@ -34853,7 +34894,7 @@ packages:
               Lifecycle workflows do not replace timestamps or statuses after the
               corresponding transition succeeds.
             type:
-              blueId: jkonpkUSjCXMpHcJ4e1N7bfCgKzwssQuXEEboaqUTsb
+              blueId: 6aAJEFVdFAgLVre8azY4YZQnNiv2FkXJpdpGAYSHiNrY
           initializationError:
             description: |
               First deterministic initialization error when status is
@@ -34928,7 +34969,7 @@ packages:
               blueId: 333eCC8uWcMWgw8Ev2FfvZgJMUK9pw8LGUa1D1cYTSsQ
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
+            typeBlueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
             attributesAdded: []
       - status: stable
         content:
@@ -34966,12 +35007,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
+              blueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4vU2SiCh553d9tGiUot94y3c6jqdQMkhZUYxy88NSLo2
+            typeBlueId: DMf38RnG66cZ4LwsTTfyTbUauPNmKxLVX92zPR8BZtaS
             attributesAdded: []
       - status: stable
         content:
@@ -35068,7 +35109,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: 52NQiDC7e1ZU2NRPnJHMevnpeRtNm677LZEfUAnaACas
+            blueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -35088,7 +35129,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: CYULeTe7ZfSmSzZp3KHQ1DTtdGx257tazQjcP1QAzRpN
+            typeBlueId: QFJDDDxx4U3j3wrCzAeT8pwvaQw2BRkAnxuxcpYo39z
             attributesAdded: []
       - status: stable
         content:
@@ -35096,10 +35137,10 @@ packages:
           description: |
             Mandate lifecycle status indicating that the guarantor-confirmed authority is currently usable by the authorized actor, subject to the concrete mandate's target and request constraints. The mandate may transition from this status only to Mandate/Status Terminated.
           type:
-            blueId: CWnb7ngc7rpPVjn3eM8c6jZ6qQDGJzJcHKyARnXrSHiN
+            blueId: G5KJnJLaUCSvz4BaZAMNJAgxtfxssb64oWWJXsDW3Uoy
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DnV7ApZKxa9qvJHNrgbxNHz1BPCh2G2SToh1sQAUFemd
+            typeBlueId: por6Zfmm5x6kxeeeoARgZRVLWrZaDkTU3Dybc2TncPx
             attributesAdded: []
       - status: stable
         content:
@@ -35107,10 +35148,10 @@ packages:
           description: |
             Mandate lifecycle status indicating that the mandate guarantor has confirmed the declared authority relationship, while the delegated authority is not yet active. The mandate may transition from this status to Mandate/Status Active or Mandate/Status Terminated.
           type:
-            blueId: CWnb7ngc7rpPVjn3eM8c6jZ6qQDGJzJcHKyARnXrSHiN
+            blueId: G5KJnJLaUCSvz4BaZAMNJAgxtfxssb64oWWJXsDW3Uoy
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: AgwzrsZ7sDFXUryLWQdjG6w8D7SRLMXFWHuVFLa55jcZ
+            typeBlueId: 65Lj5NBD9BaeXbWq1qQYcCyxV3EoH7r3rj877KDzbWCP
             attributesAdded: []
       - status: stable
         content:
@@ -35118,10 +35159,10 @@ packages:
           description: |
             Terminal mandate lifecycle status indicating that the delegated authority has permanently ended. A mandate in this status cannot be confirmed, activated, or terminated again, and the mandate processing document is gracefully terminated after the status and authoritative termination Message are stored.
           type:
-            blueId: FGhtoNCSpdvMk7ZK6V8g66aeLjSGVE14tjMZoV4xAhWF
+            blueId: 8LNqtg237MFe1zKdG3eWftMXtFTgVtyvrxgZkHcXYkC1
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DKEgt3kG9dLAf1RoKDcacsVuZrfFY2eVujtYr2YQsQR6
+            typeBlueId: CMW7kGBbCw1uDmaV5ydLVnzRSo2iaBNDFTspMX9QdvZ2
             attributesAdded: []
   - name: MyOS
     types:
@@ -35393,7 +35434,7 @@ packages:
                             value: /bootstrapStatus
                           val:
                             type:
-                              blueId: CWnb7ngc7rpPVjn3eM8c6jZ6qQDGJzJcHKyARnXrSHiN
+                              blueId: G5KJnJLaUCSvz4BaZAMNJAgxtfxssb64oWWJXsDW3Uoy
             handleParticipantResolved:
               type:
                 blueId: MyaXwTXty7ZujV89fT5STJvXpEr1W59puqdK2XM9ALv
@@ -35530,10 +35571,10 @@ packages:
                                 value: /initiatorSessionIds
                         - $appendEvent:
                             type:
-                              blueId: B4btahVwY81bXQoXskPHEv3NrRPMYfXcR1fkUV8jcPne
+                              blueId: 3wCtHNjVZc4JKbbbvfctdMYLB5VjMNEePgWLMLSdFbdv
                             status:
                               type:
-                                blueId: FGhtoNCSpdvMk7ZK6V8g66aeLjSGVE14tjMZoV4xAhWF
+                                blueId: 8LNqtg237MFe1zKdG3eWftMXtFTgVtyvrxgZkHcXYkC1
                               mode:
                                 type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -35597,10 +35638,10 @@ packages:
                                 value: /reason
                         - $appendEvent:
                             type:
-                              blueId: B4btahVwY81bXQoXskPHEv3NrRPMYfXcR1fkUV8jcPne
+                              blueId: 3wCtHNjVZc4JKbbbvfctdMYLB5VjMNEePgWLMLSdFbdv
                             status:
                               type:
-                                blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                                blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                               mode:
                                 type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -35625,7 +35666,7 @@ packages:
                 value: triggeredEventsChannel
               event:
                 type:
-                  blueId: B4btahVwY81bXQoXskPHEv3NrRPMYfXcR1fkUV8jcPne
+                  blueId: 3wCtHNjVZc4JKbbbvfctdMYLB5VjMNEePgWLMLSdFbdv
               steps:
                 items:
                   - name: Update Bootstrap Status
@@ -35685,7 +35726,7 @@ packages:
           bootstrapStatus:
             description: Overall bootstrap process status
             type:
-              blueId: 9rzc7B4yEw9gVuuaoFbRUpfajTPuxBLecVWkmHuBSg7z
+              blueId: 9Q7nZyiFKJyzxH6c6EWHsHsqQ8arUYtyrAUgwv9paoxe
           bootstrapError:
             description: Error message explaining bootstrap failure
             type:
@@ -35706,7 +35747,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DWV6u62ip7oukK5n5F1pRwZK7fKaiJaxCRDTyFcNwYCi
+            typeBlueId: 3F4dtCNZCSj6ZfVc5TQxmiiuPELFFVaPLe6tytZJ71Jv
             attributesAdded: []
       - status: stable
         content:
@@ -35890,7 +35931,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: 81DN9jPBdHdA6wdY5fqw64QnrXuwc9f2LxWNTF3q4EQ
+            blueId: 48DBg1ijT56Jg2ZzxVcWp5CcfiivevM491iNJZMP9EVR
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35902,7 +35943,7 @@ packages:
                   blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GynB48exqLBVW5SKfd7DhjpaNv2efFn6yNt9sHe64rH4
+            typeBlueId: 9iFQNEeyQvdfVvEKcWDiHvW1fyq1NzTTxFgxmY1b9Zmu
             attributesAdded: []
       - status: stable
         content:
@@ -35910,7 +35951,7 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: CYULeTe7ZfSmSzZp3KHQ1DTtdGx257tazQjcP1QAzRpN
+            blueId: QFJDDDxx4U3j3wrCzAeT8pwvaQw2BRkAnxuxcpYo39z
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35926,7 +35967,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9UuJZeNkNovTaJ17Z5j2bwhZDcFdPC78Vp2wujKJZPFW
+            typeBlueId: A8AucrtZ7XQjJKzJBRZC3dWHdaPw8ffPUJKuFmH4pLRn
             attributesAdded: []
       - status: stable
         content:
@@ -36063,7 +36104,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 81DN9jPBdHdA6wdY5fqw64QnrXuwc9f2LxWNTF3q4EQ
+            blueId: 48DBg1ijT56Jg2ZzxVcWp5CcfiivevM491iNJZMP9EVR
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -36092,7 +36133,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: HVmVRH2ifFUDfguMDdsZfyNwyXRUa2DmQEM4GGjd4AsM
+            typeBlueId: 3YXjgSDbzCTixYcNFdVbdPMaGJESAtbVpZrm3BgTWnWX
             attributesAdded: []
       - status: stable
         content:
@@ -43053,7 +43094,7 @@ packages:
                             value: /deliveryStatus
                           val:
                             type:
-                              blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                              blueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
                         - op:
                             type:
                               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43217,14 +43258,14 @@ packages:
                                           value: identified
                                       then:
                                         type:
-                                          blueId: CWnb7ngc7rpPVjn3eM8c6jZ6qQDGJzJcHKyARnXrSHiN
+                                          blueId: G5KJnJLaUCSvz4BaZAMNJAgxtfxssb64oWWJXsDW3Uoy
                                         mode:
                                           type:
                                             blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                           value: active
                                       else:
                                         type:
-                                          blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                                          blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                                         mode:
                                           type:
                                             blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43237,7 +43278,7 @@ packages:
                                               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                             value: /deliveryStatus
                                         - type:
-                                            blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                                            blueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
                                           mode:
                                             type:
                                               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43633,7 +43674,7 @@ packages:
                                           value: canAccept
                                       then:
                                         type:
-                                          blueId: FGhtoNCSpdvMk7ZK6V8g66aeLjSGVE14tjMZoV4xAhWF
+                                          blueId: 8LNqtg237MFe1zKdG3eWftMXtFTgVtyvrxgZkHcXYkC1
                                         mode:
                                           type:
                                             blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -43646,7 +43687,7 @@ packages:
                                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                                 value: /deliveryStatus
                                             - type:
-                                                blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                                                blueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
                                               mode:
                                                 type:
                                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44108,7 +44149,7 @@ packages:
                                           value: canReject
                                       then:
                                         type:
-                                          blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                                          blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                                         mode:
                                           type:
                                             blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44121,7 +44162,7 @@ packages:
                                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                                 value: /deliveryStatus
                                             - type:
-                                                blueId: FD2aGQj6GEvKL7SseBdD8XRuXmmgHsZRRgMicJV5nFCc
+                                                blueId: DUU68ikPqLZ9NwsUGzkCZ92abAUz51ihcZBTJQEty6E1
                                               mode:
                                                 type:
                                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44325,7 +44366,7 @@ packages:
                               value: /deliveryStatus
                             val:
                               type:
-                                blueId: GeZWvUThNX3mSiYHbmQAjoE7tffzYFRiC4dktuRGe1sS
+                                blueId: 3kguQFJvHMnCfrg4Bmqt81EZg6qeht8Cs6tEjNDxTkyB
                               mode:
                                 type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -44358,14 +44399,14 @@ packages:
           payNoteBootstrapRequest:
             description: PayNote bootstrap request details.
             type:
-              blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
+              blueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
             document:
               type:
                 blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
           paymentMandateBootstrapRequest:
             description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
             type:
-              blueId: 5NNr8LzdC3Cw4Kfp34PPvqMSKCSt7yrKUZ7NwrmMU4qq
+              blueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
             document:
               type:
                 blueId: 7SqnbvCPkox8veMRdWGT5nUVGpEM65aT7eFcVwXaFtsB
@@ -44376,7 +44417,7 @@ packages:
           deliveryStatus:
             description: High-level delivery status.
             type:
-              blueId: 9rzc7B4yEw9gVuuaoFbRUpfajTPuxBLecVWkmHuBSg7z
+              blueId: 9Q7nZyiFKJyzxH6c6EWHsHsqQ8arUYtyrAUgwv9paoxe
           transactionIdentificationStatus:
             description: Identification state (pending, identified, failed).
             type:
@@ -44399,7 +44440,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: H7gNHMGfpNq7si3vow74N24FyM9DRZ9t6nD3G6UpuaQU
+            typeBlueId: 7ieTcJfrepbKwaBNweqLAgxiVDbdjHTUW8UxriXefzNM
             attributesAdded: []
       - status: dev
         content:
@@ -44846,6 +44887,35 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: DtMSkzcFRUytFjeQEB5ZSEnu1jewVNMuHbN6sDWKjQ7d
+            attributesAdded: []
+  - name: SessionInteraction
+    types:
+      - status: stable
+        content:
+          name: Document Session Reference
+          description: |
+            Provider-neutral reference to one running session of a logical document. providerId identifies the runtime namespace in which sessionId is resolved, while initialDocument identifies the logical document independently of that runtime session.
+          providerId:
+            description: |
+              Identifier of the session provider that assigned sessionId and resolves the referenced session.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
+          sessionId:
+            description: Provider-local identifier of the running document session.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
+          initialDocument:
+            description: |
+              Initial document identifying the logical document processed by this session. The value may be materialized or represented by an equivalent pure { blueId: ... } reference.
+            schema:
+              required: true
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: FxcZycT49wFfrNAZpzquWVRw43epYQx5SkYXpdwx3c2Z
             attributesAdded: []
   - name: Workflows
     types:
@@ -49603,4 +49673,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 5vH9QdsV5ZBexoBap8wpEuYHYgarsaMX76wwQ84YaCbJ
+  - G1DXowcU5SQQw4h1fcyppAoyK8QkyDzTc2dc9W4uQv8H

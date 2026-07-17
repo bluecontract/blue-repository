@@ -1,5 +1,7 @@
 name: Status Failed
 type: Coordination/Status
 mode: terminated
-description: |
-  Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation failed or was rejected. The fixed mode is `failed`.
+description: >
+  Concrete Document Status meaning the relevant workflow, document bootstrap,
+  customer action, or operation failed or was rejected. The fixed mode is
+  `terminated`; the concrete type distinguishes failure.

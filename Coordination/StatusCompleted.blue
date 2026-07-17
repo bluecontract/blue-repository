@@ -1,5 +1,7 @@
 name: Status Completed
 type: Coordination/Status
 mode: terminated
-description: |
-  Concrete Document Status meaning the relevant workflow, document bootstrap, customer action, or operation has completed successfully. The fixed mode is `completed`.
+description: >
+  Concrete Document Status meaning the relevant workflow, document bootstrap,
+  customer action, or operation completed successfully. The fixed mode is
+  `terminated`; the concrete type distinguishes successful completion.

@@ -1,21 +1,24 @@
 name: Document Bootstrap Requested
 type: Coordination/Request
 description: >
-  Request asking the participant addressed by recipientChannel to bootstrap
-  the supplied initial document with the requested channel bindings and
-  optional initial Messages. The document that emits this request decides how
-  and when to emit it.
+  Request asking the participant addressed by recipientChannel to bootstrap the
+  supplied initial document with any participant resolution input and optional
+  initial Messages. The emitting document decides how and when to create the
+  request.
 
 document:
   schema:
     required: true
   description: Initial document requested for bootstrap.
 
-channelBindings:
-  schema:
-    required: true
-  description: Requested mapping from target document channel keys to participant bindings.
+participantMappings:
+  type: List
+  itemType: Bootstrap/Participant Mapping
+  description: >
+    Optional participant resolution input for target channels whose actors are
+    not already defined by the target document.
 
 initialMessages:
   type: List
-  description: Optional standard bootstrap initial Messages.
+  itemType: Coordination/Message
+  description: Optional Messages supplied as bootstrap input for the target document.

@@ -1,26 +1,21 @@
 name: Document Bootstrap
 description: >
-  Generic document for requesting and tracking bootstrap of another Blue
-  document. It defines the provider response operations but deliberately does
-  not define how or when bootstrapRequest is emitted. A concrete platform or
-  document may add its own initialization or request workflow.
-
-bootstrapRequest:
-  type: Bootstrap/Document Bootstrap Requested
-  schema:
-    required: true
-  description: Request describing the target document bootstrap.
+  Generic coordination document contract for recording a bootstrap provider's
+  response lifecycle. It defines only the provider-facing response operations
+  and the state they materialize. Concrete documents decide how bootstrap is
+  requested and which bootstrap input is supplied.
 
 status:
-  type: Text
-  description: Current bootstrap lifecycle state.
+  type: Coordination/Status
+  description: Current bootstrap lifecycle status.
 
-result:
-  description: Provider-neutral bootstrap result after successful completion.
+documentSession:
+  type: SessionInteraction/Document Session Reference
+  description: Running document session made available after successful bootstrap.
 
 error:
   type: Text
-  description: Decline or failure explanation when bootstrap does not complete.
+  description: Optional explanation recorded when bootstrap is declined or fails.
 
 contracts:
   bootstrapProviderChannel:
@@ -43,14 +38,18 @@ contracts:
           - $appendChange:
               op: replace
               path: /status
-              val: Declined
-          - $appendChange:
-              op: replace
-              path: /error
               val:
-                $default:
-                  - $event: /message/request/reason
-                  - ''
+                type: Coordination/Status Declined
+          - $if:
+              cond:
+                $exists:
+                  $event: /message/request/reason
+              then:
+                - $appendChange:
+                    op: replace
+                    path: /error
+                    val:
+                      $event: /message/request/reason
           - $return:
               changeset:
                 $changeset: true
@@ -71,7 +70,8 @@ contracts:
           - $appendChange:
               op: replace
               path: /status
-              val: In Progress
+              val:
+                type: Coordination/Status In Progress
           - $return:
               changeset:
                 $changeset: true
@@ -92,12 +92,13 @@ contracts:
           - $appendChange:
               op: replace
               path: /status
-              val: Completed
+              val:
+                type: Coordination/Status Completed
           - $appendChange:
               op: replace
-              path: /result
+              path: /documentSession
               val:
-                $event: /message/request/result
+                $event: /message/request/documentSession
           - $return:
               changeset:
                 $changeset: true
@@ -118,7 +119,8 @@ contracts:
           - $appendChange:
               op: replace
               path: /status
-              val: Failed
+              val:
+                type: Coordination/Status Failed
           - $appendChange:
               op: replace
               path: /error
