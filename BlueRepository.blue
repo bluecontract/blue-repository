@@ -11,7 +11,7 @@ packages:
             bootstrapProviderChannel:
               description: Participant channel for the bootstrap provider.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
               schema:
                 required: true
             declineBootstrap:
@@ -259,7 +259,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8AHDwDB5pBrh8VKMKxuzawVLoz7HkjX6t5ys6wWZMjoD
+            typeBlueId: DWzwDRu5bJn25PNwudPyXhvQzWgWZv1THiNUmPhxZsAe
             attributesAdded: []
       - status: stable
         content:
@@ -1841,14 +1841,6 @@ packages:
             attribution; message contains the Blue payload. A Blue processor may use entries from several timelines, but it should
             do so only after the relevant providers or finalized stores establish a complete processing window. This lets
             independent processors merge individual perspectives deterministically without global consensus.
-          providerId:
-            description: |
-              Stable identifier of the Timeline Provider responsible for append authorization, timestamp assignment,
-              and completeness guarantees for this timeline.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            schema:
-              required: true
           timelineId:
             description: |
               Stable provider- or application-defined identifier for this timeline. The identifier is used by channels, providers,
@@ -1860,7 +1852,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
+            typeBlueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
             attributesAdded: []
       - status: stable
         content:
@@ -1873,7 +1865,7 @@ packages:
             description: |
               Timeline whose entries may be accepted through this channel.
             type:
-              blueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
+              blueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
             schema:
               required: true
           actor:
@@ -1885,7 +1877,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+            typeBlueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             attributesAdded: []
       - status: stable
         content:
@@ -1895,7 +1887,7 @@ packages:
           timeline:
             description: Timeline containing this entry.
             type:
-              blueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
+              blueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
             schema:
               required: true
           prevEntry:
@@ -1932,7 +1924,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: JBzgu2CGXf4gFCrTu8geJoxphj8Gc2MTc776qoxh4WPJ#0
+            typeBlueId: BipDEsAgTsG3HSm5CL4KAMeAWBkzRetdKdtnixAwJW9y#0
             attributesAdded: []
       - status: stable
         content:
@@ -33809,14 +33801,14 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to respond to covered requests emitted by sessions of authorizedInitialDocument. The concrete request shape and additional conditions are defined through the inherited validation fields.
           type:
-            blueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
+            blueId: 47V2fyZMejS7LMCqJ66MvJ6v7VcmLL1zyxGQM44svV4H
           authorizedInitialDocument:
             description: Initial document whose sessions may emit covered requests.
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 48DBg1ijT56Jg2ZzxVcWp5CcfiivevM491iNJZMP9EVR
+            typeBlueId: DgcgZoP3VEPpGGpUsFXHesdjA7yErSra447QaCkaRCgD
             attributesAdded: []
       - status: stable
         content:
@@ -33854,7 +33846,7 @@ packages:
                 The guarantor confirms that the declared authority relationship is
                 legitimate and may invoke the standard termination operation.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
               schema:
                 required: true
             authorityHolderChannel:
@@ -33863,7 +33855,7 @@ packages:
                 resource delegated by this mandate. The authority holder may invoke the
                 standard termination operation.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
               schema:
                 required: true
             authorizedActorChannel:
@@ -33872,7 +33864,7 @@ packages:
                 authority. Concrete mandate subtypes define the delegated resource,
                 action, target, or request semantics.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
               schema:
                 required: true
             mandateTerminationChannel:
@@ -33939,7 +33931,7 @@ packages:
                     blueId: 3HtuEaYgkn8rV9xZf1x5uY2v7S9WXbVkcV3rj3Sy6arJ
                 terminatedMessageType:
                   type:
-                    blueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
+                    blueId: EcXZbNZ5BjMCBEwEaPExWjK6KLLrt3Aoxx5TNQiA5R1A
               functions:
                 isStatusPending:
                   expr:
@@ -34129,7 +34121,7 @@ packages:
                 terminatedMessage:
                   args:
                     request:
-                      description: Operation request payload, including any optional reason.
+                      description: Operation request payload containing the required reason.
                     inResponseTo:
                       description: Exact Message that invoked termination.
                   expr:
@@ -34574,11 +34566,30 @@ packages:
                             items:
                               - type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: sourceMessage
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: terminationReason
+                              - type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                 value: timestampUs
                               - type:
                                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
                                 value: terminable
                           vars:
+                            sourceMessage:
+                              $call:
+                                function:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: sourceMessage
+                            terminationReason:
+                              $var:
+                                name: sourceMessage
+                                path:
+                                  type:
+                                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                  value: /reason
                             timestampUs:
                               $call:
                                 function:
@@ -34662,9 +34673,10 @@ packages:
                               value: true
                           termination:
                             reason:
-                              type:
-                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: Mandate terminated
+                              $var:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: terminationReason
             initializeMandate:
               description: |
                 Inherited initialization implementation.
@@ -34792,7 +34804,7 @@ packages:
                 holder.
 
                 Unless the mandate is already Mandate/Status Terminated, it emits
-                Mandate/Mandate Terminated with the optional request reason and
+                Mandate/Mandate Terminated with the required request reason and
                 correlation to the invoking Message. This includes a failed mandate,
                 allowing the guarantor or authority holder to stop its processing. The
                 operation does not write lifecycle state directly;
@@ -34812,9 +34824,11 @@ packages:
                 value: mandateTerminationChannel
               request:
                 reason:
-                  description: Optional human-readable or machine-generated termination reason.
+                  description: Required human-readable or machine-generated termination reason.
                   type:
                     blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                  schema:
+                    required: true
               steps:
                 items:
                   - name: Emit Mandate Terminated
@@ -34836,8 +34850,9 @@ packages:
                 Coordination/Status Pending, Mandate/Status Authority Confirmed, or
                 Mandate/Status Active it changes status to Mandate/Status Terminated and
                 records terminatedAt from the root causal Timeline Entry. The Message
-                itself carries any reason and correlation, does not supply the timestamp,
-                and is not emitted again.
+                itself carries the required reason and correlation, does not supply the
+                timestamp, and is not emitted again. Its reason is propagated unchanged
+                to the graceful processor termination request.
 
                 The Compute result requests graceful termination after its state changes
                 and emitted events have been buffered. Coordination validates the complete
@@ -34859,7 +34874,7 @@ packages:
                 value: mandateTerminatedChannel
               event:
                 type:
-                  blueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
+                  blueId: EcXZbNZ5BjMCBEwEaPExWjK6KLLrt3Aoxx5TNQiA5R1A
               steps:
                 items:
                   - name: Apply Mandate Termination
@@ -34969,7 +34984,7 @@ packages:
               blueId: 333eCC8uWcMWgw8Ev2FfvZgJMUK9pw8LGUa1D1cYTSsQ
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
+            typeBlueId: 47V2fyZMejS7LMCqJ66MvJ6v7VcmLL1zyxGQM44svV4H
             attributesAdded: []
       - status: stable
         content:
@@ -35007,12 +35022,12 @@ packages:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
             type:
-              blueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
+              blueId: 47V2fyZMejS7LMCqJ66MvJ6v7VcmLL1zyxGQM44svV4H
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DMf38RnG66cZ4LwsTTfyTbUauPNmKxLVX92zPR8BZtaS
+            typeBlueId: Hus6vL2AqKcuG8YakBCoFknLig3Bbxgauir7wgKTrjzb
             attributesAdded: []
       - status: stable
         content:
@@ -35054,12 +35069,17 @@ packages:
           type:
             blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
           reason:
-            description: Optional human-readable or machine-generated termination reason.
+            description: |
+              Required human-readable or machine-generated termination reason. The
+              inherited termination workflow propagates this value unchanged to the
+              graceful processor termination request.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: C6zMJV5BTUBbzAQ4UJ2jcaNjxhravLVF82euN8hNe5K8
+            typeBlueId: EcXZbNZ5BjMCBEwEaPExWjK6KLLrt3Aoxx5TNQiA5R1A
             attributesAdded: []
       - status: stable
         content:
@@ -35109,7 +35129,7 @@ packages:
           description: |
             Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
           type:
-            blueId: 2sLn6T8Ch7XarFH38QTHCKzTLr89D5gGgpEvqZHNn5sb
+            blueId: 47V2fyZMejS7LMCqJ66MvJ6v7VcmLL1zyxGQM44svV4H
           target:
             initialDocument:
               description: Initial document identifying the logical target document.
@@ -35129,7 +35149,7 @@ packages:
                 required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: QFJDDDxx4U3j3wrCzAeT8pwvaQw2BRkAnxuxcpYo39z
+            typeBlueId: 7i8qhMJFPdWvw8h71W8PztE6PNC1TDc1xUD8yvYGcp4R
             attributesAdded: []
       - status: stable
         content:
@@ -35399,7 +35419,7 @@ packages:
           name: Document Session Bootstrap
           description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
           type:
-            blueId: GSheFv6JD35HAEZyoXHrjSEnC5baCwfmdy5VvLMtDuRN
+            blueId: 6VYrH3fhevaCzConTtpcgSKhFxtcXtT6azxELRH73BDa
           contracts:
             triggeredEventsChannel:
               type:
@@ -35747,7 +35767,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3F4dtCNZCSj6ZfVc5TQxmiiuPELFFVaPLe6tytZJ71Jv
+            typeBlueId: CWKe3G7uoUtFnH6TzF3vcx8UNMLkqr4D5JpS6zX48UnL
             attributesAdded: []
       - status: stable
         content:
@@ -35806,10 +35826,10 @@ packages:
             myOsAdminChannel:
               description: MyOS Admin channel for operational progress and decisions delivered through myOsAdminUpdate.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
               timeline:
                 type:
-                  blueId: 81daJe9Ns5yUCEi1aX1gyjoaL3P94CU1wut9zJ4MuXy9
+                  blueId: 2kJTAf7L1FMGBqa7tez6qXw3kPfghbjwmiWzKWVCMYw3
               actor:
                 type:
                   blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
@@ -35849,7 +35869,7 @@ packages:
                                 value: /message/request
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: GSheFv6JD35HAEZyoXHrjSEnC5baCwfmdy5VvLMtDuRN
+            typeBlueId: 6VYrH3fhevaCzConTtpcgSKhFxtcXtT6azxELRH73BDa
             attributesAdded: []
       - status: stable
         content:
@@ -35931,7 +35951,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request bootstrap work from MyOS Admin. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin. Allowed document, channel-binding, initial-message, and on-behalf-of constraints are expressed through inherited validation.
           type:
-            blueId: 48DBg1ijT56Jg2ZzxVcWp5CcfiivevM491iNJZMP9EVR
+            blueId: DgcgZoP3VEPpGGpUsFXHesdjA7yErSra447QaCkaRCgD
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35943,7 +35963,7 @@ packages:
                   blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9iFQNEeyQvdfVvEKcWDiHvW1fyq1NzTTxFgxmY1b9Zmu
+            typeBlueId: JA8Yi7KW2jjDqqExAbWbCCfZw2mu8Q7VXwEvMHVezusF
             attributesAdded: []
       - status: stable
         content:
@@ -35951,7 +35971,7 @@ packages:
           description: |
             MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: QFJDDDxx4U3j3wrCzAeT8pwvaQw2BRkAnxuxcpYo39z
+            blueId: 7i8qhMJFPdWvw8h71W8PztE6PNC1TDc1xUD8yvYGcp4R
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -35967,7 +35987,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: A8AucrtZ7XQjJKzJBRZC3dWHdaPw8ffPUJKuFmH4pLRn
+            typeBlueId: C7dtw8ZHpD93BBpL528WPq8W4xWvjnUisH9Ew8SQQ6fW
             attributesAdded: []
       - status: stable
         content:
@@ -36104,7 +36124,7 @@ packages:
           description: |
             MyOS-hosted responder mandate allowing sessions of the inherited authorizedInitialDocument to request a provider-mediated subscription to a source logical document. The authority holder must control the source document or the explicitly constrained source session. The canonical subtype constrains the guarantor and authorized-actor roles to MyOS Admin.
           type:
-            blueId: 48DBg1ijT56Jg2ZzxVcWp5CcfiivevM491iNJZMP9EVR
+            blueId: DgcgZoP3VEPpGGpUsFXHesdjA7yErSra447QaCkaRCgD
           contracts:
             mandateGuarantorChannel:
               actor:
@@ -36133,7 +36153,7 @@ packages:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 3YXjgSDbzCTixYcNFdVbdPMaGJESAtbVpZrm3BgTWnWX
+            typeBlueId: 4zjwHNN6UDSevHfuz264WsyWNSsRc2bC25KpXU4d988B
             attributesAdded: []
       - status: stable
         content:
@@ -36216,14 +36236,10 @@ packages:
           description: |
             Timeline hosted by the MyOS Timeline Provider. MyOS determines append authorization, assigns timestamps, preserves the append-only history, and supplies completeness guarantees for this timeline.
           type:
-            blueId: 8WGez2Pw3SaengwQ3fALoD7uYU4391o8NJSkQuumdh4m
-          providerId:
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-            value: myos
+            blueId: HAMjp2wA76Jhz8EGBDbfo9cqVyAq3vwVN4baKJBpj8KF
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 81daJe9Ns5yUCEi1aX1gyjoaL3P94CU1wut9zJ4MuXy9
+            typeBlueId: 2kJTAf7L1FMGBqa7tez6qXw3kPfghbjwmiWzKWVCMYw3
             attributesAdded: []
       - status: dev
         content:
@@ -37512,15 +37528,15 @@ packages:
             granterChannel:
               description: Granting party timeline channel.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             granteeChannel:
               description: Grantee timeline channel (party allowed to use the mandate).
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             guarantorChannel:
               description: Bank/admin channel executing mandate checks and settlement updates.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -39930,7 +39946,7 @@ packages:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7SqnbvCPkox8veMRdWGT5nUVGpEM65aT7eFcVwXaFtsB
+            typeBlueId: Zp9XUGFr6S4MPcfMarmfWo3uE8Bsh4UzUsgMNcKbh6V
             attributesAdded: []
       - status: dev
         content:
@@ -43059,11 +43075,11 @@ packages:
             payNoteSender:
               description: Participant submitting the PayNote delivery (merchant or processor).
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             payNoteDeliverer:
               description: Participant delivering and reporting status (e.g., bank).
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -44409,7 +44425,7 @@ packages:
               blueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
             document:
               type:
-                blueId: 7SqnbvCPkox8veMRdWGT5nUVGpEM65aT7eFcVwXaFtsB
+                blueId: Zp9XUGFr6S4MPcfMarmfWo3uE8Bsh4UzUsgMNcKbh6V
           cardTransactionDetails:
             description: Card network identifiers used to match processor and issuer records.
             type:
@@ -44440,7 +44456,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7ieTcJfrepbKwaBNweqLAgxiVDbdjHTUW8UxriXefzNM
+            typeBlueId: DT1xSSmLNv2iJSYAUYSaLumD2JJH27WjWF6KRxa9zRW5
             attributesAdded: []
       - status: dev
         content:
@@ -49004,15 +49020,15 @@ packages:
             granteeChannel:
               description: Grantee (e.g., merchant MyOS timeline).
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             granterChannel:
               description: Granter (customer represented by the bank; customer has no MyOS account).
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             guarantorChannel:
               description: Bank/admin channel.
               type:
-                blueId: 2BkkrbUNnyKqQqv83JigG1HvTY3Xa3r39jsuoQpX5Tve
+                blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
             initLifecycleChannel:
               type:
                 blueId: 2DXGQUiQBQ6CT89jwAsTAXaEPhLgiSXhKCGh9Q7Hv3MQ
@@ -49240,7 +49256,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BCoY7YXVS4wanw4HeudF91o99BEextZZrzFajYNcvQXp
+            typeBlueId: A3ARRUeBEDuZMTs7SN62agmNKd41i1ZZDRtsGWDhuSro
             attributesAdded: []
       - status: dev
         content:
@@ -49673,4 +49689,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - G1DXowcU5SQQw4h1fcyppAoyK8QkyDzTc2dc9W4uQv8H
+  - DPkjPHvEASr115BcLA4CMXRYKaJRAfmqTyodkndGJ4FY

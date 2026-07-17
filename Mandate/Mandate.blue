@@ -311,7 +311,7 @@ contracts:
       terminatedMessage:
         args:
           request:
-            description: Operation request payload, including any optional reason.
+            description: Operation request payload containing the required reason.
           inResponseTo:
             description: Exact Message that invoked termination.
         expr:
@@ -536,9 +536,19 @@ contracts:
         do:
           - $let:
               order:
+                - sourceMessage
+                - terminationReason
                 - timestampUs
                 - terminable
               vars:
+                sourceMessage:
+                  $call:
+                    function: sourceMessage
+                    args: {}
+                terminationReason:
+                  $var:
+                    name: sourceMessage
+                    path: /reason
                 timestampUs:
                   $call:
                     function: processingEventTimestamp
@@ -579,7 +589,8 @@ contracts:
               events:
                 $events: true
               termination:
-                reason: Mandate terminated
+                reason:
+                  $var: terminationReason
 
   initializeMandate:
     type: Coordination/Sequential Workflow
@@ -673,13 +684,15 @@ contracts:
     request:
       reason:
         type: Text
-        description: Optional human-readable or machine-generated termination reason.
+        schema:
+          required: true
+        description: Required human-readable or machine-generated termination reason.
     description: |
       Standard termination operation available to the guarantor and authority
       holder.
 
       Unless the mandate is already Mandate/Status Terminated, it emits
-      Mandate/Mandate Terminated with the optional request reason and
+      Mandate/Mandate Terminated with the required request reason and
       correlation to the invoking Message. This includes a failed mandate,
       allowing the guarantor or authority holder to stop its processing. The
       operation does not write lifecycle state directly;
@@ -709,8 +722,9 @@ contracts:
       Coordination/Status Pending, Mandate/Status Authority Confirmed, or
       Mandate/Status Active it changes status to Mandate/Status Terminated and
       records terminatedAt from the root causal Timeline Entry. The Message
-      itself carries any reason and correlation, does not supply the timestamp,
-      and is not emitted again.
+      itself carries the required reason and correlation, does not supply the
+      timestamp, and is not emitted again. Its reason is propagated unchanged
+      to the graceful processor termination request.
 
       The Compute result requests graceful termination after its state changes
       and emitted events have been buffered. Coordination validates the complete

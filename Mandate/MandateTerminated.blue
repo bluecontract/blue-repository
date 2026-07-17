@@ -14,4 +14,9 @@ description: |
 
 reason:
   type: Text
-  description: Optional human-readable or machine-generated termination reason.
+  schema:
+    required: true
+  description: |
+    Required human-readable or machine-generated termination reason. The
+    inherited termination workflow propagates this value unchanged to the
+    graceful processor termination request.
