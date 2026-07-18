@@ -36247,6 +36247,9 @@ packages:
           description: MyOS-specific Timeline Channel
           type:
             blueId: BDP5DqtmUNtG2FE1hLe5n2n5h4JMJayXixeGzfM5uzrq
+          timeline:
+            type:
+              blueId: 2kJTAf7L1FMGBqa7tez6qXw3kPfghbjwmiWzKWVCMYw3
           accountId:
             description: Account identifier for the MyOS timeline
             type:
@@ -36259,6 +36262,10 @@ packages:
           - repositoryVersionIndex: 1
             typeBlueId: 6z6yHvTmjhyeNpdmu14bbGtKA2hj3g1UCKbpskTQ4Hky
             attributesAdded: []
+          - repositoryVersionIndex: 2
+            typeBlueId: FS7n5P3nfsuB2TiKFaYRHPukiHGw1vxTPRwMfPZoNgvH
+            attributesAdded:
+              - /timeline
       - status: dev
         content:
           name: MyOS User
@@ -49709,3 +49716,4 @@ packages:
 repositoryVersions:
   - DPkjPHvEASr115BcLA4CMXRYKaJRAfmqTyodkndGJ4FY
   - 5Z2p73GgidEsFJM9hco4ythx8KiBFhefQMQ6U5wkg9KE
+  - 93V2Y3A4DkxBavRXdACR8CbRshht1oPUK4Gueb8ZgDQf
