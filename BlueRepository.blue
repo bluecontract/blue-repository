@@ -1892,9 +1892,7 @@ packages:
               required: true
           prevEntry:
             description: |
-              Previous entry in the same timeline, normally represented as a pure reference. The first entry may omit this field.
-            type:
-              blueId: this#0
+              Generic reference to the previous entry in the same timeline. Non-first entries should normally use a pure BlueId reference. The field is intentionally untyped so standard document processing can retain it as opaque audit evidence without materializing or validating the referenced history. The Timeline Provider or verifier validates it against the immediately preceding accepted entry. The first entry may omit this field.
           timestamp:
             description: |
               Microsecond timestamp assigned by the Timeline Provider. It is unique and strictly increasing within this timeline and is the authoritative intra-timeline ordering value. It also supports cross-timeline ordering and completeness windows under the provider profile.
@@ -1924,7 +1922,7 @@ packages:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BipDEsAgTsG3HSm5CL4KAMeAWBkzRetdKdtnixAwJW9y#0
+            typeBlueId: DNLLsGGrhPaJWHUepnChX5WA68DKzRvQdL1a7RbmLrhS
             attributesAdded: []
       - status: stable
         content:
@@ -49710,4 +49708,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - Bpv45NKfZrnt3ktMEqLjexrhmmBhnS9LhsuPpmFDt5vi
+  - 8QdBsgsosjEx6kV8EwugHtTUk663ZPRQRKqwm55wDjxb
