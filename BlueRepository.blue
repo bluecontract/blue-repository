@@ -35231,19 +35231,23 @@ packages:
       - status: stable
         content:
           name: All Participants Ready
+          type:
+            blueId: ENRQ621TbJpLg2cGyYkgTmPRLGKZkPqCzkBgm4yEXKF5
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Ff61TKzxLStjvfMksRNUBif2PRJGJM6XvmTqSf3M76wC
+            typeBlueId: BiV8zZSESjpgVqjsEXNYuzk54PUZYp69UtQhxrxK3vYC
             attributesAdded: []
       - status: stable
         content:
           name: Bootstrap Failed
+          type:
+            blueId: ENRQ621TbJpLg2cGyYkgTmPRLGKZkPqCzkBgm4yEXKF5
           reason:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: FaZorE1FNvj9ar6rxL8jHRNYQ6WYo4hERoE35v7A5DnL
+            typeBlueId: GiwuMm3gtbi79CVSUtHGZmpUnQma7EK6A17G9PRmh6jK
             attributesAdded: []
       - status: stable
         content:
@@ -35417,7 +35421,7 @@ packages:
           name: Document Session Bootstrap
           description: MyOS-specific document for bootstrapping document sessions and tracking bootstrap progress
           type:
-            blueId: 27qekptarpePgx6NKRfGQAhxzFP1nLnDA2qP9A1BauAy
+            blueId: 8ggQTWRSXKFTH3H8iqp4ff7NTFvFJn5ZNDWCHcxaxpbq
           contracts:
             triggeredEventsChannel:
               type:
@@ -35462,7 +35466,7 @@ packages:
                 value: triggeredEventsChannel
               event:
                 type:
-                  blueId: BswjhjkdTDksVCcc8ijoU2RWcPam7Rphcecc67HJjZRi
+                  blueId: 3cujh2pNfS1bvc1L5eWhLaaeBepXjByWZ75XF5erArKU
               steps:
                 items:
                   - name: Update Participant State
@@ -35550,7 +35554,7 @@ packages:
                 value: triggeredEventsChannel
               event:
                 type:
-                  blueId: 4RvVyoEwATa2dtpRRoXbnRLbizq2vqeeMQVmqUrCd8JN
+                  blueId: J9a8qD8javfYK6nRDq9YZRA8LDuzZzq7QS7DB73Pm4Lv
               steps:
                 items:
                   - name: Update Initiator Session And Emit Completion
@@ -35617,7 +35621,7 @@ packages:
                 value: triggeredEventsChannel
               event:
                 type:
-                  blueId: FaZorE1FNvj9ar6rxL8jHRNYQ6WYo4hERoE35v7A5DnL
+                  blueId: GiwuMm3gtbi79CVSUtHGZmpUnQma7EK6A17G9PRmh6jK
               steps:
                 items:
                   - name: Update Error And Emit Failure
@@ -35689,22 +35693,29 @@ packages:
                 items:
                   - name: Update Bootstrap Status
                     type:
-                      blueId: 6bU2jWm3F6GaCXSLpdxiNjRbf9XcQDzH1NUsroHz4x8U
-                    changeset:
+                      blueId: 4qGDz5yJxXc9dr8bsBE1B2Tg4AWuR4qHPU9H6T29m3KZ
+                    do:
                       items:
-                        - op:
-                            type:
-                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                            value: replace
-                          path:
-                            type:
-                              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                            value: /bootstrapStatus
-                          val:
-                            $event:
+                        - $appendChange:
+                            op:
                               type:
                                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                              value: /status
+                              value: replace
+                            path:
+                              type:
+                                blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                              value: /bootstrapStatus
+                            val:
+                              $event:
+                                type:
+                                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                                value: /status
+                        - $return:
+                            changeset:
+                              $changeset:
+                                type:
+                                  blueId: AwvXD961fmnmqcSQhjMA7r15HpVh39cefb6ZTyUz2Fm2
+                                value: true
           document:
             description: Target Blue document to be bootstrapped
           avatarUrl:
@@ -35765,7 +35776,7 @@ packages:
               blueId: ASa82RtPSXwdys7M5Xs5s3brTjYgJmQqJt2uyraQGrNA
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8YfcW6uNdYnV77ebrrBUNNvZMk9Cmk3hREGuv55aZJDR
+            typeBlueId: 5ZaWtZY29h6mm6KGKJsxcfDLF3TMS3XgFVJ7nxwZgDLB
             attributesAdded: []
       - status: stable
         content:
@@ -35834,7 +35845,7 @@ packages:
             myOsAdminUpdate:
               description: The standard, required operation for MyOS Admin to deliver events.
               type:
-                blueId: Be766kx7kqFYGf96VtAc8Weofb3xkCRUTxSDVd317S2G
+                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
               channel:
                 type:
                   blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -35844,14 +35855,6 @@ packages:
                   blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
                 itemType:
                   blueId: ENRQ621TbJpLg2cGyYkgTmPRLGKZkPqCzkBgm4yEXKF5
-            myOsAdminUpdateImpl:
-              description: Implementation that re-emits the provided events
-              type:
-                blueId: B5eQ8GaYwECKEtduoWEv8Ri1FvWznuvb3ZXGKqeYUuy
-              operation:
-                type:
-                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                value: myOsAdminUpdate
               steps:
                 items:
                   - name: EmitAdminEvents
@@ -35867,7 +35870,7 @@ packages:
                                 value: /message/request
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 27qekptarpePgx6NKRfGQAhxzFP1nLnDA2qP9A1BauAy
+            typeBlueId: 8ggQTWRSXKFTH3H8iqp4ff7NTFvFJn5ZNDWCHcxaxpbq
             attributesAdded: []
       - status: stable
         content:
@@ -36324,6 +36327,8 @@ packages:
       - status: stable
         content:
           name: Participant Resolved
+          type:
+            blueId: ENRQ621TbJpLg2cGyYkgTmPRLGKZkPqCzkBgm4yEXKF5
           channelName:
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
@@ -36332,7 +36337,7 @@ packages:
               blueId: BDWxt7xTGsK2mZKinCxD4hENHUUfEtupZPtaYzwLmKJm
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: BswjhjkdTDksVCcc8ijoU2RWcPam7Rphcecc67HJjZRi
+            typeBlueId: 3cujh2pNfS1bvc1L5eWhLaaeBepXjByWZ75XF5erArKU
             attributesAdded: []
       - status: dev
         content:
@@ -36756,6 +36761,8 @@ packages:
       - status: stable
         content:
           name: Target Document Session Started
+          type:
+            blueId: ENRQ621TbJpLg2cGyYkgTmPRLGKZkPqCzkBgm4yEXKF5
           document:
             description: The final, canonicalized document state with all timelineIds filled in.
           initiatorSessionIds:
@@ -36766,7 +36773,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 4RvVyoEwATa2dtpRRoXbnRLbizq2vqeeMQVmqUrCd8JN
+            typeBlueId: J9a8qD8javfYK6nRDq9YZRA8LDuzZzq7QS7DB73Pm4Lv
             attributesAdded: []
   - name: PayNote
     types:
@@ -49708,4 +49715,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 8QdBsgsosjEx6kV8EwugHtTUk663ZPRQRKqwm55wDjxb
+  - 3iPVYhS7LbupV6295uDTMCkiLDEy2smZaJcFxS5vUXZT

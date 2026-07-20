@@ -181,9 +181,13 @@ contracts:
       type: Coordination/Status Change
     steps:
       - name: Update Bootstrap Status
-        type: Coordination/Update Document
-        changeset:
-          - op: replace
-            path: /bootstrapStatus
-            val:
-              $event: /status
+        type: Coordination/Compute
+        do:
+          - $appendChange:
+              op: replace
+              path: /bootstrapStatus
+              val:
+                $event: /status
+          - $return:
+              changeset:
+                $changeset: true

@@ -1,3 +1,4 @@
 name: Bootstrap Failed
+type: Coordination/Event
 reason:
   type: Text
