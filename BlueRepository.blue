@@ -326,6 +326,10 @@ packages:
             Request asking the participant addressed by recipientChannel to bootstrap the supplied initial document with any participant resolution input and optional initial Messages. The emitting document decides how and when to create the request.
           type:
             blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
+          requesterChannel:
+            description: Optional channel key in the requesting document whose participant is asking for bootstrap.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
           document:
             description: Initial document requested for bootstrap.
             schema:
@@ -345,7 +349,7 @@ packages:
               blueId: 768MxgQEHnLSkedHWHtjj43mAjH361Zf6pKZgVxi5po3
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
+            typeBlueId: GtkzouXkHv2NByNsd8ciAGSpgaMcwr2LwL9Px7JLdrBJ
             attributesAdded: []
       - status: stable
         content:
@@ -35019,13 +35023,11 @@ packages:
           initialMandateDocument:
             description: |
               Initial mandate document authorizing the represented authority relationship. A feeder or provider resolves the exact processed mandate state required for the relevant action timestamp.
-            type:
-              blueId: 47V2fyZMejS7LMCqJ66MvJ6v7VcmLL1zyxGQM44svV4H
             schema:
               required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: Hus6vL2AqKcuG8YakBCoFknLig3Bbxgauir7wgKTrjzb
+            typeBlueId: AFmG8N66vjJCjfjpuvvowYeTpreb1GrdM8uHzEiDuWto
             attributesAdded: []
       - status: stable
         content:
@@ -44441,14 +44443,14 @@ packages:
           payNoteBootstrapRequest:
             description: PayNote bootstrap request details.
             type:
-              blueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
+              blueId: GtkzouXkHv2NByNsd8ciAGSpgaMcwr2LwL9Px7JLdrBJ
             document:
               type:
                 blueId: 3QhCg6W39VGD66E7by4yNop1UYH198xEbVpqYcjLaatL
           paymentMandateBootstrapRequest:
             description: Optional Payment Mandate bootstrap request details for Delivery flows that require mandate attachment before proposal exposure.
             type:
-              blueId: 2a67bWEnUUaHNFM8MDaAKRCLnKQZKMcuifjT4mxAEnGt
+              blueId: GtkzouXkHv2NByNsd8ciAGSpgaMcwr2LwL9Px7JLdrBJ
             document:
               type:
                 blueId: Zp9XUGFr6S4MPcfMarmfWo3uE8Bsh4UzUsgMNcKbh6V
@@ -44482,7 +44484,7 @@ packages:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: DT1xSSmLNv2iJSYAUYSaLumD2JJH27WjWF6KRxa9zRW5
+            typeBlueId: 9RAY5TFPvDLAei11QWyzSMGkp9HZtAjWVi3r2D7ocfrJ
             attributesAdded: []
       - status: dev
         content:
@@ -49715,4 +49717,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 3iPVYhS7LbupV6295uDTMCkiLDEy2smZaJcFxS5vUXZT
+  - 6AA5VQDuC2EyvztDsto8hwmKqbhCkBGqDvDed6Avura8

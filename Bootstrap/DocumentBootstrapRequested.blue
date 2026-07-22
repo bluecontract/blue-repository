@@ -6,6 +6,10 @@ description: >
   initial Messages. The emitting document decides how and when to create the
   request.
 
+requesterChannel:
+  type: Text
+  description: Optional channel key in the requesting document whose participant is asking for bootstrap.
+
 document:
   schema:
     required: true

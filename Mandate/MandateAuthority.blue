@@ -13,7 +13,6 @@ actor:
   description: Actor on whose behalf the containing actor claims to act.
 
 initialMandateDocument:
-  type: Mandate/Mandate
   schema:
     required: true
   description: >
