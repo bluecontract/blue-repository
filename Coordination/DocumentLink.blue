@@ -1,0 +1,18 @@
+name: Document Link
+description: |
+  Passive declaration of one outgoing connection to a specific Blue document.
+  The target is identified by the Content BlueId of its initial document state.
+  A missing anchor targets the document root; a present anchor names one exact
+  incoming connection point declared by the target.
+initialDocument:
+  description: |
+    Target document in its initial state. Authors may materialize the initial
+    document or use an equivalent pure Blue reference containing its blueId.
+    The referenced identity, not any later document state or session, is the
+    target document identifier.
+anchor:
+  type: Text
+  description: |
+    Optional exact Document Anchors dictionary key. When absent, this link
+    targets the document root. The value is opaque author-authored Text:
+    spelling, whitespace, case, and Unicode normalization are significant.

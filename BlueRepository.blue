@@ -423,38 +423,6 @@ packages:
             attributesAdded: []
       - status: dev
         content:
-          name: Document Anchor
-          description: |
-            One named connection point where matching documents can link in.
-            Anchor entries are typically used inline inside `Common/Document Anchors`
-            and can describe the expected matching document shape through `template`.
-          template:
-            description: |
-              Optional Blue document-shaped template describing what matches this anchor.
-              It may be a minimal `{ type, kind }` hint or a richer nested document shape.
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: Bu4KzxxpJuHvET1RTBzioDXpWcqmvYzmqGRiDKmktHUo
-            attributesAdded: []
-      - status: dev
-        content:
-          name: Document Anchors
-          description: |
-            Dictionary-like container of named document anchors.
-            The container is typed, while named entries can stay inline and do not need
-            to repeat `type: Common/Document Anchor` in public document shape.
-          type:
-            blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-          keyType:
-            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          valueType:
-            blueId: Bu4KzxxpJuHvET1RTBzioDXpWcqmvYzmqGRiDKmktHUo
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 5UhQNW5kxq9QrAkjnajrGV7B4nN5Cun6puDNkqUyxF4e
-            attributesAdded: []
-      - status: dev
-        content:
           name: Named Event
           description: |
             Lightweight coordination event identified by the instance `name` field.
@@ -576,13 +544,9 @@ packages:
             description: Optional primary website or canonical public URL for this space.
             type:
               blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          anchors:
-            description: Optional named connection points where matching documents can link in.
-            type:
-              blueId: 5UhQNW5kxq9QrAkjnajrGV7B4nN5Cun6puDNkqUyxF4e
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 9NWJbMy2sRh6KdLQGhQqFx6Ta8LZen5NMcdg2vqeG9yC
+            typeBlueId: BFrCmuWJzm3RYrg3AD9L1YYKV3oun4MA9gL74mDQKF1j
             attributesAdded: []
       - status: dev
         content:
@@ -1208,6 +1172,41 @@ packages:
             attributesAdded: []
       - status: stable
         content:
+          name: Document Anchor
+          description: |
+            Passive declaration of a stable named incoming connection point. The
+            enclosing Document Anchors dictionary key is the actual anchor name. This
+            value carries only optional authoring guidance; it does not grant access,
+            validate an incoming link, execute behavior, or require eager indexing.
+          template:
+            description: |
+              Optional Blue document template recommendation for documents linking to
+              this anchor. It is authoring and bootstrap guidance only, not validation,
+              automatic execution, or a condition for retaining an incoming link.
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 7PxEJAVDRqGFU2t6TFeqimEKfddFVGN1mAWTAsWmXix
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Anchors
+          description: |
+            Passive dictionary of named incoming connection points that other documents
+            may target. Each dictionary key is the exact anchor name; values provide
+            optional guidance. Anchors are part of a document's public link interface
+            when authored in effective root contracts.
+          type:
+            blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
+          keyType:
+            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+          valueType:
+            blueId: 7PxEJAVDRqGFU2t6TFeqimEKfddFVGN1mAWTAsWmXix
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: HhGmdUeYu4H3B4pfgTNkwweuUqQ1bJ4YPNdcjC42K6bw
+            attributesAdded: []
+      - status: stable
+        content:
           name: Document Bootstrap Completed
           description: |
             Lifecycle/coordination event indicating that a requested document bootstrap completed successfully. It records the
@@ -1261,6 +1260,49 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: 8HdfdnkeL2v31q56qsN6bAwUHtBYK5VseaMQ3owdWtuF
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Link
+          description: |
+            Passive declaration of one outgoing connection to a specific Blue document.
+            The target is identified by the Content BlueId of its initial document state.
+            A missing anchor targets the document root; a present anchor names one exact
+            incoming connection point declared by the target.
+          initialDocument:
+            description: |
+              Target document in its initial state. Authors may materialize the initial
+              document or use an equivalent pure Blue reference containing its blueId.
+              The referenced identity, not any later document state or session, is the
+              target document identifier.
+          anchor:
+            description: |
+              Optional exact Document Anchors dictionary key. When absent, this link
+              targets the document root. The value is opaque author-authored Text:
+              spelling, whitespace, case, and Unicode normalization are significant.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 4QgVHSQv1pyJAmEQBpuXFSVN7qdavdMDmdZXpkboNsc5
+            attributesAdded: []
+      - status: stable
+        content:
+          name: Document Links
+          description: |
+            Passive dictionary of named outgoing document-link declarations. Dictionary
+            keys organize authoring and may communicate local purpose, but do not form
+            link identity. Every value is a Coordination/Document Link. Equivalent
+            values under different keys describe the same effective endpoint.
+          type:
+            blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
+          keyType:
+            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+          valueType:
+            blueId: 4QgVHSQv1pyJAmEQBpuXFSVN7qdavdMDmdZXpkboNsc5
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 8cREvDqGAGADf9NkWvwhENWnTf5qRAGasS5ihktdXiNX
             attributesAdded: []
       - status: stable
         content:
@@ -35333,30 +35375,6 @@ packages:
             attributesAdded: []
       - status: stable
         content:
-          name: Document Anchor
-          description: Each anchor declares a semantic purpose and may optionally provide a template recommendation for linking documents.
-          template:
-            description: Optional Blue document template recommendation for linking documents. Used by MyOS UI for validation and filtering; not protocol-enforced.
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: HS9yo34TGEAM2LGcNbLh7XPN4goPRhqdGZQkiyh473Wb
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Document Anchors
-          description: Dictionary of named incoming connection points (anchors) that other documents can link to. Links to an anchor are by its dictionary key.
-          type:
-            blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-          keyType:
-            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          valueType:
-            blueId: HS9yo34TGEAM2LGcNbLh7XPN4goPRhqdGZQkiyh473Wb
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 6LzxLRpgV6a2HEZ98LXXF55BsfsTE8ChXghCZGBSJYSF
-            attributesAdded: []
-      - status: stable
-        content:
           name: Document Initial Snapshot Requested
           type:
             blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
@@ -35389,34 +35407,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: 2oWDimMA574XdPA5QFDSPETcU8HzpycEKRseE6CUhred
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Document Link
-          description: Link targeting a specific Blue document by its stable documentId (initial blueId before any processing). Used to point to a logical document regardless of session.
-          type:
-            blueId: 6EvULvymCkDo8S9SjWgvzB24sbqZotJo5opNqH7dNThP
-          documentId:
-            description: Stable document identifier (original BlueId) of the target document.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: CfdjCV1cjPJCd5sBHLMzNUx3EtkgrmBekLxB5c9Qw1Qh
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Document Links
-          description: Dictionary of named outgoing connections from this document to anchors on other documents or sessions. MyOS indexes supported link variants to power discovery.
-          type:
-            blueId: Efkz9D1ARMM7rU43w3rDNVqat1naS6qXKCqP4eHin3yG
-          keyType:
-            blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-          valueType:
-            blueId: 6EvULvymCkDo8S9SjWgvzB24sbqZotJo5opNqH7dNThP
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: HrFwCVPZz2sNinVETY4mk2sLLziGQWejTU2eWjxcUuuX
             attributesAdded: []
       - status: stable
         content:
@@ -35780,30 +35770,6 @@ packages:
           - repositoryVersionIndex: 0
             typeBlueId: 5ZaWtZY29h6mm6KGKJsxcfDLF3TMS3XgFVJ7nxwZgDLB
             attributesAdded: []
-      - status: stable
-        content:
-          name: Document Type Link
-          description: Link targeting any document of a specific Blue type. Enables dynamic discovery where the platform resolves to a concrete instance at runtime.
-          type:
-            blueId: 6EvULvymCkDo8S9SjWgvzB24sbqZotJo5opNqH7dNThP
-          documentType:
-            description: Type being targeted by this link.
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 5z86Uk79T94VasXdy6RSWjZqVUmiEfwGVWrkGc9ZooLm
-            attributesAdded: []
-      - status: stable
-        content:
-          name: Link
-          description: Abstract base class for all link types.
-          anchor:
-            description: Target anchor key on the destination document.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 6EvULvymCkDo8S9SjWgvzB24sbqZotJo5opNqH7dNThP
-            attributesAdded: []
       - status: dev
         content:
           name: LLM Agent
@@ -36055,20 +36021,6 @@ packages:
         versions:
           - repositoryVersionIndex: 0
             typeBlueId: CeWyRmXAMZqvWBvby2KbRUZWcS7Pdxs42vnMXgn9gg6H
-            attributesAdded: []
-      - status: stable
-        content:
-          name: MyOS Session Link
-          description: Link targeting a specific document session by its sessionId. Use when referencing a live session rather than a logical document.
-          type:
-            blueId: 6EvULvymCkDo8S9SjWgvzB24sbqZotJo5opNqH7dNThP
-          sessionId:
-            description: Identifier of the document session being targeted.
-            type:
-              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: 8WDRmnnsa796qcz2VcYNiua5xdH8BFXbKq94NxUYviyE
             attributesAdded: []
       - status: stable
         content:
@@ -49717,4 +49669,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 6AA5VQDuC2EyvztDsto8hwmKqbhCkBGqDvDed6Avura8
+  - 5kRv5nLCz4NPnTWFp7v6wpUJLX85CEFQ3HJcx573Vgdz
