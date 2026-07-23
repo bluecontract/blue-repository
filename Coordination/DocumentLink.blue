@@ -10,6 +10,8 @@ initialDocument:
     document or use an equivalent pure Blue reference containing its blueId.
     The referenced identity, not any later document state or session, is the
     target document identifier.
+  schema:
+    required: true
 anchor:
   type: Text
   description: |

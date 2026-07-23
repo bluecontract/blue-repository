@@ -1275,6 +1275,8 @@ packages:
               document or use an equivalent pure Blue reference containing its blueId.
               The referenced identity, not any later document state or session, is the
               target document identifier.
+            schema:
+              required: true
           anchor:
             description: |
               Optional exact Document Anchors dictionary key. When absent, this link
@@ -49669,4 +49671,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 5kRv5nLCz4NPnTWFp7v6wpUJLX85CEFQ3HJcx573Vgdz
+  - FG4LidzBiMCyVt53aP8kJXjcZXZ97mVfnv7N92zueGzr
