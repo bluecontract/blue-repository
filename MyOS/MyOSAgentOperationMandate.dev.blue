@@ -50,18 +50,3 @@ contracts:
   authorizedActorChannel:
     actor:
       type: MyOS/MyOS Agent Actor
-      agentId:
-        type: Text
-        schema:
-          required: true
-        description: Stable MyOS identity of the acting specialist Agent.
-      accountId:
-        type: Text
-        schema:
-          required: true
-        description: Account whose Principal is represented by this Agent.
-      onBehalfOf:
-        type: MyOS/Principal Actor
-        schema:
-          required: true
-        description: Exact authority-holder Principal represented by the Agent.

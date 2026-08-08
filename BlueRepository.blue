@@ -35967,24 +35967,6 @@ packages:
               actor:
                 type:
                   blueId: C2Fyt8obT6QR8WWFCPF5G36VXZLwzaM1SLtMKKAp4pwd
-                agentId:
-                  description: Stable MyOS identity of the acting specialist Agent.
-                  type:
-                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                  schema:
-                    required: true
-                accountId:
-                  description: Account whose Principal is represented by this Agent.
-                  type:
-                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                  schema:
-                    required: true
-                onBehalfOf:
-                  description: Exact authority-holder Principal represented by the Agent.
-                  type:
-                    blueId: BeUkW9h7yKH5DBgzTjF52u4PwYu9J9EmLZ5WaYZWnZuB
-                  schema:
-                    required: true
           target:
             documentValidation:
               schema:
@@ -36014,7 +35996,7 @@ packages:
                   required: true
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 6Q3h32SQfHnNM3xDSFD4R8zLGVxBY3zVcaUgbBghVwya
+            typeBlueId: ET8jdkAHvYmggWFSMbxsHN3YquaKg3gtFrwnmCCbFazi
             attributesAdded: []
       - status: dev
         content:
@@ -49759,4 +49741,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - 6RmYfs98FL7rcNwfRbfxt8bP2Viptz4gjAMnpPD43peL
+  - A1tM6ns5WLk6dbhyoc8NP3N52PZ54heq4FZ7nDrwijR
