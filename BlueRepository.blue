@@ -35171,29 +35171,65 @@ packages:
         content:
           name: Operation Mandate
           description: |
-            Mandate authorizing the actor bound to authorizedActorChannel to invoke one operation through a different effective channel on one logical target document, on behalf of the actor bound to authorityHolderChannel.
+            Mandate authorizing the actor bound to authorizedActorChannel to invoke one
+            named operation through one exact effective channel, on behalf of the actor
+            bound to authorityHolderChannel.
+
+            It may be used on any target where the authority-holder actor participates in
+            the declared effective channel and all inherited lifecycle, actor, channel,
+            operation, document-version, and optional validation checks pass.
+
+            The inherited validation field examines the nested Operation Request.request
+            payload through its immutable request binding. It does not examine the target
+            document or Operation Request envelope.
+
+            Optional target.documentValidation examines only the frozen resolved target
+            root immediately before the candidate Timeline Entry. Its absence imposes no
+            target-document identity, type, or content restriction.
           type:
             blueId: 47V2fyZMejS7LMCqJ66MvJ6v7VcmLL1zyxGQM44svV4H
           target:
-            initialDocument:
-              description: Initial document identifying the logical target document.
-              schema:
-                required: true
+            schema:
+              required: true
             channel:
-              description: Effective target channel authorized by this mandate.
+              description: Exact effective target channel authorized by this mandate.
               type:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
               schema:
                 required: true
             operation:
-              description: Single operation authorized by this mandate.
+              description: Single target operation authorized by this mandate.
               type:
                 blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
               schema:
                 required: true
+            documentValidation:
+              description: |
+                Optional deterministic target-document validation. Absence imposes no
+                document identity, type, or content restriction. When present, at least
+                one matcher is required and both configured matchers must pass.
+              document:
+                description: |
+                  Optional structural Blue pattern matched candidate-first against the
+                  frozen resolved target root immediately before the candidate entry.
+                  Extra fields in the candidate are allowed; every omitted field is
+                  unconstrained.
+              function:
+                description: |
+                  Optional deterministic BEX validation program represented as a Blue
+                  node. The host exposes $document as the exact resolved Mandate root and
+                  targetDocument as the sole immutable candidate binding containing the
+                  frozen resolved pre-entry target root.
+
+                  It does not expose the operation request or other ambient bindings.
+                  Request validation belongs to the inherited validation field.
+
+                  Only Boolean true passes. False, null, undefined, a non-Boolean result,
+                  compilation failure, execution failure, or resource-limit failure
+                  rejects the candidate.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 7i8qhMJFPdWvw8h71W8PztE6PNC1TDc1xUD8yvYGcp4R
+            typeBlueId: CnTmdtUu3ZAkaTn7TwvkvXJPsZQVFsGCn1NsRpP854wv
             attributesAdded: []
       - status: stable
         content:
@@ -35906,6 +35942,82 @@ packages:
             attributesAdded: []
       - status: dev
         content:
+          name: MyOS Agent Operation Mandate
+          description: |
+            Reusable Operation Mandate allowing one MyOS Agent Actor to invoke the
+            inherited operation for matching target documents on behalf of one MyOS
+            Principal Actor. Version 1 requires deterministic static document scope.
+
+            The optional ordered rules list contains owner-readable instructions for a
+            constrained MyOS intelligent evaluator. Rules may only narrow the
+            deterministic document and request scope. The feeder never interprets rule
+            text or invokes a model.
+          type:
+            blueId: CnTmdtUu3ZAkaTn7TwvkvXJPsZQVFsGCn1NsRpP854wv
+          contracts:
+            mandateGuarantorChannel:
+              actor:
+                type:
+                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
+            authorityHolderChannel:
+              actor:
+                type:
+                  blueId: BeUkW9h7yKH5DBgzTjF52u4PwYu9J9EmLZ5WaYZWnZuB
+            authorizedActorChannel:
+              actor:
+                type:
+                  blueId: C2Fyt8obT6QR8WWFCPF5G36VXZLwzaM1SLtMKKAp4pwd
+                agentId:
+                  description: Stable MyOS identity of the acting specialist Agent.
+                  type:
+                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                  schema:
+                    required: true
+                accountId:
+                  description: Account whose Principal is represented by this Agent.
+                  type:
+                    blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                  schema:
+                    required: true
+                onBehalfOf:
+                  description: Exact authority-holder Principal represented by the Agent.
+                  type:
+                    blueId: BeUkW9h7yKH5DBgzTjF52u4PwYu9J9EmLZ5WaYZWnZuB
+                  schema:
+                    required: true
+          target:
+            documentValidation:
+              schema:
+                required: true
+              document:
+                schema:
+                  required: true
+          rules:
+            description: |
+              Optional ordered immutable rules. An absent or empty list means that no
+              intelligent evaluation is required. Rule IDs must be non-blank and unique
+              within the exact mandate state; the MyOS host enforces those constraints.
+            type:
+              blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
+            itemType:
+              id:
+                description: Stable unique rule identifier within this exact mandate state.
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                schema:
+                  required: true
+              text:
+                description: Owner-readable instruction evaluated for each candidate action.
+                type:
+                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+                schema:
+                  required: true
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 6Q3h32SQfHnNM3xDSFD4R8zLGVxBY3zVcaUgbBghVwya
+            attributesAdded: []
+      - status: dev
+        content:
           name: MyOS Balance Account
           description: A prepared or direct MyOS balance-account reference used in payment requests.
           token:
@@ -35938,30 +36050,6 @@ packages:
             attributesAdded: []
       - status: stable
         content:
-          name: MyOS Document Operation Mandate
-          description: |
-            MyOS-hosted operation mandate allowing sessions of authorizedInitialDocument to ask MyOS Admin to write the inherited target Operation Request. The canonical subtype constrains the inherited guarantor and authorized-actor roles to MyOS Admin.
-          type:
-            blueId: 7i8qhMJFPdWvw8h71W8PztE6PNC1TDc1xUD8yvYGcp4R
-          contracts:
-            mandateGuarantorChannel:
-              actor:
-                type:
-                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
-            authorizedActorChannel:
-              actor:
-                type:
-                  blueId: 4eDC5moi1FwZaHkkdXLF9he1SGz2gWWNJArNKGYreksm
-          authorizedInitialDocument:
-            description: Initial document whose sessions may request the operation call.
-            schema:
-              required: true
-        versions:
-          - repositoryVersionIndex: 0
-            typeBlueId: C7dtw8ZHpD93BBpL528WPq8W4xWvjnUisH9Ew8SQQ6fW
-            attributesAdded: []
-      - status: stable
-        content:
           name: MyOS Document Session Reference
           description: A reference to a specific, live document processing session on the MyOS platform.
           documentId:
@@ -35980,7 +36068,7 @@ packages:
         content:
           name: MyOS Operation Call Requested
           description: |
-            Request asking MyOS Admin to write an Operation Request into a target document. The request does not carry a mandate; MyOS Admin finds and verifies an active matching MyOS Document Operation Mandate.
+            Request asking MyOS Admin to prepare an Operation Request for a target document. This request is not authority. Before delegated execution, MyOS must select and verify one exact active MyOS Agent Operation Mandate, and the target Timeline Entry must carry the corresponding Mandate Authority.
           type:
             blueId: 6XYXgjV6ja1oLqLCs3TWy4RP5UwmpPZKcppBfwwXcckU
           target:
@@ -36008,7 +36096,7 @@ packages:
             description: Target operation payload.
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: 8fSvEL47NFBSYEFSRNfDpx6qWXHr1T6bNfimrcZ1JR9w
+            typeBlueId: 8NsDycgrB1yKaNxNkqMWhMmV8Lw81ARRc1LNry6KNUoC
             attributesAdded: []
       - status: stable
         content:
@@ -49671,4 +49759,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - FG4LidzBiMCyVt53aP8kJXjcZXZ97mVfnv7N92zueGzr
+  - 6RmYfs98FL7rcNwfRbfxt8bP2Viptz4gjAMnpPD43peL
