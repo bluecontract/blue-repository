@@ -3,21 +3,13 @@ type: Mandate/Operation Mandate
 description: |
   Reusable Operation Mandate allowing one MyOS Agent Actor to invoke the
   inherited operation for matching target documents on behalf of one MyOS
-  Principal Actor. Version 1 requires deterministic static document scope.
+  Principal Actor.
 
   The optional ordered rules list contains owner-readable instructions for a
-  constrained MyOS intelligent evaluator. Rules may only narrow the
-  deterministic document and request scope. The feeder never interprets rule
-  text or invokes a model.
-
-target:
-  documentValidation:
-    schema:
-      required: true
-
-    document:
-      schema:
-        required: true
+  constrained MyOS intelligent evaluator. The inherited request and target
+  document validation may deterministically constrain the operation, while
+  rules may provide an additional or sole target-eligibility gate. The feeder
+  never interprets rule text or invokes a model.
 
 rules:
   type: List
