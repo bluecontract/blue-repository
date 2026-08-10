@@ -1,0 +1,13 @@
+name: MyOS Agent Operation Rule
+description: Owner-readable instruction used by the constrained MyOS intelligent evaluator for one candidate action.
+id:
+  type: Text
+  schema:
+    required: true
+  description: Stable unique rule identifier within this exact mandate state.
+
+text:
+  type: Text
+  schema:
+    required: true
+  description: Owner-readable instruction evaluated for each candidate action.

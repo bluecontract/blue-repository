@@ -35976,21 +35976,30 @@ packages:
             type:
               blueId: 8DSFoWG9MqRSUhStqoPLrwVQiYByRh18NWbDEarN8MKF
             itemType:
-              id:
-                description: Stable unique rule identifier within this exact mandate state.
-                type:
-                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                schema:
-                  required: true
-              text:
-                description: Owner-readable instruction evaluated for each candidate action.
-                type:
-                  blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
-                schema:
-                  required: true
+              blueId: 73jmPJ7x1sgA5yLjv74ZrRGHpUXgUYfQHyAp6SArKwWW
         versions:
           - repositoryVersionIndex: 0
-            typeBlueId: F21DrLDLAG3VWeZntTQEWvaAVpWfsyP5Q6FUiTqM7bBw
+            typeBlueId: GiN8yWYYXuQgMCSUBNhgnbVpmDePwNxMrTvLhUgzadNU
+            attributesAdded: []
+      - status: dev
+        content:
+          name: MyOS Agent Operation Rule
+          description: Owner-readable instruction used by the constrained MyOS intelligent evaluator for one candidate action.
+          id:
+            description: Stable unique rule identifier within this exact mandate state.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
+          text:
+            description: Owner-readable instruction evaluated for each candidate action.
+            type:
+              blueId: GX7CFUmSDrE2MzptunLCCdZwnuwwrenRQqEnHL4x3uoC
+            schema:
+              required: true
+        versions:
+          - repositoryVersionIndex: 0
+            typeBlueId: 73jmPJ7x1sgA5yLjv74ZrRGHpUXgUYfQHyAp6SArKwWW
             attributesAdded: []
       - status: dev
         content:
@@ -49735,4 +49744,4 @@ packages:
             typeBlueId: 9pyaCAF3GguLmRNGwhVLhXNqpvPsTtLpSdEuZCPpvRoT
             attributesAdded: []
 repositoryVersions:
-  - B7FsL4XT21LCCbhkrygytr2rKYTabHQYtC5SVArcVm5X
+  - 3w8a1PBKW6HYtCEGnC7VSvs9Zd5aWMHJugPC5fbnSFTp

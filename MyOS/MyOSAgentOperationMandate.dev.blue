@@ -13,18 +13,7 @@ description: |
 
 rules:
   type: List
-  itemType:
-    id:
-      type: Text
-      schema:
-        required: true
-      description: Stable unique rule identifier within this exact mandate state.
-
-    text:
-      type: Text
-      schema:
-        required: true
-      description: Owner-readable instruction evaluated for each candidate action.
+  itemType: MyOS/MyOS Agent Operation Rule
   description: |
     Optional ordered immutable rules. An absent or empty list means that no
     intelligent evaluation is required. Rule IDs must be non-blank and unique
