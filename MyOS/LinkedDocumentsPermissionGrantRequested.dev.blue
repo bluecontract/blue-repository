@@ -1,9 +1,0 @@
-name: Linked Documents Permission Grant Requested
-type: Coordination/Request
-description: Ask MyOS Admin to grant permisison to document (event emitter) for a concrete target session.
-onBehalfOf:
-  type: Text # granter (channel)
-targetSessionId:
-  type: Text
-links:
-  type: MyOS/Linked Documents Permission Set

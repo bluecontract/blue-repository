@@ -1,0 +1,20 @@
+name: Participant Mapping
+description: >
+  Bootstrap input for one abstract channel in a target document. It identifies
+  the participant whom the bootstrap provider should resolve or contact for
+  that channel. The mapping intentionally contains only provider-neutral
+  participant resolution hints.
+
+channelName:
+  type: Text
+  schema:
+    required: true
+  description: Abstract channel key in the target document.
+
+accountId:
+  type: Text
+  description: Optional account identifier understood by the bootstrap provider.
+
+email:
+  type: Text
+  description: Optional email address used to resolve or invite the participant.

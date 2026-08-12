@@ -1,0 +1,25 @@
+name: Purpose Statement
+description: >
+  One participant-visible purpose statement. It may describe an authorized
+  representative role, an intended request pattern and response operation, or
+  a simple non-provider role such as observing. Purpose does not grant
+  authority.
+
+onBehalfOf:
+  type: Coordination/Authority
+  description: >
+    Optional authority explaining whom the participant represents. A
+    mandate-backed purpose uses Mandate/Mandate Authority, which includes
+    the represented actor and mandate.
+
+event:
+  description: Optional request event type or pattern the participant intends to handle.
+
+respondsWith:
+  type: List
+  itemType: Coordination/Operation
+  description: Optional operation selectors the participant may use in response.
+
+summary:
+  type: Text
+  description: Optional human-readable explanation of the participant's purpose.

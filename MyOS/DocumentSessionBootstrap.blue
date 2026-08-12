@@ -25,7 +25,7 @@ capabilities:
   type: Dictionary
   keyType: Text
   valueType: Boolean
-  description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction, workerAgency)
+  description: Optional MyOS Admin capability contracts to attach (participantsOrchestration, sessionInteraction)
 bootstrapStatus:
   type: Coordination/Document Status
   description: Overall bootstrap process status
@@ -181,9 +181,13 @@ contracts:
       type: Coordination/Status Change
     steps:
       - name: Update Bootstrap Status
-        type: Coordination/Update Document
-        changeset:
-          - op: replace
-            path: /bootstrapStatus
-            val:
-              $event: /status
+        type: Coordination/Compute
+        do:
+          - $appendChange:
+              op: replace
+              path: /bootstrapStatus
+              val:
+                $event: /status
+          - $return:
+              changeset:
+                $changeset: true

@@ -1,0 +1,61 @@
+name: Operation Mandate
+type: Mandate/Mandate
+description: |
+  Mandate authorizing the actor bound to authorizedActorChannel to invoke one
+  named operation through one exact effective channel, on behalf of the actor
+  bound to authorityHolderChannel.
+
+  It may be used on any target where the authority-holder actor participates in
+  the declared effective channel and all inherited lifecycle, actor, channel,
+  operation, document-version, and optional validation checks pass.
+
+  The inherited validation field examines the nested Operation Request.request
+  payload through its immutable request binding. It does not examine the target
+  document or Operation Request envelope.
+
+  Optional target.documentValidation examines only the frozen resolved target
+  root immediately before the candidate Timeline Entry. Its absence imposes no
+  target-document identity, type, or content restriction.
+
+target:
+  schema:
+    required: true
+
+  channel:
+    type: Text
+    schema:
+      required: true
+    description: Exact effective target channel authorized by this mandate.
+
+  operation:
+    type: Text
+    schema:
+      required: true
+    description: Single target operation authorized by this mandate.
+
+  documentValidation:
+    description: |
+      Optional deterministic target-document validation. Absence imposes no
+      document identity, type, or content restriction. When present, at least
+      one matcher is required and both configured matchers must pass.
+
+    document:
+      description: |
+        Optional structural Blue pattern matched candidate-first against the
+        frozen resolved target root immediately before the candidate entry.
+        Extra fields in the candidate are allowed; every omitted field is
+        unconstrained.
+
+    function:
+      description: |
+        Optional deterministic BEX validation program represented as a Blue
+        node. The host exposes $document as the exact resolved Mandate root and
+        targetDocument as the sole immutable candidate binding containing the
+        frozen resolved pre-entry target root.
+
+        It does not expose the operation request or other ambient bindings.
+        Request validation belongs to the inherited validation field.
+
+        Only Boolean true passes. False, null, undefined, a non-Boolean result,
+        compilation failure, execution failure, or resource-limit failure
+        rejects the candidate.

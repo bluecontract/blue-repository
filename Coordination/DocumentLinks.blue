@@ -1,0 +1,9 @@
+name: Document Links
+description: |
+  Passive dictionary of named outgoing document-link declarations. Dictionary
+  keys organize authoring and may communicate local purpose, but do not form
+  link identity. Every value is a Coordination/Document Link. Equivalent
+  values under different keys describe the same effective endpoint.
+type: Dictionary
+keyType: Text
+valueType: Coordination/Document Link

@@ -1,4 +1,5 @@
 name: Participant Resolved
+type: Coordination/Event
 channelName:
   type: Text
 participant:

@@ -1,0 +1,7 @@
+name: Document Bootstrap Declined
+type: Coordination/Response
+description: Response reporting that a bootstrap provider declined the requested bootstrap.
+
+reason:
+  type: Text
+  description: Optional explanation for declining the request.

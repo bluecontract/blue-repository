@@ -17,10 +17,15 @@ on:
           - write
         default: write
       allow_diff:
-        description: 'In check mode, allow BlueRepository.blue to differ (exit 0)'
+        description: 'In check mode, allow generated repository artifacts to differ (exit 0)'
         required: true
         type: boolean
         default: true
+      downstream_base_branch:
+        description: 'blue-repository-js branch targeted by the generated-types PR'
+        required: true
+        type: string
+        default: next
 
 concurrency:
   group: repository-generator-manual-${{ inputs.branch }}
@@ -31,8 +36,9 @@ permissions:
 
 env:
   REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
-  REPOSITORY_GENERATOR_VERSION: '5.0.0-rc.3'
+  REPOSITORY_GENERATOR_VERSION: '5.0.0-rc.4'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
+  BLUE_REPOSITORY_PROVIDER_PATH: 'BlueRepository.provider.json'
   ARTIFACT_NAME: 'blue-repository-definition'
   ARTIFACT_RETENTION_DAYS: '10'
   DOWNSTREAM_REPO: 'bluecontract/blue-repository-js'
@@ -72,7 +78,8 @@ jobs:
 
           npm_config_loglevel=error \
             npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
-            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode "${MODE}" "${EXTRA_ARGS[@]}" \
+            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" \
+            --provider-bundle "${BLUE_REPOSITORY_PROVIDER_PATH}" --mode "${MODE}" "${EXTRA_ARGS[@]}" \
             | tee /tmp/repository-generator-output.txt
 
           if [ "${MODE}" = 'write' ]; then
@@ -84,19 +91,21 @@ jobs:
 
             echo "repo_blue_id=${repoBlueId}" >> "${GITHUB_OUTPUT}"
 
-            if [ -n "$(git status --porcelain -- "${BLUE_REPOSITORY_PATH}")" ]; then
+            if [ -n "$(git status --porcelain -- "${BLUE_REPOSITORY_PATH}" "${BLUE_REPOSITORY_PROVIDER_PATH}")" ]; then
               echo "changed=true" >> "${GITHUB_OUTPUT}"
             else
               echo "changed=false" >> "${GITHUB_OUTPUT}"
             fi
           fi
 
-      - name: Upload BlueRepository.blue
+      - name: Upload repository definition and provider bundle
         if: inputs.mode == 'write'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ env.BLUE_REPOSITORY_PATH }}
+          path: |
+            ${{ env.BLUE_REPOSITORY_PATH }}
+            ${{ env.BLUE_REPOSITORY_PROVIDER_PATH }}
           retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
 
       - name: Trigger blue-repository-js
@@ -109,4 +118,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.WORKFLOW_PAT }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/${{ env.DOWNSTREAM_REPO }}/dispatches \
-            -d '{"event_type":"${{ env.DOWNSTREAM_EVENT_TYPE }}","client_payload":{"run_id":"${{ github.run_id }}","workflow":"${{ env.SOURCE_WORKFLOW_FILE }}","repo_blue_id":"${{ steps.generate.outputs.repo_blue_id }}"}}'
+            -d '{"event_type":"${{ env.DOWNSTREAM_EVENT_TYPE }}","client_payload":{"run_id":"${{ github.run_id }}","workflow":"${{ env.SOURCE_WORKFLOW_FILE }}","repo_blue_id":"${{ steps.generate.outputs.repo_blue_id }}","base_branch":"${{ inputs.downstream_base_branch }}"}}'

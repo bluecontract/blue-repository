@@ -1,0 +1,33 @@
+name: MyOS Session Subscription Requested
+type: Coordination/Request
+description: >
+  Request asking MyOS Admin to start a provider-mediated subscription to a
+  logical source document. The request targets a document, not a specific
+  session. MyOS Admin chooses an eligible session unless the matching mandate
+  constrains one. The subscriber is inferred from the requesting document
+  session.
+
+sourceInitialDocument:
+  schema:
+    required: true
+  description: Source initial document to observe.
+
+filter:
+  type: MyOS/MyOS Session Subscription Filter
+  description: Optional filter for the root source document.
+
+linkedDocuments:
+  type: List
+  itemType:
+    anchor:
+      type: Text
+      schema:
+        required: true
+      description: Link anchor whose linked documents should be observed.
+
+    filter:
+      type: MyOS/MyOS Session Subscription Filter
+      description: >
+        Optional filter for linked documents under this anchor. When absent,
+        defaults include all events and no snapshots.
+  description: Optional linked-document subscription rules.

@@ -1,0 +1,28 @@
+name: Document Session Reference
+description: >
+  Provider-neutral reference to one running session of a logical document.
+  providerId identifies the runtime namespace in which sessionId is resolved,
+  while initialDocument identifies the logical document independently of that
+  runtime session.
+
+providerId:
+  type: Text
+  schema:
+    required: true
+  description: >
+    Identifier of the session provider that assigned sessionId and resolves the
+    referenced session.
+
+sessionId:
+  type: Text
+  schema:
+    required: true
+  description: Provider-local identifier of the running document session.
+
+initialDocument:
+  schema:
+    required: true
+  description: >
+    Initial document identifying the logical document processed by this
+    session. The value may be materialized or represented by an equivalent pure
+    { blueId: ... } reference.

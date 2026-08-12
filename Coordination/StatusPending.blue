@@ -1,5 +1,5 @@
 name: Status Pending
-type: Coordination/Document Status
+type: Coordination/Status
 mode: pending
 description: |
   Concrete Document Status meaning work has not yet started, is waiting for external input, or is queued for later processing. The fixed mode is `pending`.

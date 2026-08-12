@@ -1,4 +1,5 @@
 name: Target Document Session Started
+type: Coordination/Event
 document:
   description: The final, canonicalized document state with all timelineIds filled in.
 initiatorSessionIds:

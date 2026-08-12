@@ -1,0 +1,26 @@
+name: MyOS Session Subscription Filter
+description: >
+  Selects emitted events and processed document snapshots delivered for one
+  source document in a MyOS session subscription.
+
+events:
+  type: List
+  description: >
+    Optional emitted-event filter. When omitted, all emitted events are
+    included. An empty list includes no emitted events. A non-empty list
+    includes only events matching at least one listed type or pattern.
+
+snapshots:
+  initial:
+    type: Boolean
+    description: >
+      Whether the subscription start Message includes the initial processed
+      document snapshot. When omitted, false.
+
+  include:
+    type: Text
+    description: >
+      Snapshot delivery mode: None, All, or WhenEventsMatched. None includes no
+      ongoing snapshots. All includes every delivered epoch snapshot.
+      WhenEventsMatched includes a snapshot only when at least one event matched
+      in that epoch. When omitted, None.

@@ -1,0 +1,3 @@
+name: Document Bootstrap In Progress
+type: Coordination/Response
+description: Response reporting that a bootstrap provider started the requested bootstrap.

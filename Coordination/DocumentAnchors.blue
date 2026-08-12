@@ -1,0 +1,9 @@
+name: Document Anchors
+description: |
+  Passive dictionary of named incoming connection points that other documents
+  may target. Each dictionary key is the exact anchor name; values provide
+  optional guidance. Anchors are part of a document's public link interface
+  when authored in effective root contracts.
+type: Dictionary
+keyType: Text
+valueType: Coordination/Document Anchor

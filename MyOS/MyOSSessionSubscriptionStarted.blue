@@ -1,0 +1,6 @@
+name: MyOS Session Subscription Started
+type: MyOS/MyOS Session Subscription Update
+description: >
+  First update of a MyOS session subscription. It marks the clear start boundary
+  of the stream and may carry the initial source snapshot when requested by the
+  filter, together with any matching events delivered at that boundary.

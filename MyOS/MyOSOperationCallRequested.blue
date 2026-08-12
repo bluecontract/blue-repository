@@ -1,0 +1,32 @@
+name: MyOS Operation Call Requested
+type: Coordination/Request
+description: >
+  Request asking MyOS Admin to prepare an Operation Request for a target
+  document. This request is not authority. Before delegated execution, MyOS
+  must select and verify one exact active MyOS Agent Operation Mandate, and the
+  target Timeline Entry must carry the corresponding Mandate Authority.
+
+target:
+  document:
+    schema:
+      required: true
+    description: Current target document state used as the basis for the call.
+
+  channel:
+    type: Text
+    schema:
+      required: true
+    description: Effective target channel.
+
+  operation:
+    type: Text
+    schema:
+      required: true
+    description: Target operation.
+
+  requireExactDocumentVersion:
+    type: Boolean
+    description: Whether the target Operation Request requires exact target-state equality.
+
+request:
+  description: Target operation payload.

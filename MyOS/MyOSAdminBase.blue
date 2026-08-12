@@ -3,21 +3,19 @@ description: Document base for MyOS Admin participant
 contracts:
   myOsAdminChannel:
     type: MyOS/MyOS Timeline Channel
-    description: MyOS Admin (accountId=0) — posts operational progress/decisions via myOsAdminUpdate
+    description: MyOS Admin channel for operational progress and decisions delivered through myOsAdminUpdate.
+    timeline:
+      type: MyOS/MyOS Timeline
+    actor:
+      type: MyOS/MyOS Admin Actor
 
   myOsAdminUpdate:
-    type: Coordination/Operation
+    type: Coordination/Sequential Workflow Operation
     description: The standard, required operation for MyOS Admin to deliver events.
     channel: myOsAdminChannel
-    # TODO: Uncomment when we will support List type
-    # request:
-    #   type: List
-    #   itemType: Event
-
-  myOsAdminUpdateImpl:
-    type: Coordination/Sequential Workflow Operation
-    description: Implementation that re-emits the provided events
-    operation: myOsAdminUpdate
+    request:
+      type: List
+      itemType: Coordination/Event
     steps:
       - name: EmitAdminEvents
         type: Coordination/Compute

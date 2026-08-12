@@ -2,8 +2,8 @@ name: Operation
 type: Handler
 description: |
   Base handler contract type describing a named operation supported by a document or scope. An Operation gives a stable
-  name to a business action, binds that action to a same-scope channel, and describes the expected request payload
-  shape.
+  name to a business action, binds that action to a same-scope effective handler channel, and describes the expected
+  request payload shape.
 
   Operation is the common interface for operation handlers. A plain Operation declares the channel and request shape;
   concrete operation types such as Sequential Workflow Operation provide the executable behavior. Actor Policy and
@@ -16,5 +16,7 @@ request:
 channel:
   type: Text
   description: |
-    Same-scope channel key through which Operation Request events for this operation are expected to arrive. This is the
-    Handler channel binding for the operation.
+    Same-scope effective channel key used to discover and invoke this Operation handler. An Operation Request may be
+    accepted through a different eligible source channel; the feeder validates source and authority constraints, and a
+    supporting processor routes the accepted request to this effective channel without transferring source-channel
+    checkpoint ownership.

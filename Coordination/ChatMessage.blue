@@ -1,18 +1,20 @@
 name: Chat Message
-type: Coordination/Event
+type: Coordination/Message
 description: |
-  Human-readable coordination event. Chat Message records text intended for participants or auditors when no more
-  specific machine-actionable event type is required.
+  Free-text Message for humans. Chat Message records text intended for
+  participants or auditors when no structured, machine-actionable Message type
+  is required.
 
-  The `message` text is identity-bearing exactly as authored. If the message is stored in a Timeline Entry, actor,
-  source, timestamp, and provider completeness belong to the enclosing Timeline Entry. Use concrete operation or status
-  event types when workflow logic must react to structured fields rather than free text.
+  As a Coordination/Message it supports requestId, inResponseTo, threadId, and
+  recipientChannel. recipientChannel directs attention but does not make the
+  Message private. A Chat Message may comment on a Request but never fulfils it;
+  only a Coordination/Response answers a Request, and only concrete operation
+  contracts perform actions.
+
 message:
   type: Text
+  schema:
+    required: true
   description: |
-    Textual content of the message. Exact spelling, whitespace, and Unicode code points are part of the Blue value.
-replyTo:
-  type: Coordination/Timeline Entry
-  description: |
-    Optional timeline entry this chat message replies to or comments on. In concrete documents this may be represented
-    by the full Timeline Entry object or by a BlueId reference to that entry.
+    Textual content of the Message. Exact spelling, whitespace, and Unicode code
+    points are part of the Blue value.

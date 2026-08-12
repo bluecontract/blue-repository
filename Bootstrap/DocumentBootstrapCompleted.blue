@@ -1,0 +1,16 @@
+name: Document Bootstrap Completed
+type: Coordination/Response
+description: >
+  Response reporting that a bootstrap provider successfully started the
+  requested logical document and made a running session of that document
+  available to the requester or to the participant on whose behalf bootstrap
+  was requested.
+
+documentSession:
+  type: SessionInteraction/Document Session Reference
+  schema:
+    required: true
+  description: >
+    Provider-neutral reference to the running session made available to the
+    requester or to the participant on whose behalf bootstrap was requested.
+    Its initialDocument identifies the requested logical document.

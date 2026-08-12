@@ -1,0 +1,12 @@
+name: Mandate Activated
+type: Coordination/Message
+description: |
+  Lifecycle Message emitted by authority confirmation or another authorized
+  mandate operation.
+
+  The inherited activation workflow accepts this Message while the mandate is
+  in Mandate/Status Authority Confirmed, changes the status to
+  Mandate/Status Active, and derives activatedAt from the root causal Timeline
+  Entry. This Message does not supply the effective timestamp and is not
+  re-emitted by the accepting workflow. The inherited inResponseTo field may
+  identify the Message that caused activation.

@@ -168,15 +168,15 @@ chargeAttempts:
 
 contracts:
   granterChannel:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Granting party timeline channel.
 
   granteeChannel:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Grantee timeline channel (party allowed to use the mandate).
 
   guarantorChannel:
-    type: MyOS/MyOS Timeline Channel
+    type: Coordination/Timeline Channel
     description: Bank/admin channel executing mandate checks and settlement updates.
 
   initLifecycleChannel:

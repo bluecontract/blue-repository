@@ -1,0 +1,33 @@
+name: MyOS Agent Operation Mandate
+type: Mandate/Operation Mandate
+description: |
+  Reusable Operation Mandate allowing one MyOS Agent Actor to invoke the
+  inherited operation for matching target documents on behalf of one MyOS
+  Principal Actor.
+
+  The optional ordered rules list contains owner-readable instructions for a
+  constrained MyOS intelligent evaluator. The inherited request and target
+  document validation may deterministically constrain the operation, while
+  rules may provide an additional or sole target-eligibility gate. The feeder
+  never interprets rule text or invokes a model.
+
+rules:
+  type: List
+  itemType: MyOS/MyOS Agent Operation Rule
+  description: |
+    Optional ordered immutable rules. An absent or empty list means that no
+    intelligent evaluation is required. Rule IDs must be non-blank and unique
+    within the exact mandate state; the MyOS host enforces those constraints.
+
+contracts:
+  mandateGuarantorChannel:
+    actor:
+      type: MyOS/MyOS Admin Actor
+
+  authorityHolderChannel:
+    actor:
+      type: MyOS/Principal Actor
+
+  authorizedActorChannel:
+    actor:
+      type: MyOS/MyOS Agent Actor

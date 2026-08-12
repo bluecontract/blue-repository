@@ -7,6 +7,3 @@ description: |
 website:
   type: Text
   description: Optional primary website or canonical public URL for this space.
-anchors:
-  type: Common/Document Anchors
-  description: Optional named connection points where matching documents can link in.

@@ -1,0 +1,7 @@
+name: Status Terminated
+type: Coordination/Status Completed
+description: >
+  Terminal mandate lifecycle status indicating that the delegated authority has
+  permanently ended. A mandate in this status cannot be confirmed, activated,
+  or terminated again, and the mandate processing document is gracefully
+  terminated after the status and authoritative termination Message are stored.

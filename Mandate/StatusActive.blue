@@ -1,0 +1,7 @@
+name: Status Active
+type: Coordination/Status In Progress
+description: >
+  Mandate lifecycle status indicating that the guarantor-confirmed authority is
+  currently usable by the authorized actor, subject to the concrete mandate's
+  target and request constraints. The mandate may transition from this status
+  only to Mandate/Status Terminated.

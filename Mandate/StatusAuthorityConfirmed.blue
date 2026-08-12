@@ -1,0 +1,7 @@
+name: Status Authority Confirmed
+type: Coordination/Status In Progress
+description: >
+  Mandate lifecycle status indicating that the mandate guarantor has confirmed
+  the declared authority relationship, while the delegated authority is not yet
+  active. The mandate may transition from this status to Mandate/Status Active
+  or Mandate/Status Terminated.

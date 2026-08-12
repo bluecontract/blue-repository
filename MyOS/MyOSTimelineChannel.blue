@@ -1,6 +1,8 @@
 name: MyOS Timeline Channel
 type: Coordination/Timeline Channel
 description: MyOS-specific Timeline Channel
+timeline:
+  type: MyOS/MyOS Timeline
 accountId:
   type: Text
   description: Account identifier for the MyOS timeline

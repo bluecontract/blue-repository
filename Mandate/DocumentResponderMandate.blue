@@ -1,0 +1,12 @@
+name: Document Responder Mandate
+type: Mandate/Mandate
+description: >
+  Mandate authorizing the actor bound to authorizedActorChannel to respond to
+  covered requests emitted by sessions of authorizedInitialDocument. The
+  concrete request shape and additional conditions are defined through the
+  inherited validation fields.
+
+authorizedInitialDocument:
+  schema:
+    required: true
+  description: Initial document whose sessions may emit covered requests.

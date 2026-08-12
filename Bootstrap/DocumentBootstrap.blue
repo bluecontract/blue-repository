@@ -1,0 +1,133 @@
+name: Document Bootstrap
+description: >
+  Generic coordination document contract for recording a bootstrap provider's
+  response lifecycle. It defines only the provider-facing response operations
+  and the state they materialize. Concrete documents decide how bootstrap is
+  requested and which bootstrap input is supplied.
+
+status:
+  type: Coordination/Status
+  description: Current bootstrap lifecycle status.
+
+documentSession:
+  type: SessionInteraction/Document Session Reference
+  description: Running document session made available after successful bootstrap.
+
+error:
+  type: Text
+  description: Optional explanation recorded when bootstrap is declined or fails.
+
+contracts:
+  bootstrapProviderChannel:
+    type: Coordination/Timeline Channel
+    schema:
+      required: true
+    description: Participant channel for the bootstrap provider.
+
+  declineBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap Declined
+    steps:
+      - name: Record Bootstrap Declined
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val:
+                type: Coordination/Status Declined
+          - $if:
+              cond:
+                $exists:
+                  $event: /message/request/reason
+              then:
+                - $appendChange:
+                    op: replace
+                    path: /error
+                    val:
+                      $event: /message/request/reason
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+
+  startBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap In Progress
+    steps:
+      - name: Record Bootstrap In Progress
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val:
+                type: Coordination/Status In Progress
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+
+  completeBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap Completed
+    steps:
+      - name: Record Bootstrap Completed
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val:
+                type: Coordination/Status Completed
+          - $appendChange:
+              op: replace
+              path: /documentSession
+              val:
+                $event: /message/request/documentSession
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true
+
+  failBootstrap:
+    type: Coordination/Sequential Workflow Operation
+    channel: bootstrapProviderChannel
+    request:
+      type: Bootstrap/Document Bootstrap Failed
+    steps:
+      - name: Record Bootstrap Failed
+        type: Coordination/Compute
+        do:
+          - $appendEvent:
+              $event: /message/request
+          - $appendChange:
+              op: replace
+              path: /status
+              val:
+                type: Coordination/Status Failed
+          - $appendChange:
+              op: replace
+              path: /error
+              val:
+                $event: /message/request/error
+          - $return:
+              changeset:
+                $changeset: true
+              events:
+                $events: true

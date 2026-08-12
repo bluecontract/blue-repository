@@ -1,0 +1,21 @@
+name: Mandate Authority
+type: Coordination/Authority
+description: >
+  Authority evidence backed by an initial Mandate/Mandate document. On a
+  Timeline Entry, the containing actor claims to act on behalf of actor under
+  that mandate. The initialMandateDocument value may be materialized inline or
+  represented as an equivalent pure { blueId: ... } reference.
+
+actor:
+  type: Coordination/Actor
+  schema:
+    required: true
+  description: Actor on whose behalf the containing actor claims to act.
+
+initialMandateDocument:
+  schema:
+    required: true
+  description: >
+    Initial mandate document authorizing the represented authority relationship.
+    A feeder or provider resolves the exact processed mandate state required for
+    the relevant action timestamp.
