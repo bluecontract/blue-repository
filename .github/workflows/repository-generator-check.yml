@@ -14,8 +14,9 @@ permissions:
 
 env:
   REPOSITORY_GENERATOR_PACKAGE: '@blue-labs/repository-generator'
-  REPOSITORY_GENERATOR_VERSION: '5.0.0-rc.3'
+  REPOSITORY_GENERATOR_VERSION: '5.0.0-rc.4'
   BLUE_REPOSITORY_PATH: 'BlueRepository.blue'
+  BLUE_REPOSITORY_PROVIDER_PATH: 'BlueRepository.provider.json'
 
 jobs:
   Check:
@@ -37,4 +38,5 @@ jobs:
 
           npm_config_loglevel=error \
             npm exec --yes --package "${REPOSITORY_GENERATOR_PACKAGE}@${REPOSITORY_GENERATOR_VERSION}" -- \
-            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" --mode check --allow-diff
+            blue-repo-generator --repo-root . --blue-repository "${BLUE_REPOSITORY_PATH}" \
+            --provider-bundle "${BLUE_REPOSITORY_PROVIDER_PATH}" --mode check --allow-diff
